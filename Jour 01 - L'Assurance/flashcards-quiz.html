@@ -135,6 +135,52 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
   .fiche-body table{page-break-inside:avoid;font-size:9pt}
 }
 @media(max-width:600px){main{padding:20px 12px}.qcard,.fiche-body{padding:20px 16px}.scene{height:240px}header{padding:14px 16px 0}}
+
+    /* ── Multi-select ── */
+    .opt.selected { background: rgba(77,124,195,.15); border: 2px solid var(--accent); }
+    .opt.selected:hover { background: rgba(77,124,195,.25); }
+
+    /* ── Exercices ── */
+    #tab-exercices { padding-bottom: 40px; }
+    .ex-header { margin-bottom: 24px; }
+    .ex-header h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+    .ex-sub { font-size: 0.82rem; color: var(--muted); }
+    .ex-card { background: var(--card); border-radius: 14px; padding: 20px; margin-bottom: 22px; box-shadow: var(--shadow); }
+    .ex-title { font-size: 0.97rem; font-weight: 700; margin-bottom: 16px; color: var(--accent); }
+    .ex-source { display: flex; flex-wrap: wrap; gap: 8px; min-height: 52px; padding: 12px; background: var(--bg); border-radius: 10px; margin-bottom: 16px; border: 2px dashed var(--border); transition: border-color .2s; }
+    .ex-source.has-picked { border-color: var(--accent); }
+    .drag-item { padding: 8px 14px; background: var(--accent); color: #fff; border-radius: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 500; user-select: none; transition: transform .15s, box-shadow .15s, opacity .15s; white-space: nowrap; }
+    .drag-item:hover { opacity: .9; }
+    .drag-item.picked { transform: scale(1.06); box-shadow: 0 4px 18px rgba(0,0,0,.28); outline: 3px solid #fff; }
+    .drag-item.ex-ok { background: var(--ok) !important; }
+    .drag-item.ex-ko { background: var(--err) !important; }
+    .drop-zone { min-height: 48px; border: 2px dashed #ccc; border-radius: 8px; padding: 6px 8px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; transition: border-color .2s, background .2s; cursor: pointer; }
+    .drop-zone.multi { min-height: 90px; align-items: flex-start; }
+    .drop-zone.inline { min-width: 130px; min-height: 42px; display: inline-flex; }
+    .drop-zone.dz-hover { border-color: var(--accent); background: rgba(77,124,195,.07); }
+    .ex-grid4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 14px; }
+    .ex-grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 14px; }
+    .ex-grid2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-bottom: 14px; }
+    .ex-col-header { font-weight: 700; font-size: 0.82rem; margin-bottom: 8px; text-align: center; padding: 4px 8px; border-radius: 6px; }
+    .ex-col-header.ind-h { background: rgba(46,125,50,.12); color: #2e7d32; }
+    .ex-col-header.for-h { background: rgba(230,119,0,.12); color: #e06000; }
+    .ex-col-header.obl-h { background: rgba(46,125,50,.12); color: #2e7d32; }
+    .ex-col-header.noo-h { background: rgba(194,24,7,.12); color: #c21807; }
+    .ex-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+    .ex-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 0.87rem; vertical-align: middle; }
+    .ex-table td:first-child { width: 55%; }
+    .ex-btns { margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-check { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
+    .btn-reset { background: transparent; color: var(--muted); border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 18px; cursor: pointer; font-size: 0.9rem; }
+    .ex-feedback { margin-top: 14px; padding: 10px 14px; border-radius: 8px; font-size: 0.88rem; display: none; }
+    .ex-feedback.ok { background: var(--ok-bg, rgba(46,125,50,.1)); color: var(--ok, #2e7d32); display: block; }
+    .ex-feedback.ko { background: rgba(194,24,7,.08); color: var(--err, #c21807); display: block; }
+    @media (max-width: 640px) {
+      .ex-grid4 { grid-template-columns: repeat(2,1fr); }
+      .ex-grid3 { grid-template-columns: 1fr 1fr; }
+      .drag-item { font-size: 0.78rem; padding: 7px 11px; }
+    }
+    @media (max-width: 420px) { .ex-grid3 { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -150,6 +196,7 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
     <button class="tab-btn" onclick="switchTab('quiz')">📝 Quiz</button>
     <button class="tab-btn tab-focus-btn" onclick="switchTab('focus')">🎯 Focus</button>
     <button class="tab-btn" onclick="switchTab('fiche')">📄 Fiche</button>
+    <button class="tab-btn" onclick="switchTab('exercices')">🏋️ Exercices</button>
   </div>
 </header>
 <main>
@@ -406,6 +453,11 @@ const QUIZ = [
   {ch:"Ch.3",q:"Quelle est la sanction pécuniaire maximale que peut infliger l'ACPR ?",opts:["1 million d'euros","10 millions d'euros","50 millions d'euros","100 millions d'euros"],c:3,e:"L'ACPR peut infliger jusqu'à 100 millions d'euros de sanction pécuniaire."},
   {ch:"Ch.3",q:"Depuis le 1er avril 2023 (loi PACTE), les intermédiaires doivent...",opts:["Passer un examen annuel","Adhérer à une chambre professionnelle pour s'immatriculer à l'ORIAS","Obtenir un master en droit des assurances","Souscrire une assurance vie"],c:1,e:"Loi PACTE : adhésion à une chambre professionnelle obligatoire pour immatriculation ORIAS ou renouvellement."},
   {ch:"Ch.3",q:"Quel délai minimum avant qu'une garantie financière puisse cesser ?",opts:["24 heures","3 jours francs","7 jours calendaires","30 jours"],c:1,e:"Art. R512-7 : la GF ne peut cesser avant 3 jours francs à compter de l'information à l'ORIAS."},
+
+  // ── Questions multi-select ──
+  {ch:"Ch.1 — Les intermédiaires",q:"Parmi ces activités, lesquelles un MIA peut-il exercer ? (plusieurs réponses)",opts:["Apporter des affaires","Gérer les contrats en cours","Encaisser des cotisations","Régler des sinistres"],c:[0,2],multi:true,e:"Le MIA peut : apporter des affaires + encaisser des cotisations (+ remettre des fonds en vie). Gestion des contrats et règlement des sinistres lui sont interdits."},
+  {ch:"Ch.2 — Conditions d'exercice",q:"Quels documents justifient la capacité professionnelle ? (plusieurs réponses)",opts:["Livret de stage signé","Extrait de casier judiciaire B2","Attestation de formation","Diplôme reconnu par arrêté"],c:[0,2,3],multi:true,e:"CP : livret de stage, attestation de formation/de fonctions, diplôme reconnu par arrêté. Le casier judiciaire sert à l'honorabilité, pas à la capacité professionnelle."},
+  {ch:"Ch.3 — Types d'assurances",q:"Quelles assurances relèvent du principe indemnitaire ? (plusieurs réponses)",opts:["Décès toutes causes","Santé / frais médicaux","Épargne retraite","Accidents corporels"],c:[1,3],multi:true,e:"Indemnitaire : santé, frais médicaux, accidents, invalidité. Forfaitaire : décès, vie, épargne, retraite, incapacité, tontine."},
 ];
 
 const FOCUS = [
@@ -541,11 +593,30 @@ function qRender() {
   document.getElementById('q-text').textContent = q.q;
   document.getElementById('q-bar').style.width = (qi/QUIZ.length*100)+'%';
   const od = document.getElementById('q-opts'); od.innerHTML='';
-  q.opts.forEach((o,i)=>{
-    const b=document.createElement('button');
-    b.className='opt'; b.textContent=`${['A','B','C','D'][i]}. ${o}`;
-    b.onclick=()=>qSelect(i); od.appendChild(b);
-  });
+  if(q.multi) {
+    const hint=document.createElement('div');
+    hint.style='font-size:.78rem;color:var(--muted);margin-bottom:8px;font-style:italic';
+    hint.textContent='Plusieurs réponses correctes — sélectionnez toutes les bonnes réponses puis validez.';
+    od.appendChild(hint);
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.dataset.idx=i;
+      b.textContent=`${['A','B','C','D'][i]}. ${o}`;
+      b.onclick=()=>{ if(!b.disabled) b.classList.toggle('selected'); };
+      od.appendChild(b);
+    });
+    const val=document.createElement('button');
+    val.style='margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-weight:600;cursor:pointer;font-size:.9rem';
+    val.textContent='✅ Valider';
+    val.onclick=()=>qValidateMulti();
+    od.appendChild(val);
+  } else {
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.textContent=`${['A','B','C','D'][i]}. ${o}`;
+      b.onclick=()=>qSelect(i); od.appendChild(b);
+    });
+  }
   document.getElementById('q-fb').className='fb';
   document.getElementById('q-fb').innerHTML='';
   document.getElementById('qnext').style.display='none';
@@ -557,10 +628,32 @@ function qSelect(i) {
   document.querySelectorAll('#q-opts .opt')[i].classList.add(ok?'correct':'wrong');
   if(!ok) document.querySelectorAll('#q-opts .opt')[q.c].classList.add('correct');
   if(ok) qs++; qa++;
-  qAnswers.push({i,c:q.c,q:q.q,opts:q.opts,e:q.e});
+  qAnswers.push({sel:[i],c:Array.isArray(q.c)?q.c:[q.c],q:q.q,opts:q.opts,e:q.e});
   const fb=document.getElementById('q-fb');
   fb.className='fb '+(ok?'correct':'wrong');
   fb.innerHTML=(ok?'<strong>✅ Bonne réponse !</strong>':'<strong>❌ Mauvaise réponse.</strong> ')+q.e;
+  document.getElementById('q-badge').textContent=`${qs} / ${qa}`;
+  document.getElementById('qnext').style.display='inline-flex';
+}
+function qValidateMulti() {
+  const q=QUIZ[qi];
+  const btns=[...document.querySelectorAll('#q-opts .opt')];
+  const sel=btns.filter(b=>b.classList.contains('selected')).map(b=>+b.dataset.idx);
+  const correct=Array.isArray(q.c)?q.c:[q.c];
+  btns.forEach(b=>b.disabled=true);
+  const ok=sel.length===correct.length&&correct.every(c=>sel.includes(c));
+  btns.forEach(b=>{
+    if(!b.dataset.idx) return;
+    const idx=+b.dataset.idx;
+    if(correct.includes(idx)) b.classList.add('correct');
+    else if(sel.includes(idx)) b.classList.add('wrong');
+  });
+  if(ok) qs++; qa++;
+  qAnswers.push({sel,c:correct,q:q.q,opts:q.opts,e:q.e});
+  const fb=document.getElementById('q-fb');
+  fb.className='fb '+(ok?'correct':'wrong');
+  const corrTxt=correct.map(c=>q.opts[c]).join(', ');
+  fb.innerHTML=(ok?'<strong>✅ Bonne réponse !</strong> ':'<strong>❌ Mauvaise réponse.</strong> Réponses attendues : <em>'+corrTxt+'</em>. ')+q.e;
   document.getElementById('q-badge').textContent=`${qs} / ${qa}`;
   document.getElementById('qnext').style.display='inline-flex';
 }
@@ -581,9 +674,9 @@ function qShowScore() {
   const bar=document.getElementById('s-bar');
   bar.style.background=pct>=.7?'linear-gradient(90deg,#2d8a4e,#4caf50)':pct>=.5?'linear-gradient(90deg,#e67e22,#f39c12)':'linear-gradient(90deg,#c0392b,#e74c3c)';
   setTimeout(()=>{ bar.style.width=(pct*100)+'%'; },100);
-  const errors=qAnswers.filter(a=>a.i!==a.c);
+  const errors=qAnswers.filter(a=>{ const c=Array.isArray(a.c)?a.c:[a.c]; const s=Array.isArray(a.sel)?a.sel:[a.sel]; return !(s.length===c.length&&c.every(x=>s.includes(x))); });
   const rl=document.getElementById('rev-list');
-  rl.innerHTML=errors.length===0?'<div style="color:var(--ok);padding:12px 0;font-weight:600">✅ Aucune erreur !</div>':errors.map(a=>`<div class="rev-item"><div class="rev-q">${a.q}</div><div class="rev-wrong">✗ ${a.opts[a.i]}</div><div class="rev-right">✓ ${a.opts[a.c]}</div></div>`).join('');
+  rl.innerHTML=errors.length===0?'<div style="color:var(--ok);padding:12px 0;font-weight:600">✅ Aucune erreur !</div>':errors.map(a=>{ const c=Array.isArray(a.c)?a.c:[a.c]; const s=Array.isArray(a.sel)?a.sel:[a.sel]; const sText=s.map(i=>a.opts[i]).join(', ')||'(aucune sélection)'; const cText=c.map(i=>a.opts[i]).join(', '); return `<div class="rev-item"><div class="rev-q">${a.q}</div><div class="rev-wrong">✗ ${sText}</div><div class="rev-right">✓ ${cText}</div></div>`; }).join('');
   try{ const s=JSON.parse(localStorage.getItem('cgp_scores')||'{}');s['jour01']={score:qs,total:QUIZ.length,pct:Math.round(pct*100),date:new Date().toLocaleDateString('fr-FR')};localStorage.setItem('cgp_scores',JSON.stringify(s));}catch(e){}
 }
 function qRestart() { qi=0;qs=0;qa=0;qAnswers=[]; document.getElementById('quiz-active').style.display='block'; document.getElementById('score-scr').classList.remove('vis'); qRender(); }
@@ -633,11 +726,30 @@ function fqRender() {
   document.getElementById('fq-text').textContent=q.q;
   document.getElementById('fq-bar').style.width=(fqi/quiz.length*100)+'%';
   const od=document.getElementById('fq-opts'); od.innerHTML='';
-  q.opts.forEach((o,i)=>{
-    const b=document.createElement('button');
-    b.className='opt'; b.textContent=`${['A','B','C','D'][i]}. ${o}`;
-    b.onclick=()=>fqSelect(i); od.appendChild(b);
-  });
+  if(q.multi) {
+    const hint=document.createElement('div');
+    hint.style='font-size:.78rem;color:var(--muted);margin-bottom:8px;font-style:italic';
+    hint.textContent='Plusieurs réponses correctes — sélectionnez toutes les bonnes réponses puis validez.';
+    od.appendChild(hint);
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.dataset.idx=i;
+      b.textContent=`${['A','B','C','D'][i]}. ${o}`;
+      b.onclick=()=>{ if(!b.disabled) b.classList.toggle('selected'); };
+      od.appendChild(b);
+    });
+    const val=document.createElement('button');
+    val.style='margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-weight:600;cursor:pointer;font-size:.9rem';
+    val.textContent='✅ Valider';
+    val.onclick=()=>fqValidateMulti();
+    od.appendChild(val);
+  } else {
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.textContent=`${['A','B','C','D'][i]}. ${o}`;
+      b.onclick=()=>fqSelect(i); od.appendChild(b);
+    });
+  }
   document.getElementById('fq-fb').className='fb';
   document.getElementById('fq-fb').innerHTML='';
   document.getElementById('fqnext').style.display='none';
@@ -649,10 +761,32 @@ function fqSelect(i) {
   document.querySelectorAll('#fq-opts .opt')[i].classList.add(ok?'correct':'wrong');
   if(!ok) document.querySelectorAll('#fq-opts .opt')[q.c].classList.add('correct');
   if(ok) fqs++; fqa++;
-  fqAnswers.push({i,c:q.c,q:q.q,opts:q.opts,e:q.e});
+  fqAnswers.push({sel:[i],c:Array.isArray(q.c)?q.c:[q.c],q:q.q,opts:q.opts,e:q.e});
   const fb=document.getElementById('fq-fb');
   fb.className='fb '+(ok?'correct':'wrong');
   fb.innerHTML=(ok?'<strong>✅ Bonne réponse !</strong>':'<strong>❌ Mauvaise réponse.</strong> ')+q.e;
+  document.getElementById('fq-badge').textContent=`${fqs} / ${fqa}`;
+  document.getElementById('fqnext').style.display='inline-flex';
+}
+function fqValidateMulti() {
+  const q=FOCUS[ft].quiz[fqi];
+  const btns=[...document.querySelectorAll('#fq-opts .opt')];
+  const sel=btns.filter(b=>b.classList.contains('selected')).map(b=>+b.dataset.idx);
+  const correct=Array.isArray(q.c)?q.c:[q.c];
+  btns.forEach(b=>b.disabled=true);
+  const ok=sel.length===correct.length&&correct.every(c=>sel.includes(c));
+  btns.forEach(b=>{
+    if(!b.dataset.idx) return;
+    const idx=+b.dataset.idx;
+    if(correct.includes(idx)) b.classList.add('correct');
+    else if(sel.includes(idx)) b.classList.add('wrong');
+  });
+  if(ok) fqs++; fqa++;
+  fqAnswers.push({sel,c:correct,q:q.q,opts:q.opts,e:q.e});
+  const fb=document.getElementById('fq-fb');
+  fb.className='fb '+(ok?'correct':'wrong');
+  const corrTxt=correct.map(c=>q.opts[c]).join(', ');
+  fb.innerHTML=(ok?'<strong>✅ Bonne réponse !</strong> ':'<strong>❌ Mauvaise réponse.</strong> Réponses attendues : <em>'+corrTxt+'</em>. ')+q.e;
   document.getElementById('fq-badge').textContent=`${fqs} / ${fqa}`;
   document.getElementById('fqnext').style.display='inline-flex';
 }
@@ -668,8 +802,8 @@ function fqShowScore() {
   document.getElementById('fqs-title').textContent=title;
   document.getElementById('fqs-num').textContent=`${fqs} / ${FOCUS[ft].quiz.length}`;
   document.getElementById('fqs-det').textContent=`${Math.round(pct*100)} %`;
-  const errors=fqAnswers.filter(a=>a.i!==a.c);
-  document.getElementById('fq-rev-list').innerHTML=errors.length===0?'<div style="color:var(--ok);padding:10px 0;font-weight:600">✅ Parfait !</div>':errors.map(a=>`<div class="rev-item"><div class="rev-q">${a.q}</div><div class="rev-wrong">✗ ${a.opts[a.i]}</div><div class="rev-right">✓ ${a.opts[a.c]}</div></div>`).join('');
+  const errors=fqAnswers.filter(a=>{ const c=Array.isArray(a.c)?a.c:[a.c]; const s=Array.isArray(a.sel)?a.sel:[a.sel]; return !(s.length===c.length&&c.every(x=>s.includes(x))); });
+  document.getElementById('fq-rev-list').innerHTML=errors.length===0?'<div style="color:var(--ok);padding:10px 0;font-weight:600">✅ Parfait !</div>':errors.map(a=>{ const c=Array.isArray(a.c)?a.c:[a.c]; const s=Array.isArray(a.sel)?a.sel:[a.sel]; const sText=s.map(i=>a.opts[i]).join(', ')||'(aucune sélection)'; const cText=c.map(i=>a.opts[i]).join(', '); return `<div class="rev-item"><div class="rev-q">${a.q}</div><div class="rev-wrong">✗ ${sText}</div><div class="rev-right">✓ ${cText}</div></div>`; }).join('');
 }
 function fqRestart() { fqi=0;fqs=0;fqa=0;fqAnswers=[]; document.getElementById('fmq-active').style.display='block'; document.getElementById('fq-score').style.display='none'; fqRender(); }
 
@@ -677,12 +811,288 @@ function switchTab(name) {
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
-  const idx={'flashcards':0,'quiz':1,'focus':2,'fiche':3}[name];
+  const idx={'flashcards':0,'quiz':1,'focus':2,'fiche':3,'exercices':4}[name];
   document.querySelectorAll('.tab-btn')[idx].classList.add('active');
 }
+
+
+/* ════════════════════════════════════════════
+   EXERCICES INTERACTIFS — données + moteur
+   ════════════════════════════════════════════ */
+const EX_DATA = {
+  1: { items: [
+    {id:'e1a', text:'Commerçant — inscrit au RCS', answer:'courtier'},
+    {id:'e1b', text:'Profession libérale — mandat exclusif d'une compagnie', answer:'agent'},
+    {id:'e1c', text:'PP non salariée ou PM — mandaté par une compagnie', answer:'mandataire'},
+    {id:'e1d', text:'PP non salariée ou PM — mandaté par un intermédiaire', answer:'mia'},
+  ]},
+  2: { items: [
+    {id:'e2a', text:'Santé / frais médicaux', answer:'ind'},
+    {id:'e2b', text:'Accidents corporels', answer:'ind'},
+    {id:'e2c', text:'Invalidité fonctionnelle', answer:'ind'},
+    {id:'e2d', text:'Vie / décès', answer:'for'},
+    {id:'e2e', text:'Épargne retraite', answer:'for'},
+    {id:'e2f', text:'Incapacité de travail (ITT)', answer:'for'},
+    {id:'e2g', text:'Tontine', answer:'for'},
+  ]},
+  3: { items: [
+    {id:'e3a', text:'Code des assurances', answer:'ea'},
+    {id:'e3b', text:'Code de la mutualité', answer:'mut'},
+    {id:'e3c', text:'Code de la Sécurité Sociale', answer:'ip'},
+  ]},
+  4: { items: [
+    {id:'e4a', text:'1,5 M€', answer:'rcp-sin'},
+    {id:'e4b', text:'2 M€', answer:'rcp-an'},
+    {id:'e4c', text:'20 %', answer:'franchise'},
+    {id:'e4d', text:'115 000 €', answer:'gf'},
+    {id:'e4e', text:'3 jours francs', answer:'delai'},
+    {id:'e4f', text:'5 ans', answer:'presc'},
+  ]},
+  5: { items: [
+    {id:'e5a', text:'Locataire (RC locative)', answer:'obl'},
+    {id:'e5b', text:'Copropriétaire occupant', answer:'obl'},
+    {id:'e5c', text:'Copropriétaire non occupant', answer:'obl'},
+    {id:'e5d', text:'Propriétaire occupant hors copropriété', answer:'non'},
+    {id:'e5e', text:'Propriétaire bailleur (maison individuelle)', answer:'non'},
+  ]},
+};
+
+let exPicked = null; // l'élément en cours de déplacement
+
+function initExercises() {
+  Object.keys(EX_DATA).forEach(id => {
+    const srcEl = document.getElementById('ex'+id+'-src');
+    if(!srcEl) return;
+    srcEl.innerHTML = '';
+    const items = [...EX_DATA[id].items].sort(()=>Math.random()-.5);
+    items.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'drag-item';
+      el.id = item.id;
+      el.dataset.answer = item.answer;
+      el.dataset.exId = id;
+      el.textContent = item.text;
+      // Tap/click pour sélectionner
+      el.addEventListener('click', e => { e.stopPropagation(); pickItem(el); });
+      // Drag desktop
+      el.draggable = true;
+      el.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text', el.id);
+        setTimeout(()=>el.classList.add('picked'), 0);
+        exPicked = el;
+      });
+      el.addEventListener('dragend', () => el.classList.remove('picked'));
+      srcEl.appendChild(el);
+    });
+    // Zones de dépôt
+    document.querySelectorAll('.drop-zone[data-ex="'+id+'"]').forEach(zone => {
+      zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dz-hover'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('dz-hover'));
+      zone.addEventListener('drop', e => {
+        e.preventDefault(); zone.classList.remove('dz-hover');
+        const dragged = document.getElementById(e.dataTransfer.getData('text'));
+        if(dragged) placeItem(zone, dragged);
+      });
+      zone.addEventListener('click', e => {
+        e.stopPropagation();
+        if(exPicked) placeItem(zone, exPicked);
+      });
+    });
+  });
+  // Click hors zone = désélectionner
+  document.addEventListener('click', () => { if(exPicked){ exPicked.classList.remove('picked'); exPicked=null; } });
+}
+
+function pickItem(el) {
+  if(exPicked === el) { el.classList.remove('picked'); exPicked=null; return; }
+  if(exPicked) exPicked.classList.remove('picked');
+  exPicked = el;
+  el.classList.add('picked');
+  // Highlight zones compatibles
+  const id = el.dataset.exId;
+  document.querySelectorAll('.drop-zone[data-ex="'+id+'"]').forEach(z=>z.classList.add('dz-hover'));
+  setTimeout(()=>document.querySelectorAll('.drop-zone').forEach(z=>z.classList.remove('dz-hover')),600);
+}
+
+function placeItem(zone, item) {
+  if(!item) return;
+  item.classList.remove('picked');
+  exPicked = null;
+  const isMulti = zone.classList.contains('multi');
+  const srcEl = document.getElementById('ex'+item.dataset.exId+'-src');
+  if(!isMulti) {
+    // Zone mono : renvoyer l'existant à la source
+    const existing = zone.querySelector('.drag-item');
+    if(existing) srcEl.appendChild(existing);
+  }
+  zone.appendChild(item);
+}
+
+function checkEx(id) {
+  EX_DATA[id].items.forEach(item => {
+    const el = document.getElementById(item.id);
+    el.classList.remove('ex-ok','ex-ko');
+    const zone = el.closest('.drop-zone');
+    if(zone && zone.dataset.key === item.answer) el.classList.add('ex-ok');
+    else el.classList.add('ex-ko');
+  });
+  const total = EX_DATA[id].items.length;
+  const correct = EX_DATA[id].items.filter(item => {
+    const el = document.getElementById(item.id);
+    return el.classList.contains('ex-ok');
+  }).length;
+  const fb = document.getElementById('ex'+id+'-fb');
+  if(correct === total) {
+    fb.className = 'ex-feedback ok';
+    fb.textContent = '✅ Parfait ! ' + correct + '/' + total + ' — tous les éléments sont bien placés.';
+  } else {
+    fb.className = 'ex-feedback ko';
+    fb.textContent = '❌ ' + correct + '/' + total + ' correct. Les éléments en rouge ne sont pas au bon endroit.';
+  }
+}
+
+function resetEx(id) {
+  const srcEl = document.getElementById('ex'+id+'-src');
+  EX_DATA[id].items.forEach(item => {
+    const el = document.getElementById(item.id);
+    el.classList.remove('ex-ok','ex-ko','picked');
+    srcEl.appendChild(el);
+  });
+  const fb = document.getElementById('ex'+id+'-fb');
+  fb.className = 'ex-feedback';
+  fb.textContent = '';
+}
+
+// Init au chargement
+initExercises();
 
 fcRender();
 qRender();
 </script>
+
+  <!-- ═══════════════ ONGLET EXERCICES ═══════════════ -->
+  <div class="tab-panel" id="tab-exercices">
+    <div class="ex-header">
+      <h2>🏋️ Exercices interactifs — Jour 01</h2>
+      <p class="ex-sub">Tape sur un élément pour le sélectionner, puis tape sur la zone de dépôt pour le placer. Sur desktop, le glisser-déposer fonctionne aussi.</p>
+    </div>
+
+    <!-- EX 1 : Statuts des intermédiaires -->
+    <div class="ex-card" id="ex1">
+      <div class="ex-title">① Associer chaque intermédiaire à son statut juridique</div>
+      <div class="ex-source" id="ex1-src"></div>
+      <div class="ex-grid4">
+        <div>
+          <div class="ex-col-header">🤝 Courtier</div>
+          <div class="drop-zone" data-ex="1" data-key="courtier"></div>
+        </div>
+        <div>
+          <div class="ex-col-header">🏛️ Agent général</div>
+          <div class="drop-zone" data-ex="1" data-key="agent"></div>
+        </div>
+        <div>
+          <div class="ex-col-header">📋 Mandataire</div>
+          <div class="drop-zone" data-ex="1" data-key="mandataire"></div>
+        </div>
+        <div>
+          <div class="ex-col-header">🔗 MIA</div>
+          <div class="drop-zone" data-ex="1" data-key="mia"></div>
+        </div>
+      </div>
+      <div class="ex-btns">
+        <button class="btn-check" onclick="checkEx(1)">🔍 Corriger</button>
+        <button class="btn-reset" onclick="resetEx(1)">↺ Réinitialiser</button>
+      </div>
+      <div class="ex-feedback" id="ex1-fb"></div>
+    </div>
+
+    <!-- EX 2 : Indemnitaire vs Forfaitaire -->
+    <div class="ex-card" id="ex2">
+      <div class="ex-title">② Classer chaque assurance : Indemnitaire ou Forfaitaire ?</div>
+      <div class="ex-source" id="ex2-src"></div>
+      <div class="ex-grid2">
+        <div>
+          <div class="ex-col-header ind-h">⚖️ Indemnitaire</div>
+          <div class="drop-zone multi" data-ex="2" data-key="ind"></div>
+        </div>
+        <div>
+          <div class="ex-col-header for-h">💰 Forfaitaire</div>
+          <div class="drop-zone multi" data-ex="2" data-key="for"></div>
+        </div>
+      </div>
+      <div class="ex-btns">
+        <button class="btn-check" onclick="checkEx(2)">🔍 Corriger</button>
+        <button class="btn-reset" onclick="resetEx(2)">↺ Réinitialiser</button>
+      </div>
+      <div class="ex-feedback" id="ex2-fb"></div>
+    </div>
+
+    <!-- EX 3 : 3 familles et leurs codes -->
+    <div class="ex-card" id="ex3">
+      <div class="ex-title">③ Associer chaque famille d'organismes à son code juridique</div>
+      <div class="ex-source" id="ex3-src"></div>
+      <div class="ex-grid3">
+        <div>
+          <div class="ex-col-header">🏢 Entreprises d'assurances</div>
+          <div class="drop-zone" data-ex="3" data-key="ea"></div>
+        </div>
+        <div>
+          <div class="ex-col-header">🤲 Sociétés mutuelles</div>
+          <div class="drop-zone" data-ex="3" data-key="mut"></div>
+        </div>
+        <div>
+          <div class="ex-col-header">🛡️ Institutions de prévoyance</div>
+          <div class="drop-zone" data-ex="3" data-key="ip"></div>
+        </div>
+      </div>
+      <div class="ex-btns">
+        <button class="btn-check" onclick="checkEx(3)">🔍 Corriger</button>
+        <button class="btn-reset" onclick="resetEx(3)">↺ Réinitialiser</button>
+      </div>
+      <div class="ex-feedback" id="ex3-fb"></div>
+    </div>
+
+    <!-- EX 4 : Montants clés -->
+    <div class="ex-card" id="ex4">
+      <div class="ex-title">④ Compléter le tableau des montants clés</div>
+      <div class="ex-source" id="ex4-src"></div>
+      <table class="ex-table">
+        <tr><td>RCP — minimum par sinistre</td><td><div class="drop-zone inline" data-ex="4" data-key="rcp-sin"></div></td></tr>
+        <tr><td>RCP — minimum par an</td><td><div class="drop-zone inline" data-ex="4" data-key="rcp-an"></div></td></tr>
+        <tr><td>Franchise maximum de la RCP (inopposable aux victimes)</td><td><div class="drop-zone inline" data-ex="4" data-key="franchise"></div></td></tr>
+        <tr><td>Garantie financière — montant minimum</td><td><div class="drop-zone inline" data-ex="4" data-key="gf"></div></td></tr>
+        <tr><td>Délai minimum avant cessation de la GF</td><td><div class="drop-zone inline" data-ex="4" data-key="delai"></div></td></tr>
+        <tr><td>Délai de prescription RC après réclamation</td><td><div class="drop-zone inline" data-ex="4" data-key="presc"></div></td></tr>
+      </table>
+      <div class="ex-btns">
+        <button class="btn-check" onclick="checkEx(4)">🔍 Corriger</button>
+        <button class="btn-reset" onclick="resetEx(4)">↺ Réinitialiser</button>
+      </div>
+      <div class="ex-feedback" id="ex4-fb"></div>
+    </div>
+
+    <!-- EX 5 : MRH obligatoire ou non -->
+    <div class="ex-card" id="ex5">
+      <div class="ex-title">⑤ MRH — Qui est légalement obligé de s'assurer ?</div>
+      <div class="ex-source" id="ex5-src"></div>
+      <div class="ex-grid2">
+        <div>
+          <div class="ex-col-header obl-h">✅ Obligatoire</div>
+          <div class="drop-zone multi" data-ex="5" data-key="obl"></div>
+        </div>
+        <div>
+          <div class="ex-col-header noo-h">❌ Non obligatoire</div>
+          <div class="drop-zone multi" data-ex="5" data-key="non"></div>
+        </div>
+      </div>
+      <div class="ex-btns">
+        <button class="btn-check" onclick="checkEx(5)">🔍 Corriger</button>
+        <button class="btn-reset" onclick="resetEx(5)">↺ Réinitialiser</button>
+      </div>
+      <div class="ex-feedback" id="ex5-fb"></div>
+    </div>
+
+  </div><!-- /tab-exercices -->
+
 </body>
 </html>
