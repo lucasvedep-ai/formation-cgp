@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hub — Formation CGP | Cap Finances</title>
+<style>
+:root {
+  --navy:#1a2744; --navy2:#253460; --gold:#c9a227; --gold2:#e8c84a;
+  --bg:#f4f6fb; --white:#fff; --text:#1a2744; --muted:#5a6a8a;
+  --ok:#2d8a4e; --border:#dce3f0; --shadow:0 8px 32px rgba(26,39,68,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:32px 36px 28px}
+header h1{font-size:1.6rem;font-weight:800;margin-bottom:4px}
+header p{font-size:.88rem;color:rgba(255,255,255,.55)}
+.stats-bar{display:flex;gap:16px;flex-wrap:wrap;margin:28px 0 0;padding:0 4px}
+.stat-pill{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.15);border-radius:99px;padding:7px 18px;font-size:.82rem;color:rgba(255,255,255,.8);font-weight:600}
+.stat-pill span{color:var(--gold2)}
+main{max-width:900px;margin:0 auto;padding:36px 20px}
+.section-title{font-size:1.05rem;font-weight:800;color:var(--navy);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.days-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-bottom:40px}
+.day-card{background:#fff;border:2px solid var(--border);border-radius:18px;padding:24px 22px;position:relative;transition:.15s;display:flex;flex-direction:column;gap:0}
+.day-card.available{border-color:var(--border);box-shadow:var(--shadow)}
+.day-card.available:hover{border-color:var(--gold);box-shadow:0 12px 40px rgba(201,162,39,.15);transform:translateY(-2px)}
+.day-card.locked{opacity:.55;cursor:default}
+.day-card.locked .day-badge{background:var(--border);color:var(--muted)}
+.day-badge{display:inline-flex;align-items:center;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:99px;padding:4px 12px;margin-bottom:14px;width:fit-content}
+.day-date{font-size:.75rem;color:var(--muted);margin-bottom:10px}
+.day-title{font-size:1.08rem;font-weight:800;color:var(--navy);margin-bottom:12px;line-height:1.3}
+.day-topics{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.topic-tag{font-size:.72rem;font-weight:600;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:3px 9px;color:var(--muted)}
+.day-stats{display:flex;gap:12px;margin-bottom:16px;font-size:.78rem;color:var(--muted)}
+.day-stats span{display:flex;align-items:center;gap:3px}
+.day-score{font-size:.82rem;font-weight:700;border-radius:99px;padding:5px 14px;margin-bottom:14px;width:fit-content}
+.day-score.no-score{background:var(--bg);color:var(--muted);border:1.5px solid var(--border)}
+.day-score.has-score{background:#eafaf1;color:var(--ok);border:1.5px solid var(--ok)}
+.btn-open{display:block;width:100%;text-align:center;background:var(--navy);color:#fff;text-decoration:none;font-weight:700;font-size:.9rem;padding:11px;border-radius:10px;transition:.15s;margin-top:auto}
+.btn-open:hover{background:var(--navy2)}
+.btn-locked{display:block;width:100%;text-align:center;background:var(--bg);color:var(--muted);font-weight:700;font-size:.85rem;padding:11px;border-radius:10px;border:none;cursor:default;margin-top:auto}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:36px}
+.info-card{background:#fff;border-radius:14px;padding:20px;box-shadow:var(--shadow);border:1.5px solid var(--border)}
+.info-card h3{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+.info-card p{font-size:.8rem;color:var(--muted);line-height:1.5}
+.process-box{background:linear-gradient(135deg,#fff8e0,#fff);border:2px solid var(--gold);border-radius:16px;padding:22px 24px;margin-bottom:32px}
+.process-box h3{font-size:.95rem;font-weight:800;color:#a37d10;margin-bottom:10px}
+.process-steps{display:flex;flex-direction:column;gap:7px}
+.process-step{display:flex;align-items:flex-start;gap:10px;font-size:.84rem;color:var(--text)}
+.step-num{background:var(--gold);color:#fff;border-radius:99px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.7rem;flex-shrink:0;margin-top:1px}
+@media(max-width:600px){header{padding:22px 18px 20px}main{padding:22px 14px}.days-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>📚 Formation CGP</h1>
+  <p>Cap Finances · Lucas · Lorient</p>
+  <div class="stats-bar">
+    <div class="stat-pill"><span id="stat-days">1</span> jour disponible</div>
+    <div class="stat-pill"><span>42</span> flashcards</div>
+    <div class="stat-pill"><span>15</span> questions quiz</div>
+    <div class="stat-pill"><span>3</span> thèmes focus</div>
+  </div>
+</header>
+<main>
+  <div class="process-box">
+    <h3>⚡ Comment ça marche</h3>
+    <div class="process-steps">
+      <div class="process-step"><div class="step-num">1</div>Tu envoies tes captures d'écran du jour (ZIP ou images)</div>
+      <div class="process-step"><div class="step-num">2</div>Tu précises les thèmes clés à retenir (ex : "les intervenants", "types d'assurances")</div>
+      <div class="process-step"><div class="step-num">3</div>Claude génère : Flashcards · Quiz · Focus dédié aux thèmes · Fiche PDF · Mise à jour du hub</div>
+      <div class="process-step"><div class="step-num">4</div>Tu révises ici — flashcards, quiz général, mini-quiz par thème, fiche imprimable</div>
+    </div>
+  </div>
+  <div class="section-title">📅 Leçons disponibles</div>
+  <div class="days-grid" id="days-grid">
+    <div class="day-card available">
+      <div class="day-badge">Jour 01</div>
+      <div class="day-date">23 juin 2026</div>
+      <div class="day-title">L'Assurance</div>
+      <div class="day-topics">
+        <span class="topic-tag">Ch.1 — Secteur</span>
+        <span class="topic-tag">Ch.2 — Catégories</span>
+        <span class="topic-tag">Ch.3 — Intermédiation</span>
+      </div>
+      <div class="day-stats">
+        <span>🃏 42 cartes</span>
+        <span>📝 15 questions</span>
+        <span>🎯 3 focus</span>
+      </div>
+      <div class="day-score no-score" id="score-jour01">Quiz non encore effectué</div>
+      <a href="./Jour 01 - L'Assurance/flashcards-quiz.html" class="btn-open">Ouvrir la leçon →</a>
+    </div>
+    <div class="day-card locked">
+      <div class="day-badge">Jour 02</div>
+      <div class="day-date">À venir</div>
+      <div class="day-title">Prochain cours</div>
+      <div class="day-topics"><span class="topic-tag">Envoyer les slides</span></div>
+      <div class="day-stats"><span>— cartes</span><span>— questions</span></div>
+      <button class="btn-locked">Non disponible</button>
+    </div>
+    <div class="day-card locked">
+      <div class="day-badge">Jour 03</div>
+      <div class="day-date">À venir</div>
+      <div class="day-title">Prochain cours</div>
+      <div class="day-topics"><span class="topic-tag">Envoyer les slides</span></div>
+      <div class="day-stats"><span>— cartes</span><span>— questions</span></div>
+      <button class="btn-locked">Non disponible</button>
+    </div>
+    <div class="day-card locked">
+      <div class="day-badge">Jour 04</div>
+      <div class="day-date">À venir</div>
+      <div class="day-title">Prochain cours</div>
+      <div class="day-topics"><span class="topic-tag">Envoyer les slides</span></div>
+      <div class="day-stats"><span>— cartes</span><span>— questions</span></div>
+      <button class="btn-locked">Non disponible</button>
+    </div>
+    <div class="day-card locked">
+      <div class="day-badge">Jour 05</div>
+      <div class="day-date">À venir</div>
+      <div class="day-title">Prochain cours</div>
+      <div class="day-topics"><span class="topic-tag">Envoyer les slides</span></div>
+      <div class="day-stats"><span>— cartes</span><span>— questions</span></div>
+      <button class="btn-locked">Non disponible</button>
+    </div>
+  </div>
+  <div class="section-title">📌 Ressources</div>
+  <div class="info-grid">
+    <div class="info-card"><h3>🃏 Flashcards</h3><p>42 cartes à retourner par clic. Navigation avant/arrière et mélange aléatoire.</p></div>
+    <div class="info-card"><h3>📝 Quiz QCM</h3><p>15 questions avec correction immédiate, explication et récap des erreurs. Score sauvegardé.</p></div>
+    <div class="info-card"><h3>🎯 Focus</h3><p>Thèmes clés du jour : cartes ciblées + mini-quiz par thème.</p></div>
+    <div class="info-card"><h3>📄 Fiche PDF</h3><p>Fiche de révision complète, imprimable depuis le navigateur (Cmd+P ou bouton).</p></div>
+  </div>
+</main>
+<script>
+try {
+  const scores = JSON.parse(localStorage.getItem('cgp_scores') || '{}');
+  if (scores['jour01']) {
+    const s = scores['jour01'];
+    const el = document.getElementById('score-jour01');
+    el.className = 'day-score has-score';
+    el.textContent = `Dernier quiz : ${s.score}/${s.total} (${s.pct}%) — ${s.date}`;
+  }
+} catch(e) {}
+</script>
+</body>
+</html>
