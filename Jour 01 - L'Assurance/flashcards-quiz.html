@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jour 01 — L'Assurance | Formation CGP</title>
+<style>
+:root {
+  --navy:#1a2744; --navy2:#253460; --gold:#c9a227; --gold2:#e8c84a;
+  --bg:#f4f6fb; --white:#fff; --text:#1a2744; --muted:#5a6a8a;
+  --ok:#2d8a4e; --err:#c0392b; --ok-bg:#eafaf1; --err-bg:#fdf0ef;
+  --border:#dce3f0; --shadow:0 8px 32px rgba(26,39,68,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:16px 28px 0}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.back-btn{color:rgba(255,255,255,.7);text-decoration:none;font-size:.8rem;font-weight:600;padding:5px 12px;border:1.5px solid rgba(255,255,255,.25);border-radius:8px;transition:.15s}
+.back-btn:hover{color:#fff;border-color:rgba(255,255,255,.6)}
+header h1{font-size:1.35rem;font-weight:800}
+header p{font-size:.8rem;color:rgba(255,255,255,.55);margin-top:3px}
+.tabs{display:flex;gap:3px;margin-top:16px;flex-wrap:wrap}
+.tab-btn{padding:9px 18px;border:none;background:rgba(255,255,255,.12);color:rgba(255,255,255,.65);border-radius:8px 8px 0 0;cursor:pointer;font-size:.88rem;font-weight:700;transition:.15s;white-space:nowrap}
+.tab-btn.active{background:var(--bg);color:var(--navy)}
+.tab-btn:hover:not(.active){background:rgba(255,255,255,.2);color:#fff}
+.tab-focus-btn{background:rgba(201,162,39,.2);color:var(--gold2)}
+.tab-focus-btn.active{background:var(--bg);color:#a37d10}
+main{max-width:840px;margin:0 auto;padding:32px 18px}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.pg-wrap{background:var(--border);border-radius:99px;height:5px;margin-bottom:26px;overflow:hidden}
+.pg-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;transition:width .4s}
+.fc-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.fc-count{font-size:.88rem;color:var(--muted);font-weight:600}
+.fc-ch{font-size:.75rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.scene{width:100%;height:270px;perspective:1200px;cursor:pointer;margin-bottom:20px}
+.card-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1)}
+.scene.flipped .card-inner{transform:rotateY(180deg)}
+.card-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;box-shadow:var(--shadow)}
+.cf-front{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff}
+.cf-back{background:#fff;color:var(--text);transform:rotateY(180deg);border:2px solid var(--gold)}
+.card-lbl{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.cf-front .card-lbl{color:var(--gold2)}
+.cf-back .card-lbl{color:var(--gold)}
+.card-txt{font-size:1.05rem;line-height:1.6}
+.cf-front .card-txt{color:#fff}
+.tap-hint{position:absolute;bottom:14px;font-size:.7rem;color:rgba(255,255,255,.35)}
+.fc-ctrl{display:flex;gap:10px;justify-content:center;margin-bottom:12px}
+.btn{padding:10px 24px;border:none;border-radius:10px;font-size:.92rem;font-weight:700;cursor:pointer;transition:.15s}
+.btn:active{transform:scale(.97)}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-navy:hover{background:var(--navy2)}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-gold:hover{background:#b8911e}
+.btn-light{background:var(--border);color:var(--text)}
+.btn-light:hover{background:#c4cede}
+.btn-sm{padding:6px 14px;font-size:.78rem;border:1.5px solid var(--border);background:#fff;color:var(--muted);border-radius:8px;cursor:pointer;font-weight:600;transition:.15s}
+.btn-sm:hover{border-color:var(--navy);color:var(--navy)}
+.row-right{display:flex;justify-content:flex-end;margin-top:10px}
+.quiz-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.quiz-cnt{font-size:.88rem;color:var(--muted);font-weight:600}
+.quiz-badge{font-size:.82rem;font-weight:700;color:var(--navy);background:#fff;border:2px solid var(--border);border-radius:99px;padding:4px 14px}
+.qcard{background:#fff;border-radius:16px;padding:32px;box-shadow:var(--shadow);margin-bottom:18px}
+.q-tag{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--gold);border:1.5px solid var(--gold);border-radius:99px;padding:2px 12px;margin-bottom:14px}
+.q-text{font-size:1.08rem;font-weight:700;color:var(--navy);line-height:1.5;margin-bottom:24px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{width:100%;text-align:left;padding:13px 18px;background:var(--bg);border:2px solid var(--border);border-radius:10px;cursor:pointer;font-size:.93rem;font-weight:500;color:var(--text);transition:.15s;line-height:1.4}
+.opt:hover:not(:disabled){border-color:var(--navy);background:#fff}
+.opt.correct{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700}
+.opt.wrong{border-color:var(--err);background:var(--err-bg);color:var(--err);font-weight:700}
+.opt:disabled{cursor:default}
+.fb{margin-top:16px;padding:13px 16px;border-radius:10px;font-size:.88rem;line-height:1.5;display:none}
+.fb.correct{background:var(--ok-bg);border:1.5px solid var(--ok);color:var(--ok);display:block}
+.fb.wrong{background:var(--err-bg);border:1.5px solid var(--err);color:#7a1c14;display:block}
+.fb strong{display:block;margin-bottom:3px}
+.next-row{display:flex;justify-content:flex-end;margin-top:6px}
+#qnext{display:none}
+.score-scr{background:#fff;border-radius:16px;padding:44px 32px;box-shadow:var(--shadow);text-align:center;display:none}
+.score-scr.vis{display:block}
+.score-emoji{font-size:3.5rem;margin-bottom:12px}
+.score-title{font-size:1.5rem;font-weight:800;color:var(--navy);margin-bottom:6px}
+.score-sub{font-size:.9rem;color:var(--muted);margin-bottom:28px}
+.score-num{font-size:3.8rem;font-weight:900;color:var(--navy);line-height:1}
+.score-det{font-size:.95rem;color:var(--muted);margin:6px 0 28px}
+.s-bar-wrap{background:var(--border);border-radius:99px;height:10px;max-width:280px;margin:0 auto 28px;overflow:hidden}
+.s-bar-fill{height:100%;border-radius:99px;transition:width 1s}
+.score-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.rev-section{text-align:left}
+.rev-title{font-size:.95rem;font-weight:700;color:var(--navy);padding-bottom:8px;border-bottom:2px solid var(--border);margin-bottom:12px}
+.rev-item{padding:12px 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.rev-q{font-weight:600;margin-bottom:5px}
+.rev-wrong{color:var(--err);font-size:.83rem}
+.rev-right{color:var(--ok);font-size:.83rem;margin-top:2px}
+.focus-intro{font-size:.88rem;color:var(--muted);margin-bottom:18px}
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px}
+.theme-card{background:#fff;border:2.5px solid var(--border);border-radius:14px;padding:20px 18px;cursor:pointer;transition:.15s;text-align:left}
+.theme-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(201,162,39,.15)}
+.theme-card.active{border-color:var(--gold);background:linear-gradient(135deg,#fdf8ec,#fff8e0)}
+.theme-num{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:8px}
+.theme-name{font-size:.98rem;font-weight:700;color:var(--navy);margin-bottom:5px;line-height:1.3}
+.theme-desc{font-size:.78rem;color:var(--muted);line-height:1.4}
+.focus-content{display:none}
+.focus-content.vis{display:block}
+.focus-back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:.82rem;font-weight:600;cursor:pointer;margin-bottom:18px;border:none;background:none;padding:0}
+.focus-back:hover{color:var(--navy)}
+.focus-mode-btns{display:flex;gap:8px;margin-bottom:22px}
+.fmode-btn{padding:8px 20px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;border:2px solid var(--border);background:#fff;color:var(--muted);transition:.15s}
+.fmode-btn.active{border-color:var(--gold);background:var(--gold);color:#fff}
+.focus-heading{font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:16px}
+.scene-sm{height:220px}
+.card-txt-sm{font-size:.95rem}
+.fiche-actions{display:flex;gap:10px;align-items:center;margin-bottom:24px;flex-wrap:wrap}
+.fiche-body{background:#fff;border-radius:16px;padding:36px 40px;box-shadow:var(--shadow);line-height:1.7}
+.fiche-body h2{font-size:1.15rem;font-weight:800;color:var(--navy);margin:28px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--border)}
+.fiche-body h2:first-child{margin-top:0}
+.fiche-body h3{font-size:.98rem;font-weight:700;color:var(--navy2);margin:18px 0 8px}
+.fiche-body p{font-size:.9rem;color:var(--text);margin-bottom:10px}
+.fiche-body ul{padding-left:18px;margin-bottom:10px}
+.fiche-body li{font-size:.9rem;margin-bottom:4px;color:var(--text)}
+.fiche-body strong{color:var(--navy)}
+.fiche-body table{width:100%;border-collapse:collapse;margin:12px 0 16px;font-size:.85rem}
+.fiche-body th{background:var(--bg);color:var(--navy);font-weight:700;padding:9px 12px;text-align:left;border:1px solid var(--border)}
+.fiche-body td{padding:8px 12px;border:1px solid var(--border)}
+.fiche-body td:first-child{font-weight:600}
+.fiche-body blockquote{background:#f8f9fc;border-left:4px solid var(--gold);padding:10px 16px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.88rem;color:var(--muted)}
+.fiche-body .warn{background:#fff8e0;border-left:4px solid var(--gold);padding:10px 16px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.88rem}
+@media print {
+  body{background:#fff}
+  header,.tabs,main>.tab-panel:not(#tab-fiche),.fiche-actions,.no-print{display:none!important}
+  #tab-fiche{display:block!important;padding:0!important}
+  .fiche-body{box-shadow:none;padding:0;border-radius:0}
+  .fiche-body h2{font-size:13pt;page-break-after:avoid}
+  .fiche-body h3{font-size:11pt;page-break-after:avoid}
+  .fiche-body p,.fiche-body li{font-size:10pt}
+  .fiche-body table{page-break-inside:avoid;font-size:9pt}
+}
+@media(max-width:600px){main{padding:20px 12px}.qcard,.fiche-body{padding:20px 16px}.scene{height:240px}header{padding:14px 16px 0}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <a href="../index.html" class="back-btn">← Hub Formation CGP</a>
+    <span style="font-size:.75rem;color:rgba(255,255,255,.4)">23 juin 2026</span>
+  </div>
+  <h1>📘 Jour 01 — L'Assurance</h1>
+  <p>Cap Finances · 52 slides · 3 chapitres</p>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('flashcards')">🃏 Flashcards</button>
+    <button class="tab-btn" onclick="switchTab('quiz')">📝 Quiz</button>
+    <button class="tab-btn tab-focus-btn" onclick="switchTab('focus')">🎯 Focus</button>
+    <button class="tab-btn" onclick="switchTab('fiche')">📄 Fiche</button>
+  </div>
+</header>
+<main>
+<div id="tab-flashcards" class="tab-panel active">
+  <div class="fc-meta">
+    <span class="fc-count" id="fc-cnt">Carte 1 / 42</span>
+    <span class="fc-ch" id="fc-ch">Chapitre 1</span>
+  </div>
+  <div class="pg-wrap"><div class="pg-fill" id="fc-bar" style="width:2.4%"></div></div>
+  <div class="scene" id="fc-scene" onclick="fcFlip()">
+    <div class="card-inner" id="fc-inner">
+      <div class="card-face cf-front">
+        <div class="card-lbl">❓ Question</div>
+        <div class="card-txt" id="fc-q"></div>
+        <div class="tap-hint">Cliquer pour retourner</div>
+      </div>
+      <div class="card-face cf-back">
+        <div class="card-lbl">✅ Réponse</div>
+        <div class="card-txt" id="fc-a"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-ctrl">
+    <button class="btn btn-light" onclick="fcPrev()">←</button>
+    <button class="btn btn-gold" onclick="fcFlip()">Retourner</button>
+    <button class="btn btn-navy" onclick="fcNext()">→</button>
+  </div>
+  <div class="row-right"><button class="btn-sm" onclick="fcShuffle()">🔀 Mélanger</button></div>
+</div>
+<div id="tab-quiz" class="tab-panel">
+  <div id="quiz-active">
+    <div class="quiz-hdr">
+      <span class="quiz-cnt" id="q-cnt">Question 1 / 15</span>
+      <span class="quiz-badge" id="q-badge">0 / 0</span>
+    </div>
+    <div class="pg-wrap"><div class="pg-fill" id="q-bar" style="width:0%"></div></div>
+    <div class="qcard">
+      <div class="q-tag" id="q-tag"></div>
+      <div class="q-text" id="q-text"></div>
+      <div class="opts" id="q-opts"></div>
+      <div class="fb" id="q-fb"></div>
+    </div>
+    <div class="next-row"><button class="btn btn-navy" id="qnext" onclick="qNext()">Question suivante →</button></div>
+  </div>
+  <div class="score-scr" id="score-scr">
+    <div class="score-emoji" id="s-emoji"></div>
+    <div class="score-title" id="s-title"></div>
+    <div class="score-sub" id="s-sub"></div>
+    <div class="score-num" id="s-num"></div>
+    <div class="score-det" id="s-det"></div>
+    <div class="s-bar-wrap"><div class="s-bar-fill" id="s-bar"></div></div>
+    <div class="score-btns">
+      <button class="btn btn-navy" onclick="qRestart()">🔁 Recommencer</button>
+      <button class="btn btn-light" onclick="switchTab('flashcards')">🃏 Flashcards</button>
+      <button class="btn btn-light" onclick="switchTab('focus')">🎯 Focus</button>
+    </div>
+    <div class="rev-section">
+      <div class="rev-title">📋 Erreurs à revoir</div>
+      <div id="rev-list"></div>
+    </div>
+  </div>
+</div>
+<div id="tab-focus" class="tab-panel">
+  <p class="focus-intro">Thèmes clés du jour — cartes ciblées + mini-quiz par thème.</p>
+  <div class="theme-grid" id="theme-grid">
+    <div class="theme-card" onclick="selectTheme(0)">
+      <div class="theme-num">Thème 1</div>
+      <div class="theme-name">🏢 Les intervenants</div>
+      <div class="theme-desc">Courtier, agent général, mandataire, MIA, ORIAS, familles d'organismes</div>
+    </div>
+    <div class="theme-card" onclick="selectTheme(1)">
+      <div class="theme-num">Thème 2</div>
+      <div class="theme-name">⚖️ 3 conditions d'exercice</div>
+      <div class="theme-desc">Honorabilité, capacité professionnelle, RCP et garantie financière</div>
+    </div>
+    <div class="theme-card" onclick="selectTheme(2)">
+      <div class="theme-num">Thème 3</div>
+      <div class="theme-name">🔀 Types d'assurances</div>
+      <div class="theme-desc">Indemnitaire/forfaitaire, répartition/capitalisation, individuelle/collective</div>
+    </div>
+  </div>
+  <div class="focus-content" id="focus-content">
+    <button class="focus-back" onclick="backToThemes()">← Retour aux thèmes</button>
+    <div class="focus-heading" id="focus-heading"></div>
+    <div class="focus-mode-btns">
+      <button class="fmode-btn active" id="fmode-cards" onclick="setFMode('cards')">🃏 Cartes</button>
+      <button class="fmode-btn" id="fmode-quiz" onclick="setFMode('quiz')">📝 Mini-quiz</button>
+    </div>
+    <div id="focus-cards-section">
+      <div class="fc-meta">
+        <span class="fc-count" id="fc2-cnt">Carte 1 / 12</span>
+      </div>
+      <div class="pg-wrap"><div class="pg-fill" id="fc2-bar" style="width:8%"></div></div>
+      <div class="scene scene-sm" id="fc2-scene" onclick="fc2Flip()">
+        <div class="card-inner" id="fc2-inner">
+          <div class="card-face cf-front">
+            <div class="card-lbl">❓ Question</div>
+            <div class="card-txt card-txt-sm" id="fc2-q"></div>
+            <div class="tap-hint">Cliquer pour retourner</div>
+          </div>
+          <div class="card-face cf-back">
+            <div class="card-lbl">✅ Réponse</div>
+            <div class="card-txt card-txt-sm" id="fc2-a"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-ctrl">
+        <button class="btn btn-light" onclick="fc2Prev()">←</button>
+        <button class="btn btn-gold" onclick="fc2Flip()">Retourner</button>
+        <button class="btn btn-navy" onclick="fc2Next()">→</button>
+      </div>
+    </div>
+    <div id="focus-quiz-section" style="display:none">
+      <div id="fmq-active">
+        <div class="quiz-hdr">
+          <span class="quiz-cnt" id="fq-cnt">Question 1 / 10</span>
+          <span class="quiz-badge" id="fq-badge">0 / 0</span>
+        </div>
+        <div class="pg-wrap"><div class="pg-fill" id="fq-bar" style="width:0%"></div></div>
+        <div class="qcard">
+          <div class="q-text" id="fq-text"></div>
+          <div class="opts" id="fq-opts"></div>
+          <div class="fb" id="fq-fb"></div>
+        </div>
+        <div class="next-row"><button class="btn btn-navy" id="fqnext" onclick="fqNext()" style="display:none">Suivant →</button></div>
+      </div>
+      <div class="score-scr" id="fq-score" style="padding:28px 20px">
+        <div class="score-emoji" id="fqs-emoji"></div>
+        <div class="score-title" id="fqs-title"></div>
+        <div class="score-num" id="fqs-num" style="font-size:2.8rem"></div>
+        <div class="score-det" id="fqs-det" style="margin-bottom:18px"></div>
+        <div class="score-btns">
+          <button class="btn btn-navy" onclick="fqRestart()">🔁 Réessayer</button>
+          <button class="btn btn-light" onclick="setFMode('cards')">🃏 Revoir les cartes</button>
+        </div>
+        <div class="rev-section"><div class="rev-title">Erreurs</div><div id="fq-rev-list"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="tab-fiche" class="tab-panel">
+  <div class="fiche-actions no-print">
+    <button class="btn btn-navy" onclick="window.print()">🖨️ Enregistrer en PDF</button>
+    <span style="font-size:.8rem;color:var(--muted)">Dans la boîte de dialogue d'impression → choisir "Enregistrer en PDF"</span>
+  </div>
+  <div class="fiche-body">
+    <h2>Chapitre 1 — Présentation du secteur</h2>
+    <h3>1.1 L'opération d'assurance</h3>
+    <p>L'assurance est un contrat par lequel l'<strong>assureur</strong> s'engage, en contrepartie d'une <strong>prime</strong>, à indemniser en cas de réalisation du <strong>risque</strong> (événement aléatoire).</p>
+    <table><tr><th>Intervenant</th><th>Rôle</th></tr><tr><td>Assuré</td><td>Personne exposée au risque</td></tr><tr><td>Bénéficiaire</td><td>Personne qui reçoit la prestation</td></tr><tr><td>Adhérent</td><td>Signe la police (employeur en collectif)</td></tr><tr><td>Assureur</td><td>PM — accepte risques, perçoit primes, règle sinistres</td></tr></table>
+    <h3>1.2 Rôle économique et social</h3>
+    <p>Fonctionne par <strong>mutualisation</strong>. <strong>IARD</strong> = Incendie, Accidents, Risques Divers (+ Transport = IARDT). <strong>Réassurance</strong> : transfert de risque vers réassureur — fortement non-vie, très international.</p>
+    <table><tr><th>Mode</th><th>Assurances</th><th>Provisions</th></tr><tr><td>Répartition</td><td>IARD, non-vie</td><td>Techniques</td></tr><tr><td>Capitalisation</td><td>Assurance-vie</td><td>Mathématiques</td></tr></table>
+    <p><strong>Rôle social</strong> : maintenir revenus · reconstituer patrimoine · ne pas être à charge de la collectivité · sauvegarder emplois · préserver tissu économique.</p>
+    <h3>1.3 Les intervenants du secteur</h3>
+    <table><tr><th>Organisme</th><th>Code</th></tr><tr><td>Entreprises d'assurances</td><td>Code des assurances</td></tr><tr><td>Sociétés mutuelles</td><td>Code de la mutualité</td></tr><tr><td>Institutions de prévoyance</td><td>Code de la Sécurité Sociale</td></tr></table>
+    <p><strong>LPS</strong> : services sans être établi. <strong>LE</strong> : via établissement permanent. <strong>Passeport européen</strong> : exercer dans toute l'UE via dossier auprès de l'autorité nationale.</p>
+    <p><strong>Agrément ACPR — 3 principes</strong> : Spécialité · Spécialisation (séparation vie/non-vie) · Branche (18 non-vie + 7 vie). Délai : <strong>6 mois</strong>. Perte : retrait · caducité · transfert total.</p>
+    <table><tr><th>Statut</th><th>Nature</th><th>Exclusivité</th><th>Portefeuille</th></tr><tr><td>Agent général</td><td>Profession libérale</td><td>Oui</td><td>Propriété de la compagnie</td></tr><tr><td>Courtier</td><td>Commerçant</td><td>Non</td><td>Lui appartient</td></tr><tr><td>Mandataire</td><td>PP non salariée / PM</td><td>Avec ou sans</td><td>Variable</td></tr><tr><td>MIA</td><td>PP ou PM</td><td>Par un intermédiaire</td><td>—</td></tr></table>
+    <p><strong>Conditions d'exercice</strong> : Honorabilité · Capacité professionnelle · RCP · Garantie financière (si encaissement). Immatriculation : <strong>ORIAS</strong>.</p>
+    <h2>Chapitre 2 — Les catégories d'assurance</h2>
+    <h3>2.1 Personnes / Biens</h3>
+    <ul><li><strong>Vie entière/décès</strong> : capital quelle que soit la date du décès</li><li><strong>Vie proprement dite</strong> : capital uniquement si vivant à la date fixée</li><li><strong>Mixte</strong> : capital si décès dans le délai OU si vivant à l'échéance</li></ul>
+    <p>RC civile et RC décennale = <strong>obligatoires</strong>. <strong>Action directe victime</strong> : droit de créance exclusif sur l'indemnité. <strong>BCT</strong> : saisi si garantie refusée.</p>
+    <h3>2.2 Individuelle / Collective</h3>
+    <p><strong>Homme-clé</strong> : indemnité si décès/incapacité de la personne-clé. <strong>Collective</strong> (Art. L141-1) : souscrite par une PM pour un groupe — risques vie, intégrité physique, maternité, incapacité, invalidité, chômage.</p>
+    <table><tr><th>Épargne salariale</th><th>Caractéristiques</th></tr><tr><td>PEE</td><td>Une seule entreprise (OPCVM, titres)</td></tr><tr><td>PEI</td><td>Plusieurs entreprises du même secteur</td></tr><tr><td>PERCO</td><td>Retraite collective — capital ou rente</td></tr></table>
+    <p><strong>Participation</strong> : obligatoire &gt; <strong>50 salariés</strong>.</p>
+    <h3>2.3 Obligatoire / Facultative</h3>
+    <p><strong>Modes de déclenchement</strong> : Fait dommageable (sinistre pendant contrat) · Réclamation de la victime (sinistre + réclamation + min. <strong>5 ans</strong> après fin).</p>
+    <table><tr><th>Statut</th><th>MRH obligatoire ?</th></tr><tr><td>Locataire</td><td>✅ Oui (RC locative)</td></tr><tr><td>Copropriétaire (occupant ou non)</td><td>✅ Oui</td></tr><tr><td>Propriétaire occupant hors copropriété</td><td>❌ Non</td></tr></table>
+    <p><strong>Auto facultatif</strong> : dommages tous accidents · collision · vol · bris de glace. Attachées : catastrophe naturelle, tempête, attentats, catastrophe technologique.</p>
+    <h3>2.4 Indemnitaire / Forfaitaire</h3>
+    <table><tr><th></th><th>Indemnitaire</th><th>Forfaitaire</th></tr><tr><td>Principe</td><td>Répare le préjudice réel</td><td>Montant fixé à la souscription</td></tr><tr><td>Exemples</td><td>MRH, auto, santé (frais médicaux)</td><td>Vie, décès, prévoyance, retraite</td></tr></table>
+    <p><strong>Valeur d'usage</strong> : prix au sinistre moins vétusté. <strong>Valeur à neuf</strong> : sans déduction vétusté.</p>
+    <h3>2.5 Répartition / Capitalisation</h3>
+    <p>Séparation juridique obligatoire. Répartition → <strong>provisions techniques</strong>. Capitalisation → <strong>provisions mathématiques</strong>.</p>
+    <h2>Chapitre 3 — L'intermédiation en assurance</h2>
+    <h3>3.1 Champ d'application</h3>
+    <p><strong>Distribution</strong> : recommandations, présentation, proposition, aide à la conclusion, comparaison de produits (Art. L511-1 III). <strong>Rémunération</strong> (Art. R511-3) : commission, honoraire, ou tout avantage en lien avec la distribution.</p>
+    <h3>3.2 Les 4 catégories</h3>
+    <table><tr><th>Statut</th><th>Nature</th><th>Spécificités</th></tr><tr><td>Courtier</td><td>Commerçant</td><td>RCP + GF obligatoires. Portefeuille lui appartient.</td></tr><tr><td>Agent général</td><td>Profession libérale</td><td>Mandat exclusif. Portefeuille = compagnie.</td></tr><tr><td>Mandataire</td><td>PP non salariée / PM</td><td>Mandaté par une compagnie d'assurance.</td></tr><tr><td>MIA</td><td>PP ou PM</td><td>Mandaté par un intermédiaire. Apport + encaissement seulement.</td></tr></table>
+    <h3>3.3 Conditions d'accès et d'exercice</h3>
+    <p><strong>Honorabilité</strong> (Art. L512-3) : pas de condamnations (Art. L322-2). Justificatif : déclaration sur l'honneur. L'ORIAS apprécie.</p>
+    <table><tr><th>Niveau</th><th>Personnes concernées</th><th>Article</th></tr><tr><td>I</td><td>Courtiers, agents généraux, salariés responsables</td><td>R512-9</td></tr><tr><td>II</td><td>Mandataires, MIA sans fonction de responsable</td><td>R512-10</td></tr><tr><td>III</td><td>Intermédiation à titre accessoire</td><td>R512-12</td></tr></table>
+    <p>Justificatifs capacité : stage agréé · expérience en production/gestion · diplôme reconnu. <strong>Loi PACTE (1er avril 2023)</strong> : adhésion obligatoire à une chambre professionnelle.</p>
+    <h3>3.4 RCP et Garantie financière</h3>
+    <p><strong>RCP</strong> (Art. L512-6) : min. <strong>1,5 M€/sinistre</strong> et <strong>2 M€/an</strong> (Art. A512-4). Franchise max 20 %, inopposable aux victimes. Couvre l'EEE. Résiliation → notification immédiate ORIAS. Exception : mandataire si mandant fournit garantie équivalente.</p>
+    <p><strong>GF</strong> (Art. L512-7) : min. <strong>115 000 €</strong> (Art. A512-5). Ne peut cesser avant <strong>3 jours francs</strong>. Exception : mandant encaisse lui-même. Aucun capital social minimum requis.</p>
+    <h3>3.5 Contrôle et sanctions ACPR</h3>
+    <p>Contrôles à distance et sur place. Sanctions (du + léger au + grave) : Avertissement · Blâme · Interdiction d'opérations (max 10 ans) · Suspension dirigeants (max 10 ans) · Démission d'office · Radiation · Interdiction d'activité · <strong>Sanction pécuniaire max 100 M€</strong>.</p>
+  </div>
+</div>
+</main>
+<script>
+const CARDS = [
+  {ch:"Ch.1 — Opération d'assurance",q:"Définition de l'opération d'assurance",a:"L'opération par laquelle <strong>l'assureur</strong> s'engage à délivrer une prestation en cas de réalisation d'un risque à <strong>l'assuré</strong>, moyennant le paiement d'une <strong>prime ou cotisation</strong>."},
+  {ch:"Ch.1 — Opération d'assurance",q:"Les 4 intervenants au contrat d'assurance",a:"<strong>Assuré</strong> : exposé au risque · <strong>Bénéficiaire</strong> : perçoit la prestation · <strong>Adhérent</strong> : signe la police (collectif) · <strong>Assureur</strong> : personne morale, perçoit cotisations et règle sinistres."},
+  {ch:"Ch.1 — Rôle éco/social",q:"Différence de gestion assurances non-vie / vie",a:"<strong>Non-vie</strong> → répartition (cotisations de l'année paient sinistres de l'année). <strong>Vie</strong> → capitalisation (primes investies individuellement, capitalisées à long terme)."},
+  {ch:"Ch.1 — Rôle éco/social",q:"IARD — développer l'acronyme",a:"<strong>Incendie, Accidents, Risques Divers</strong> (parfois IARDT avec Transport). Regroupe les assurances de biens et de responsabilité."},
+  {ch:"Ch.1 — Rôle éco/social",q:"Qu'est-ce que la réassurance ?",a:"Mécanisme permettant de <strong>transférer en tout ou partie le risque</strong> d'un assureur vers un <strong>réassureur</strong> (assureur de 2ème degré). Fortement orienté non-vie, très international."},
+  {ch:"Ch.1 — Rôle éco/social",q:"Rôle social de l'assurance (5 éléments)",a:"(1) Maintenir les revenus · (2) Reconstituer le patrimoine · (3) Ne pas être à charge de la collectivité · (4) Sauvegarder des emplois · (5) Préserver le tissu économique."},
+  {ch:"Ch.1 — Intervenants",q:"Les 3 familles d'organismes et leur code",a:"<strong>Entreprises d'assurances</strong> → Code des assurances · <strong>Sociétés mutuelles</strong> → Code de la mutualité · <strong>IP</strong> → Code de la Sécurité Sociale (et Code Rural)."},
+  {ch:"Ch.1 — Intervenants",q:"LPS vs Liberté d'Établissement",a:"<strong>LPS</strong> : offrir des services dans un autre État membre SANS y être établi. <strong>LE</strong> : via un <strong>établissement permanent</strong> (succursale ou agence) dans un autre État membre de l'EEE."},
+  {ch:"Ch.1 — Intervenants",q:"Qu'est-ce que le passeport européen ?",a:"Permet aux intermédiaires d'exercer dans <strong>toute l'UE</strong> grâce à un dossier déposé auprès de leur autorité de contrôle nationale, en LPS ou en LE."},
+  {ch:"Ch.1 — Intervenants",q:"Les 3 principes de l'agrément ACPR",a:"<strong>Spécialité</strong> : opérations agréées uniquement · <strong>Spécialisation</strong> : séparation vie/non-vie · <strong>Branche</strong> : 18 branches non-vie + 7 branches vie en France."},
+  {ch:"Ch.1 — Intervenants",q:"Délai ACPR pour statuer sur un dossier d'agrément",a:"<strong>6 mois</strong> à compter de la réception du dossier complet. L'agrément est publié au Journal Officiel."},
+  {ch:"Ch.1 — Intervenants",q:"Comment un organisme peut-il perdre son agrément ?",a:"<strong>Retrait</strong> (absence prolongée d'activité) · <strong>Caducité</strong> (dissolution) · <strong>Transfert total du portefeuille</strong>. Ou à titre de sanction disciplinaire."},
+  {ch:"Ch.1 — Intervenants",q:"Qu'est-ce qu'un transfert de portefeuille ?",a:"Transfert de tout ou partie des contrats vers un autre organisme, <strong>après autorisation de l'ACPR</strong>. Ne doit pas préjudicier aux souscripteurs/adhérents."},
+  {ch:"Ch.1 — Intervenants",q:"Courtier vs Agent général — différences clés",a:"<strong>Courtier</strong> : commerçant, hors exclusivité, portefeuille lui appartient, RCP + GF obligatoires. <strong>Agent général</strong> : profession libérale, mandat exclusif, portefeuille = propriété de la société."},
+  {ch:"Ch.1 — Intervenants",q:"Qu'est-ce qu'un MIA ?",a:"Mandaté par un courtier ou agent général. Activité limitée à l'apport + encaissement des cotisations (en vie : remise de fonds). <strong>Exclut</strong> la gestion des contrats et le règlement des sinistres."},
+  {ch:"Ch.1 — Intervenants",q:"Les 3 conditions d'exercice des intermédiaires",a:"(1) <strong>Honorabilité</strong> · (2) <strong>Capacité professionnelle</strong> (stage, expérience ou diplôme) · (3) <strong>RCP obligatoire</strong>. + Garantie financière si encaissement de fonds."},
+  {ch:"Ch.1 — Intervenants",q:"Qu'est-ce que l'ORIAS ?",a:"Registre national des intermédiaires en assurance, banque et finance. Tout intermédiaire doit y être immatriculé dans chacune des catégories qu'il exerce."},
+  {ch:"Ch.2 — Types assurances de personnes",q:"Vie entière / Vie proprement dite / Mixte",a:"<strong>Vie entière</strong> : capital quelle que soit la date du décès. <strong>Vie proprement dite</strong> : capital UNIQUEMENT si vivant à la date fixée. <strong>Mixte</strong> : capital aux héritiers si décès dans le délai, OU à l'assuré si vivant."},
+  {ch:"Ch.2 — Types assurances de personnes",q:"Qu'est-ce que l'assurance homme-clé ?",a:"Garantit à l'entreprise le versement d'une <strong>indemnité financière</strong> en cas de décès ou d'incapacité de la personne-clé. Assure la pérennité financière de l'entreprise."},
+  {ch:"Ch.2 — Types assurances de personnes",q:"Dommages vs Responsabilité",a:"<strong>Dommages</strong> : pertes financières directes sur les biens propres de l'assuré. <strong>Responsabilité</strong> : réparations dues aux tiers suite aux préjudices causés (RC pro, RC décennale…)."},
+  {ch:"Ch.2 — Assurances collectives",q:"Définition de l'assurance collective",a:"Contrat souscrit par une <strong>personne morale</strong> (employeur) au profit d'un groupe de personnes, pour des risques liés à la vie humaine, l'intégrité physique, la maternité, l'incapacité, l'invalidité ou le chômage (Art. L141-1)."},
+  {ch:"Ch.2 — Assurances collectives",q:"PEE / PEI / PERCO — différences",a:"<strong>PEE</strong> : une seule entreprise (OPCVM, titres). <strong>PEI</strong> : plusieurs entreprises du même secteur. <strong>PERCO</strong> : épargne retraite collective, restituée en capital ou rente."},
+  {ch:"Ch.2 — Assurances obligatoires",q:"2 modes de déclenchement de garantie",a:"<strong>Fait dommageable</strong> : couvre si sinistre pendant le contrat, même si réclamation postérieure. <strong>Réclamation de la victime</strong> : sinistre ET réclamation pendant le contrat + délai min. <strong>5 ans</strong> après fin."},
+  {ch:"Ch.2 — Assurances obligatoires",q:"MRH — qui a l'obligation d'assurance ?",a:"<strong>Obligatoire</strong> : locataire (RC locative), copropriétaire occupant, copropriétaire non occupant. <strong>Pas obligatoire</strong> : propriétaire occupant hors copropriété."},
+  {ch:"Ch.2 — Assurances obligatoires",q:"Garanties facultatives auto + garanties automatiquement attachées",a:"<strong>Facultatives</strong> : dommages tous accidents · collision · vol · bris de glace. <strong>Automatiquement attachées</strong> : catastrophe naturelle, catastrophe technologique, tempête, attentats."},
+  {ch:"Ch.2 — Assurances obligatoires",q:"Qu'est-ce que le Bureau Central de Tarification ?",a:"Organisme saisi par tout candidat à l'assurance <strong>auquel la garantie a été refusée</strong>. Notamment en matière automobile (RC civile obligatoire)."},
+  {ch:"Ch.2 — Indemnitaire / Forfaitaire",q:"Principe indemnitaire — définition et limite",a:"Remet l'assuré dans une situation <strong>identique à avant le sinistre</strong>. L'indemnité ne peut dépasser la <strong>valeur de la chose assurée</strong> au moment du sinistre (pas d'enrichissement)."},
+  {ch:"Ch.2 — Indemnitaire / Forfaitaire",q:"Valeur d'usage vs valeur à neuf",a:"<strong>Valeur d'usage</strong> : prix du bien au jour du sinistre <strong>moins vétusté</strong>. <strong>Valeur à neuf</strong> : bien tel qu'il était la veille du sinistre (sans déduction vétusté)."},
+  {ch:"Ch.2 — Indemnitaire / Forfaitaire",q:"Assurances de personnes — quel principe ?",a:"<strong>Indemnitaire</strong> : santé, accidents, maladie, invalidité, frais médicaux. <strong>Forfaitaire</strong> : vie, décès, épargne, retraite, incapacité, tontine."},
+  {ch:"Ch.2 — Répartition / Capitalisation",q:"Provisions techniques vs provisions mathématiques",a:"<strong>Provisions techniques</strong> → répartition (IARD). <strong>Provisions mathématiques</strong> → capitalisation (assurance-vie)."},
+  {ch:"Ch.2 — Répartition / Capitalisation",q:"Pourquoi la loi impose la séparation répartition/capitalisation ?",a:"Principe de <strong>spécialisation</strong> : les sociétés vie ne peuvent pas faire de non-vie, et inversement."},
+  {ch:"Ch.2 — Répartition / Capitalisation",q:"Sigle IARDT — que représente le T ?",a:"<strong>Transport</strong>. La catégorie IARD comprend aussi les assurances de transport → <strong>IARDT</strong>."},
+  {ch:"Ch.3 — Distribution",q:"Définition légale de la distribution d'assurances",a:"Toute activité consistant à fournir des <strong>recommandations</strong>, présenter, proposer ou <strong>aider à conclure</strong> des contrats, réaliser des travaux préparatoires, ou fournir des informations permettant de comparer des produits (Art. L511-1 III)."},
+  {ch:"Ch.3 — Distribution",q:"Définition de la rémunération d'un intermédiaire (Art. R511-3)",a:"Toute <strong>commission</strong>, tout <strong>honoraire</strong>, ou tout autre avantage de toute nature (économique ou autre) en lien avec des activités de distribution d'assurances."},
+  {ch:"Ch.3 — Conditions d'accès",q:"3 niveaux de capacité professionnelle",a:"<strong>Niveau I</strong> (R512-9) : courtiers, agents, salariés responsables. <strong>Niveau II</strong> (R512-10) : mandataires, MIA sans responsabilité. <strong>Niveau III</strong> (R512-12) : intermédiation à titre accessoire."},
+  {ch:"Ch.3 — Conditions d'accès",q:"Comment justifier sa capacité professionnelle ?",a:"(1) <strong>Stage agréé</strong> (avec contrôle à l'issue) · (2) <strong>Expérience</strong> en production/gestion de contrats · (3) <strong>Diplôme</strong> reconnu par arrêté (Art. A512-6/7)."},
+  {ch:"Ch.3 — Conditions d'accès",q:"Obligation loi PACTE (depuis le 1er avril 2023)",a:"Tous les intermédiaires doivent <strong>adhérer à une chambre professionnelle</strong> pour s'immatriculer à l'ORIAS ou renouveler leur immatriculation."},
+  {ch:"Ch.3 — RCP / GF",q:"Montants minimaux de la RCP",a:"<strong>1,5 M€ par sinistre</strong> et <strong>2 M€ par année</strong> (Art. A512-4). Franchise max 20 %, inopposable aux victimes. Police couvrant l'EEE."},
+  {ch:"Ch.3 — RCP / GF",q:"Qui est exempté de la RCP ?",a:"Un <strong>mandataire</strong> si son <strong>mandant lui a fourni une garantie équivalente</strong>."},
+  {ch:"Ch.3 — RCP / GF",q:"Montant minimal et cessation de la garantie financière",a:"Min. <strong>115 000 €</strong> (Art. A512-5). Ne peut cesser avant <strong>3 jours francs</strong> après information de l'ORIAS. Cesse lors de dénonciation, décès, cessation d'activité ou dissolution."},
+  {ch:"Ch.3 — RCP / GF",q:"Qui est exempté de la garantie financière ?",a:"L'intermédiaire dont le mandant a <strong>expressément chargé</strong> l'encaissement ou le versement des fonds. Aucun capital social minimum exigé en France."},
+  {ch:"Ch.3 — Sanctions ACPR",q:"Sanctions ACPR — ordre croissant de sévérité",a:"Avertissement · Blâme · Interdiction d'opérations (max 10 ans) · Suspension de dirigeants (max 10 ans) · Démission d'office · Radiation du registre · Interdiction d'activité · <strong>Sanction pécuniaire max 100 M€</strong>."},
+];
+
+const QUIZ = [
+  {ch:"Ch.1",q:"Quelle est la définition correcte de l'assureur ?",opts:["La personne exposée au risque","La personne qui signe la police","La personne morale qui accepte les risques, perçoit les primes et règle les sinistres","La personne qui doit percevoir la prestation"],c:2,e:"L'assureur est une personne morale. L'assuré est exposé au risque ; l'adhérent signe la police ; le bénéficiaire perçoit la prestation."},
+  {ch:"Ch.1",q:"Parmi ces familles d'organismes, laquelle relève du Code de la mutualité ?",opts:["Les entreprises d'assurances (compagnies)","Les sociétés mutuelles","Les institutions de prévoyance","Les groupes d'assurances"],c:1,e:"Mutuelles → Code de la mutualité. Compagnies → Code des assurances. IP → Code de la Sécurité Sociale."},
+  {ch:"Ch.1",q:"Quel délai l'ACPR accorde-t-elle pour statuer sur une demande d'agrément ?",opts:["3 mois","12 mois","6 mois","18 mois"],c:2,e:"L'ACPR dispose de 6 mois à compter de la réception du dossier complet. L'agrément est publié au Journal Officiel."},
+  {ch:"Ch.1",q:"Le principe de spécialisation signifie que :",opts:["Un assureur ne pratique que les opérations pour lesquelles il est agréé","Les sociétés vie ne peuvent pas faire de non-vie (et inversement)","L'activité est limitée à certaines branches uniquement","L'agrément est délivré branche par branche"],c:1,e:"Spécialisation = séparation vie/non-vie. Spécialité = opérations agréées uniquement. Branche = découpe en 18+7 branches."},
+  {ch:"Ch.2",q:"Une assurance-vie proprement dite verse le capital...",opts:["Quelle que soit la date du décès","Uniquement si l'assuré est en vie à la date déterminée","Automatiquement à la retraite","En cas d'invalidité uniquement"],c:1,e:"La vie proprement dite ne verse le capital QUE si l'assuré est vivant à l'échéance. C'est l'assurance vie entière/décès qui verse quelle que soit la date du décès."},
+  {ch:"Ch.2",q:"L'assurance MRH est-elle obligatoire pour le propriétaire occupant hors copropriété ?",opts:["Oui, toujours","Non, elle n'est pas obligatoire dans ce cas","Oui, mais seulement en zone inondable","Oui, pour les logements de plus de 100 m²"],c:1,e:"MRH obligatoire : locataire, copropriétaire occupant, copropriétaire non occupant. Pas obligatoire : propriétaire occupant hors copropriété."},
+  {ch:"Ch.2",q:"En valeur d'usage, comment est calculée l'indemnité ?",opts:["Selon le montant fixé à la souscription","Au prix du bien neuf équivalent la veille du sinistre","Au prix du bien au jour du sinistre, déduction faite de la vétusté","Selon la déclaration de l'assuré"],c:2,e:"Valeur d'usage = prix au jour du sinistre MOINS vétusté. Valeur à neuf = bien tel qu'il était la veille (sans déduction)."},
+  {ch:"Ch.2",q:"Quelle affirmation sur le PERCO est correcte ?",opts:["Il ne concerne que les dirigeants","C'est un plan d'épargne retraite collectif restituable en capital ou rente","Il est obligatoire pour les entreprises de plus de 50 salariés","Il ne peut être souscrit que dans une seule entreprise"],c:1,e:"PERCO : épargne retraite collective restituée en capital ou rente. C'est la participation qui est obligatoire dès 50 salariés."},
+  {ch:"Ch.3",q:"Quel est le montant minimal de la garantie financière ?",opts:["50 000 €","75 000 €","100 000 €","115 000 €"],c:3,e:"Art. A512-5 : montant minimum de la GF = 115 000 €."},
+  {ch:"Ch.2",q:"Les primes collectées par capitalisation constituent les...",opts:["Provisions techniques","Provisions mathématiques","Réserves prudentielles","Fonds propres réglementaires"],c:1,e:"Répartition → provisions techniques (IARD). Capitalisation → provisions mathématiques (assurance-vie)."},
+  {ch:"Ch.3",q:"Ce que peut faire un MIA parmi les propositions suivantes :",opts:["Gérer les contrats d'assurance","Régler les sinistres sous un plafond","Apporter des affaires et encaisser des cotisations","Exercer sans mandat, sous sa propre responsabilité"],c:2,e:"Le MIA ne peut QUE : apporter des affaires, encaisser des cotisations, et (en vie) remettre des fonds. Gestion de contrats et règlement de sinistres = exclus."},
+  {ch:"Ch.3",q:"Montant minimal de RCP par sinistre / par an pour un intermédiaire :",opts:["500 000 € / 1 M€","1 M€ / 1,5 M€","1,5 M€ / 2 M€","2 M€ / 5 M€"],c:2,e:"Art. A512-4 : 1,5 M€ par sinistre et 2 M€ par année. Franchise max 20 %, inopposable aux victimes."},
+  {ch:"Ch.3",q:"Quelle est la sanction pécuniaire maximale que peut infliger l'ACPR ?",opts:["1 million d'euros","10 millions d'euros","50 millions d'euros","100 millions d'euros"],c:3,e:"L'ACPR peut infliger jusqu'à 100 millions d'euros de sanction pécuniaire."},
+  {ch:"Ch.3",q:"Depuis le 1er avril 2023 (loi PACTE), les intermédiaires doivent...",opts:["Passer un examen annuel","Adhérer à une chambre professionnelle pour s'immatriculer à l'ORIAS","Obtenir un master en droit des assurances","Souscrire une assurance vie"],c:1,e:"Loi PACTE : adhésion à une chambre professionnelle obligatoire pour immatriculation ORIAS ou renouvellement."},
+  {ch:"Ch.3",q:"Quel délai minimum avant qu'une garantie financière puisse cesser ?",opts:["24 heures","3 jours francs","7 jours calendaires","30 jours"],c:1,e:"Art. R512-7 : la GF ne peut cesser avant 3 jours francs à compter de l'information à l'ORIAS."},
+];
+
+const FOCUS = [
+  {
+    title:"🏢 Les intervenants",
+    cards:[
+      {q:"Les 4 types d'intermédiaires — noms et statuts juridiques",a:"<strong>Courtier</strong> (commerçant) · <strong>Agent général</strong> (profession libérale, mandat exclusif) · <strong>Mandataire d'assurances</strong> (PP non salariée ou PM, mandaté par une compagnie) · <strong>MIA</strong> (PP ou PM mandaté par un intermédiaire)."},
+      {q:"Propriété du portefeuille : courtier vs agent général",a:"<strong>Courtier</strong> : portefeuille lui appartient. <strong>Agent général</strong> : portefeuille = propriété de la société d'assurances qui lui a donné mandat. Différence fondamentale à l'examen."},
+      {q:"Qu'exclut l'activité d'un MIA ?",a:"<strong>Gestion des contrats</strong> et <strong>règlement des sinistres</strong>. Activité limitée à : apport, encaissement des cotisations, et (en vie) remise de fonds."},
+      {q:"Qui répond des fautes d'un MIA ?",a:"L'<strong>intermédiaire qui l'a mandaté</strong> (courtier, agent général ou mandataire) répond des fautes commises par le MIA dans l'exercice de son mandat."},
+      {q:"L'agent général peut-il vendre des contrats d'une autre compagnie ?",a:"Oui, mais <strong>hors de son mandat d'agent général</strong> et <strong>sous sa propre responsabilité</strong>. Il engage sa responsabilité, pas celle de la compagnie mandante."},
+      {q:"Mandataire d'assurances vs MIA — différences clés",a:"<strong>Mandataire</strong> : mandaté par une <em>entreprise d'assurance</em>, avec ou sans exclusivité. <strong>MIA</strong> : mandaté par un <em>intermédiaire</em>. Activité du MIA plus limitée (apport + encaissement seulement)."},
+      {q:"Les 3 familles d'organismes et leur code",a:"<strong>Entreprises d'assurances</strong> → Code des assurances · <strong>Sociétés mutuelles</strong> → Code de la mutualité · <strong>Institutions de prévoyance</strong> → Code de la Sécurité Sociale."},
+      {q:"LPS vs Liberté d'Établissement",a:"<strong>LPS</strong> = offrir des services sans être établi dans l'État membre. <strong>LE</strong> = via un établissement permanent (succursale ou agence). Les deux s'exercent dans l'EEE."},
+      {q:"Passeport européen — définition et fonctionnement",a:"Permet aux intermédiaires d'exercer dans <strong>toute l'Union Européenne</strong> grâce à un dossier déposé auprès de leur <strong>autorité de contrôle nationale</strong>, en LPS ou en LE."},
+      {q:"Qu'est-ce qu'un groupe d'assurances ?",a:"Plusieurs sociétés exerçant des activités vie et non-vie au sein d'<strong>entités juridiquement distinctes</strong>. Permet une gamme large de produits tout en respectant le principe de spécialisation."},
+      {q:"Quelles sont les 4 catégories immatriculées à l'ORIAS ?",a:"(1) Agents généraux · (2) Courtiers · (3) Mandataires d'assurances · (4) MIA. Immatriculation obligatoire dans <em>chacune</em> des catégories exercées."},
+      {q:"Transfert de portefeuille — conditions",a:"Autorisation <strong>ACPR obligatoire</strong>. Ne doit pas préjudicier aux souscripteurs/adhérents. Possible en cas de fusion, acquisition, retrait ou perte d'agrément."},
+    ],
+    quiz:[
+      {q:"Parmi les intermédiaires suivants, lequel est un commerçant ?",opts:["Agent général d'assurances","Courtier d'assurances","Mandataire d'assurances","MIA"],c:1,e:"Le courtier est le seul commerçant. L'agent général exerce une profession libérale. Le mandataire et le MIA sont des PP non salariées ou PM."},
+      {q:"À qui appartient le portefeuille constitué par un agent général ?",opts:["À l'agent général lui-même","À la société d'assurances qui lui a donné mandat","À l'ORIAS","À l'État"],c:1,e:"Le portefeuille de l'agent général est propriété de la compagnie. C'est l'inverse du courtier, dont le portefeuille lui appartient personnellement."},
+      {q:"Que peut faire un MIA parmi ces activités ?",opts:["Gérer des contrats d'assurance","Régler des sinistres sous plafond","Encaisser des cotisations","Résilier des contrats à la demande du client"],c:2,e:"Le MIA ne peut faire que : apporter des affaires, encaisser des cotisations, et remettre des fonds en vie. Gestion et règlement de sinistres = exclus."},
+      {q:"Qui répond des fautes commises par un MIA dans l'exercice de son mandat ?",opts:["Le MIA lui-même","L'intermédiaire (courtier ou agent) qui l'a mandaté","L'ORIAS","L'ACPR"],c:1,e:"L'intermédiaire mandant répond des fautes du MIA. C'est pourquoi le MIA a moins d'obligations directes que les autres catégories."},
+      {q:"Un agent général peut-il vendre des produits d'une autre compagnie ?",opts:["Non, jamais — l'exclusivité est absolue","Oui, mais sous sa propre responsabilité et hors de son mandat","Oui, avec l'accord préalable de l'ACPR","Oui, à condition d'être aussi courtier"],c:1,e:"L'agent général peut vendre des contrats d'autres compagnies, mais hors mandat et sous sa propre responsabilité."},
+      {q:"Quel organisme immatricule les intermédiaires d'assurance en France ?",opts:["ACPR","AMF","ORIAS","DGCCRF"],c:2,e:"L'ORIAS immatricule tous les intermédiaires. L'ACPR délivre les agréments aux organismes d'assurance et contrôle."},
+      {q:"La LPS permet à une entreprise de :",opts:["S'établir définitivement dans un autre État membre","Offrir ses services dans un autre État membre sans y être établie","Opérer sans agrément dans l'UE","Fusionner avec une entreprise étrangère"],c:1,e:"La LPS permet d'offrir des services transfrontaliers sans établissement permanent. La LE implique une présence physique permanente."},
+      {q:"Depuis le 1er avril 2023 (loi PACTE), les intermédiaires doivent :",opts:["Passer un examen annuel","Adhérer à une chambre professionnelle pour s'immatriculer à l'ORIAS","Obtenir un master en droit des assurances","Souscrire obligatoirement une assurance vie"],c:1,e:"La loi PACTE a rendu l'adhésion à une chambre professionnelle obligatoire pour toute immatriculation ou renouvellement ORIAS."},
+      {q:"Combien existe-t-il de catégories immatriculées à l'ORIAS ?",opts:["2","3","4","5"],c:2,e:"4 catégories : agents généraux, courtiers, mandataires d'assurances, MIA. Un intermédiaire exerçant plusieurs activités doit être immatriculé dans chacune."},
+      {q:"Qu'est-ce qui distingue le mandataire d'assurances du MIA ?",opts:["Le mandataire est un commerçant, le MIA non","Le mandataire est mandaté par une entreprise d'assurance, le MIA par un intermédiaire","Le mandataire peut régler des sinistres, le MIA peut gérer des contrats","Le mandataire doit toujours travailler en exclusivité"],c:1,e:"Mandataire = mandaté par une entreprise d'assurance. MIA = mandaté par un intermédiaire. Le MIA a une activité plus limitée."},
+    ]
+  },
+  {
+    title:"⚖️ 3 conditions d'exercice",
+    cards:[
+      {q:"Les 3 conditions d'exercice + condition supplémentaire",a:"(1) <strong>Honorabilité</strong> : pas de condamnations pénales · (2) <strong>Capacité professionnelle</strong> : 3 niveaux · (3) <strong>RCP obligatoire</strong> · + <strong>Garantie financière</strong> si encaissement de fonds."},
+      {q:"Comment justifier l'honorabilité ?",a:"<strong>Déclaration sur l'honneur</strong> (Art. R514-1). Condition : ne pas avoir fait l'objet d'une condamnation visée à l'Art. L322-2. <strong>L'ORIAS apprécie souverainement</strong>."},
+      {q:"Les 3 niveaux de capacité professionnelle",a:"<strong>Niveau I</strong> (R512-9) : courtiers, agents, salariés responsables · <strong>Niveau II</strong> (R512-10) : mandataires, MIA sans responsabilité · <strong>Niveau III</strong> (R512-12) : intermédiation à titre accessoire."},
+      {q:"Comment justifier la capacité professionnelle ?",a:"(1) <strong>Stage professionnel agréé</strong> par arrêté · (2) <strong>Expérience</strong> dans la production ou gestion de contrats · (3) <strong>Diplôme</strong> reconnu par arrêté (Art. A512-6/7)."},
+      {q:"Documents à produire pour justifier la capacité professionnelle",a:"<strong>Livret de stage</strong> signé (Art. R514-4) · <strong>Attestation de formation</strong> (Art. R514-5) · <strong>Attestation de fonctions</strong> · <strong>Diplôme</strong> obtenu."},
+      {q:"Montants minimaux de la RCP (Art. A512-4)",a:"<strong>1,5 M€ par sinistre</strong> et <strong>2 M€ par année</strong>. Franchise max <strong>20 %</strong> inopposable aux victimes. Police couvrant l'EEE. Résiliation → notification immédiate à l'ORIAS."},
+      {q:"Qui est exempté de la RCP ?",a:"Un <strong>mandataire</strong> dont son <strong>mandant lui a fourni une assurance ou garantie équivalente</strong>. Cette exemption ne vaut pas pour les courtiers et agents généraux."},
+      {q:"Montant minimal et cessation de la garantie financière",a:"Min. <strong>115 000 €</strong> (Art. A512-5). Ne peut cesser avant <strong>3 jours francs</strong> après information de l'ORIAS. Cesse lors de : dénonciation · décès · cessation d'activité · dissolution."},
+      {q:"Qui est exempté de la garantie financière ?",a:"L'intermédiaire dont le <strong>mandant a expressément chargé</strong> l'encaissement ou le versement des fonds. <strong>Aucun capital social minimum</strong> n'est exigé pour exercer en France."},
+      {q:"Que se passe-t-il si la RCP d'un intermédiaire est résiliée ?",a:"L'assureur doit <strong>communiquer sans délai à l'ORIAS</strong> toute suspension, dénonciation ou résiliation. L'assureur délivre une <strong>attestation de RCP</strong> à l'intermédiaire."},
+      {q:"Attestation de garantie financière — qui la délivre ?",a:"Le <strong>garant</strong> (banque ou société d'assurances) délivre une <strong>attestation de garantie financière</strong> à l'intermédiaire, nécessaire pour l'immatriculation à l'ORIAS."},
+      {q:"Obligation loi PACTE — depuis le 1er avril 2023",a:"Tous les intermédiaires doivent <strong>adhérer à une chambre professionnelle</strong> pour s'immatriculer à l'ORIAS ou renouveler leur immatriculation."},
+    ],
+    quiz:[
+      {q:"Quel est le montant minimum de la RCP par sinistre ?",opts:["500 000 €","1 000 000 €","1 500 000 €","2 000 000 €"],c:2,e:"Art. A512-4 : 1,5 M€ par sinistre et 2 M€ par an. Ces montants sont des minimums."},
+      {q:"Quel est le montant minimum de la garantie financière ?",opts:["50 000 €","75 000 €","100 000 €","115 000 €"],c:3,e:"Art. A512-5 : le montant minimum est de 115 000 €. C'est un plancher."},
+      {q:"Quel niveau de capacité professionnelle pour un courtier ?",opts:["Niveau I","Niveau II","Niveau III","Aucun niveau requis"],c:0,e:"Les courtiers, agents généraux et salariés responsables relèvent du Niveau I (Art. R512-9), le plus exigeant."},
+      {q:"Quel délai avant qu'une garantie financière puisse cesser ?",opts:["24 heures","3 jours francs","7 jours","30 jours"],c:1,e:"Art. R512-7 : la GF ne peut jamais cesser avant 3 jours francs à compter de l'information à l'ORIAS."},
+      {q:"La franchise de la RCP peut-elle être opposée aux victimes ?",opts:["Oui, toujours","Oui, si supérieure à 20 %","Non, elle est inopposable aux victimes","Oui, si l'intermédiaire est en liquidation"],c:2,e:"La franchise est inopposable aux victimes (Art. R512-14). Elle ne peut pas dépasser 20 % des indemnités dues."},
+      {q:"Parmi les 3 façons de justifier la capacité professionnelle, laquelle n'est pas valide ?",opts:["Stage professionnel agréé par arrêté","Expérience dans la production ou gestion de contrats","Diplôme reconnu par arrêté","Recommandation d'un agent général en exercice"],c:3,e:"La recommandation n'est pas un mode reconnu. Seuls le stage agréé, l'expérience et le diplôme reconnu par arrêté sont valides."},
+      {q:"Un mandataire peut-il être exempté de l'obligation de RCP ?",opts:["Non, jamais","Oui, si son mandant lui fournit une garantie équivalente","Oui, s'il n'encaisse pas de fonds","Oui, s'il travaille en exclusivité"],c:1,e:"Art. L512-6 : l'obligation ne s'applique pas à un mandataire si son mandant lui a fourni une assurance ou garantie équivalente."},
+      {q:"Que fait l'ORIAS en cas de doute sur l'honorabilité d'un requérant ?",opts:["Il rejette automatiquement la demande","Il peut demander au commissaire du Gouvernement de vérifier","Il saisit l'ACPR pour sanction","Il demande un stage supplémentaire"],c:1,e:"L'ORIAS peut demander au commissaire du Gouvernement de vérifier l'honorabilité. L'ORIAS reste souverain dans son appréciation."},
+      {q:"La garantie financière couvre les fonds dans quel cas ?",opts:["Uniquement les primes perçues pour les compagnies","Les primes destinées à un organisme d'assurance ET les fonds reçus pour payer les sinistres","Uniquement les remboursements en assurance-vie","Tous les fonds quelle que soit leur nature"],c:1,e:"Art. L512-7 : la GF couvre les primes destinées à un organisme d'assurance, les fonds reçus pour payer les sinistres, et les fonds reçus en tant que mandataire pour transmission."},
+      {q:"Quel document le garant de la GF doit-il délivrer à l'intermédiaire ?",opts:["Un agrément de l'ACPR","Une attestation de garantie financière","Un certificat de solvabilité","Un extrait Kbis certifié"],c:1,e:"Le garant (banque ou société d'assurance) délivre une attestation de garantie financière, nécessaire pour l'immatriculation à l'ORIAS."},
+    ]
+  },
+  {
+    title:"🔀 Types d'assurances",
+    cards:[
+      {q:"Indemnitaire vs forfaitaire — définition",a:"<strong>Indemnitaire</strong> : répare le préjudice réel (ne peut dépasser valeur du bien). <strong>Forfaitaire</strong> : montant fixé à la souscription, sans évaluation du préjudice au sinistre."},
+      {q:"Répartition vs capitalisation",a:"<strong>Répartition</strong> : cotisations de l'année paient sinistres de l'année → provisions <em>techniques</em> (IARD). <strong>Capitalisation</strong> : primes investies individuellement → provisions <em>mathématiques</em> (assurance-vie)."},
+      {q:"Quel principe pour chaque type d'assurance de personnes ?",a:"<strong>Indemnitaire</strong> : santé, accidents, maladie, frais médicaux, invalidité. <strong>Forfaitaire</strong> : vie, décès, épargne, retraite, incapacité, tontine. <em>Santé = indemnitaire · vie/décès = forfaitaire</em>."},
+      {q:"Valeur d'usage vs valeur à neuf",a:"<strong>Valeur d'usage</strong> : prix du bien au jour du sinistre <em>moins vétusté</em>. <strong>Valeur à neuf</strong> : bien tel qu'il était la veille du sinistre <em>sans déduction de vétusté</em>."},
+      {q:"Individuelle vs collective (Art. L141-1)",a:"<strong>Individuelle</strong> : contrat entre une PP et l'assureur. <strong>Collective</strong> : souscrit par une <em>personne morale</em> (employeur) pour un groupe — risques vie, intégrité physique, maternité, incapacité, invalidité, chômage."},
+      {q:"Vie entière / Vie proprement dite / Mixte",a:"<strong>Vie entière/décès</strong> : capital quelle que soit la date du décès. <strong>Vie proprement dite</strong> : capital UNIQUEMENT si vivant à la date fixée. <strong>Mixte</strong> : capital si décès dans le délai OU si vivant à l'échéance."},
+      {q:"MRH — qui a l'obligation d'assurance ?",a:"<strong>Obligatoire</strong> : locataire (RC locative), copropriétaire occupant, copropriétaire non occupant. <strong>Pas obligatoire</strong> : propriétaire occupant hors copropriété."},
+      {q:"Garanties facultatives auto + garanties automatiquement attachées",a:"<strong>Facultatives</strong> : dommages tous accidents · collision · vol · bris de glace. <strong>Automatiquement attachées</strong> : catastrophe naturelle, catastrophe technologique, tempête, attentats."},
+      {q:"Modes de déclenchement de garantie (RC obligatoire)",a:"<strong>Fait dommageable</strong> : sinistre pendant le contrat, réclamation postérieure possible. <strong>Réclamation de la victime</strong> : sinistre + réclamation dans délai + min. <strong>5 ans</strong> après fin du contrat."},
+      {q:"Action directe de la victime — principe",a:"La victime a un <strong>droit de créance exclusif</strong> sur le montant de l'indemnité, sans passer par le patrimoine du responsable. Déroge au <em>principe de relativité des créanciers</em>."},
+      {q:"RC décennale — qui est concerné ?",a:"Obligatoire pour les <strong>entreprises de travaux</strong>. Couvre les vices affectant le sol ou le bâtiment. Garantie de <strong>10 ans</strong> après la livraison de l'ouvrage."},
+      {q:"Les catastrophes naturelles dans les contrats de dommages",a:"<strong>Inclusion obligatoire</strong> dans tous les contrats garantissant les dommages aux biens situés en France. Déclenchées par <em>arrêté interministériel</em>."},
+    ],
+    quiz:[
+      {q:"L'assurance-vie est gérée selon quel mode financier ?",opts:["Répartition","Capitalisation","Les deux selon le type de risque","Ni l'un ni l'autre"],c:1,e:"L'assurance-vie est gérée par capitalisation : primes investies et capitalisées. Provisions mathématiques (≠ provisions techniques pour la répartition)."},
+      {q:"Une assurance prévoyance décès correspond au principe :",opts:["Indemnitaire","Forfaitaire","Les deux selon le dommage","Variable selon la compagnie"],c:1,e:"Vie et décès = forfaitaire : le capital est fixé à la souscription. Retenir : santé = indemnitaire ; vie/décès = forfaitaire."},
+      {q:"L'assurance santé (remboursement de frais médicaux) relève de quel principe ?",opts:["Forfaitaire","Indemnitaire","Mixte selon les frais","Cela dépend du contrat"],c:1,e:"Santé / frais médicaux = indemnitaire : on rembourse les frais réels. Une assurance décès verse un capital fixé à la souscription = forfaitaire."},
+      {q:"En valeur d'usage, comment est calculée l'indemnité ?",opts:["Au montant fixé à la souscription","Au prix du bien neuf la veille du sinistre","Au prix du bien au jour du sinistre, déduction de la vétusté","Selon la déclaration de l'assuré"],c:2,e:"Valeur d'usage = prix au sinistre MOINS vétusté. La valeur à neuf prend le bien tel qu'il était la veille du sinistre, sans déduire la vétusté."},
+      {q:"La RC décennale est obligatoire pour :",opts:["Tous les propriétaires immobiliers","Les entreprises de travaux","Les agents immobiliers","Les locataires de locaux commerciaux"],c:1,e:"La RC décennale est obligatoire pour les entreprises de travaux. Elle couvre les vices pouvant affecter le sol et le bâtiment pendant 10 ans après livraison."},
+      {q:"Les catastrophes naturelles sont-elles obligatoirement incluses dans un contrat MRH ?",opts:["Non, c'est une garantie optionnelle","Oui, elles sont nécessairement incluses dans tout contrat garantissant des dommages aux biens en France","Seulement si le bien est en zone à risque","Seulement pour les locataires"],c:1,e:"Les catastrophes naturelles sont nécessairement incluses dans tous les contrats garantissant les dommages aux biens situés en France, déclenchées par arrêté interministériel."},
+      {q:"En mode 'réclamation de la victime', quel délai minimum s'applique après la fin du contrat ?",opts:["1 an","3 ans","5 ans","10 ans"],c:2,e:"Art. L124-5 : le délai ne peut pas être inférieur à 5 ans après la fin du contrat."},
+      {q:"La participation aux résultats de l'entreprise est obligatoire à partir de :",opts:["10 salariés","20 salariés","50 salariés","100 salariés"],c:2,e:"La participation est obligatoire pour les entreprises de plus de 50 salariés. L'intéressement reste facultatif."},
+      {q:"L'action directe de la victime déroge à quel principe juridique ?",opts:["Au principe de spécialisation des assureurs","Au principe de relativité des créanciers","Au principe indemnitaire","Au principe de mutualisation"],c:1,e:"L'action directe déroge au principe de relativité des créanciers : la victime (non partie au contrat) bénéficie d'un droit direct sur l'indemnité."},
+      {q:"L'assurance MRH est-elle obligatoire pour le propriétaire occupant hors copropriété ?",opts:["Oui, toujours","Non — elle n'est pas obligatoire dans ce cas","Oui, mais seulement en zone inondable","Oui, pour les logements de plus de 80 m²"],c:1,e:"MRH obligatoire : locataire, copropriétaire occupant/non occupant. Pas obligatoire : propriétaire occupant hors copropriété."},
+    ]
+  }
+];
+
+let cards = [...CARDS], ci = 0, flipped = false;
+function fcRender() {
+  const c = cards[ci];
+  document.getElementById('fc-q').innerHTML = c.q;
+  document.getElementById('fc-a').innerHTML = c.a;
+  document.getElementById('fc-cnt').textContent = `Carte ${ci+1} / ${cards.length}`;
+  document.getElementById('fc-ch').textContent = c.ch;
+  document.getElementById('fc-bar').style.width = ((ci+1)/cards.length*100)+'%';
+  document.getElementById('fc-scene').classList.remove('flipped');
+  flipped = false;
+}
+function fcFlip() { flipped=!flipped; document.getElementById('fc-scene').classList.toggle('flipped',flipped); }
+function fcNext() { ci = (ci+1)%cards.length; fcRender(); }
+function fcPrev() { ci = (ci-1+cards.length)%cards.length; fcRender(); }
+function fcShuffle() {
+  for(let i=cards.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1));[cards[i],cards[j]]=[cards[j],cards[i]]; }
+  ci=0; fcRender();
+}
+
+let qi=0, qs=0, qa=0, qAnswers=[];
+function qRender() {
+  const q = QUIZ[qi];
+  document.getElementById('q-cnt').textContent = `Question ${qi+1} / ${QUIZ.length}`;
+  document.getElementById('q-badge').textContent = `${qs} / ${qa}`;
+  document.getElementById('q-tag').textContent = q.ch;
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('q-bar').style.width = (qi/QUIZ.length*100)+'%';
+  const od = document.getElementById('q-opts'); od.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=`${['A','B','C','D'][i]}. ${o}`;
+    b.onclick=()=>qSelect(i); od.appendChild(b);
+  });
+  document.getElementById('q-fb').className='fb';
+  document.getElementById('q-fb').innerHTML='';
+  document.getElementById('qnext').style.display='none';
+}
+function qSelect(i) {
+  const q=QUIZ[qi];
+  document.querySelectorAll('#q-opts .opt').forEach(b=>b.disabled=true);
+  const ok=i===q.c;
+  document.querySelectorAll('#q-opts .opt')[i].classList.add(ok?'correct':'wrong');
+  if(!ok) document.querySelectorAll('#q-opts .opt')[q.c].classList.add('correct');
+  if(ok) qs++; qa++;
+  qAnswers.push({i,c:q.c,q:q.q,opts:q.opts,e:q.e});
+  const fb=document.getElementById('q-fb');
+  fb.className='fb '+(ok?'correct':'wrong');
+  fb.innerHTML=(ok?'<strong>✅ Bonne réponse !</strong>':'<strong>❌ Mauvaise réponse.</strong> ')+q.e;
+  document.getElementById('q-badge').textContent=`${qs} / ${qa}`;
+  document.getElementById('qnext').style.display='inline-flex';
+}
+function qNext() { qi++; if(qi>=QUIZ.length){ qShowScore(); return; } qRender(); }
+function qShowScore() {
+  document.getElementById('quiz-active').style.display='none';
+  const ss=document.getElementById('score-scr'); ss.classList.add('vis');
+  const pct=qs/QUIZ.length;
+  let emoji='😤',title='À revoir !',sub='Continue les flashcards et réessaie.';
+  if(pct>=.9){emoji='🏆';title='Excellent !';sub='Tu maîtrises le chapitre assurance.';}
+  else if(pct>=.7){emoji='💪';title='Bien joué !';sub='Quelques points à consolider.';}
+  else if(pct>=.5){emoji='📚';title='Moyen…';sub='Relis la fiche et reviens tester.';}
+  document.getElementById('s-emoji').textContent=emoji;
+  document.getElementById('s-title').textContent=title;
+  document.getElementById('s-sub').textContent=sub;
+  document.getElementById('s-num').textContent=`${qs} / ${QUIZ.length}`;
+  document.getElementById('s-det').textContent=`${Math.round(pct*100)} % de réussite`;
+  const bar=document.getElementById('s-bar');
+  bar.style.background=pct>=.7?'linear-gradient(90deg,#2d8a4e,#4caf50)':pct>=.5?'linear-gradient(90deg,#e67e22,#f39c12)':'linear-gradient(90deg,#c0392b,#e74c3c)';
+  setTimeout(()=>{ bar.style.width=(pct*100)+'%'; },100);
+  const errors=qAnswers.filter(a=>a.i!==a.c);
+  const rl=document.getElementById('rev-list');
+  rl.innerHTML=errors.length===0?'<div style="color:var(--ok);padding:12px 0;font-weight:600">✅ Aucune erreur !</div>':errors.map(a=>`<div class="rev-item"><div class="rev-q">${a.q}</div><div class="rev-wrong">✗ ${a.opts[a.i]}</div><div class="rev-right">✓ ${a.opts[a.c]}</div></div>`).join('');
+  try{ const s=JSON.parse(localStorage.getItem('cgp_scores')||'{}');s['jour01']={score:qs,total:QUIZ.length,pct:Math.round(pct*100),date:new Date().toLocaleDateString('fr-FR')};localStorage.setItem('cgp_scores',JSON.stringify(s));}catch(e){}
+}
+function qRestart() { qi=0;qs=0;qa=0;qAnswers=[]; document.getElementById('quiz-active').style.display='block'; document.getElementById('score-scr').classList.remove('vis'); qRender(); }
+
+let ft=-1, fm='cards', fc2i=0, fc2flipped=false;
+let fqi=0, fqs=0, fqa=0, fqAnswers=[];
+function selectTheme(idx) {
+  ft=idx; fm='cards'; fc2i=0; fc2flipped=false; fqi=0; fqs=0; fqa=0; fqAnswers=[];
+  document.querySelectorAll('.theme-card').forEach((c,i)=>c.classList.toggle('active',i===idx));
+  document.getElementById('theme-grid').style.display='none';
+  document.getElementById('focus-content').classList.add('vis');
+  document.getElementById('focus-heading').textContent=FOCUS[ft].title;
+  setFMode('cards'); fc2Render();
+}
+function backToThemes() {
+  document.getElementById('theme-grid').style.display='grid';
+  document.getElementById('focus-content').classList.remove('vis');
+  document.querySelectorAll('.theme-card').forEach(c=>c.classList.remove('active'));
+  ft=-1;
+}
+function setFMode(m) {
+  fm=m;
+  document.getElementById('fmode-cards').classList.toggle('active',m==='cards');
+  document.getElementById('fmode-quiz').classList.toggle('active',m==='quiz');
+  document.getElementById('focus-cards-section').style.display=m==='cards'?'block':'none';
+  document.getElementById('focus-quiz-section').style.display=m==='quiz'?'block':'none';
+  if(m==='quiz'){ fqi=0;fqs=0;fqa=0;fqAnswers=[];document.getElementById('fmq-active').style.display='block';document.getElementById('fq-score').style.display='none';fqRender(); }
+}
+function fc2Render() {
+  if(ft<0) return;
+  const c=FOCUS[ft].cards[fc2i];
+  document.getElementById('fc2-q').innerHTML=c.q;
+  document.getElementById('fc2-a').innerHTML=c.a;
+  document.getElementById('fc2-cnt').textContent=`Carte ${fc2i+1} / ${FOCUS[ft].cards.length}`;
+  document.getElementById('fc2-bar').style.width=((fc2i+1)/FOCUS[ft].cards.length*100)+'%';
+  document.getElementById('fc2-scene').classList.remove('flipped');
+  fc2flipped=false;
+}
+function fc2Flip(){ fc2flipped=!fc2flipped; document.getElementById('fc2-scene').classList.toggle('flipped',fc2flipped); }
+function fc2Next(){ fc2i=(fc2i+1)%FOCUS[ft].cards.length; fc2Render(); }
+function fc2Prev(){ fc2i=(fc2i-1+FOCUS[ft].cards.length)%FOCUS[ft].cards.length; fc2Render(); }
+function fqRender() {
+  if(ft<0) return;
+  const quiz=FOCUS[ft].quiz, q=quiz[fqi];
+  document.getElementById('fq-cnt').textContent=`Question ${fqi+1} / ${quiz.length}`;
+  document.getElementById('fq-badge').textContent=`${fqs} / ${fqa}`;
+  document.getElementById('fq-text').textContent=q.q;
+  document.getElementById('fq-bar').style.width=(fqi/quiz.length*100)+'%';
+  const od=document.getElementById('fq-opts'); od.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=`${['A','B','C','D'][i]}. ${o}`;
+    b.onclick=()=>fqSelect(i); od.appendChild(b);
+  });
+  document.getElementById('fq-fb').className='fb';
+  document.getElementById('fq-fb').innerHTML='';
+  document.getElementById('fqnext').style.display='none';
+}
+function fqSelect(i) {
+  const q=FOCUS[ft].quiz[fqi];
+  document.querySelectorAll('#fq-opts .opt').forEach(b=>b.disabled=true);
+  const ok=i===q.c;
+  document.querySelectorAll('#fq-opts .opt')[i].classList.add(ok?'correct':'wrong');
+  if(!ok) document.querySelectorAll('#fq-opts .opt')[q.c].classList.add('correct');
+  if(ok) fqs++; fqa++;
+  fqAnswers.push({i,c:q.c,q:q.q,opts:q.opts,e:q.e});
+  const fb=document.getElementById('fq-fb');
+  fb.className='fb '+(ok?'correct':'wrong');
+  fb.innerHTML=(ok?'<strong>✅ Bonne réponse !</strong>':'<strong>❌ Mauvaise réponse.</strong> ')+q.e;
+  document.getElementById('fq-badge').textContent=`${fqs} / ${fqa}`;
+  document.getElementById('fqnext').style.display='inline-flex';
+}
+function fqNext() { fqi++; if(fqi>=FOCUS[ft].quiz.length){ fqShowScore(); return; } fqRender(); }
+function fqShowScore() {
+  document.getElementById('fmq-active').style.display='none';
+  document.getElementById('fq-score').style.display='block';
+  const pct=fqs/FOCUS[ft].quiz.length;
+  let emoji='😤',title='À revoir !';
+  if(pct>=.8){emoji='🏆';title='Thème maîtrisé !';}
+  else if(pct>=.6){emoji='💪';title='Bien !';}
+  document.getElementById('fqs-emoji').textContent=emoji;
+  document.getElementById('fqs-title').textContent=title;
+  document.getElementById('fqs-num').textContent=`${fqs} / ${FOCUS[ft].quiz.length}`;
+  document.getElementById('fqs-det').textContent=`${Math.round(pct*100)} %`;
+  const errors=fqAnswers.filter(a=>a.i!==a.c);
+  document.getElementById('fq-rev-list').innerHTML=errors.length===0?'<div style="color:var(--ok);padding:10px 0;font-weight:600">✅ Parfait !</div>':errors.map(a=>`<div class="rev-item"><div class="rev-q">${a.q}</div><div class="rev-wrong">✗ ${a.opts[a.i]}</div><div class="rev-right">✓ ${a.opts[a.c]}</div></div>`).join('');
+}
+function fqRestart() { fqi=0;fqs=0;fqa=0;fqAnswers=[]; document.getElementById('fmq-active').style.display='block'; document.getElementById('fq-score').style.display='none'; fqRender(); }
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  const idx={'flashcards':0,'quiz':1,'focus':2,'fiche':3}[name];
+  document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+}
+
+fcRender();
+qRender();
+</script>
+</body>
+</html>
