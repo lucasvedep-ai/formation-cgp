@@ -284,6 +284,7 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
     <div class="focus-mode-btns">
       <button class="fmode-btn active" id="fmode-cards" onclick="setFMode('cards')">🃏 Cartes</button>
       <button class="fmode-btn" id="fmode-quiz" onclick="setFMode('quiz')">📝 Mini-quiz</button>
+      <button class="fmode-btn" id="fmode-exercices" onclick="setFMode('exercices')">🏋️ Exercices</button>
     </div>
     <div id="focus-cards-section">
       <div class="fc-meta">
@@ -334,6 +335,9 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
         </div>
         <div class="rev-section"><div class="rev-title">Erreurs</div><div id="fq-rev-list"></div></div>
       </div>
+    </div>
+    <div id="focus-ex-section" style="display:none">
+      <div id="focus-ex-container"></div>
     </div>
   </div>
 </div>
@@ -701,9 +705,12 @@ function setFMode(m) {
   fm=m;
   document.getElementById('fmode-cards').classList.toggle('active',m==='cards');
   document.getElementById('fmode-quiz').classList.toggle('active',m==='quiz');
+  document.getElementById('fmode-exercices').classList.toggle('active',m==='exercices');
   document.getElementById('focus-cards-section').style.display=m==='cards'?'block':'none';
   document.getElementById('focus-quiz-section').style.display=m==='quiz'?'block':'none';
+  document.getElementById('focus-ex-section').style.display=m==='exercices'?'block':'none';
   if(m==='quiz'){ fqi=0;fqs=0;fqa=0;fqAnswers=[];document.getElementById('fmq-active').style.display='block';document.getElementById('fq-score').style.display='none';fqRender(); }
+  if(m==='exercices'){ initFocusEx(ft); }
 }
 function fc2Render() {
   if(ft<0) return;
@@ -817,6 +824,184 @@ function switchTab(name) {
 
 
 /* ════════════════════════════════════════════
+   EXERCICES FOCUS — données et moteur
+   ════════════════════════════════════════════ */
+const FOCUS_EX = [
+  /* Thème 0 — Les intervenants */
+  { exercises: [
+    { id:'f0e1', title:'① Propriété du portefeuille', type:'match',
+      items:[
+        {id:'f0e1a', text:"Portefeuille = propriété de l'intermédiaire lui-même", answer:'court'},
+        {id:'f0e1b', text:'Portefeuille = propriété de la compagnie mandante', answer:'agent'},
+      ],
+      zones:[{key:'court',label:'🤝 Courtier'},{key:'agent',label:'🏛️ Agent général'}]
+    },
+    { id:'f0e2', title:'② Activités du MIA — peut ou ne peut pas ?', type:'multi',
+      items:[
+        {id:'f0e2a', text:'Apporter des affaires', answer:'peut'},
+        {id:'f0e2b', text:'Encaisser des cotisations', answer:'peut'},
+        {id:'f0e2c', text:'Remettre des fonds (assurance-vie)', answer:'peut'},
+        {id:'f0e2d', text:'Gérer les contrats en cours', answer:'nepeut'},
+        {id:'f0e2e', text:'Régler des sinistres', answer:'nepeut'},
+      ],
+      zones:[{key:'peut',label:'✅ MIA peut',cls:'obl-h'},{key:'nepeut',label:'❌ MIA ne peut pas',cls:'noo-h'}]
+    },
+    { id:'f0e3', title:"③ Familles d'organismes → code juridique", type:'match',
+      items:[
+        {id:'f0e3a', text:'Code des assurances', answer:'ea'},
+        {id:'f0e3b', text:'Code de la mutualité', answer:'mut'},
+        {id:'f0e3c', text:'Code de la Sécurité Sociale', answer:'ip'},
+      ],
+      zones:[{key:'ea',label:"🏢 Entreprises d'assurances"},{key:'mut',label:'🤲 Sociétés mutuelles'},{key:'ip',label:'🛡️ Institutions de prévoyance'}]
+    },
+  ]},
+  /* Thème 1 — 3 conditions d'exercice */
+  { exercises: [
+    { id:'f1e1', title:'① Classer par niveau de capacité professionnelle', type:'multi',
+      items:[
+        {id:'f1e1a', text:"Courtier d'assurances", answer:'niv1'},
+        {id:'f1e1b', text:"Agent général d'assurances", answer:'niv1'},
+        {id:'f1e1c', text:"Salarié responsable de l'activité", answer:'niv1'},
+        {id:'f1e1d', text:"Mandataire d'assurances", answer:'niv2'},
+        {id:'f1e1e', text:'MIA sans responsabilité', answer:'niv2'},
+        {id:'f1e1f', text:'Intermédiation à titre accessoire', answer:'niv3'},
+      ],
+      zones:[{key:'niv1',label:'Niveau I (R512-9)'},{key:'niv2',label:'Niveau II (R512-10)'},{key:'niv3',label:'Niveau III (R512-12)'}]
+    },
+    { id:'f1e2', title:'② Compléter les seuils réglementaires', type:'table',
+      items:[
+        {id:'f1e2a', text:'1,5 M€', answer:'rcp-sin'},
+        {id:'f1e2b', text:'2 M€', answer:'rcp-an'},
+        {id:'f1e2c', text:'20 %', answer:'franchise'},
+        {id:'f1e2d', text:'115 000 €', answer:'gf-min'},
+        {id:'f1e2e', text:'3 jours francs', answer:'delai-gf'},
+      ],
+      zones:[
+        {key:'rcp-sin',label:'RCP minimum par sinistre'},
+        {key:'rcp-an',label:'RCP minimum par an'},
+        {key:'franchise',label:'Franchise max (inopposable aux victimes)'},
+        {key:'gf-min',label:'Garantie financière minimum'},
+        {key:'delai-gf',label:'Délai avant cessation de la GF'},
+      ]
+    },
+    { id:'f1e3', title:'③ Exemptions — qui est dispensé de quoi ?', type:'match',
+      items:[
+        {id:'f1e3a', text:'Mandataire dont le mandant fournit une garantie équivalente', answer:'ex-rcp'},
+        {id:'f1e3b', text:"Intermédiaire dont le mandant a expressément chargé l'encaissement des fonds", answer:'ex-gf'},
+      ],
+      zones:[{key:'ex-rcp',label:'Dispensé de RCP'},{key:'ex-gf',label:'Dispensé de GF'}]
+    },
+  ]},
+  /* Thème 2 — Types d'assurances */
+  { exercises: [
+    { id:'f2e1', title:'① Répartition vs Capitalisation — classer les caractéristiques', type:'multi',
+      items:[
+        {id:'f2e1a', text:"Cotisations de l'année paient les sinistres de l'année", answer:'rep'},
+        {id:'f2e1b', text:'Provisions techniques', answer:'rep'},
+        {id:'f2e1c', text:'Assurance IARD (dommages)', answer:'rep'},
+        {id:'f2e1d', text:'Primes investies individuellement et capitalisées', answer:'cap'},
+        {id:'f2e1e', text:'Provisions mathématiques', answer:'cap'},
+        {id:'f2e1f', text:'Assurance-vie', answer:'cap'},
+      ],
+      zones:[{key:'rep',label:'🔄 Répartition'},{key:'cap',label:'📈 Capitalisation'}]
+    },
+    { id:'f2e2', title:'② Vie entière / Vie proprement dite / Mixte', type:'match',
+      items:[
+        {id:'f2e2a', text:'Capital versé quelle que soit la date du décès', answer:'ve'},
+        {id:'f2e2b', text:'Capital versé uniquement si vivant à la date fixée', answer:'vpd'},
+        {id:'f2e2c', text:"Capital si décès dans le délai OU si vivant à l'échéance", answer:'mix'},
+      ],
+      zones:[{key:'ve',label:'Vie entière'},{key:'vpd',label:'Vie proprement dite'},{key:'mix',label:'Mixte'}]
+    },
+    { id:'f2e3', title:'③ Mode de déclenchement RC — classer les caractéristiques', type:'multi',
+      items:[
+        {id:'f2e3a', text:'Le sinistre survient pendant la durée du contrat', answer:'fd'},
+        {id:'f2e3b', text:'La réclamation peut être postérieure à la fin du contrat', answer:'fd'},
+        {id:'f2e3c', text:'Sinistre + réclamation dans le délai contractuel', answer:'rv'},
+        {id:'f2e3d', text:'Délai minimum de 5 ans après fin du contrat', answer:'rv'},
+      ],
+      zones:[{key:'fd',label:'⚡ Fait dommageable'},{key:'rv',label:'📩 Réclamation de la victime'}]
+    },
+  ]},
+];
+
+function setupFDZ(dz) {
+  dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('dz-hover');});
+  dz.addEventListener('dragleave',()=>dz.classList.remove('dz-hover'));
+  dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('dz-hover');const d=document.getElementById(e.dataTransfer.getData('text'));if(d)placeItem(dz,d);});
+  dz.addEventListener('click',e=>{e.stopPropagation();if(exPicked)placeItem(dz,exPicked);});
+}
+function initFocusEx(idx) {
+  if(idx<0||!FOCUS_EX[idx]) return;
+  const box=document.getElementById('focus-ex-container');
+  box.innerHTML='';
+  FOCUS_EX[idx].exercises.forEach(ex=>{
+    const sid='fex-src-'+ex.id;
+    const card=document.createElement('div'); card.className='ex-card';
+    const ttl=document.createElement('div'); ttl.className='ex-title'; ttl.textContent=ex.title; card.appendChild(ttl);
+    const src=document.createElement('div'); src.className='ex-source'; src.id=sid;
+    [...ex.items].sort(()=>Math.random()-.5).forEach(it=>{
+      const el=document.createElement('div'); el.className='drag-item';
+      el.id='fex-item-'+it.id; el.dataset.answer=it.answer; el.dataset.srcId=sid;
+      el.textContent=it.text;
+      el.addEventListener('click',e=>{e.stopPropagation();pickItem(el);});
+      el.draggable=true;
+      el.addEventListener('dragstart',e=>{e.dataTransfer.setData('text',el.id);setTimeout(()=>el.classList.add('picked'),0);exPicked=el;});
+      el.addEventListener('dragend',()=>el.classList.remove('picked'));
+      src.appendChild(el);
+    });
+    card.appendChild(src);
+    if(ex.type==='table'){
+      const tbl=document.createElement('table'); tbl.className='ex-table';
+      ex.zones.forEach(z=>{
+        const tr=document.createElement('tr');
+        const td1=document.createElement('td'); td1.textContent=z.label;
+        const td2=document.createElement('td');
+        const dz=document.createElement('div'); dz.className='drop-zone inline'; dz.dataset.key=z.key;
+        setupFDZ(dz); td2.appendChild(dz); tr.appendChild(td1); tr.appendChild(td2); tbl.appendChild(tr);
+      });
+      card.appendChild(tbl);
+    } else {
+      const n=ex.zones.length;
+      const g=document.createElement('div'); g.className=n===2?'ex-grid2':n===3?'ex-grid3':'ex-grid4';
+      ex.zones.forEach(z=>{
+        const col=document.createElement('div');
+        const hdr=document.createElement('div'); hdr.className='ex-col-header'+(z.cls?' '+z.cls:''); hdr.textContent=z.label; col.appendChild(hdr);
+        const dz=document.createElement('div'); dz.className='drop-zone'+(ex.type==='multi'?' multi':''); dz.dataset.key=z.key;
+        setupFDZ(dz); col.appendChild(dz); g.appendChild(col);
+      });
+      card.appendChild(g);
+    }
+    const btns=document.createElement('div'); btns.className='ex-btns';
+    const chk=document.createElement('button'); chk.className='btn-check'; chk.textContent='🔍 Corriger'; chk.onclick=()=>checkFEx(ex); btns.appendChild(chk);
+    const rst=document.createElement('button'); rst.className='btn-reset'; rst.textContent='↺ Réinitialiser'; rst.onclick=()=>resetFEx(ex,sid); btns.appendChild(rst);
+    card.appendChild(btns);
+    const fb=document.createElement('div'); fb.className='ex-feedback'; fb.id='fex-fb-'+ex.id; card.appendChild(fb);
+    box.appendChild(card);
+  });
+}
+function checkFEx(ex) {
+  let ok=0,tot=ex.items.length;
+  ex.items.forEach(it=>{
+    const el=document.getElementById('fex-item-'+it.id); if(!el) return;
+    el.classList.remove('ex-ok','ex-ko');
+    const z=el.closest('.drop-zone');
+    if(z&&z.dataset.key===it.answer){el.classList.add('ex-ok');ok++;}else el.classList.add('ex-ko');
+  });
+  const fb=document.getElementById('fex-fb-'+ex.id);
+  fb.className='ex-feedback '+(ok===tot?'ok':'ko');
+  fb.textContent=ok===tot?'✅ Parfait ! '+ok+'/'+tot+' — tous les éléments sont bien placés.':'❌ '+ok+'/'+tot+' correct. Les éléments en rouge ne sont pas au bon endroit.';
+}
+function resetFEx(ex,sid) {
+  const src=document.getElementById(sid);
+  ex.items.forEach(it=>{const el=document.getElementById('fex-item-'+it.id);if(el){el.classList.remove('ex-ok','ex-ko','picked');if(src)src.appendChild(el);}});
+  const fb=document.getElementById('fex-fb-'+ex.id);
+  if(fb){fb.className='ex-feedback';fb.textContent='';}
+  if(exPicked){exPicked.classList.remove('picked');exPicked=null;}
+}
+
+
+/* ════════════════════════════════════════════
    EXERCICES INTERACTIFS — données + moteur
    ════════════════════════════════════════════ */
 const EX_DATA = {
@@ -919,11 +1104,10 @@ function placeItem(zone, item) {
   item.classList.remove('picked');
   exPicked = null;
   const isMulti = zone.classList.contains('multi');
-  const srcEl = document.getElementById('ex'+item.dataset.exId+'-src');
+  const srcEl = document.getElementById(item.dataset.srcId||('ex'+item.dataset.exId+'-src'));
   if(!isMulti) {
-    // Zone mono : renvoyer l'existant à la source
     const existing = zone.querySelector('.drag-item');
-    if(existing) srcEl.appendChild(existing);
+    if(existing&&srcEl) srcEl.appendChild(existing);
   }
   zone.appendChild(item);
 }
