@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jour 02 — Régimes matrimoniaux & Succession | Formation CGP</title>
+<style>
+:root {
+  --navy:#1a2744; --navy2:#253460; --gold:#c9a227; --gold2:#e8c84a;
+  --bg:#f4f6fb; --white:#fff; --text:#1a2744; --muted:#5a6a8a;
+  --ok:#2d8a4e; --err:#c0392b; --ok-bg:#eafaf1; --err-bg:#fdf0ef;
+  --border:#dce3f0; --shadow:0 8px 32px rgba(26,39,68,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:16px 28px 0}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.back-btn{color:rgba(255,255,255,.7);text-decoration:none;font-size:.8rem;font-weight:600;padding:5px 12px;border:1.5px solid rgba(255,255,255,.25);border-radius:8px;transition:.15s}
+.back-btn:hover{color:#fff;border-color:rgba(255,255,255,.6)}
+header h1{font-size:1.35rem;font-weight:800}
+header p{font-size:.8rem;color:rgba(255,255,255,.55);margin-top:3px}
+.tabs{display:flex;gap:3px;margin-top:16px;flex-wrap:wrap}
+.tab-btn{padding:9px 18px;border:none;background:rgba(255,255,255,.12);color:rgba(255,255,255,.65);border-radius:8px 8px 0 0;cursor:pointer;font-size:.88rem;font-weight:700;transition:.15s;white-space:nowrap}
+.tab-btn.active{background:var(--bg);color:var(--navy)}
+.tab-btn:hover:not(.active){background:rgba(255,255,255,.2);color:#fff}
+.tab-focus-btn{background:rgba(201,162,39,.2);color:var(--gold2)}
+.tab-focus-btn.active{background:var(--bg);color:#a37d10}
+main{max-width:840px;margin:0 auto;padding:32px 18px}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.pg-wrap{background:var(--border);border-radius:99px;height:5px;margin-bottom:26px;overflow:hidden}
+.pg-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;transition:width .4s}
+.fc-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.fc-count{font-size:.88rem;color:var(--muted);font-weight:600}
+.fc-ch{font-size:.75rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.scene{width:100%;height:270px;perspective:1200px;cursor:pointer;margin-bottom:20px}
+.card-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1)}
+.scene.flipped .card-inner{transform:rotateY(180deg)}
+.card-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;box-shadow:var(--shadow)}
+.cf-front{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff}
+.cf-back{background:#fff;color:var(--text);transform:rotateY(180deg);border:2px solid var(--gold)}
+.card-lbl{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+.cf-front .card-lbl{color:var(--gold2)}
+.cf-back .card-lbl{color:var(--gold)}
+.card-txt{font-size:1.05rem;line-height:1.6}
+.cf-front .card-txt{color:#fff}
+.tap-hint{position:absolute;bottom:14px;font-size:.7rem;color:rgba(255,255,255,.35)}
+.fc-ctrl{display:flex;gap:10px;justify-content:center;margin-bottom:12px}
+.btn{padding:10px 24px;border:none;border-radius:10px;font-size:.92rem;font-weight:700;cursor:pointer;transition:.15s}
+.btn:active{transform:scale(.97)}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-navy:hover{background:var(--navy2)}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-gold:hover{background:#b8911e}
+.btn-light{background:var(--border);color:var(--text)}
+.btn-light:hover{background:#c4cede}
+.btn-sm{padding:6px 14px;font-size:.78rem;border:1.5px solid var(--border);background:#fff;color:var(--muted);border-radius:8px;cursor:pointer;font-weight:600;transition:.15s}
+.btn-sm:hover{border-color:var(--navy);color:var(--navy)}
+.row-right{display:flex;justify-content:flex-end;margin-top:10px}
+.quiz-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.quiz-cnt{font-size:.88rem;color:var(--muted);font-weight:600}
+.quiz-badge{font-size:.82rem;font-weight:700;color:var(--navy);background:#fff;border:2px solid var(--border);border-radius:99px;padding:4px 14px}
+.qcard{background:#fff;border-radius:16px;padding:32px;box-shadow:var(--shadow);margin-bottom:18px}
+.q-tag{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--gold);border:1.5px solid var(--gold);border-radius:99px;padding:2px 12px;margin-bottom:14px}
+.q-text{font-size:1.08rem;font-weight:700;color:var(--navy);line-height:1.5;margin-bottom:24px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{width:100%;text-align:left;padding:13px 18px;background:var(--bg);border:2px solid var(--border);border-radius:10px;cursor:pointer;font-size:.93rem;font-weight:500;color:var(--text);transition:.15s;line-height:1.4}
+.opt:hover:not(:disabled){border-color:var(--navy);background:#fff}
+.opt.correct{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700}
+.opt.wrong{border-color:var(--err);background:var(--err-bg);color:var(--err);font-weight:700}
+.opt:disabled{cursor:default}
+.opt.selected{background:rgba(77,124,195,.15);border:2px solid var(--navy)}
+.opt.selected:hover{background:rgba(77,124,195,.25)}
+.fb{margin-top:16px;padding:13px 16px;border-radius:10px;font-size:.88rem;line-height:1.5;display:none}
+.fb.correct{background:var(--ok-bg);border:1.5px solid var(--ok);color:var(--ok);display:block}
+.fb.wrong{background:var(--err-bg);border:1.5px solid var(--err);color:#7a1c14;display:block}
+.fb strong{display:block;margin-bottom:3px}
+.next-row{display:flex;justify-content:flex-end;margin-top:6px}
+#qnext{display:none}
+.score-scr{background:#fff;border-radius:16px;padding:44px 32px;box-shadow:var(--shadow);text-align:center;display:none}
+.score-scr.vis{display:block}
+.score-emoji{font-size:3.5rem;margin-bottom:12px}
+.score-title{font-size:1.5rem;font-weight:800;color:var(--navy);margin-bottom:6px}
+.score-sub{font-size:.9rem;color:var(--muted);margin-bottom:28px}
+.score-num{font-size:3.8rem;font-weight:900;color:var(--navy);line-height:1}
+.score-det{font-size:.95rem;color:var(--muted);margin:6px 0 28px}
+.s-bar-wrap{background:var(--border);border-radius:99px;height:10px;max-width:280px;margin:0 auto 28px;overflow:hidden}
+.s-bar-fill{height:100%;border-radius:99px;transition:width 1s}
+.score-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.rev-section{text-align:left}
+.rev-title{font-size:.95rem;font-weight:700;color:var(--navy);padding-bottom:8px;border-bottom:2px solid var(--border);margin-bottom:12px}
+.rev-item{padding:12px 0;border-bottom:1px solid var(--border);font-size:.88rem}
+.rev-q{font-weight:600;margin-bottom:5px}
+.rev-wrong{color:var(--err);font-size:.83rem}
+.rev-right{color:var(--ok);font-size:.83rem;margin-top:2px}
+.focus-intro{font-size:.88rem;color:var(--muted);margin-bottom:18px}
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px}
+.theme-card{background:#fff;border:2.5px solid var(--border);border-radius:14px;padding:20px 18px;cursor:pointer;transition:.15s;text-align:left}
+.theme-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(201,162,39,.15)}
+.theme-card.active{border-color:var(--gold);background:linear-gradient(135deg,#fdf8ec,#fff8e0)}
+.theme-num{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:8px}
+.theme-name{font-size:.98rem;font-weight:700;color:var(--navy);margin-bottom:5px;line-height:1.3}
+.theme-desc{font-size:.78rem;color:var(--muted);line-height:1.4}
+.focus-content{display:none}
+.focus-content.vis{display:block}
+.focus-back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:.82rem;font-weight:600;cursor:pointer;margin-bottom:18px;border:none;background:none;padding:0}
+.focus-back:hover{color:var(--navy)}
+.focus-mode-btns{display:flex;gap:8px;margin-bottom:22px}
+.fmode-btn{padding:8px 20px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;border:2px solid var(--border);background:#fff;color:var(--muted);transition:.15s}
+.fmode-btn.active{border-color:var(--gold);background:var(--gold);color:#fff}
+.focus-heading{font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:16px}
+.scene-sm{height:220px}
+.card-txt-sm{font-size:.95rem}
+.fiche-actions{display:flex;gap:10px;align-items:center;margin-bottom:24px;flex-wrap:wrap}
+.fiche-body{background:#fff;border-radius:16px;padding:36px 40px;box-shadow:var(--shadow);line-height:1.7}
+.fiche-body h2{font-size:1.15rem;font-weight:800;color:var(--navy);margin:28px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--border)}
+.fiche-body h2:first-child{margin-top:0}
+.fiche-body h3{font-size:.98rem;font-weight:700;color:var(--navy2);margin:18px 0 8px}
+.fiche-body p{font-size:.9rem;color:var(--text);margin-bottom:10px}
+.fiche-body ul{padding-left:18px;margin-bottom:10px}
+.fiche-body li{font-size:.9rem;margin-bottom:4px;color:var(--text)}
+.fiche-body strong{color:var(--navy)}
+.fiche-body table{width:100%;border-collapse:collapse;margin:12px 0 16px;font-size:.85rem}
+.fiche-body th{background:var(--bg);color:var(--navy);font-weight:700;padding:9px 12px;text-align:left;border:1px solid var(--border)}
+.fiche-body td{padding:8px 12px;border:1px solid var(--border)}
+.fiche-body td:first-child{font-weight:600}
+.fiche-body blockquote{background:#f8f9fc;border-left:4px solid var(--gold);padding:10px 16px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.88rem;color:var(--muted)}
+.fiche-body .warn{background:#fff8e0;border-left:4px solid var(--gold);padding:10px 16px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.88rem}
+#tab-exercices{padding-bottom:40px}
+.ex-header{margin-bottom:24px}
+.ex-header h2{font-size:1.15rem;font-weight:700;margin-bottom:6px}
+.ex-sub{font-size:.82rem;color:var(--muted)}
+.ex-card{background:var(--white);border-radius:14px;padding:20px;margin-bottom:22px;box-shadow:var(--shadow)}
+.ex-title{font-size:.97rem;font-weight:700;margin-bottom:16px;color:var(--navy)}
+.ex-source{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:12px;background:var(--bg);border-radius:10px;margin-bottom:16px;border:2px dashed var(--border);transition:border-color .2s}
+.ex-source.has-picked{border-color:var(--navy)}
+.drag-item{padding:8px 14px;background:var(--navy);color:#fff;border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:500;user-select:none;transition:transform .15s,box-shadow .15s,opacity .15s;white-space:nowrap}
+.drag-item:hover{opacity:.9}
+.drag-item.picked{transform:scale(1.06);box-shadow:0 4px 18px rgba(0,0,0,.28);outline:3px solid #fff}
+.drag-item.ex-ok{background:var(--ok)!important}
+.drag-item.ex-ko{background:var(--err)!important}
+.drop-zone{min-height:48px;border:2px dashed #ccc;border-radius:8px;padding:6px 8px;display:flex;align-items:center;flex-wrap:wrap;gap:6px;transition:border-color .2s,background .2s;cursor:pointer}
+.drop-zone.multi{min-height:90px;align-items:flex-start}
+.drop-zone.dz-hover{border-color:var(--navy);background:rgba(77,124,195,.07)}
+.ex-grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.ex-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.ex-grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px}
+.ex-col-header{font-weight:700;font-size:.82rem;margin-bottom:8px;text-align:center;padding:4px 8px;border-radius:6px;color:#1a1a2e}
+.ex-table{width:100%;border-collapse:collapse;margin-bottom:14px}
+.ex-table td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:.87rem;vertical-align:middle}
+.ex-btns{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.btn-check{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-weight:600;cursor:pointer;font-size:.9rem}
+.btn-reset{background:transparent;color:var(--muted);border:1.5px solid var(--border);border-radius:8px;padding:10px 18px;cursor:pointer;font-size:.9rem}
+.ex-feedback{margin-top:14px;padding:10px 14px;border-radius:8px;font-size:.88rem;display:none}
+.ex-feedback.ok{background:var(--ok-bg);color:var(--ok);display:block}
+.ex-feedback.ko{background:rgba(194,24,7,.08);color:var(--err);display:block}
+@media(max-width:640px){.ex-grid4{grid-template-columns:repeat(2,1fr)}.ex-grid3{grid-template-columns:1fr 1fr}.drag-item{font-size:.78rem;padding:7px 11px}}
+@media(max-width:420px){.ex-grid3{grid-template-columns:1fr}}
+@media print{body{background:#fff}header,.tabs,main>.tab-panel:not(#tab-fiche),.fiche-actions,.no-print{display:none!important}#tab-fiche{display:block!important;padding:0!important}.fiche-body{box-shadow:none;padding:0;border-radius:0}}
+@media(max-width:600px){main{padding:20px 12px}.qcard,.fiche-body{padding:20px 16px}.scene{height:240px}header{padding:14px 16px 0}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <a href="../index.html" class="back-btn">← Hub Formation CGP</a>
+    <span style="font-size:.75rem;color:rgba(255,255,255,.4)">23 juin 2026</span>
+  </div>
+  <h1>📘 Jour 02 — Régimes matrimoniaux & Succession</h1>
+  <p>Cap Finances · 71 slides · 2 modules</p>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('flashcards')">🃏 Flashcards</button>
+    <button class="tab-btn" onclick="switchTab('quiz')">📝 Quiz</button>
+    <button class="tab-btn tab-focus-btn" onclick="switchTab('focus')">🎯 Focus</button>
+    <button class="tab-btn" onclick="switchTab('fiche')">📄 Fiche</button>
+    <button class="tab-btn" onclick="switchTab('exercices')">🏋️ Exercices</button>
+  </div>
+</header>
+<main>
+
+<div id="tab-flashcards" class="tab-panel active">
+  <div class="fc-meta">
+    <span class="fc-count" id="fc-cnt">Carte 1 / 41</span>
+    <span class="fc-ch" id="fc-ch"></span>
+  </div>
+  <div class="pg-wrap"><div class="pg-fill" id="fc-bar" style="width:2%"></div></div>
+  <div class="scene" id="fc-scene" onclick="fcFlip()">
+    <div class="card-inner" id="fc-inner">
+      <div class="card-face cf-front">
+        <div class="card-lbl">❓ Question</div>
+        <div class="card-txt" id="fc-q"></div>
+        <div class="tap-hint">Cliquer pour retourner</div>
+      </div>
+      <div class="card-face cf-back">
+        <div class="card-lbl">✅ Réponse</div>
+        <div class="card-txt" id="fc-a"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-ctrl">
+    <button class="btn btn-light" onclick="fcPrev()">←</button>
+    <button class="btn btn-gold" onclick="fcFlip()">Retourner</button>
+    <button class="btn btn-navy" onclick="fcNext()">→</button>
+  </div>
+  <div class="row-right"><button class="btn-sm" onclick="fcShuffle()">🔀 Mélanger</button></div>
+</div>
+
+<div id="tab-quiz" class="tab-panel">
+  <div id="quiz-active">
+    <div class="quiz-hdr">
+      <span class="quiz-cnt" id="q-cnt">Question 1 / 15</span>
+      <span class="quiz-badge" id="q-badge">0 / 0</span>
+    </div>
+    <div class="pg-wrap"><div class="pg-fill" id="q-bar" style="width:0%"></div></div>
+    <div class="qcard">
+      <div class="q-tag" id="q-tag"></div>
+      <div class="q-text" id="q-text"></div>
+      <div class="opts" id="q-opts"></div>
+      <div class="fb" id="q-fb"></div>
+    </div>
+    <div class="next-row"><button class="btn btn-navy" id="qnext" onclick="qNext()">Question suivante →</button></div>
+  </div>
+  <div class="score-scr" id="score-scr">
+    <div class="score-emoji" id="s-emoji"></div>
+    <div class="score-title" id="s-title"></div>
+    <div class="score-sub" id="s-sub"></div>
+    <div class="score-num" id="s-num"></div>
+    <div class="score-det" id="s-det"></div>
+    <div class="s-bar-wrap"><div class="s-bar-fill" id="s-bar"></div></div>
+    <div class="score-btns">
+      <button class="btn btn-navy" onclick="qRestart()">🔁 Recommencer</button>
+      <button class="btn btn-light" onclick="switchTab('flashcards')">🃏 Flashcards</button>
+      <button class="btn btn-light" onclick="switchTab('focus')">🎯 Focus</button>
+    </div>
+    <div class="rev-section">
+      <div class="rev-title">📋 Erreurs à revoir</div>
+      <div id="rev-list"></div>
+    </div>
+  </div>
+</div>
+
+<div id="tab-focus" class="tab-panel">
+  <p class="focus-intro">6 thèmes clés du jour — cartes ciblées + mini-quiz + exercices par thème.</p>
+  <div class="theme-grid" id="theme-grid">
+    <div class="theme-card" onclick="selectTheme(0)">
+      <div class="theme-num">Thème 1</div>
+      <div class="theme-name">💒 Régimes légaux</div>
+      <div class="theme-desc">Mariage, PACS, concubinage — structures et régime primaire</div>
+    </div>
+    <div class="theme-card" onclick="selectTheme(1)">
+      <div class="theme-num">Thème 2</div>
+      <div class="theme-name">🏘️ Régimes communautaires</div>
+      <div class="theme-desc">CMA, CRA, communauté universelle — biens propres vs communs</div>
+    </div>
+    <div class="theme-card" onclick="selectTheme(2)">
+      <div class="theme-num">Thème 3</div>
+      <div class="theme-name">🔀 Régimes séparatistes</div>
+      <div class="theme-desc">Séparation des biens, participation aux acquêts, PACS</div>
+    </div>
+    <div class="theme-card" onclick="selectTheme(3)">
+      <div class="theme-num">Thème 4</div>
+      <div class="theme-name">⚖️ Masse successorale</div>
+      <div class="theme-desc">Formule de calcul et liens avec le régime matrimonial</div>
+    </div>
+    <div class="theme-card" onclick="selectTheme(4)">
+      <div class="theme-num">Thème 5</div>
+      <div class="theme-name">👨‍👩‍👧 Les 4 ordres</div>
+      <div class="theme-desc">Qui hérite, dans quel ordre et de combien</div>
+    </div>
+    <div class="theme-card" onclick="selectTheme(5)">
+      <div class="theme-num">Thème 6</div>
+      <div class="theme-name">🔄 La représentation</div>
+      <div class="theme-desc">Mécanisme de représentation dans la dévolution légale</div>
+    </div>
+  </div>
+  <div class="focus-content" id="focus-content">
+    <button class="focus-back" onclick="backToThemes()">← Retour aux thèmes</button>
+    <div class="focus-heading" id="focus-heading"></div>
+    <div class="focus-mode-btns">
+      <button class="fmode-btn active" id="fmode-cards" onclick="setFMode('cards')">🃏 Cartes</button>
+      <button class="fmode-btn" id="fmode-quiz" onclick="setFMode('quiz')">📝 Mini-quiz</button>
+      <button class="fmode-btn" id="fmode-exercices" onclick="setFMode('exercices')">🏋️ Exercices</button>
+    </div>
+    <div id="focus-cards-section">
+      <div class="fc-meta">
+        <span class="fc-count" id="fc2-cnt">Carte 1 / 8</span>
+      </div>
+      <div class="pg-wrap"><div class="pg-fill" id="fc2-bar" style="width:12%"></div></div>
+      <div class="scene scene-sm" id="fc2-scene" onclick="fc2Flip()">
+        <div class="card-inner" id="fc2-inner">
+          <div class="card-face cf-front">
+            <div class="card-lbl">❓ Question</div>
+            <div class="card-txt card-txt-sm" id="fc2-q"></div>
+            <div class="tap-hint">Cliquer pour retourner</div>
+          </div>
+          <div class="card-face cf-back">
+            <div class="card-lbl">✅ Réponse</div>
+            <div class="card-txt card-txt-sm" id="fc2-a"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-ctrl">
+        <button class="btn btn-light" onclick="fc2Prev()">←</button>
+        <button class="btn btn-gold" onclick="fc2Flip()">Retourner</button>
+        <button class="btn btn-navy" onclick="fc2Next()">→</button>
+      </div>
+    </div>
+    <div id="focus-quiz-section" style="display:none">
+      <div id="fmq-active">
+        <div class="quiz-hdr">
+          <span class="quiz-cnt" id="fq-cnt">Question 1 / 10</span>
+          <span class="quiz-badge" id="fq-badge">0 / 0</span>
+        </div>
+        <div class="pg-wrap"><div class="pg-fill" id="fq-bar" style="width:0%"></div></div>
+        <div class="qcard">
+          <div class="q-text" id="fq-text"></div>
+          <div class="opts" id="fq-opts"></div>
+          <div class="fb" id="fq-fb"></div>
+        </div>
+        <div class="next-row"><button class="btn btn-navy" id="fqnext" style="display:none" onclick="fqNext()">Suivante →</button></div>
+      </div>
+      <div class="score-scr" id="fq-score">
+        <div class="score-emoji" id="fs-emoji"></div>
+        <div class="score-title" id="fs-title"></div>
+        <div class="score-num" id="fs-num"></div>
+        <div class="score-det" id="fs-det"></div>
+        <div class="s-bar-wrap"><div class="s-bar-fill" id="fs-bar"></div></div>
+        <div class="score-btns">
+          <button class="btn btn-navy" onclick="fqRestart()">🔁 Recommencer</button>
+          <button class="btn btn-light" onclick="setFMode('cards')">🃏 Cartes</button>
+          <button class="btn btn-light" onclick="setFMode('exercices')">🏋️ Exercices</button>
+        </div>
+      </div>
+    </div>
+    <div id="focus-ex-section" style="display:none"></div>
+  </div>
+</div>
+
+<div id="tab-fiche" class="tab-panel">
+  <div class="fiche-actions no-print">
+    <button class="btn btn-navy" onclick="window.print()">🖨️ Imprimer</button>
+    <span style="font-size:.8rem;color:var(--muted)">Fiche de révision — Jour 02</span>
+  </div>
+  <div class="fiche-body">
+    <h2>Module 1 — Les Régimes Matrimoniaux</h2>
+    <h3>1.1 Les 3 modes de vie de couple</h3>
+    <table><tr><th>Statut</th><th>Lien juridique</th><th>Régime des biens (défaut)</th></tr>
+    <tr><td>Mariage</td><td>Conjoints mariés</td><td>Communauté Réduite aux Acquêts (CRA)</td></tr>
+    <tr><td>PACS</td><td>Partenaires pacsés</td><td>Séparation des biens</td></tr>
+    <tr><td>Concubinage</td><td>Aucun lien juridique</td><td>Biens propres + Biens indivis</td></tr>
+    </table>
+    <p><strong>Le régime matrimonial</strong> a un impact sur l'organisation et la transmission du patrimoine.</p>
+    <h3>1.2 Le régime primaire</h3>
+    <p>Socle commun à <strong>tous les régimes matrimoniaux</strong>. Composé de :</p>
+    <ul>
+      <li><strong>Charges du mariage</strong> : respect, fidélité, secours et assistance ; dettes ménagères (engagent les 2 époux sauf dépenses excessives) ; logement familial (ni l'un ni l'autre ne peut le vendre seul, même si bien propre)</li>
+      <li><strong>Droits du conjoint</strong> : gérer ses biens personnels et les biens meubles communs ; passer des contrats d'entretien du ménage ; ouvrir un compte de dépôt ou de titres ; exercer librement sa profession et disposer de ses revenus</li>
+    </ul>
+    <h3>1.3 Les régimes communautaires</h3>
+    <table><tr><th>Régime</th><th>Biens propres</th><th>Biens communs</th></tr>
+    <tr><td>CMA (avant 01/02/1966)</td><td>Immeubles donation/succession ; immeubles avant mariage ; remploi</td><td>Tous les meubles (y compris reçus par don/succession) + immeubles acquis pendant mariage</td></tr>
+    <tr><td>CRA (depuis 01/02/1966) — régime légal</td><td>Tout ce reçu par donation/succession (meubles ET immeubles) ; biens avant mariage ; remploi</td><td>Biens acquis pendant le mariage + revenus des biens propres et communs</td></tr>
+    <tr><td>Communauté universelle</td><td>—</td><td>Tous les biens (présents et futurs)</td></tr>
+    </table>
+    <div class="warn">⚠️ Communauté universelle avec clause d'attribution intégrale : pas de succession au 1er décès → conjoint survivant garde tout → une seule succession au 2ème décès → les enfants n'ont leur abattement (100 000 €) qu'une seule fois.</div>
+    <h3>1.4 Les régimes séparatistes</h3>
+    <table><tr><th>Régime</th><th>Pendant le mariage</th><th>À la dissolution</th></tr>
+    <tr><td>Séparation des biens</td><td>Propres M + Indivis + Propres Mme (chacun gère ses biens)</td><td>Chacun reprend ses propres ; partage de l'indivis selon répartition</td></tr>
+    <tr><td>Participation aux acquêts</td><td>Comme une séparation (chacun gère librement)</td><td>Partage enrichissement : Patrimoine final − Patrimoine initial = Acquêts</td></tr>
+    </table>
+    <h3>1.5 Le PACS et le concubinage</h3>
+    <table><tr><th></th><th>PACS légal</th><th>PACS sur option</th><th>Concubinage</th></tr>
+    <tr><td>Structure</td><td>Propres + Indivis</td><td>Propres + Communs</td><td>Propres + Indivis</td></tr>
+    <tr><td>Convention</td><td colspan="2">Obligatoirement écrite (sous seing privé ou notariée)</td><td>—</td></tr>
+    <tr><td>Publicité</td><td colspan="2">Inscription en marge de l'acte de naissance en mairie</td><td>—</td></tr>
+    </table>
+    <h3>1.6 Liquidation en cas de divorce/rupture</h3>
+    <table><tr><th>Régime</th><th>Ce qui est partagé</th></tr>
+    <tr><td>CRA</td><td>Propres M / Biens Communs (partagés ½ ½) / Propres Mme</td></tr>
+    <tr><td>Communauté universelle</td><td>Tous les biens communs partagés</td></tr>
+    <tr><td>Séparation des biens</td><td>Propres M / Indivis (partagé) / Propres Mme</td></tr>
+    <tr><td>Participation aux acquêts</td><td>Propres M / Enrichissement partagé / Propres Mme</td></tr>
+    </table>
+
+    <h2>Module 2 — La Succession</h2>
+    <h3>2.1 La masse successorale</h3>
+    <p style="font-size:1.1rem;font-weight:800;text-align:center;padding:14px;background:var(--bg);border-radius:10px;border:2px solid var(--gold);margin:12px 0">MASSE SUCCESSORALE = (ACTIF − PASSIF) + DONATIONS ANTÉRIEURES (&lt; 15 ans)</p>
+    <p>Le passif est souvent faible grâce aux <strong>assurances de prêts</strong>. Les donations antérieures sont réintégrées fictivement (civilement et/ou fiscalement).</p>
+    <h3>2.2 Masse successorale et régime matrimonial</h3>
+    <table><tr><th>Régime</th><th>Succession du défunt</th></tr>
+    <tr><td>CRA</td><td>Biens propres M + ½ des biens communs</td></tr>
+    <tr><td>Communauté universelle + clause</td><td>Pas de succession au 1er décès (conjoint prend tout)</td></tr>
+    <tr><td>Séparation des biens</td><td>Biens propres M + ½ des biens indivis</td></tr>
+    </table>
+    <h3>2.3 Les 4 ordres d'héritiers (dévolution légale)</h3>
+    <table><tr><th>Ordre</th><th>Héritiers (personne seule/PACS/concubinage)</th><th>Part</th></tr>
+    <tr><td>1er ordre</td><td>Descendants : enfants (1°), petits-enfants (2°), arrière-petits-enfants (3°)...</td><td>100% par parts égales</td></tr>
+    <tr><td>2ème ordre</td><td>Parents (1°) + frères/sœurs (2°), neveux/nièces (3°), petits-neveux (4°)</td><td>¼ père + ¼ mère + ½ aux frères/sœurs</td></tr>
+    <tr><td>3ème ordre</td><td>Ascendants ordinaires : grands-parents (2°), arrière-grands-parents (3°)</td><td>Fente : 50% côté paternel + 50% côté maternel</td></tr>
+    <tr><td>4ème ordre</td><td>Collatéraux ordinaires : oncles/tantes (3°), cousins germains (4°)...</td><td>Fente : 50% paternel + 50% maternel</td></tr>
+    </table>
+    <p>Au-delà du <strong>4ème ordre / 6ème degré</strong> : c'est <strong>l'État</strong> qui hérite.</p>
+    <p>Entre héritiers d'un même ordre : l'héritier <strong>le plus proche en degré exclut le plus éloigné</strong>. À égalité de degré : succession par <strong>parts égales par tête</strong>.</p>
+    <h3>2.4 La notion de représentation</h3>
+    <p>Mécanisme permettant aux descendants d'un héritier <strong>prédécédé ou renonçant</strong> de prendre sa place et de recueillir sa part.</p>
+    <table><tr><th>Ligne</th><th>Représentation</th></tr>
+    <tr><td>Ligne directe descendante</td><td>✅ À l'infini</td></tr>
+    <tr><td>Descendants de frères/sœurs</td><td>✅ À l'infini</td></tr>
+    <tr><td>Ascendants</td><td>❌ Ne joue pas</td></tr>
+    <tr><td>Collatéraux ordinaires</td><td>❌ Ne joue pas</td></tr>
+    </table>
+    <blockquote>Exemple : Masse 200 — 2 enfants. Enfant n°2 prédécédé, laisse 2 petits-enfants. → Enfant n°1 : 100. Les 2 petits-enfants REPRÉSENTENT l'enfant n°2 → 50 chacun.</blockquote>
+  </div>
+</div>
+
+<div id="tab-exercices" class="tab-panel">
+  <div class="ex-header">
+    <h2>🏋️ Exercices interactifs</h2>
+    <p class="ex-sub">Exercices issus des diapos de cours — glisser-déposer avec correction automatique</p>
+  </div>
+  <div id="ex-container"></div>
+</div>
+
+</main>
+<script>
+const CARDS = [
+  // ── Mariage & régime primaire ──
+  {ch:"💒 Mariage & Régime primaire",q:"Les 3 modes de vie de couple et leur lien juridique",a:"<strong>Mariage</strong> → conjoints mariés · <strong>PACS</strong> → partenaires pacsés · <strong>Concubinage</strong> → aucun lien juridique. Chacun implique des règles patrimoniales différentes."},
+  {ch:"💒 Mariage & Régime primaire",q:"Définition du régime primaire",a:"Socle commun à <strong>tous les régimes matrimoniaux</strong>, impératif et d'ordre public. Deux volets : les <strong>charges du mariage</strong> et les <strong>droits du conjoint</strong>."},
+  {ch:"💒 Mariage & Régime primaire",q:"Les charges du mariage (régime primaire)",a:"<strong>Respect, fidélité, secours et assistance</strong> mutuels · <strong>Dettes ménagères</strong> (engagent les 2 époux sauf dépenses excessives) · <strong>Logement familial</strong> : ni l'un ni l'autre ne peut le vendre seul, même si c'est un bien propre."},
+  {ch:"💒 Mariage & Régime primaire",q:"Les droits du conjoint (régime primaire)",a:"Gérer ses biens personnels et meubles communs · Passer des contrats d'entretien du ménage · Ouvrir un compte de dépôt ou de titres · <strong>Exercer librement sa profession</strong> et disposer de ses revenus."},
+  {ch:"💒 Mariage & Régime primaire",q:"Quel régime légal s'applique depuis le 1er février 1966 ?",a:"La <strong>Communauté Réduite aux Acquêts (CRA)</strong>. Avant le 01/02/1966, c'était la Communauté de Meubles et Acquêts (CMA)."},
+  {ch:"💒 Mariage & Régime primaire",q:"Les 2 familles de régimes matrimoniaux",a:"<strong>Régimes communautaires</strong> : biens communs (CMA, CRA, Communauté universelle) · <strong>Régimes séparatistes</strong> : chacun gère ses propres (Séparation des biens, Participation aux acquêts)."},
+  {ch:"💒 Mariage & Régime primaire",q:"PACS : formalités obligatoires",a:"Convention <strong>obligatoirement écrite</strong> (sous seing privé ou notariée) · <strong>Inscription en marge de l'acte de naissance</strong> en mairie (remplace l'inscription au tribunal depuis 2017)."},
+  {ch:"💒 Mariage & Régime primaire",q:"PACS : régime légal vs concubinage",a:"<strong>PACS légal</strong> : biens propres + biens indivis (comme le concubinage). <strong>Différence</strong> : le PACS crée un cadre juridique avec droits et devoirs ; le concubinage n'est qu'une situation de fait sans protection légale."},
+  // ── Régimes communautaires ──
+  {ch:"🏘️ Régimes communautaires",q:"Biens propres sous CRA",a:"Biens reçus par <strong>donation ou succession</strong> (meubles ET immeubles) · Biens possédés <strong>avant le mariage</strong> · Biens acquis par <strong>remploi</strong> de biens propres."},
+  {ch:"🏘️ Régimes communautaires",q:"Biens communs sous CRA",a:"Biens <strong>acquis à titre onéreux pendant le mariage</strong> · <strong>Revenus du travail</strong> des époux · <strong>Revenus des biens propres et communs</strong> · Biens dont on ne peut prouver l'origine."},
+  {ch:"🏘️ Régimes communautaires",q:"Différence CMA (avant 1966) vs CRA (depuis 1966)",a:"Sous <strong>CMA</strong> : les meubles reçus par don ou succession tombent dans la communauté (communs). Sous <strong>CRA</strong> : ils restent des biens propres. L'immeuble reçu par donation/succession est propre dans les deux régimes."},
+  {ch:"🏘️ Régimes communautaires",q:"Communauté universelle — définition",a:"<strong>Tous les biens présents et futurs</strong> des époux sont communs. Aucun bien propre. Possibilité d'y ajouter une <strong>clause d'attribution intégrale</strong> au conjoint survivant."},
+  {ch:"🏘️ Régimes communautaires",q:"Clause d'attribution intégrale — conséquence successorale",a:"Au décès, le conjoint survivant <strong>garde la totalité</strong> → pas de succession au 1er décès. Conséquence fiscale : les enfants ne disposent de leur abattement (100 000 €) qu'<strong>une seule fois</strong>, au 2ème décès."},
+  {ch:"🏘️ Régimes communautaires",q:"Les revenus du travail d'un époux marié sous CRA sont-ils propres ou communs ?",a:"<strong>Communs</strong>. Tous les revenus du travail générés pendant le mariage tombent dans la masse commune, même si provenant d'un talent personnel ou d'une activité individuelle."},
+  {ch:"🏘️ Régimes communautaires",q:"Une maison reçue par héritage pendant le mariage (CRA) est-elle propre ou commune ?",a:"<strong>Propre</strong>. Sous CRA, tout ce qui est reçu par donation ou succession (meubles ET immeubles) reste un bien propre, quel que soit le moment de la réception."},
+  {ch:"🏘️ Régimes communautaires",q:"Liquidation CRA au divorce",a:"Propres Monsieur / <strong>Biens Communs partagés ½ ½</strong> / Propres Madame. Les créances de récompense (remboursements entre masse propre et masse commune) sont calculées au moment de la liquidation."},
+  {ch:"🏘️ Régimes communautaires",q:"Liquidation communauté universelle",a:"<strong>Tous les biens sont communs</strong> → partage à parts égales. S'il y avait une clause d'attribution intégrale, le conjoint survivant reprend tout au 1er décès."},
+  {ch:"🏘️ Régimes communautaires",q:"Un meuble reçu par donation sous CMA est-il propre ou commun ?",a:"<strong>Commun</strong>. Spécificité CMA (avant 01/02/1966) : les meubles reçus par donation ou succession tombent dans la communauté. Ce n'est plus le cas sous CRA où ils restent propres."},
+  // ── Régimes séparatistes & PACS ──
+  {ch:"🔀 Régimes séparatistes",q:"Structure des biens sous séparation des biens",a:"<strong>Propres M / Indivis / Propres Mme</strong>. Chaque époux gère seul ses biens propres. Les achats conjoints créent une indivision selon la quote-part de financement."},
+  {ch:"🔀 Régimes séparatistes",q:"Participation aux acquêts — fonctionnement pendant le mariage",a:"Pendant le mariage : fonctionne <strong>comme une séparation des biens</strong> (chacun gère librement ses propres). C'est seulement à la dissolution que le partage de l'enrichissement intervient."},
+  {ch:"🔀 Régimes séparatistes",q:"Formule de la participation aux acquêts à la dissolution",a:"<strong>Acquêts = Patrimoine final − Patrimoine initial</strong> (réévalué). L'époux le moins enrichi reçoit une créance de participation égale à la <strong>moitié de la différence</strong> d'enrichissement."},
+  {ch:"🔀 Régimes séparatistes",q:"PACS — régime légal des biens",a:"Par défaut : <strong>biens propres + biens indivis</strong> (comme le concubinage). Les achats conjoints sont indivis selon la contribution de chacun. Chaque partenaire reste propriétaire de ses biens personnels."},
+  {ch:"🔀 Régimes séparatistes",q:"PACS — régime sur option",a:"Par convention, les partenaires peuvent choisir le régime de <strong>l'indivision des acquêts</strong> : biens propres + biens <em>communs</em> (acquêts). S'approche du CRA mais reste différent."},
+  {ch:"🔀 Régimes séparatistes",q:"Concubinage — structure et protection",a:"Aucun régime légal : <strong>biens propres + biens indivis</strong>. Aucune protection juridique automatique. En cas de rupture ou décès, le concubin n'a aucun droit légal sur le patrimoine de l'autre."},
+  {ch:"🔀 Régimes séparatistes",q:"Rupture de PACS — régime légal",a:"Chacun reprend ses biens propres. <strong>Partage des biens indivis</strong> selon les quotes-parts de financement. Pas de prestation compensatoire automatique."},
+  {ch:"🔀 Régimes séparatistes",q:"Rupture de PACS — régime d'indivision (option)",a:"Si le PACS était sur option indivision : <strong>partage par moitié</strong> de tous les biens acquis pendant le PACS, quel que soit le financeur."},
+  {ch:"🔀 Régimes séparatistes",q:"Comparatif CRA vs séparation des biens vs PACS légal",a:"<strong>CRA</strong> : propres + communs (acquêts + revenus). <strong>Séparation des biens</strong> : propres + indivis. <strong>PACS légal</strong> : propres + indivis. La différence CRA/séparation est la masse commune des revenus et acquêts."},
+  {ch:"🔀 Régimes séparatistes",q:"Notion d'acquêts",a:"Les <strong>acquêts</strong> sont les biens acquis à titre onéreux pendant la vie commune. Dans la participation aux acquêts et le PACS sur option, c'est l'enrichissement issu des acquêts qui est partagé à la dissolution."},
+  // ── Masse successorale ──
+  {ch:"⚖️ Masse successorale",q:"Formule de calcul de la masse successorale",a:"<strong>Masse = (Actif − Passif) + Donations antérieures de moins de 15 ans</strong>. Les donations sont réintégrées fictivement (civilement et/ou fiscalement)."},
+  {ch:"⚖️ Masse successorale",q:"Rôle des donations antérieures dans la masse successorale",a:"Les donations de moins de <strong>15 ans</strong> sont réintégrées fictivement pour calculer la réserve et la quotité disponible. Elles permettent de vérifier qu'il n'y a pas d'atteinte à la réserve héréditaire."},
+  {ch:"⚖️ Masse successorale",q:"Liquidation CRA au décès d'un époux",a:"Au décès : dissolution de la communauté → <strong>½ des biens communs revient au conjoint survivant</strong> (hors succession) + <strong>½ des biens communs + tous les biens propres du défunt = masse successorale</strong>."},
+  {ch:"⚖️ Masse successorale",q:"Communauté universelle + clause d'attribution intégrale au 1er décès",a:"<strong>Pas de succession au 1er décès</strong>. Le conjoint survivant récupère l'intégralité du patrimoine. La succession n'a lieu qu'au <strong>2ème décès</strong>, avec un seul abattement par enfant."},
+  {ch:"⚖️ Masse successorale",q:"Le passif successoral",a:"Dettes du défunt, frais funéraires, frais de liquidation du régime matrimonial. Souvent faible grâce aux <strong>assurances emprunteur</strong> qui soldent les prêts au décès."},
+  // ── Ordres & représentation ──
+  {ch:"👨‍👩‍👧 Ordres & représentation",q:"Les 4 ordres d'héritiers (dévolution légale)",a:"<strong>1er</strong> : Descendants (enfants, petits-enfants…) · <strong>2ème</strong> : Parents + frères/sœurs (et leurs descendants) · <strong>3ème</strong> : Ascendants ordinaires (grands-parents) · <strong>4ème</strong> : Collatéraux ordinaires (oncles, tantes, cousins). Au-delà = État."},
+  {ch:"👨‍👩‍👧 Ordres & représentation",q:"1er ordre — contenu et répartition",a:"Enfants (1°), petits-enfants (2°), arrière-petits-enfants (3°)… <strong>Parts égales par tête</strong> entre héritiers du même degré. Un enfant seul prend <strong>100 %</strong>."},
+  {ch:"👨‍👩‍👧 Ordres & représentation",q:"2ème ordre — contenu et répartition (sans conjoint marié)",a:"Père + mère (1°) + frères/sœurs (2°) et leurs descendants. Répartition : <strong>¼ père + ¼ mère + ½ aux frères/sœurs</strong>. Si un seul parent vivant et frères/sœurs : ¼ au parent + ¾ aux frères/sœurs."},
+  {ch:"👨‍👩‍👧 Ordres & représentation",q:"La fente successorale (3ème et 4ème ordre)",a:"Le patrimoine est divisé en <strong>2 moitiés</strong> : côté paternel (½) et côté maternel (½). Chaque moitié est partagée entre les héritiers du côté correspondant."},
+  {ch:"👨‍👩‍👧 Ordres & représentation",q:"La règle du degré entre héritiers",a:"L'héritier <strong>le plus proche en degré exclut le plus éloigné</strong> du même ordre. À égalité de degré : parts égales. Ex : si un enfant est vivant, les petits-enfants n'héritent pas directement (sauf représentation)."},
+  {ch:"👨‍👩‍👧 Ordres & représentation",q:"Définition de la représentation",a:"Mécanisme permettant aux <strong>descendants d'un héritier prédécédé ou renonçant</strong> de prendre sa place dans la succession et de recueillir sa part, par souche."},
+  {ch:"👨‍👩‍👧 Ordres & représentation",q:"Dans quelles lignes la représentation joue-t-elle ?",a:"✅ <strong>Ligne directe descendante</strong> : à l'infini · ✅ <strong>Descendants de frères/sœurs</strong> : à l'infini (neveux, petits-neveux…) · ❌ Ascendants : non · ❌ Collatéraux ordinaires : non."},
+  {ch:"👨‍👩‍👧 Ordres & représentation",q:"Exemple : masse 200, 2 enfants, enfant n°2 prédécédé avec 2 petits-enfants",a:"Enfant n°1 : <strong>100</strong> (½ de 200) · Enfant n°2 prédécédé → <strong>représentation</strong> par ses 2 enfants : <strong>50 chacun</strong> (½ de la part de l'enfant n°2). Partage par souche, pas par tête."},
+];
+
+const QUIZ = [
+  {ch:"Matrimoniaux",q:"Depuis le 1er février 1966, quel est le régime matrimonial légal en France ?",opts:["Séparation des biens","Communauté de Meubles et Acquêts (CMA)","Communauté Réduite aux Acquêts (CRA)","Participation aux acquêts"],c:2,e:"Le CRA est le régime légal depuis le 01/02/1966. Avant cette date, c'était la CMA. Les époux qui ne font pas de contrat de mariage sont soumis au CRA."},
+  {ch:"Matrimoniaux",q:"Un époux marié sous CRA reçoit une maison par héritage. Ce bien est...",opts:["Commun — car reçu pendant le mariage","Propre — car reçu par succession","Indivis — car reçu sans contrat","Commun — car c'est un immeuble"],c:1,e:"Sous CRA, tous les biens reçus par donation ou succession (meubles ET immeubles) restent des biens propres, quelle que soit la date de réception."},
+  {ch:"Matrimoniaux",q:"Communauté universelle + clause d'attribution intégrale : conséquence principale au 1er décès ?",opts:["La moitié des biens revient aux enfants","Pas de succession : le conjoint garde tout","Les enfants reçoivent la réserve","La succession est partagée à parts égales"],c:1,e:"Avec la clause d'attribution intégrale, il n'y a pas de succession au 1er décès. Le conjoint survivant récupère tout. La succession n'a lieu qu'au 2ème décès — les enfants n'ont leur abattement de 100 000€ qu'une seule fois."},
+  {ch:"Matrimoniaux",q:"Quel est le régime des biens par défaut pour un PACS sans convention ?",opts:["Communauté réduite aux acquêts","Séparation des biens totale","Biens propres + biens indivis","Participation aux acquêts"],c:2,e:"Le régime légal du PACS est : biens propres + biens indivis. C'est identique à la structure du concubinage. Sur option, les partenaires peuvent choisir l'indivision des acquêts."},
+  {ch:"Matrimoniaux",q:"Dans la participation aux acquêts, que se passe-t-il pendant le mariage ?",opts:["Les biens sont en communauté dès l'achat","Chacun gère librement ses biens propres comme en séparation","Les revenus du travail sont communs","Il y a un compte commun obligatoire"],c:1,e:"Pendant le mariage, la participation aux acquêts fonctionne comme une séparation des biens : chacun gère librement ses propres. C'est seulement à la dissolution que l'enrichissement est partagé."},
+  {ch:"Matrimoniaux",q:"Parmi ces formalités, laquelle est obligatoire pour un PACS ?",opts:["Un acte notarié obligatoire","Une convention écrite + inscription en marge de l'acte de naissance","L'accord des parents de moins de 21 ans","Un délai de réflexion de 3 mois"],c:1,e:"Le PACS nécessite une convention écrite (sous seing privé ou notariée) et son inscription en marge de l'acte de naissance en mairie (depuis 2017, plus au tribunal)."},
+  {ch:"Matrimoniaux",q:"Sous CRA, les revenus du travail d'un époux sont-ils propres ou communs ?",opts:["Propres — car issus d'un effort personnel","Communs — tous les revenus générés pendant le mariage","Indivis — partagés selon le revenu de chacun","Propres si gagnés avant le mariage"],c:1,e:"Sous CRA, tous les revenus du travail générés pendant le mariage sont des biens communs, quelle que soit leur origine. C'est une différence majeure avec la séparation des biens."},
+  {ch:"Succession",q:"Quelle est la formule de la masse successorale ?",opts:["Actif + Passif + Donations < 15 ans","(Actif − Passif) + Donations < 15 ans","Actif − Passif − Donations","Actif total des biens au jour du décès"],c:1,e:"Masse = (Actif − Passif) + Donations antérieures de moins de 15 ans. Le passif est souvent faible grâce aux assurances emprunteur. Les donations sont réintégrées fictivement."},
+  {ch:"Succession",q:"Qui hérite en 1er ordre (dévolution légale) ?",opts:["Les parents du défunt","Les frères et sœurs","Les descendants (enfants, petits-enfants…)","Le conjoint en premier"],c:2,e:"Le 1er ordre regroupe les descendants : enfants (1°), petits-enfants (2°), arrière-petits-enfants (3°)… Ils partagent à parts égales par tête. L'enfant vivant le plus proche exclut les petits-enfants sauf représentation."},
+  {ch:"Succession",q:"Un enfant du défunt vivant exclut-il un autre enfant du défunt ?",opts:["Oui — le plus âgé exclut le plus jeune","Non — les enfants partagent toujours à parts égales","Oui si l'autre a reçu plus de donations","Non, c'est le père vivant qui exclut les enfants"],c:1,e:"Entre héritiers du même ordre et même degré, la règle est le partage à parts égales par tête. Les enfants partagent toujours entre eux. C'est l'héritier plus proche EN DEGRÉ qui exclut le plus éloigné."},
+  {ch:"Succession",q:"2ème ordre sans conjoint marié : père et mère vivants + 2 frères/sœurs. Répartition ?",opts:["¼ père + ¼ mère + ¼ chaque frère","½ père + ½ mère (frères exclus)","¼ père + ¼ mère + ½ pour les 2 frères/sœurs","Tout aux frères/sœurs"],c:2,e:"2ème ordre : ¼ père + ¼ mère + ½ aux frères/sœurs (soit ¼ chacun). Si un seul parent : ¼ à ce parent + ¾ aux frères/sœurs."},
+  {ch:"Succession",q:"La représentation dans la ligne directe descendante joue jusqu'à quel degré ?",opts:["Jusqu'aux petits-enfants seulement (2°)","Jusqu'aux arrière-petits-enfants (3°)","À l'infini","Seulement si le prédécédé avait plus de 2 enfants"],c:2,e:"La représentation joue à l'infini dans la ligne directe descendante. Elle joue aussi à l'infini dans la ligne des descendants de frères/sœurs (neveux, petits-neveux…)."},
+  {ch:"Succession",q:"La représentation joue-t-elle pour les ascendants ?",opts:["Oui, à l'infini","Oui, jusqu'au 2ème degré","Non","Oui si le défunt n'avait pas d'enfants"],c:2,e:"La représentation ne joue PAS pour les ascendants. Elle joue uniquement : en ligne directe descendante (à l'infini) et pour les descendants de frères/sœurs (à l'infini)."},
+  {ch:"Succession",q:"Au décès d'un époux marié sous CRA, qu'est-ce qui entre dans la masse successorale ?",opts:["La totalité des biens du couple","Les biens propres + ½ des biens communs","Uniquement les biens propres","½ des biens propres + ½ des biens communs"],c:1,e:"Sous CRA, au décès : ½ des biens communs revient au conjoint survivant (hors succession). La masse successorale = biens propres du défunt + ½ des biens communs."},
+  {ch:"Succession",q:"Qui hérite si le défunt n'a aucun héritier jusqu'au 6ème degré ?",opts:["Le conjoint survivant","L'État","Les associations caritatives par défaut","Le notaire conserve les biens"],c:1,e:"Au-delà du 4ème ordre / 6ème degré de parenté, c'est l'État qui hérite par déshérence. Le conjoint survivant a des droits légaux séparés (il n'appartient à aucun des 4 ordres)."},
+];
+
+const FOCUS = [
+  {
+    title:"💒 Régimes légaux",
+    cards:[
+      {q:"Régime des biens par statut : mariage / PACS / concubinage",a:"<strong>Mariage (depuis 1966)</strong> → CRA · <strong>PACS sans convention</strong> → Biens propres + Indivis · <strong>Concubinage</strong> → Biens propres + Indivis (aucune protection légale)."},
+      {q:"Régime primaire — charges du mariage",a:"<strong>Respect, fidélité, secours et assistance</strong> · <strong>Dettes ménagères</strong> (engagent les 2 époux sauf dépenses excessives) · <strong>Logement familial</strong> : aucun époux ne peut le vendre seul même si bien propre."},
+      {q:"Régime primaire — droits du conjoint",a:"Gérer ses biens personnels et meubles communs · Passer des contrats d'entretien du ménage · Ouvrir un compte · <strong>Exercer librement sa profession</strong> et disposer de ses revenus."},
+      {q:"Pourquoi le régime primaire est-il dit 'impératif' ?",a:"Car il s'applique à <strong>tous les époux quel que soit leur régime matrimonial</strong>, y compris ceux qui ont fait un contrat de mariage. Les époux ne peuvent pas y déroger."},
+      {q:"La vente du logement familial : règle clé",a:"<strong>Ni l'un ni l'autre des époux ne peut vendre ou hypothéquer seul le logement familial</strong>, même si ce logement est son bien propre. Cette règle fait partie du régime primaire."},
+      {q:"PACS vs concubinage : différence clé",a:"Structure patrimoniale identique (propres + indivis), mais le <strong>PACS crée un cadre juridique</strong> avec droits et devoirs alors que le concubinage est une simple situation de fait <strong>sans protection légale</strong>."},
+      {q:"Quand un couple peut-il changer de régime matrimonial ?",a:"Après <strong>2 ans de mariage</strong>, les époux peuvent changer de régime matrimonial par acte notarié. La procédure est devenue judiciaire → amiable (loi 2019), sauf si enfants mineurs ou intérêt de tiers."},
+      {q:"PACS : régime sur option",a:"Sur option (convention), les partenaires peuvent choisir le régime de <strong>l'indivision des acquêts</strong> : biens propres + biens communs. S'approche du CRA mais reste différent du régime matrimonial."},
+    ],
+    quiz:[
+      {q:"Le régime primaire s'applique :",opts:["Uniquement aux couples mariés sous CRA","À tous les époux, quel que soit leur régime","Uniquement aux régimes communautaires","Aux couples pacsés et mariés uniquement"],c:1,e:"Le régime primaire est impératif et s'applique à tous les époux sans exception, quel que soit leur régime matrimonial. On ne peut pas y déroger par contrat."},
+      {q:"Le logement familial peut-il être vendu seul par l'époux propriétaire ?",opts:["Oui, s'il est son bien propre","Oui, avec accord du notaire","Non — les deux époux doivent consentir","Non — sauf décision de justice"],c:2,e:"Même si le logement familial est un bien propre d'un époux, il ne peut être vendu ou hypothéqué sans le consentement de l'autre. C'est une règle du régime primaire, donc impérative."},
+      {q:"Quel est le régime légal des biens pour un PACS sans convention ?",opts:["CRA","Séparation totale des biens","Biens propres + biens indivis","Communauté universelle"],c:2,e:"Le régime légal du PACS est biens propres + biens indivis (structure identique au concubinage). Sur option, les partenaires peuvent choisir l'indivision des acquêts."},
+      {q:"La différence fondamentale entre PACS légal et concubinage est :",opts:["La structure des biens (indivis vs séparés)","Le PACS crée un cadre juridique avec droits et devoirs","Le PACS impose un régime communautaire","Le concubinage offre plus de protection fiscale"],c:1,e:"Structure patrimoniale identique (propres + indivis), mais le PACS crée un cadre juridique protecteur alors que le concubinage est une situation de fait sans protection légale."},
+      {q:"Les dettes ménagères sous régime matrimonial engagent :",opts:["Uniquement l'époux qui a contracté la dette","Les deux époux solidairement, sauf dépenses excessives","Uniquement l'époux dont c'est le bien propre","Les deux époux, toujours et sans exception"],c:1,e:"Les dettes ménagères engagent les deux époux solidairement (régime primaire), SAUF si la dépense est excessive ou luxueuse par rapport au train de vie du couple."},
+      {q:"Un époux peut-il exercer librement une activité professionnelle sans l'accord du conjoint ?",opts:["Non — accord du conjoint obligatoire","Oui — c'est un droit du régime primaire","Non — sauf si régime séparatiste","Oui — mais uniquement pour les professions libérales"],c:1,e:"Exercer librement sa profession et disposer de ses revenus professionnels est un droit garanti par le régime primaire, applicable à tous les époux quel que soit leur régime."},
+      {q:"Après combien d'années de mariage peut-on changer de régime matrimonial ?",opts:["1 an","2 ans","5 ans","10 ans"],c:1,e:"Les époux peuvent changer de régime matrimonial après 2 ans de mariage par acte notarié. La procédure est devenue amiable depuis 2019, sauf présence d'enfants mineurs ou intérêt de tiers."},
+      {q:"Quel régime applique-t-on à un couple marié n'ayant fait aucun contrat de mariage (depuis 1966) ?",opts:["Communauté universelle","Séparation des biens","CRA — Communauté Réduite aux Acquêts","CMA — Communauté de Meubles et Acquêts"],c:2,e:"Le CRA est le régime légal depuis le 01/02/1966. Sans contrat de mariage, les époux y sont soumis automatiquement. Avant 1966, c'était la CMA."},
+    ]
+  },
+  {
+    title:"🏘️ Régimes communautaires",
+    cards:[
+      {q:"Biens propres sous CRA : liste complète",a:"Biens reçus par <strong>donation ou succession</strong> (meubles ET immeubles) · Biens possédés <strong>avant le mariage</strong> · Biens acquis par <strong>remploi de propres</strong> · Biens à caractère personnel (vêtements, actions en dommages-intérêts)."},
+      {q:"Biens communs sous CRA : liste complète",a:"Biens acquis à titre <strong>onéreux pendant le mariage</strong> · <strong>Revenus du travail</strong> · <strong>Revenus des biens propres et communs</strong> · Biens dont on ne peut prouver l'origine."},
+      {q:"Différence CMA vs CRA pour les meubles par donation/succession",a:"<strong>CMA (avant 1966)</strong> : meubles reçus par don/succession → <strong>COMMUNS</strong>. <strong>CRA (depuis 1966)</strong> : meubles reçus par don/succession → <strong>PROPRES</strong>. Les immeubles sont propres dans les deux régimes."},
+      {q:"Communauté universelle : structure",a:"<strong>Tous les biens présents et futurs sont communs</strong>. Aucun bien propre. Convient aux couples souhaitant une fusion totale du patrimoine, souvent accompagnée d'une clause d'attribution intégrale."},
+      {q:"Clause d'attribution intégrale : risque successoral",a:"Conjoint survivant garde tout au 1er décès → <strong>une seule succession au 2ème décès</strong> → les enfants ne disposent de leur <strong>abattement de 100 000 €</strong> qu'une fois au lieu de deux. Coût fiscal potentiellement élevé."},
+      {q:"Revenus des biens propres sous CRA : propres ou communs ?",a:"<strong>Communs</strong>. Même les revenus (loyers, dividendes) issus des biens propres tombent dans la masse commune sous CRA. C'est pourquoi la gestion des biens propres peut générer des créances de récompense."},
+      {q:"Liquidation CRA au divorce : étapes",a:"1. <strong>Séparation des masses</strong> : propres M / propres Mme / communs · 2. <strong>Créances de récompense</strong> (si masse propre a enrichi la masse commune ou inversement) · 3. <strong>Partage ½ ½</strong> de la masse commune nette."},
+      {q:"Cas pratique : maison achetée pendant le mariage avec des fonds propres hérités",a:"La maison est un <strong>bien propre par remploi</strong>, sous réserve d'avoir effectué une déclaration de remploi dans l'acte d'achat. Sans déclaration, le bien tombe dans la communauté."},
+    ],
+    quiz:[
+      {q:"Sous CRA, un meuble reçu par donation pendant le mariage est :",opts:["Commun","Propre","Indivis","Dépend de sa valeur"],c:1,e:"Sous CRA, tout ce qui est reçu par donation ou succession (meubles ET immeubles) est un bien propre. C'est la différence avec la CMA où les meubles reçus par donation étaient communs."},
+      {q:"Les revenus du travail d'un époux marié sous CRA sont :",opts:["Propres — résultant d'un effort personnel","Communs — tombent dans la masse commune","Indivis — propriété des deux époux à 50/50","Propres jusqu'au divorce puis communs"],c:1,e:"Sous CRA, tous les revenus du travail générés pendant le mariage sont des biens communs. C'est une différence fondamentale avec la séparation des biens."},
+      {q:"Sous CMA (avant 1966), un meuble reçu par héritage est :",opts:["Propre","Commun","Indivis","Dépend de l'acte de donation"],c:1,e:"Spécificité CMA : les meubles reçus par donation ou succession tombent dans la communauté (communs). Sous CRA (depuis 1966), ils restent propres."},
+      {q:"En communauté universelle, qu'est-ce qui est commun ?",opts:["Seulement les biens acquis pendant le mariage","Les biens acquis pendant le mariage + les revenus","Tous les biens présents et futurs des époux","Tous les biens sauf les biens reçus par succession"],c:2,e:"En communauté universelle, TOUS les biens présents et futurs sont communs. Il n'y a aucun bien propre. C'est la fusion totale du patrimoine."},
+      {q:"La clause d'attribution intégrale sur une communauté universelle entraîne :",opts:["Le partage immédiat au 1er décès","L'absence de succession au 1er décès, le conjoint garde tout","Le versement d'une réserve aux enfants au 1er décès","Un abattement double pour les enfants"],c:1,e:"Avec la clause d'attribution intégrale, il n'y a pas de succession au 1er décès. Le conjoint garde tout. La succession n'a lieu qu'au 2ème décès, avec un seul abattement par enfant (pas deux)."},
+      {q:"Un bien acquis pendant le mariage avec des fonds propres hérités est-il propre ?",opts:["Oui, automatiquement","Oui, si une déclaration de remploi est faite dans l'acte","Non, tout achat pendant le mariage est commun","Non, sauf accord du conjoint"],c:1,e:"La qualité de propre par remploi est conditionnée à une déclaration de remploi dans l'acte d'achat. Sans cette déclaration, le bien tombe dans la communauté sous CRA."},
+      {q:"Au divorce sous CRA, comment sont partagés les biens communs ?",opts:["⅓ ⅔ selon les revenus de chacun","½ ½ entre les époux","Selon la quote-part de financement","Selon décision du juge uniquement"],c:1,e:"Sous CRA, la masse commune est partagée ½ ½ entre les époux après déduction des créances de récompense. Chacun reprend ses biens propres intégralement."},
+      {q:"Les revenus d'un bien propre (ex. loyer d'un appartement propre) sous CRA sont :",opts:["Propres, car issus d'un bien propre","Communs, car générés pendant le mariage","Indivis entre les époux","Propres si déclarés comme tels"],c:1,e:"Sous CRA, même les revenus des biens propres (loyers, dividendes) tombent dans la masse commune. Cela peut créer une créance de récompense de la communauté envers la masse propre."},
+    ]
+  },
+  {
+    title:"🔀 Régimes séparatistes",
+    cards:[
+      {q:"Séparation des biens : structure et gestion",a:"<strong>Propres M / Indivis / Propres Mme</strong>. Chaque époux gère librement ses biens propres. Les achats conjoints créent une indivision selon la quote-part de financement de chacun."},
+      {q:"Participation aux acquêts : fonctionnement en 2 phases",a:"<strong>Pendant le mariage</strong> : comme une séparation des biens (chacun gère librement ses propres). <strong>À la dissolution</strong> : partage de l'enrichissement = ½ de la différence entre patrimoine final et patrimoine initial."},
+      {q:"Formule de la participation aux acquêts",a:"<strong>Acquêts = Patrimoine final − Patrimoine initial</strong> (réévalué). L'époux le moins enrichi reçoit une créance de participation = ½ de (Acquêts A − Acquêts B). Pas de partage de biens réels, c'est une créance en valeur."},
+      {q:"PACS légal vs PACS sur option — différence",a:"<strong>Légal</strong> : Propres + Indivis. <strong>Sur option</strong> : Propres + Communs (indivision des acquêts). L'option doit être stipulée dans la convention de PACS et publiée."},
+      {q:"Concubinage : absence de protection",a:"Aucun régime légal : <strong>propres + indivis</strong>. En cas de rupture ou décès, le concubin n'a <strong>aucun droit légal</strong> sur le patrimoine de l'autre. Pas de prestation compensatoire ni de droits successoraux."},
+      {q:"Rupture de PACS — partage des biens",a:"<strong>Régime légal</strong> (propres + indivis) : chacun reprend ses propres, partage de l'indivis selon quote-parts. <strong>Option indivision</strong> : partage par moitié de tous les acquêts."},
+      {q:"Avantage de la participation aux acquêts vs séparation des biens",a:"La participation aux acquêts protège l'époux qui a sacrifié sa carrière (souvent Madame) : au divorce ou décès, il reçoit une part de l'enrichissement généré par l'autre, sans avoir à prouver ses apports."},
+      {q:"Notion de remploi dans les régimes séparatistes",a:"En régime de séparation, le remploi n'est pas nécessaire car tout bien acquis par un époux reste son propre. Pas de masse commune → pas de problème de remploi. L'indivis est régi par ses quotes-parts."},
+    ],
+    quiz:[
+      {q:"Sous séparation des biens, les salaires d'un époux sont :",opts:["Communs — comme en CRA","Propres — appartiennent à celui qui les a gagnés","Indivis à 50/50","Mis en commun si > 2 000 €/mois"],c:1,e:"En séparation des biens, chaque époux conserve la propriété de ses revenus et biens. Il n'y a pas de masse commune. C'est la différence fondamentale avec le CRA."},
+      {q:"Dans la participation aux acquêts, pendant le mariage le fonctionnement est identique à :",opts:["La communauté réduite aux acquêts","La séparation des biens","La communauté universelle","Le PACS sur option"],c:1,e:"Pendant le mariage, la participation aux acquêts fonctionne comme la séparation des biens : chacun gère librement ses propres. C'est à la dissolution que l'enrichissement est partagé."},
+      {q:"La formule de la participation aux acquêts à la dissolution est :",opts:["½ des biens communs","Patrimoine final − Patrimoine initial","Actif − Passif + Donations","½ × (Acquêts A − Acquêts B) = créance de participation"],c:3,e:"L'époux le moins enrichi reçoit une créance = ½ × (Acquêts A − Acquêts B). Les acquêts = Patrimoine final − Patrimoine initial réévalué. C'est une créance en valeur, pas un partage de biens."},
+      {q:"En cas de rupture de PACS légal, que devient la maison achetée ensemble pendant le PACS ?",opts:["Elle est partagée moitié-moitié","Elle va au partenaire qui l'habitait","Elle est partagée selon les quotes-parts de financement","Elle revient au partenaire dont le nom est sur l'acte"],c:2,e:"En PACS légal (propres + indivis), les biens indivis sont partagés selon les quotes-parts de financement de chacun, pas nécessairement à 50/50."},
+      {q:"Le concubinage confère au concubin quels droits en cas de décès de l'autre ?",opts:["Les mêmes droits qu'un époux marié","Les mêmes droits qu'un partenaire pacsé","Aucun droit légal successoral","½ des biens indivis uniquement"],c:2,e:"Le concubinage est une situation de fait sans protection légale. En cas de décès, le concubin survivant n'a aucun droit successoral. Il subit en outre une fiscalité de 60% sur les biens reçus par testament."},
+      {q:"Quel régime protège le mieux l'époux qui n'a pas travaillé ?",opts:["Séparation des biens","Participation aux acquêts","PACS légal","Concubinage"],c:1,e:"La participation aux acquêts protège l'époux qui a sacrifié sa carrière : à la dissolution, il reçoit la moitié de la différence d'enrichissement. La séparation des biens ne tient pas compte des sacrifices professionnels."},
+      {q:"En PACS sur option, les acquêts sont :",opts:["Propres à chaque partenaire","Indivis selon les quotes-parts","Communs (partagés ½ ½)","Fiscalement traités comme des propres"],c:2,e:"En PACS sur option (indivision des acquêts), les biens acquis pendant le PACS sont communs et partagés moitié-moitié, comme en CRA — c'est la principale différence avec le PACS légal."},
+      {q:"Le remploi est-il nécessaire en séparation des biens ?",opts:["Oui, pour que le bien reste propre","Non — tout bien acquis par un époux est son propre sans formalité","Oui, déclaration notariale obligatoire","Non — mais conseillé pour éviter les conflits"],c:1,e:"En séparation des biens, il n'y a pas de masse commune, donc pas besoin de remploi. Tout bien acquis par un époux lui appartient en propre automatiquement, sans formalité particulière."},
+    ]
+  },
+  {
+    title:"⚖️ Masse successorale",
+    cards:[
+      {q:"Formule de la masse successorale",a:"<strong>Masse = (Actif − Passif) + Donations de moins de 15 ans</strong>. Permet de calculer la réserve héréditaire et la quotité disponible. Les donations sont réintégrées fictivement."},
+      {q:"Qu'est-ce que le passif successoral ?",a:"Dettes du défunt (emprunts, dettes fiscales, dettes envers tiers), frais funéraires, frais de liquidation. Souvent faible grâce aux <strong>assurances emprunteur</strong> qui soldent les prêts au décès."},
+      {q:"Pourquoi réintégrer les donations antérieures ?",a:"Pour vérifier qu'il n'y a pas d'atteinte à la <strong>réserve héréditaire</strong>. Les donations de moins de 15 ans sont fictivement rajoutées à la masse pour calculer la part réservée aux héritiers réservataires."},
+      {q:"Masse successorale CRA — calcul",a:"Dissolution du régime → ½ masse commune = part du conjoint (hors succession). <strong>Masse successorale = Biens propres M + ½ masse commune</strong> − Passif + Donations < 15 ans."},
+      {q:"Masse successorale communauté universelle + clause attribution intégrale",a:"<strong>Pas de succession au 1er décès</strong>. Conjoint garde tout. Masse successorale = 0 au 1er décès. Au <strong>2ème décès</strong> : l'intégralité du patrimoine est transmise, avec un seul abattement par enfant."},
+      {q:"Masse successorale séparation des biens",a:"Pas de masse commune. <strong>Masse successorale = Biens propres M + ½ biens indivis</strong> − Passif + Donations < 15 ans. La part du conjoint dans l'indivis (½) reste hors succession."},
+      {q:"Impact de l'assurance-vie sur la masse successorale",a:"Les capitaux décès d'assurance-vie versés aux bénéficiaires sont <strong>hors masse successorale</strong> (Article L132-12 Code des assurances). Ils ne sont pas réintégrés civlement sauf primes manifestement exagérées."},
+      {q:"Réserve héréditaire vs quotité disponible",a:"<strong>Réserve</strong> : part minimale garantie aux héritiers réservataires (enfants). <strong>Quotité disponible</strong> : part dont le défunt peut disposer librement (donation, testament). Ensemble = 100% de la masse."},
+    ],
+    quiz:[
+      {q:"La formule correcte de la masse successorale est :",opts:["Actif + Donations < 15 ans","(Actif − Passif) + Donations < 15 ans","Actif total − Passif total","Actif − Passif − Donations"],c:1,e:"Masse = (Actif − Passif) + Donations de moins de 15 ans. Le passif est déduit, les donations sont ajoutées fictivement pour vérifier la réserve héréditaire."},
+      {q:"Pourquoi le passif est-il souvent faible dans une succession ?",opts:["Car les dettes sont effacées au décès","Grâce aux assurances emprunteur qui soldent les prêts","Car les héritiers peuvent refuser le passif","Car les crédits sont limités par la loi"],c:1,e:"Les assurances emprunteur (assurance crédit immobilier) soldent généralement les prêts au décès de l'assuré, réduisant significativement le passif successoral."},
+      {q:"Les donations antérieures réintégrées dans la masse sont celles de moins de :",opts:["5 ans","10 ans","15 ans","20 ans"],c:2,e:"Les donations de moins de 15 ans sont réintégrées fictivement dans la masse successorale pour calculer la réserve. Au-delà de 15 ans, elles sortent du rapport."},
+      {q:"Sous CRA, qu'entre-t-il dans la masse successorale au décès du mari ?",opts:["Tous les biens du couple","Biens propres M + ½ biens communs","Uniquement les biens propres du défunt","½ de tous les biens"],c:1,e:"Au décès sous CRA : la ½ des biens communs revient au conjoint survivant hors succession. La masse successorale = biens propres M + ½ biens communs − passif + donations."},
+      {q:"En communauté universelle + clause d'attribution intégrale, au 1er décès :",opts:["½ revient aux enfants immédiatement","Le conjoint garde tout et il n'y a pas de succession","Les enfants reçoivent leur réserve","La clause doit être validée par le juge"],c:1,e:"Avec la clause d'attribution intégrale, pas de succession au 1er décès. Conjoint garde tout. Succession uniquement au 2ème décès — les enfants n'ont leur abattement de 100 000€ qu'une seule fois."},
+      {q:"En séparation des biens, la masse successorale comprend :",opts:["½ de tous les biens du couple","Biens propres M + ½ biens indivis","Tous les biens propres + tous les biens indivis","Uniquement les biens propres"],c:1,e:"En séparation des biens, la masse successorale = biens propres M + ½ biens indivis. La ½ de l'indivis appartenant au conjoint reste hors succession."},
+      {q:"Les capitaux d'assurance-vie versés aux bénéficiaires entrent-ils dans la masse successorale ?",opts:["Oui, toujours","Non — hors masse successorale (Art. L132-12)","Oui, si montant > 152 500 €","Non, sauf si versés au conjoint"],c:1,e:"Les capitaux décès d'assurance-vie sont hors masse successorale (Art. L132-12). Ils ne sont pas réintégrés civilement sauf en cas de primes manifestement exagérées."},
+      {q:"Qu'est-ce que la réserve héréditaire ?",opts:["La part du patrimoine réservée à l'État","La part minimale garantie aux héritiers réservataires (enfants)","Le patrimoine minimum laissé au conjoint","La somme réservée pour les dettes"],c:1,e:"La réserve héréditaire est la part du patrimoine dont le défunt ne peut pas disposer librement — elle est garantie aux héritiers réservataires (enfants). Le reste est la quotité disponible."},
+    ]
+  },
+  {
+    title:"👨‍👩‍👧 Les 4 ordres",
+    cards:[
+      {q:"Les 4 ordres de succession (dévolution légale)",a:"<strong>1er</strong> : Descendants · <strong>2ème</strong> : Parents + Collatéraux privilégiés (frères/sœurs) · <strong>3ème</strong> : Ascendants ordinaires (grands-parents) · <strong>4ème</strong> : Collatéraux ordinaires (oncles, cousins). Au-delà = État."},
+      {q:"1er ordre : contenu et répartition",a:"<strong>Enfants</strong> (1°), petits-enfants (2°), arrière-petits-enfants (3°)… Parts égales par tête entre héritiers du même degré. <strong>Un enfant seul = 100 %</strong>. Deux enfants = 50 % chacun."},
+      {q:"2ème ordre : contenu et répartition (défunt sans conjoint marié)",a:"Père + Mère (1°) + Frères/Sœurs (2°) et neveux/nièces (3°). Répartition : <strong>¼ père + ¼ mère + ½ pour les frères/sœurs</strong>. Si un seul parent : ¼ à ce parent + ¾ aux frères/sœurs."},
+      {q:"Règle du degré entre héritiers",a:"L'héritier <strong>le plus proche en degré exclut le plus éloigné</strong> du même ordre. Ex : si un enfant est vivant, les petits-enfants n'héritent pas (sauf représentation). À égalité de degré : parts égales."},
+      {q:"La fente successorale",a:"Aux <strong>3ème et 4ème ordres</strong>, le patrimoine est divisé en 2 : <strong>½ côté paternel + ½ côté maternel</strong>. Chaque moitié est partagée entre les héritiers de ce côté. Évite que l'extinction d'une ligne favorise uniquement l'autre."},
+      {q:"Que se passe-t-il si aucun héritier jusqu'au 6ème degré ?",a:"Au-delà du <strong>4ème ordre / 6ème degré</strong>, la succession est dévolue à l'<strong>État</strong> (déshérence). Le notaire établit une déclaration de vacance de succession."},
+      {q:"Le conjoint survivant : position dans les ordres",a:"Le conjoint marié survivant n'appartient à <strong>aucun des 4 ordres</strong>. Il a des droits légaux propres qui varient selon les héritiers présents (ex : droit d'habitation, usufruit légal ou pleine propriété dans certains cas)."},
+      {q:"Cas pratique : défunt avec 3 enfants, dont 1 prédécédé sans descendant",a:"L'enfant prédécédé <strong>sans descendant</strong> ne peut pas être représenté (pas de représentation d'un héritier sans descendant pour le remplacer). Les 2 enfants vivants se partagent 100 % → 50 % chacun."},
+    ],
+    quiz:[
+      {q:"Dans la dévolution légale, qui appartient au 2ème ordre ?",opts:["Les enfants et petits-enfants","Les parents et les frères/sœurs","Les grands-parents","Les oncles et tantes"],c:1,e:"2ème ordre = parents (père et mère) + collatéraux privilégiés (frères/sœurs et leurs descendants). Si un enfant est vivant (1er ordre), il exclut tout le 2ème ordre."},
+      {q:"Entre héritiers du même ordre et même degré, la règle est :",opts:["La fente successorale","Parts égales par tête","Parts proportionnelles aux revenus","La règle du droit d'aînesse"],c:1,e:"À égalité de degré dans le même ordre : parts égales par tête. C'est la fente successorale qui s'applique aux 3ème et 4ème ordres pour séparer côté paternel et maternel."},
+      {q:"Un défunt sans descendant ni conjoint laisse ses 2 parents et 2 frères. Répartition (sans conjoint) ?",opts:["½ aux parents + ½ aux frères","¼ père + ¼ mère + ¼ frère 1 + ¼ frère 2","¼ père + ¼ mère + ½ aux 2 frères (¼ chacun)","Tout aux frères — les parents sont exclus"],c:2,e:"2ème ordre : ¼ père + ¼ mère + ½ aux frères/sœurs. Avec 2 frères → ¼ chacun. Répartition : ¼ + ¼ + ¼ + ¼ = 100%."},
+      {q:"La fente successorale s'applique à quel(s) ordre(s) ?",opts:["1er ordre seulement","2ème ordre seulement","3ème et 4ème ordres","Tous les ordres"],c:2,e:"La fente successorale s'applique aux 3ème (ascendants ordinaires) et 4ème ordres (collatéraux ordinaires) : ½ côté paternel + ½ côté maternel."},
+      {q:"Quel héritier exclut un grand-parent dans la succession ?",opts:["Un oncle","Un petit-enfant du défunt","Un frère du défunt","Un cousin germain"],c:1,e:"Les héritiers de 1er ordre (descendants) excluent tous les héritiers des ordres suivants. Un petit-enfant (1er ordre) exclut les grands-parents (3ème ordre)."},
+      {q:"Si le défunt n'a pas d'héritier jusqu'au 6ème degré, qui hérite ?",opts:["Les amis désignés","L'État par déshérence","Les communes de résidence","Personne — les biens sont perdus"],c:1,e:"Au-delà du 4ème ordre / 6ème degré, la succession est dévolue à l'État par déshérence. Le notaire établit une déclaration de vacance."},
+      {q:"Le conjoint survivant appartient à quel ordre de succession ?",opts:["1er ordre, avec les enfants","2ème ordre, avec les parents","Il n'appartient à aucun ordre — droits spécifiques","4ème ordre, en dernier recours"],c:2,e:"Le conjoint marié survivant n'appartient à aucun des 4 ordres. Il dispose de droits légaux propres (droit d'habitation, usufruit ou pleine propriété) qui varient selon les héritiers présents."},
+      {q:"Défunt avec 3 enfants, enfant n°2 prédécédé SANS descendant. Les 2 enfants survivants héritent :",opts:["⅓ chacun — la part de l'enfant n°2 est répartie entre eux","½ chacun — la part de l'enfant n°2 retombe sur les survivants","½ aux survivants + ⅓ à l'État","⅓ chacun + ⅓ aux parents du défunt"],c:1,e:"Sans représentation possible (l'enfant n°2 n'a pas de descendant), sa part retombe sur les 2 enfants survivants. Ils partagent 100 % → ½ chacun."},
+    ]
+  },
+  {
+    title:"🔄 La représentation",
+    cards:[
+      {q:"Définition de la représentation successorale",a:"Mécanisme permettant aux <strong>descendants d'un héritier prédécédé ou renonçant</strong> de prendre sa place dans la succession, par souche. Ils recueillent la même part que leur ascendant aurait eu."},
+      {q:"Représentation : où s'applique-t-elle ?",a:"✅ <strong>Ligne directe descendante : à l'infini</strong> · ✅ <strong>Descendants de frères/sœurs : à l'infini</strong> (neveux, petits-neveux…) · ❌ Ascendants : non · ❌ Collatéraux ordinaires (cousins) : non."},
+      {q:"Partage par souche vs par tête",a:"Avec représentation : partage <strong>par souche</strong> (chaque branche reçoit la part de son auteur). Sans représentation : partage <strong>par tête</strong> (parts égales entre héritiers présents)."},
+      {q:"Exemple 1 — Masse 200, 2 enfants, enfant 2 prédécédé avec 2 enfants",a:"Part normale : ½ = 100 chacun. Enfant n°2 prédécédé → représentation par ses 2 enfants. <strong>Enfant n°1 : 100 · Petits-enfants A et B : 50 chacun</strong> (½ de la part de l'enfant n°2)."},
+      {q:"La représentation joue-t-elle si l'héritier a renoncé ?",a:"<strong>Oui</strong>, depuis la loi du 23 juin 2006. La représentation joue même si l'héritier a renoncé à la succession, à condition qu'il ait des descendants qui, eux, acceptent."},
+      {q:"Un neveu du défunt peut-il hériter par représentation de son père prédécédé ?",a:"<strong>Oui</strong>, dans le 2ème ordre. Si un frère du défunt est prédécédé, ses enfants (neveux du défunt) le représentent et héritent de sa part. La représentation joue à l'infini dans cette ligne."},
+      {q:"Exemple 2 — Masse 300, 3 enfants, enfant 2 prédécédé avec 2 petits-enfants",a:"Part normale : ⅓ = 100 chacun. Enfant n°2 prédécédé → représentation par 2 petits-enfants. <strong>Enfant n°1 : 100 · Enfant n°3 : 100 · Petits-enfants : 50 chacun</strong>."},
+      {q:"Représentation et renonciation : précision",a:"Si un enfant renonce mais a des descendants, <strong>ses descendants peuvent le représenter</strong> et hériter à sa place. En revanche, si l'héritier est vivant et accepte, il n'y a pas de représentation (il hérite lui-même)."},
+    ],
+    quiz:[
+      {q:"La représentation successorale s'applique :",opts:["Uniquement aux enfants du défunt","Aux descendants de tout héritier prédécédé ou renonçant","Uniquement en ligne directe descendante jusqu'au 3ème degré","À tous les héritiers, à tous les ordres"],c:1,e:"La représentation bénéficie aux descendants d'un héritier prédécédé ou renonçant. Elle joue en ligne directe descendante et pour les descendants de frères/sœurs, à l'infini."},
+      {q:"La représentation joue-t-elle pour les ascendants du défunt ?",opts:["Oui, jusqu'aux grands-parents","Oui, à l'infini","Non — elle ne joue pas dans la ligne ascendante","Oui, si le parent est décédé avant le défunt"],c:2,e:"La représentation NE joue PAS pour les ascendants. Elle joue uniquement : en ligne directe descendante (à l'infini) et pour les descendants de frères/sœurs (à l'infini)."},
+      {q:"Masse 200 — 2 enfants, enfant n°2 prédécédé avec 2 petits-enfants. Quelle est la part de chaque petit-enfant ?",opts:["100","50","66,67","25"],c:1,e:"Enfant n°1 : 100 (½ de 200). Enfant n°2 prédécédé → représentation : sa part de 100 est partagée entre ses 2 enfants → 50 chacun."},
+      {q:"Le partage 'par souche' signifie :",opts:["Partage à parts égales entre tous les héritiers présents","Chaque branche reçoit la part de son auteur prédécédé","Partage selon l'âge des héritiers","Partage proportionnel aux revenus de chaque branche"],c:1,e:"Par souche = chaque branche reçoit la part que leur auteur aurait reçue. Par tête = parts égales entre héritiers présents. La représentation impose le partage par souche."},
+      {q:"Un neveu du défunt peut-il hériter si son père (frère du défunt) est prédécédé ?",opts:["Non — seulement si le défunt est sans descendants","Oui — par représentation de son père dans le 2ème ordre","Oui — uniquement s'il est le seul neveu","Non — la représentation ne joue pas dans le 2ème ordre"],c:1,e:"La représentation joue à l'infini pour les descendants de frères/sœurs. Le neveu représente son père prédécédé et hérite de sa part dans le 2ème ordre."},
+      {q:"La représentation joue-t-elle si l'héritier a renoncé à la succession ?",opts:["Non — le renonçant est traité comme s'il n'avait jamais existé","Oui — depuis la loi du 23 juin 2006","Non — seulement le décès déclenche la représentation","Oui — mais uniquement si la renonciation est récente"],c:1,e:"Depuis la loi du 23 juin 2006, la représentation joue même en cas de renonciation : les descendants de l'héritier renonçant peuvent hériter à sa place s'ils acceptent la succession."},
+      {q:"Masse 300 — 3 enfants, enfant n°2 prédécédé avec 2 petits-enfants. Part des enfants n°1 et n°3 ?",opts:["66,67 chacun","100 chacun","50 chacun","75 chacun"],c:1,e:"Part normale = ⅓ de 300 = 100 par enfant. L'enfant n°1 prend 100 et l'enfant n°3 prend 100. L'enfant n°2 prédécédé → ses 2 petits-enfants se partagent 100 → 50 chacun."},
+      {q:"Si un héritier est vivant et accepte la succession, la représentation joue-t-elle pour ses enfants ?",opts:["Oui, toujours","Oui, si les enfants ont plus de 18 ans","Non — seul l'héritier lui-même hérite","Non, sauf si l'héritier est malade"],c:2,e:"La représentation ne joue que si l'héritier est prédécédé ou renonçant. Si l'héritier est vivant et accepte, il hérite lui-même — ses descendants ne peuvent pas le représenter."},
+    ]
+  }
+];
+
+const FOCUS_EX = [
+  { exercises: [
+    { id:"f0e1", title:"① Régime des biens par statut de couple", type:"multi",
+      items:[
+        {id:"f0e1a", text:"Mariage (depuis 1966)", answer:"cra"},
+        {id:"f0e1b", text:"PACS sans convention", answer:"ind"},
+        {id:"f0e1c", text:"Concubinage", answer:"ind"},
+        {id:"f0e1d", text:"PACS sur option indivision", answer:"com"},
+      ],
+      zones:[{key:"cra",label:"💍 CRA (communs + propres)"},{key:"ind",label:"🤝 Propres + Indivis"},{key:"com",label:"🔧 Propres + Communs (option)"}]
+    },
+    { id:"f0e2", title:"② Régime primaire : charges vs droits", type:"multi",
+      items:[
+        {id:"f0e2a", text:"Logement familial : ne peut être vendu seul", answer:"charge"},
+        {id:"f0e2b", text:"Exercer librement sa profession", answer:"droit"},
+        {id:"f0e2c", text:"Dettes ménagères : engagent les 2 époux", answer:"charge"},
+        {id:"f0e2d", text:"Ouvrir un compte de dépôt seul", answer:"droit"},
+      ],
+      zones:[{key:"charge",label:"⚖️ Charges du mariage"},{key:"droit",label:"✅ Droits du conjoint"}]
+    }
+  ]},
+  { exercises: [
+    { id:"f1e1", title:"① Classer les biens sous CRA", type:"multi",
+      items:[
+        {id:"f1e1a", text:"Maison reçue par héritage pendant le mariage", answer:"propre"},
+        {id:"f1e1b", text:"Salaires gagnés pendant le mariage", answer:"commun"},
+        {id:"f1e1c", text:"Appartement possédé avant le mariage", answer:"propre"},
+        {id:"f1e1d", text:"Maison achetée à deux pendant le mariage", answer:"commun"},
+        {id:"f1e1e", text:"Revenus du loyer d'un appartement propre", answer:"commun"},
+      ],
+      zones:[{key:"propre",label:"👤 Biens propres"},{key:"commun",label:"👫 Biens communs"}]
+    },
+    { id:"f1e2", title:"② Associer chaque régime communautaire à sa particularité", type:"match",
+      items:[
+        {id:"f1e2a", text:"CMA (avant 1966)", answer:"cma"},
+        {id:"f1e2b", text:"CRA (depuis 1966)", answer:"cra"},
+        {id:"f1e2c", text:"Communauté universelle", answer:"cu"},
+      ],
+      zones:[
+        {key:"cma",label:"Meubles reçus par don = communs"},
+        {key:"cra",label:"Régime légal actuel — meubles donation = propres"},
+        {key:"cu",label:"Tous les biens présents et futurs sont communs"},
+      ]
+    }
+  ]},
+  { exercises: [
+    { id:"f2e1", title:"① Classer les éléments par régime séparatiste", type:"multi",
+      items:[
+        {id:"f2e1a", text:"Pendant le mariage : chacun gère ses propres librement", answer:"both"},
+        {id:"f2e1b", text:"À la dissolution : partage de l'enrichissement par moitié", answer:"part"},
+        {id:"f2e1c", text:"À la dissolution : chacun reprend ses propres sans partage", answer:"sep"},
+        {id:"f2e1d", text:"Achats conjoints : bien indivis selon quote-part", answer:"both"},
+      ],
+      zones:[
+        {key:"sep",label:"✂️ Séparation des biens uniquement"},
+        {key:"part",label:"📈 Participation aux acquêts uniquement"},
+        {key:"both",label:"✅ Les deux régimes"},
+      ]
+    },
+    { id:"f2e2", title:"② PACS : régime légal vs sur option", type:"match",
+      items:[
+        {id:"f2e2a", text:"Propres + Biens indivis (par défaut)", answer:"legal"},
+        {id:"f2e2b", text:"Propres + Biens communs (acquêts)", answer:"option"},
+        {id:"f2e2c", text:"Convention écrite obligatoire", answer:"both"},
+        {id:"f2e2d", text:"Inscription en marge de l'acte de naissance", answer:"both"},
+      ],
+      zones:[
+        {key:"legal",label:"⚙️ PACS légal (défaut)"},
+        {key:"option",label:"🔧 PACS sur option"},
+        {key:"both",label:"✅ Les deux"},
+      ]
+    }
+  ]},
+  { exercises: [
+    { id:"f3e1", title:"① Éléments de la formule : actif / passif / donation", type:"multi",
+      items:[
+        {id:"f3e1a", text:"Résidence principale (valeur vénale)", answer:"actif"},
+        {id:"f3e1b", text:"Crédit immobilier restant dû", answer:"passif"},
+        {id:"f3e1c", text:"Donation de 50 000€ faite il y a 8 ans", answer:"don"},
+        {id:"f3e1d", text:"Comptes bancaires et placements", answer:"actif"},
+        {id:"f3e1e", text:"Donation de 30 000€ faite il y a 18 ans", answer:"rien"},
+      ],
+      zones:[
+        {key:"actif",label:"📈 Actif successoral"},
+        {key:"passif",label:"📉 Passif successoral"},
+        {key:"don",label:"🎁 Donation réintégrée (< 15 ans)"},
+        {key:"rien",label:"❌ Non réintégrée (> 15 ans)"},
+      ]
+    },
+    { id:"f3e2", title:"② Masse selon le régime matrimonial", type:"match",
+      items:[
+        {id:"f3e2a", text:"Biens propres M + ½ masse commune", answer:"cra"},
+        {id:"f3e2b", text:"Aucune succession au 1er décès (conjoint garde tout)", answer:"cu"},
+        {id:"f3e2c", text:"Biens propres M + ½ biens indivis", answer:"sep"},
+      ],
+      zones:[
+        {key:"cra",label:"💍 CRA"},
+        {key:"cu",label:"🌐 Communauté universelle + clause"},
+        {key:"sep",label:"✂️ Séparation des biens"},
+      ]
+    }
+  ]},
+  { exercises: [
+    { id:"f4e1", title:"① Qui appartient à quel ordre ?", type:"multi",
+      items:[
+        {id:"f4e1a", text:"Enfants du défunt", answer:"o1"},
+        {id:"f4e1b", text:"Parents du défunt", answer:"o2"},
+        {id:"f4e1c", text:"Grands-parents du défunt", answer:"o3"},
+        {id:"f4e1d", text:"Petits-enfants du défunt", answer:"o1"},
+        {id:"f4e1e", text:"Frères et soeurs du défunt", answer:"o2"},
+        {id:"f4e1f", text:"Oncles et tantes du défunt", answer:"o4"},
+      ],
+      zones:[
+        {key:"o1",label:"1er ordre"},
+        {key:"o2",label:"2ème ordre"},
+        {key:"o3",label:"3ème ordre"},
+        {key:"o4",label:"4ème ordre"},
+      ]
+    },
+    { id:"f4e2", title:"② Répartition — défunt sans conjoint, avec 2 parents + 2 frères/soeurs", type:"match",
+      items:[
+        {id:"f4e2a", text:"Part du père", answer:"quart"},
+        {id:"f4e2b", text:"Part de la mère", answer:"quart"},
+        {id:"f4e2c", text:"Part de chaque frère/soeur", answer:"quart"},
+      ],
+      zones:[
+        {key:"quart",label:"¼ (25%)"},
+        {key:"moitie",label:"½ (50%)"},
+        {key:"tiers",label:"⅓ (33%)"},
+      ]
+    }
+  ]},
+  { exercises: [
+    { id:"f5e1", title:"① La représentation s'applique-t-elle ?", type:"multi",
+      items:[
+        {id:"f5e1a", text:"Enfant prédécédé — ses enfants (petits-enfants du défunt)", answer:"oui"},
+        {id:"f5e1b", text:"Frère prédécédé — ses enfants (neveux du défunt)", answer:"oui"},
+        {id:"f5e1c", text:"Parent prédécédé — ses parents (grands-parents du défunt)", answer:"non"},
+        {id:"f5e1d", text:"Cousin prédécédé — ses enfants", answer:"non"},
+      ],
+      zones:[{key:"oui",label:"✅ Représentation joue"},{key:"non",label:"❌ Représentation ne joue pas"}]
+    },
+    { id:"f5e2", title:"② Masse 300 — 3 enfants, enfant n°2 prédécédé avec 2 petits-enfants", type:"match",
+      items:[
+        {id:"f5e2a", text:"Part de l'enfant n°1", answer:"cent"},
+        {id:"f5e2b", text:"Part de l'enfant n°3", answer:"cent"},
+        {id:"f5e2c", text:"Part de chaque petit-enfant (représentation)", answer:"cin"},
+      ],
+      zones:[
+        {key:"cent",label:"100 (⅓ de 300)"},
+        {key:"cin",label:"50 (½ de la part n°2)"},
+        {key:"zero",label:"0 (exclus)"},
+      ]
+    }
+  ]},
+];
+
+let cards = [...CARDS], ci = 0, flipped = false;
+function fcRender() {
+  const c = cards[ci];
+  document.getElementById('fc-q').innerHTML = c.q;
+  document.getElementById('fc-a').innerHTML = c.a;
+  document.getElementById('fc-cnt').textContent = "Carte " + (ci+1) + " / " + cards.length;
+  document.getElementById('fc-ch').textContent = c.ch;
+  document.getElementById('fc-bar').style.width = ((ci+1)/cards.length*100)+'%';
+  document.getElementById('fc-scene').classList.remove('flipped');
+  flipped = false;
+}
+function fcFlip() { flipped=!flipped; document.getElementById('fc-scene').classList.toggle('flipped',flipped); }
+function fcNext() { ci = (ci+1)%cards.length; fcRender(); }
+function fcPrev() { ci = (ci-1+cards.length)%cards.length; fcRender(); }
+function fcShuffle() {
+  for(let i=cards.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1));[cards[i],cards[j]]=[cards[j],cards[i]]; }
+  ci=0; fcRender();
+}
+
+let qi=0, qs=0, qa=0, qAnswers=[];
+function qRender() {
+  const q = QUIZ[qi];
+  document.getElementById('q-cnt').textContent = "Question " + (qi+1) + " / " + QUIZ.length;
+  document.getElementById('q-badge').textContent = qs + " / " + qa;
+  document.getElementById('q-tag').textContent = q.ch;
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('q-bar').style.width = (qi/QUIZ.length*100)+'%';
+  const od = document.getElementById('q-opts'); od.innerHTML='';
+  if(q.multi) {
+    const hint=document.createElement('div');
+    hint.style='font-size:.78rem;color:var(--muted);margin-bottom:8px;font-style:italic';
+    hint.textContent='Plusieurs réponses correctes — sélectionnez toutes les bonnes réponses puis validez.';
+    od.appendChild(hint);
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.dataset.idx=i;
+      b.textContent=['A','B','C','D'][i]+'. '+o;
+      b.onclick=()=>{ if(!b.disabled) b.classList.toggle('selected'); };
+      od.appendChild(b);
+    });
+    const val=document.createElement('button');
+    val.style='margin-top:12px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-weight:600;cursor:pointer;font-size:.9rem';
+    val.textContent='Valider';
+    val.onclick=()=>qValidateMulti();
+    od.appendChild(val);
+  } else {
+    q.opts.forEach((o,i)=>{
+      const b=document.createElement('button');
+      b.className='opt'; b.textContent=['A','B','C','D'][i]+'. '+o;
+      b.onclick=()=>qSelect(i); od.appendChild(b);
+    });
+  }
+  document.getElementById('q-fb').className='fb';
+  document.getElementById('q-fb').innerHTML='';
+  document.getElementById('qnext').style.display='none';
+}
+function qSelect(i) {
+  const q=QUIZ[qi];
+  document.querySelectorAll('#q-opts .opt').forEach(b=>b.disabled=true);
+  const ok=i===q.c;
+  document.querySelectorAll('#q-opts .opt')[i].classList.add(ok?'correct':'wrong');
+  if(!ok) document.querySelectorAll('#q-opts .opt')[q.c].classList.add('correct');
+  if(ok) qs++; qa++;
+  qAnswers.push({sel:[i],c:Array.isArray(q.c)?q.c:[q.c],q:q.q,opts:q.opts,e:q.e});
+  const fb=document.getElementById('q-fb');
+  fb.className='fb '+(ok?'correct':'wrong');
+  fb.innerHTML=(ok?'<strong>Bonne réponse !</strong>':'<strong>Mauvaise réponse.</strong> ')+q.e;
+  document.getElementById('q-badge').textContent=qs+' / '+qa;
+  document.getElementById('qnext').style.display='inline-flex';
+}
+function qValidateMulti() {
+  const q=QUIZ[qi];
+  const btns=[...document.querySelectorAll('#q-opts .opt')];
+  const sel=btns.filter(b=>b.classList.contains('selected')).map(b=>+b.dataset.idx);
+  const correct=Array.isArray(q.c)?q.c:[q.c];
+  btns.forEach(b=>b.disabled=true);
+  const ok=sel.length===correct.length&&correct.every(c=>sel.includes(c));
+  btns.forEach(b=>{
+    const idx=+b.dataset.idx;
+    if(isNaN(idx)) return;
+    if(correct.includes(idx)) b.classList.add('correct');
+    else if(sel.includes(idx)) b.classList.add('wrong');
+  });
+  if(ok) qs++; qa++;
+  qAnswers.push({sel,c:correct,q:q.q,opts:q.opts,e:q.e});
+  const fb=document.getElementById('q-fb');
+  fb.className='fb '+(ok?'correct':'wrong');
+  fb.innerHTML=(ok?'<strong>Bonne réponse !</strong>':'<strong>Mauvaise réponse.</strong> ')+q.e;
+  document.getElementById('q-badge').textContent=qs+' / '+qa;
+  document.getElementById('qnext').style.display='inline-flex';
+}
+function qNext() {
+  qi++;
+  if(qi>=QUIZ.length) { qShowScore(); return; }
+  qRender();
+}
+function qShowScore() {
+  document.getElementById('quiz-active').style.display='none';
+  const sc=document.getElementById('score-scr');
+  sc.classList.add('vis');
+  const pct=Math.round(qs/QUIZ.length*100);
+  document.getElementById('s-emoji').textContent=pct>=80?'🏆':pct>=60?'💪':'📖';
+  document.getElementById('s-title').textContent=pct>=80?'Excellent !':pct>=60?'Bon travail !':'Continue tes révisions';
+  document.getElementById('s-sub').textContent='Quiz général J2 — '+QUIZ.length+' questions';
+  document.getElementById('s-num').textContent=qs+' / '+QUIZ.length;
+  document.getElementById('s-det').textContent=pct+'% de bonnes réponses';
+  const bar=document.getElementById('s-bar');
+  bar.style.width='0%'; bar.style.background=pct>=80?'var(--ok)':pct>=60?'var(--gold)':'var(--err)';
+  setTimeout(()=>bar.style.width=pct+'%',100);
+  const rl=document.getElementById('rev-list');
+  rl.innerHTML='';
+  qAnswers.forEach(a=>{
+    const c=Array.isArray(a.c)?a.c:[a.c];
+    const ok=a.sel.length===c.length&&c.every(x=>a.sel.includes(x));
+    if(!ok){
+      const d=document.createElement('div');
+      d.className='rev-item';
+      d.innerHTML='<div class="rev-q">'+a.q+'</div>'
+        +'<div class="rev-wrong">Votre réponse : '+a.sel.map(i=>a.opts[i]).join(', ')+'</div>'
+        +'<div class="rev-right">Correcte : '+c.map(i=>a.opts[i]).join(', ')+'</div>'
+        +'<div style="font-size:.8rem;color:var(--muted);margin-top:4px">'+a.e+'</div>';
+      rl.appendChild(d);
+    }
+  });
+  if(!rl.children.length) rl.innerHTML='<p style="color:var(--ok);font-weight:600;padding:8px 0">Parfait — aucune erreur !</p>';
+}
+function qRestart() {
+  qi=0; qs=0; qa=0; qAnswers=[];
+  document.getElementById('quiz-active').style.display='';
+  document.getElementById('score-scr').classList.remove('vis');
+  qRender();
+}
+
+let curTheme=-1, fc2i=0, fc2cards=[], fc2flipped=false;
+function selectTheme(t) {
+  curTheme=t;
+  document.querySelectorAll('.theme-card').forEach((c,i)=>c.classList.toggle('active',i===t));
+  document.getElementById('theme-grid').style.display='none';
+  const fc=document.getElementById('focus-content');
+  fc.classList.add('vis');
+  document.getElementById('focus-heading').textContent=FOCUS[t].title;
+  setFMode('cards');
+}
+function backToThemes() {
+  document.getElementById('theme-grid').style.display='';
+  document.getElementById('focus-content').classList.remove('vis');
+  curTheme=-1;
+}
+function setFMode(m) {
+  ['cards','quiz','exercices'].forEach(x=>{
+    document.getElementById('fmode-'+x).classList.toggle('active',x===m);
+  });
+  document.getElementById('focus-cards-section').style.display=m==='cards'?'':'none';
+  document.getElementById('focus-quiz-section').style.display=m==='quiz'?'':'none';
+  document.getElementById('focus-ex-section').style.display=m==='exercices'?'':'none';
+  if(m==='cards') { fc2cards=[...FOCUS[curTheme].cards]; fc2i=0; fc2flipped=false; fc2Render(); }
+  if(m==='quiz') { fqi=0; fqs=0; fqa=0; fqAnswers=[]; document.getElementById('fq-score').classList.remove('vis'); document.getElementById('fmq-active').style.display=''; fqRender(); }
+  if(m==='exercices') initFocusEx(curTheme);
+}
+function fc2Render() {
+  const c=fc2cards[fc2i];
+  document.getElementById('fc2-q').innerHTML=c.q;
+  document.getElementById('fc2-a').innerHTML=c.a;
+  document.getElementById('fc2-cnt').textContent='Carte '+(fc2i+1)+' / '+fc2cards.length;
+  document.getElementById('fc2-bar').style.width=((fc2i+1)/fc2cards.length*100)+'%';
+  document.getElementById('fc2-scene').classList.remove('flipped');
+  fc2flipped=false;
+}
+function fc2Flip() { fc2flipped=!fc2flipped; document.getElementById('fc2-scene').classList.toggle('flipped',fc2flipped); }
+function fc2Next() { fc2i=(fc2i+1)%fc2cards.length; fc2Render(); }
+function fc2Prev() { fc2i=(fc2i-1+fc2cards.length)%fc2cards.length; fc2Render(); }
+
+let fqi=0, fqs=0, fqa=0, fqAnswers=[];
+function fqRender() {
+  if(!FOCUS[curTheme]) return;
+  const qs2=FOCUS[curTheme].quiz;
+  const q=qs2[fqi];
+  document.getElementById('fq-cnt').textContent='Question '+(fqi+1)+' / '+qs2.length;
+  document.getElementById('fq-badge').textContent=fqs+' / '+fqa;
+  document.getElementById('fq-text').textContent=q.q;
+  document.getElementById('fq-bar').style.width=(fqi/qs2.length*100)+'%';
+  const od=document.getElementById('fq-opts'); od.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.textContent=['A','B','C','D'][i]+'. '+o;
+    b.onclick=()=>fqSelect(i); od.appendChild(b);
+  });
+  document.getElementById('fq-fb').className='fb';
+  document.getElementById('fq-fb').innerHTML='';
+  document.getElementById('fqnext').style.display='none';
+}
+function fqSelect(i) {
+  const q=FOCUS[curTheme].quiz[fqi];
+  document.querySelectorAll('#fq-opts .opt').forEach(b=>b.disabled=true);
+  const ok=i===q.c;
+  document.querySelectorAll('#fq-opts .opt')[i].classList.add(ok?'correct':'wrong');
+  if(!ok) document.querySelectorAll('#fq-opts .opt')[q.c].classList.add('correct');
+  if(ok) fqs++; fqa++;
+  fqAnswers.push({sel:[i],c:[q.c],q:q.q,opts:q.opts,e:q.e});
+  const fb=document.getElementById('fq-fb');
+  fb.className='fb '+(ok?'correct':'wrong');
+  fb.innerHTML=(ok?'<strong>Bonne réponse !</strong>':'<strong>Mauvaise réponse.</strong> ')+q.e;
+  document.getElementById('fq-badge').textContent=fqs+' / '+fqa;
+  document.getElementById('fqnext').style.display='inline-flex';
+}
+function fqNext() {
+  fqi++;
+  const qs2=FOCUS[curTheme].quiz;
+  if(fqi>=qs2.length) { fqShowScore(); return; }
+  fqRender();
+}
+function fqShowScore() {
+  document.getElementById('fmq-active').style.display='none';
+  const sc=document.getElementById('fq-score'); sc.classList.add('vis');
+  const total=FOCUS[curTheme].quiz.length;
+  const pct=Math.round(fqs/total*100);
+  document.getElementById('fs-emoji').textContent=pct>=80?'🏆':pct>=60?'💪':'📖';
+  document.getElementById('fs-title').textContent=pct>=80?'Excellent !':pct>=60?'Bon travail !':'Revois le thème';
+  document.getElementById('fs-num').textContent=fqs+' / '+total;
+  document.getElementById('fs-det').textContent=pct+'% de réussite';
+  const bar=document.getElementById('fs-bar');
+  bar.style.width='0%'; bar.style.background=pct>=80?'var(--ok)':pct>=60?'var(--gold)':'var(--err)';
+  setTimeout(()=>bar.style.width=pct+'%',100);
+}
+function fqRestart() {
+  fqi=0; fqs=0; fqa=0; fqAnswers=[];
+  document.getElementById('fq-score').classList.remove('vis');
+  document.getElementById('fmq-active').style.display='';
+  fqRender();
+}
+
+let pickedItem=null, pickedEl=null;
+function pickItem(el,exId) {
+  if(el.classList.contains('ex-ok')||el.classList.contains('ex-ko')) return;
+  if(pickedEl) pickedEl.classList.remove('picked');
+  if(pickedEl===el) { pickedItem=null; pickedEl=null; return; }
+  pickedEl=el; pickedItem={id:el.dataset.id,text:el.textContent,answer:el.dataset.answer,exId};
+  el.classList.add('picked');
+}
+function placeItem(zoneEl,exId) {
+  if(!pickedItem||pickedItem.exId!==exId) return;
+  const zoneKey=zoneEl.dataset.key;
+  let existing=zoneEl.querySelector('[data-id="'+pickedItem.id+'"]');
+  if(existing) { existing.remove(); }
+  const clone=document.createElement('div');
+  clone.className='drag-item';
+  clone.dataset.id=pickedItem.id;
+  clone.dataset.answer=pickedItem.answer;
+  clone.dataset.zone=zoneKey;
+  clone.textContent=pickedItem.text;
+  clone.onclick=()=>pickItem(clone,exId);
+  zoneEl.appendChild(clone);
+  if(pickedEl) pickedEl.classList.remove('picked');
+  pickedItem=null; pickedEl=null;
+}
+
+function initFocusEx(themeIdx) {
+  const container=document.getElementById('focus-ex-section');
+  container.innerHTML='';
+  if(!FOCUS_EX[themeIdx]) { container.innerHTML='<p style="color:var(--muted);font-size:.9rem">Exercices en préparation pour ce thème.</p>'; return; }
+  FOCUS_EX[themeIdx].exercises.forEach(ex=>{
+    const div=document.createElement('div'); div.className='ex-card'; div.id='ex-'+ex.id;
+    div.innerHTML='<div class="ex-title">'+ex.title+'</div>';
+    // source items
+    const src=document.createElement('div'); src.className='ex-source'; src.id='src-'+ex.id;
+    ex.items.forEach(item=>{
+      const el=document.createElement('div'); el.className='drag-item';
+      el.dataset.id=item.id; el.dataset.answer=item.answer; el.textContent=item.text;
+      el.setAttribute('draggable','true');
+      el.ondragstart=e=>{ e.dataTransfer.setData('text/plain',JSON.stringify({id:item.id,text:item.text,answer:item.answer,exId:ex.id})); };
+      el.onclick=()=>pickItem(el,ex.id);
+      src.appendChild(el);
+    });
+    div.appendChild(src);
+    // zones
+    const cols=ex.zones.length<=2?'ex-grid2':'ex-grid3';
+    const grid=document.createElement('div'); grid.className=cols;
+    ex.zones.forEach(z=>{
+      const col=document.createElement('div');
+      const hdr=document.createElement('div'); hdr.className='ex-col-header';
+      hdr.style.background='var(--bg)'; hdr.style.border='1px solid var(--border)'; hdr.textContent=z.label;
+      const dz=document.createElement('div');
+      dz.className='drop-zone multi'; dz.id='dz-'+ex.id+'-'+z.key; dz.dataset.key=z.key;
+      dz.ondragover=e=>{ e.preventDefault(); dz.classList.add('dz-hover'); };
+      dz.ondragleave=()=>dz.classList.remove('dz-hover');
+      dz.ondrop=e=>{ e.preventDefault(); dz.classList.remove('dz-hover');
+        const d=JSON.parse(e.dataTransfer.getData('text/plain'));
+        if(d.exId!==ex.id) return;
+        pickedItem=d; placeItem(dz,ex.id);
+      };
+      dz.onclick=()=>placeItem(dz,ex.id);
+      col.appendChild(hdr); col.appendChild(dz); grid.appendChild(col);
+    });
+    div.appendChild(grid);
+    const btns=document.createElement('div'); btns.className='ex-btns';
+    const cb=document.createElement('button'); cb.className='btn-check'; cb.textContent='Vérifier';
+    cb.onclick=()=>checkFEx(ex);
+    const rb=document.createElement('button'); rb.className='btn-reset'; rb.textContent='Réinitialiser';
+    rb.onclick=()=>resetFEx(ex,themeIdx);
+    btns.appendChild(cb); btns.appendChild(rb);
+    div.appendChild(btns);
+    const fb=document.createElement('div'); fb.className='ex-feedback'; fb.id='fb-'+ex.id;
+    div.appendChild(fb);
+    container.appendChild(div);
+  });
+}
+
+function checkFEx(ex) {
+  let total=ex.items.length, correct=0;
+  ex.zones.forEach(z=>{
+    const dz=document.getElementById('dz-'+ex.id+'-'+z.key);
+    if(!dz) return;
+    dz.querySelectorAll('.drag-item').forEach(el=>{
+      el.classList.remove('ex-ok','ex-ko');
+      if(el.dataset.answer===z.key) { el.classList.add('ex-ok'); correct++; }
+      else el.classList.add('ex-ko');
+    });
+  });
+  const fb=document.getElementById('fb-'+ex.id);
+  if(correct===total) { fb.className='ex-feedback ok'; fb.textContent='Parfait ! Tous les éléments sont bien placés.'; }
+  else { fb.className='ex-feedback ko'; fb.textContent=correct+'/'+total+' correct(s). Les cases rouges sont mal placées — réinitialisez pour réessayer.'; }
+}
+
+function resetFEx(ex,themeIdx) {
+  const src=document.getElementById('src-'+ex.id);
+  if(src) src.innerHTML='';
+  ex.zones.forEach(z=>{
+    const dz=document.getElementById('dz-'+ex.id+'-'+z.key);
+    if(dz) dz.innerHTML='';
+  });
+  ex.items.forEach(item=>{
+    const el=document.createElement('div'); el.className='drag-item';
+    el.dataset.id=item.id; el.dataset.answer=item.answer; el.textContent=item.text;
+    el.setAttribute('draggable','true');
+    el.ondragstart=e=>{ e.dataTransfer.setData('text/plain',JSON.stringify({id:item.id,text:item.text,answer:item.answer,exId:ex.id})); };
+    el.onclick=()=>pickItem(el,ex.id);
+    if(src) src.appendChild(el);
+  });
+  const fb=document.getElementById('fb-'+ex.id);
+  if(fb) { fb.className='ex-feedback'; fb.textContent=''; }
+}
+
+function initGlobalEx() {
+  const c=document.getElementById('ex-container');
+  c.innerHTML='';
+  FOCUS_EX.forEach((theme,ti)=>{
+    const th=FOCUS[ti];
+    const thDiv=document.createElement('div');
+    thDiv.innerHTML='<h3 style="font-size:1rem;font-weight:700;color:var(--navy);margin:0 0 12px;padding:10px 0 6px;border-bottom:2px solid var(--border)">'+th.title+'</h3>';
+    theme.exercises.forEach(ex=>{
+      const div=document.createElement('div'); div.className='ex-card'; div.id='gex-'+ex.id;
+      div.innerHTML='<div class="ex-title">'+ex.title+'</div>';
+      const src=document.createElement('div'); src.className='ex-source'; src.id='gsrc-'+ex.id;
+      ex.items.forEach(item=>{
+        const el=document.createElement('div'); el.className='drag-item';
+        el.dataset.id='g'+item.id; el.dataset.answer=item.answer; el.textContent=item.text;
+        el.setAttribute('draggable','true');
+        el.ondragstart=e=>{ e.dataTransfer.setData('text/plain',JSON.stringify({id:'g'+item.id,text:item.text,answer:item.answer,exId:'g'+ex.id})); };
+        el.onclick=()=>pickItem(el,'g'+ex.id);
+        src.appendChild(el);
+      });
+      div.appendChild(src);
+      const cols=ex.zones.length<=2?'ex-grid2':'ex-grid3';
+      const grid=document.createElement('div'); grid.className=cols;
+      ex.zones.forEach(z=>{
+        const col=document.createElement('div');
+        const hdr=document.createElement('div'); hdr.className='ex-col-header';
+        hdr.style.background='var(--bg)'; hdr.style.border='1px solid var(--border)'; hdr.textContent=z.label;
+        const dz=document.createElement('div');
+        dz.className='drop-zone multi'; dz.id='gdz-'+ex.id+'-'+z.key; dz.dataset.key=z.key;
+        dz.ondragover=e=>{ e.preventDefault(); dz.classList.add('dz-hover'); };
+        dz.ondragleave=()=>dz.classList.remove('dz-hover');
+        dz.ondrop=e=>{ e.preventDefault(); dz.classList.remove('dz-hover');
+          const d=JSON.parse(e.dataTransfer.getData('text/plain'));
+          if(d.exId!=='g'+ex.id) return;
+          pickedItem=d; placeItem(dz,'g'+ex.id);
+        };
+        dz.onclick=()=>placeItem(dz,'g'+ex.id);
+        col.appendChild(hdr); col.appendChild(dz); grid.appendChild(col);
+      });
+      div.appendChild(grid);
+      const btns=document.createElement('div'); btns.className='ex-btns';
+      const cb=document.createElement('button'); cb.className='btn-check'; cb.textContent='Vérifier';
+      cb.onclick=()=>checkGEx(ex);
+      const rb=document.createElement('button'); rb.className='btn-reset'; rb.textContent='Réinitialiser';
+      rb.onclick=()=>resetGEx(ex);
+      btns.appendChild(cb); btns.appendChild(rb);
+      div.appendChild(btns);
+      const fb=document.createElement('div'); fb.className='ex-feedback'; fb.id='gfb-'+ex.id;
+      div.appendChild(fb);
+      thDiv.appendChild(div);
+    });
+    c.appendChild(thDiv);
+  });
+}
+
+function checkGEx(ex) {
+  let total=ex.items.length, correct=0;
+  ex.zones.forEach(z=>{
+    const dz=document.getElementById('gdz-'+ex.id+'-'+z.key);
+    if(!dz) return;
+    dz.querySelectorAll('.drag-item').forEach(el=>{
+      el.classList.remove('ex-ok','ex-ko');
+      if(el.dataset.answer===z.key) { el.classList.add('ex-ok'); correct++; }
+      else el.classList.add('ex-ko');
+    });
+  });
+  const fb=document.getElementById('gfb-'+ex.id);
+  if(correct===total) { fb.className='ex-feedback ok'; fb.textContent='Parfait ! Tous les éléments sont bien placés.'; }
+  else { fb.className='ex-feedback ko'; fb.textContent=correct+'/'+total+' correct(s). Les cases rouges sont mal placées.'; }
+}
+
+function resetGEx(ex) {
+  const src=document.getElementById('gsrc-'+ex.id);
+  if(src) src.innerHTML='';
+  ex.zones.forEach(z=>{
+    const dz=document.getElementById('gdz-'+ex.id+'-'+z.key);
+    if(dz) dz.innerHTML='';
+  });
+  ex.items.forEach(item=>{
+    const el=document.createElement('div'); el.className='drag-item';
+    el.dataset.id='g'+item.id; el.dataset.answer=item.answer; el.textContent=item.text;
+    el.setAttribute('draggable','true');
+    el.ondragstart=e=>{ e.dataTransfer.setData('text/plain',JSON.stringify({id:'g'+item.id,text:item.text,answer:item.answer,exId:'g'+ex.id})); };
+    el.onclick=()=>pickItem(el,'g'+ex.id);
+    if(src) src.appendChild(el);
+  });
+  const fb=document.getElementById('gfb-'+ex.id);
+  if(fb) { fb.className='ex-feedback'; fb.textContent=''; }
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  const btns=[...document.querySelectorAll('.tab-btn')];
+  const map={flashcards:0,quiz:1,focus:2,fiche:3,exercices:4};
+  if(map[name]!==undefined) btns[map[name]].classList.add('active');
+}
+
+window.onload = function() {
+  fcRender();
+  qRender();
+  initGlobalEx();
+};
+
+</script>
+</body>
+</html>
