@@ -353,40 +353,53 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
     <button class="btn btn-navy" onclick="window.print()">🖨️ Imprimer</button>
     <span style="font-size:.8rem;color:var(--muted)">Fiche de révision — Jour 02</span>
   </div>
-  <div class="fiche-subnav no-print" id="j2-subnav"><button class="fiche-subbtn active" id="btn-recap" onclick="['recap','mod1','mod2'].forEach(function(x){document.getElementById('fiche-'+x).style.display=x==='recap'?'block':'none';document.getElementById('btn-'+x).className='fiche-subbtn'+(x==='recap'?' active':'')})">📋 Récap</button><button class="fiche-subbtn" id="btn-mod1" onclick="['recap','mod1','mod2'].forEach(function(x){document.getElementById('fiche-'+x).style.display=x==='mod1'?'block':'none';document.getElementById('btn-'+x).className='fiche-subbtn'+(x==='mod1'?' active':'')})">💍 Régimes matri</button><button class="fiche-subbtn" id="btn-mod2" onclick="['recap','mod1','mod2'].forEach(function(x){document.getElementById('fiche-'+x).style.display=x==='mod2'?'block':'none';document.getElementById('btn-'+x).className='fiche-subbtn'+(x==='mod2'?' active':'')})">👪 Succession</button></div>
-<div class="fiche-panel active" id="fiche-recap" style="display:block">
-<div class="fiche-body">
-<h2>📋 Récapitulatif — Jour 02 : Régimes matrimoniaux &amp; Succession</h2>
+  <style>
+  .j2nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+  .j2btn{padding:8px 16px;border:2px solid #ddd;background:#fff;color:#888;border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:700}
+  .j2btn.on{border-color:#c9a227;background:#c9a227;color:#fff}
+  </style>
+  <script>
+  function j2go(n){
+    var all=['r','1','2'];
+    for(var i=0;i<all.length;i++){
+      var pp=document.getElementById('j2pn'+all[i]);
+      var bb=document.getElementById('j2bn'+all[i]);
+      if(pp) pp.style.display=(all[i]===n)?'block':'none';
+      if(bb) bb.className='j2btn'+(all[i]===n?' on':'');
+    }
+  }
+  </script>
+  <div class="j2nav">
+    <button class="j2btn on" id="j2bnr" onclick="j2go('r')">Recap</button>
+    <button class="j2btn" id="j2bn1" onclick="j2go('1')">Regimes matri</button>
+    <button class="j2btn" id="j2bn2" onclick="j2go('2')">Succession</button>
+  </div>
+  <div id="j2pnr" style="display:block"><div class="fiche-body">
+<h2>&#128203; R&eacute;cap &mdash; Jour 02 : R&eacute;gimes matrimoniaux &amp; Succession</h2>
+<h3>Regimes matrimoniaux</h3>
+<table><tr><th>Statut</th><th>R&eacute;gime par d&eacute;faut</th></tr>
+<tr><td>Mariage</td><td>CRA &mdash; Communaut&eacute; R&eacute;duite aux Acqu&ecirc;ts (depuis 01/02/1966)</td></tr>
+<tr><td>PACS</td><td>S&eacute;paration des biens</td></tr>
+<tr><td>Concubinage</td><td>Biens propres + indivis</td></tr></table>
+<p><strong>Communautaires</strong> : CMA &middot; CRA &middot; Communaut&eacute; universelle</p>
+<p><strong>S&eacute;paratistes</strong> : S&eacute;paration des biens &middot; Participation aux acqu&ecirc;ts</p>
+<div class="warn">Communaut&eacute; universelle + clause d'attribution int&eacute;grale &rarr; pas de succession au 1er d&eacute;c&egrave;s &rarr; les enfants n'ont l'abattement (100 000&euro;) qu'une seule fois.</div>
+<h3>Succession</h3>
+<p><strong>Masse successorale</strong> = Actif &minus; Passif + Donations ant&eacute;rieures (&lt; 15 ans)</p>
+<table><tr><th>R&eacute;gime</th><th>Masse du d&eacute;funt</th></tr>
+<tr><td>CRA</td><td>Biens propres + 1/2 biens communs</td></tr>
+<tr><td>S&eacute;paration des biens</td><td>Biens propres + 1/2 biens indivis</td></tr>
+<tr><td>Communaut&eacute; universelle + clause</td><td>Rien au 1er d&eacute;c&egrave;s</td></tr></table>
+<table><tr><th>Ordre</th><th>H&eacute;ritiers</th></tr>
+<tr><td>1er</td><td>Descendants</td></tr>
+<tr><td>2&egrave;me</td><td>Parents + fr&egrave;res/soeurs</td></tr>
+<tr><td>3&egrave;me</td><td>Ascendants ordinaires</td></tr>
+<tr><td>4&egrave;me</td><td>Collat&eacute;raux ordinaires</td></tr></table>
+<p><strong>Repr&eacute;sentation</strong> : a l'infini en ligne directe + descendants de freres/soeurs.</p>
+<p>Rappel J1 : l'assurance-vie n'entre PAS dans la masse successorale (Art. L132-12).</p>
+  </div></div>
+  <div id="j2pn1" style="display:none"><div class="fiche-body">
 
-<h3>💍 Régimes matrimoniaux</h3>
-<table><tr><th>Statut</th><th>Régime par défaut</th></tr>
-<tr><td>Mariage</td><td>CRA — Communauté Réduite aux Acquêts (régime légal depuis 01/02/1966)</td></tr>
-<tr><td>PACS</td><td>Séparation des biens</td></tr>
-<tr><td>Concubinage</td><td>Biens propres + biens indivis</td></tr>
-</table>
-<p><strong>Régimes communautaires</strong> : CMA · CRA (légal) · Communauté universelle</p>
-<p><strong>Régimes séparatistes</strong> : Séparation des biens · Participation aux acquêts</p>
-<div class="warn">⚠️ Communauté universelle + clause d'attribution intégrale → pas de succession au 1er décès → les enfants n'ont leur abattement (100 000 €) qu'une seule fois (au 2ème décès).</div>
-
-<h3>👪 Succession</h3>
-<p><strong>Masse successorale</strong> = Actif − Passif + Donations antérieures (&lt; 15 ans)</p>
-<table><tr><th>Régime</th><th>Masse du défunt</th></tr>
-<tr><td>CRA</td><td>Biens propres + ½ biens communs</td></tr>
-<tr><td>Séparation des biens</td><td>Biens propres + ½ biens indivis</td></tr>
-<tr><td>Communauté universelle + clause</td><td>Rien au 1er décès</td></tr>
-</table>
-<table><tr><th>Ordre</th><th>Héritiers</th></tr>
-<tr><td>1er</td><td>Descendants (enfants &gt; petits-enfants...)</td></tr>
-<tr><td>2ème</td><td>Parents + frères/sœurs</td></tr>
-<tr><td>3ème</td><td>Ascendants ordinaires (grands-parents...)</td></tr>
-<tr><td>4ème</td><td>Collatéraux ordinaires (oncles, cousins...)</td></tr>
-</table>
-<p><strong>Représentation</strong> : à l'infini en ligne directe descendante et descendants de frères/sœurs. ❌ Ne joue pas pour les ascendants ni les collatéraux ordinaires.</p>
-<p>⚡ <strong>Rappel J1</strong> : l'assurance-vie n'entre PAS dans la masse successorale (Art. L132-12).</p>
-</div>
-</div>
-<div class="fiche-panel" id="fiche-mod1" style="display:none">
-<div class="fiche-body">
 <h2>Module 1 — Les Régimes Matrimoniaux</h2>
     <h3>1.1 Les 3 modes de vie de couple</h3>
     <table><tr><th>Statut</th><th>Lien juridique</th><th>Régime des biens (défaut)</th></tr>
@@ -428,10 +441,10 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
     </table>
 
     
-</div>
-</div>
-<div class="fiche-panel" id="fiche-mod2" style="display:none">
-<div class="fiche-body">
+
+  </div></div>
+  <div id="j2pn2" style="display:none"><div class="fiche-body">
+
 <div class="rappel-jour"><strong>🔗 Liens avec les autres jours</strong><div class="rappel-item"><span class="rappel-lbl">J1</span><span>Assurance-vie (Art. L132-12) : les capitaux décès sont versés <strong>hors masse successorale</strong>. Levier clé de transmission en dehors de la dévolution légale.</span></div></div>
 <h2>Module 2 — La Succession</h2>
     <h3>2.1 La masse successorale</h3>
@@ -462,9 +475,8 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
     </table>
     <blockquote>Exemple : Masse 200 — 2 enfants. Enfant n°2 prédécédé, laisse 2 petits-enfants. → Enfant n°1 : 100. Les 2 petits-enfants REPRÉSENTENT l'enfant n°2 → 50 chacun.</blockquote>
   
-</div>
-</div>
 
+  </div></div>
 </div>
 
 <div id="tab-exercices" class="tab-panel">
