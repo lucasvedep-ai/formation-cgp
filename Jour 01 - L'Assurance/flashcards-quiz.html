@@ -1103,7 +1103,6 @@ const EX_DATA = {
 
 let exPicked = null; // l'élément en cours de déplacement
 
-function 
 function switchFiche(id){
   document.querySelectorAll('.fiche-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.fiche-subbtn').forEach(b=>b.classList.remove('active'));
@@ -1111,7 +1110,7 @@ function switchFiche(id){
   document.querySelector('[data-fiche="'+id+'"]').classList.add('active');
 }
 
-initExercises() {
+function initExercises() {
   Object.keys(EX_DATA).forEach(id => {
     const srcEl = document.getElementById('ex'+id+'-src');
     if(!srcEl) return;
