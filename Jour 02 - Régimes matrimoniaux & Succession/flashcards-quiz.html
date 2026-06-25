@@ -1290,10 +1290,20 @@ window.onload = function() {
 
 
 function switchFiche(id){
-  document.querySelectorAll('.fiche-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.fiche-subbtn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('fiche-'+id).classList.add('active');
-  document.querySelector('[data-fiche="'+id+'"]').classList.add('active');
+  var panels=document.querySelectorAll('.fiche-panel');
+  panels.forEach(function(p){p.style.display='none';p.classList.remove('active');});
+  var btns=document.querySelectorAll('.fiche-subbtn');
+  btns.forEach(function(b){b.classList.remove('active');});
+  var target=document.getElementById('fiche-'+id);
+  if(target){target.style.display='block';target.classList.add('active');}
+  var btn=document.querySelector('[data-fiche="'+id+'"]');
+  if(btn){btn.classList.add('active');}
+}
+function initFichePanels(){
+  var panels=document.querySelectorAll('.fiche-panel');
+  panels.forEach(function(p){
+    p.style.display=p.classList.contains('active')?'block':'none';
+  });
 }
 </script>
 </body>
