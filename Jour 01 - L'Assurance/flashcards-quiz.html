@@ -181,6 +181,18 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
       .drag-item { font-size: 0.78rem; padding: 7px 11px; }
     }
     @media (max-width: 420px) { .ex-grid3 { grid-template-columns: 1fr; } }
+
+/* ── Multi-fiche sub-navigation ── */
+.fiche-subnav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.fiche-subbtn{padding:8px 16px;border:2px solid var(--border);background:#fff;color:var(--muted);border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:700;transition:.15s;white-space:nowrap}
+.fiche-subbtn.active{border-color:var(--gold);background:var(--gold);color:#fff}
+.fiche-subbtn:hover:not(.active){border-color:var(--navy);color:var(--navy)}
+.fiche-panel{display:none}
+.fiche-panel.active{display:block}
+.rappel-jour{background:linear-gradient(135deg,#fff8e0 0%,#fffdf5 100%);border:2px solid var(--gold);border-radius:12px;padding:14px 18px;margin-bottom:22px;font-size:.85rem;line-height:1.6}
+.rappel-jour strong{color:#a37d10;display:block;margin-bottom:5px;font-size:.88rem}
+.rappel-item{display:flex;gap:8px;align-items:flex-start;margin-top:7px}
+.rappel-lbl{background:var(--navy);color:#fff;border-radius:4px;padding:1px 8px;font-size:.72rem;font-weight:700;white-space:nowrap;margin-top:2px;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -346,8 +358,42 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
     <button class="btn btn-navy" onclick="window.print()">🖨️ Enregistrer en PDF</button>
     <span style="font-size:.8rem;color:var(--muted)">Dans la boîte de dialogue d'impression → choisir "Enregistrer en PDF"</span>
   </div>
-  <div class="fiche-body">
-    <h2>Chapitre 1 — Présentation du secteur</h2>
+  <div class="fiche-subnav no-print"><button class="fiche-subbtn active" data-fiche="recap" onclick="switchFiche('recap')">📋 Récap</button><button class="fiche-subbtn" data-fiche="ch1" onclick="switchFiche('ch1')">🏢 Secteur</button><button class="fiche-subbtn" data-fiche="ch2" onclick="switchFiche('ch2')">🛡️ Catégories</button><button class="fiche-subbtn" data-fiche="ch3" onclick="switchFiche('ch3')">🤝 Intermédiation</button></div>
+<div class="fiche-panel active" id="fiche-recap">
+<div class="fiche-body">
+<h2>📋 Récapitulatif — Jour 01 : L'Assurance</h2>
+
+<h3>🏢 Secteur</h3>
+<table><tr><th>Opérateur</th><th>Code</th></tr>
+<tr><td>Entreprises d'assurances</td><td>Code des assurances</td></tr>
+<tr><td>Sociétés mutuelles</td><td>Code de la mutualité</td></tr>
+<tr><td>Institutions de prévoyance</td><td>Code de la Sécurité Sociale</td></tr>
+</table>
+<p><strong>ACPR</strong> : agrément en 6 mois · 18 branches non-vie + 7 branches vie · principe de spécialité (vie ≠ non-vie séparés).</p>
+<p><strong>Répartition</strong> (IARD) → provisions techniques. <strong>Capitalisation</strong> (Vie) → provisions mathématiques.</p>
+
+<h3>🛡️ Catégories</h3>
+<ul>
+  <li><strong>RC civile + RC décennale</strong> : assurances obligatoires</li>
+  <li>Déclenchement <strong>fait dommageable</strong> : sinistre pendant le contrat</li>
+  <li>Déclenchement <strong>réclamation</strong> : sinistre + réclamation · délai min. 5 ans après fin contrat</li>
+  <li><strong>Participation</strong> aux résultats : obligatoire au-delà de 50 salariés</li>
+  <li><strong>Assurance-vie</strong> : hors masse successorale (Art. L132-12) — levier clé de transmission patrimoniale</li>
+</ul>
+
+<h3>🤝 Intermédiation</h3>
+<table><tr><th>Statut</th><th>Nature</th><th>Exclusivité</th><th>Portefeuille</th></tr>
+<tr><td>Agent général</td><td>Profession libérale</td><td>Oui</td><td>Propriété compagnie</td></tr>
+<tr><td>Courtier</td><td>Commerçant</td><td>Non</td><td>Lui appartient</td></tr>
+<tr><td>Mandataire</td><td>PP / PM</td><td>Avec ou sans</td><td>Variable</td></tr>
+<tr><td>MIA</td><td>PP ou PM</td><td>Via un intermédiaire</td><td>—</td></tr>
+</table>
+<p><strong>4 conditions d'exercice</strong> : Honorabilité · Capacité professionnelle · RCP · Garantie financière (si encaissement). Immatriculation <strong>ORIAS</strong> obligatoire.</p>
+</div>
+</div>
+<div class="fiche-panel" id="fiche-ch1">
+<div class="fiche-body">
+<h2>Chapitre 1 — Présentation du secteur</h2>
     <h3>1.1 L'opération d'assurance</h3>
     <p>L'assurance est un contrat par lequel l'<strong>assureur</strong> s'engage, en contrepartie d'une <strong>prime</strong>, à indemniser en cas de réalisation du <strong>risque</strong> (événement aléatoire).</p>
     <table><tr><th>Intervenant</th><th>Rôle</th></tr><tr><td>Assuré</td><td>Personne exposée au risque</td></tr><tr><td>Bénéficiaire</td><td>Personne qui reçoit la prestation</td></tr><tr><td>Adhérent</td><td>Signe la police (employeur en collectif)</td></tr><tr><td>Assureur</td><td>PM — accepte risques, perçoit primes, règle sinistres</td></tr></table>
@@ -361,7 +407,12 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
     <p><strong>Agrément ACPR — 3 principes</strong> : Spécialité · Spécialisation (séparation vie/non-vie) · Branche (18 non-vie + 7 vie). Délai : <strong>6 mois</strong>. Perte : retrait · caducité · transfert total.</p>
     <table><tr><th>Statut</th><th>Nature</th><th>Exclusivité</th><th>Portefeuille</th></tr><tr><td>Agent général</td><td>Profession libérale</td><td>Oui</td><td>Propriété de la compagnie</td></tr><tr><td>Courtier</td><td>Commerçant</td><td>Non</td><td>Lui appartient</td></tr><tr><td>Mandataire</td><td>PP non salariée / PM</td><td>Avec ou sans</td><td>Variable</td></tr><tr><td>MIA</td><td>PP ou PM</td><td>Par un intermédiaire</td><td>—</td></tr></table>
     <p><strong>Conditions d'exercice</strong> : Honorabilité · Capacité professionnelle · RCP · Garantie financière (si encaissement). Immatriculation : <strong>ORIAS</strong>.</p>
-    <h2>Chapitre 2 — Les catégories d'assurance</h2>
+    
+</div>
+</div>
+<div class="fiche-panel" id="fiche-ch2">
+<div class="fiche-body">
+<h2>Chapitre 2 — Les catégories d'assurance</h2>
     <h3>2.1 Personnes / Biens</h3>
     <ul><li><strong>Vie entière/décès</strong> : capital quelle que soit la date du décès</li><li><strong>Vie proprement dite</strong> : capital uniquement si vivant à la date fixée</li><li><strong>Mixte</strong> : capital si décès dans le délai OU si vivant à l'échéance</li></ul>
     <p>RC civile et RC décennale = <strong>obligatoires</strong>. <strong>Action directe victime</strong> : droit de créance exclusif sur l'indemnité. <strong>BCT</strong> : saisi si garantie refusée.</p>
@@ -378,7 +429,12 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
     <p><strong>Valeur d'usage</strong> : prix au sinistre moins vétusté. <strong>Valeur à neuf</strong> : sans déduction vétusté.</p>
     <h3>2.5 Répartition / Capitalisation</h3>
     <p>Séparation juridique obligatoire. Répartition → <strong>provisions techniques</strong>. Capitalisation → <strong>provisions mathématiques</strong>.</p>
-    <h2>Chapitre 3 — L'intermédiation en assurance</h2>
+    
+</div>
+</div>
+<div class="fiche-panel" id="fiche-ch3">
+<div class="fiche-body">
+<h2>Chapitre 3 — L'intermédiation en assurance</h2>
     <h3>3.1 Champ d'application</h3>
     <p><strong>Distribution</strong> : recommandations, présentation, proposition, aide à la conclusion, comparaison de produits (Art. L511-1 III). <strong>Rémunération</strong> (Art. R511-3) : commission, honoraire, ou tout avantage en lien avec la distribution.</p>
     <h3>3.2 Les 4 catégories</h3>
@@ -392,7 +448,10 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
     <p><strong>GF</strong> (Art. L512-7) : min. <strong>115 000 €</strong> (Art. A512-5). Ne peut cesser avant <strong>3 jours francs</strong>. Exception : mandant encaisse lui-même. Aucun capital social minimum requis.</p>
     <h3>3.5 Contrôle et sanctions ACPR</h3>
     <p>Contrôles à distance et sur place. Sanctions (du + léger au + grave) : Avertissement · Blâme · Interdiction d'opérations (max 10 ans) · Suspension dirigeants (max 10 ans) · Démission d'office · Radiation · Interdiction d'activité · <strong>Sanction pécuniaire max 100 M€</strong>.</p>
-  </div>
+  
+</div>
+</div>
+
 </div>
 </main>
 <script>
@@ -1044,7 +1103,15 @@ const EX_DATA = {
 
 let exPicked = null; // l'élément en cours de déplacement
 
-function initExercises() {
+function 
+function switchFiche(id){
+  document.querySelectorAll('.fiche-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.fiche-subbtn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('fiche-'+id).classList.add('active');
+  document.querySelector('[data-fiche="'+id+'"]').classList.add('active');
+}
+
+initExercises() {
   Object.keys(EX_DATA).forEach(id => {
     const srcEl = document.getElementById('ex'+id+'-src');
     if(!srcEl) return;
