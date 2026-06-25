@@ -353,8 +353,8 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
     <button class="btn btn-navy" onclick="window.print()">🖨️ Imprimer</button>
     <span style="font-size:.8rem;color:var(--muted)">Fiche de révision — Jour 02</span>
   </div>
-  <div class="fiche-subnav no-print"><button class="fiche-subbtn active" data-fiche="recap" onclick="switchFiche('recap')">📋 Récap</button><button class="fiche-subbtn" data-fiche="mod1" onclick="switchFiche('mod1')">💍 Régimes matri</button><button class="fiche-subbtn" data-fiche="mod2" onclick="switchFiche('mod2')">👪 Succession</button></div>
-<div class="fiche-panel active" id="fiche-recap">
+  <div class="fiche-subnav no-print" id="j2-subnav"><button class="fiche-subbtn active" id="btn-recap" onclick="['recap','mod1','mod2'].forEach(function(x){document.getElementById('fiche-'+x).style.display=x==='recap'?'block':'none';document.getElementById('btn-'+x).className='fiche-subbtn'+(x==='recap'?' active':'')})">📋 Récap</button><button class="fiche-subbtn" id="btn-mod1" onclick="['recap','mod1','mod2'].forEach(function(x){document.getElementById('fiche-'+x).style.display=x==='mod1'?'block':'none';document.getElementById('btn-'+x).className='fiche-subbtn'+(x==='mod1'?' active':'')})">💍 Régimes matri</button><button class="fiche-subbtn" id="btn-mod2" onclick="['recap','mod1','mod2'].forEach(function(x){document.getElementById('fiche-'+x).style.display=x==='mod2'?'block':'none';document.getElementById('btn-'+x).className='fiche-subbtn'+(x==='mod2'?' active':'')})">👪 Succession</button></div>
+<div class="fiche-panel active" id="fiche-recap" style="display:block">
 <div class="fiche-body">
 <h2>📋 Récapitulatif — Jour 02 : Régimes matrimoniaux &amp; Succession</h2>
 
@@ -385,7 +385,7 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
 <p>⚡ <strong>Rappel J1</strong> : l'assurance-vie n'entre PAS dans la masse successorale (Art. L132-12).</p>
 </div>
 </div>
-<div class="fiche-panel" id="fiche-mod1">
+<div class="fiche-panel" id="fiche-mod1" style="display:none">
 <div class="fiche-body">
 <h2>Module 1 — Les Régimes Matrimoniaux</h2>
     <h3>1.1 Les 3 modes de vie de couple</h3>
@@ -430,7 +430,7 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
     
 </div>
 </div>
-<div class="fiche-panel" id="fiche-mod2">
+<div class="fiche-panel" id="fiche-mod2" style="display:none">
 <div class="fiche-body">
 <div class="rappel-jour"><strong>🔗 Liens avec les autres jours</strong><div class="rappel-item"><span class="rappel-lbl">J1</span><span>Assurance-vie (Art. L132-12) : les capitaux décès sont versés <strong>hors masse successorale</strong>. Levier clé de transmission en dehors de la dévolution légale.</span></div></div>
 <h2>Module 2 — La Succession</h2>
