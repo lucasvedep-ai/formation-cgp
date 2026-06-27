@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hub — Formation CGP | Cap Finances</title>
+<title>Hub &mdash; Formation CGP | Cap Finances</title>
 <style>
-:root {
-  --navy:#1a2744; --navy2:#253460; --gold:#c9a227; --gold2:#e8c84a;
-  --bg:#f4f6fb; --white:#fff; --text:#1a2744; --muted:#5a6a8a;
-  --ok:#2d8a4e; --border:#dce3f0; --shadow:0 8px 32px rgba(26,39,68,.1);
+:root{
+  --navy:#1a2744;--navy2:#253460;--gold:#c9a227;--gold2:#e8c84a;
+  --bg:#f4f6fb;--white:#fff;--text:#1a2744;--muted:#5a6a8a;
+  --ok:#2d8a4e;--ok-bg:#eafaf1;--err:#c0392b;--err-bg:#fdf3f2;
+  --border:#dce3f0;--shadow:0 8px 32px rgba(26,39,68,.1);
+  --gold-bg:#fff8e0;--warn:#c0392b;--warn-bg:#fff3cd;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
@@ -18,24 +20,32 @@ header p{font-size:.88rem;color:rgba(255,255,255,.55)}
 .stats-bar{display:flex;gap:16px;flex-wrap:wrap;margin:28px 0 0;padding:0 4px}
 .stat-pill{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.15);border-radius:99px;padding:7px 18px;font-size:.82rem;color:rgba(255,255,255,.8);font-weight:600}
 .stat-pill span{color:var(--gold2)}
-main{max-width:900px;margin:0 auto;padding:36px 20px}
+/* ── TABS ── */
+.main-tabs{display:flex;gap:0;background:var(--navy2);padding:0 20px}
+.main-tab{background:none;border:none;color:rgba(255,255,255,.55);font-size:.88rem;font-weight:700;padding:14px 22px;cursor:pointer;border-bottom:3px solid transparent;transition:.15s}
+.main-tab.active{color:#fff;border-bottom-color:var(--gold2)}
+.main-tab:hover{color:rgba(255,255,255,.85)}
+/* ── MAIN ── */
+main{max-width:960px;margin:0 auto;padding:36px 20px}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+/* ── LECONS ── */
 .section-title{font-size:1.05rem;font-weight:800;color:var(--navy);margin-bottom:18px;display:flex;align-items:center;gap:8px}
 .days-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-bottom:40px}
 .day-card{background:#fff;border:2px solid var(--border);border-radius:18px;padding:24px 22px;position:relative;transition:.15s;display:flex;flex-direction:column;gap:0}
 .day-card.available{border-color:var(--border);box-shadow:var(--shadow)}
 .day-card.available:hover{border-color:var(--gold);box-shadow:0 12px 40px rgba(201,162,39,.15);transform:translateY(-2px)}
 .day-card.locked{opacity:.55;cursor:default}
-.day-card.locked .day-badge{background:var(--border);color:var(--muted)}
 .day-badge{display:inline-flex;align-items:center;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:99px;padding:4px 12px;margin-bottom:14px;width:fit-content}
+.day-card.locked .day-badge{background:var(--border);color:var(--muted)}
 .day-date{font-size:.75rem;color:var(--muted);margin-bottom:10px}
 .day-title{font-size:1.08rem;font-weight:800;color:var(--navy);margin-bottom:12px;line-height:1.3}
 .day-topics{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
 .topic-tag{font-size:.72rem;font-weight:600;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:3px 9px;color:var(--muted)}
 .day-stats{display:flex;gap:12px;margin-bottom:16px;font-size:.78rem;color:var(--muted)}
-.day-stats span{display:flex;align-items:center;gap:3px}
 .day-score{font-size:.82rem;font-weight:700;border-radius:99px;padding:5px 14px;margin-bottom:14px;width:fit-content}
 .day-score.no-score{background:var(--bg);color:var(--muted);border:1.5px solid var(--border)}
-.day-score.has-score{background:#eafaf1;color:var(--ok);border:1.5px solid var(--ok)}
+.day-score.has-score{background:var(--ok-bg);color:var(--ok);border:1.5px solid var(--ok)}
 .btn-open{display:block;width:100%;text-align:center;background:var(--navy);color:#fff;text-decoration:none;font-weight:700;font-size:.9rem;padding:11px;border-radius:10px;transition:.15s;margin-top:auto}
 .btn-open:hover{background:var(--navy2)}
 .btn-locked{display:block;width:100%;text-align:center;background:var(--bg);color:var(--muted);font-weight:700;font-size:.85rem;padding:11px;border-radius:10px;border:none;cursor:default;margin-top:auto}
@@ -48,7 +58,51 @@ main{max-width:900px;margin:0 auto;padding:36px 20px}
 .process-steps{display:flex;flex-direction:column;gap:7px}
 .process-step{display:flex;align-items:flex-start;gap:10px;font-size:.84rem;color:var(--text)}
 .step-num{background:var(--gold);color:#fff;border-radius:99px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.7rem;flex-shrink:0;margin-top:1px}
-@media(max-width:600px){header{padding:22px 18px 20px}main{padding:22px 14px}.days-grid{grid-template-columns:1fr}}
+/* ── REVISIONS ── */
+.rev-subnav{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
+.rev-subbtn{background:var(--bg);border:2px solid var(--border);border-radius:99px;padding:9px 22px;font-size:.88rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s}
+.rev-subbtn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.rev-pane{display:none}
+.rev-pane.active{display:block}
+.theme-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.theme-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s}
+.theme-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.theme-section{display:none}
+.theme-section.active{display:block}
+.theme-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:14px;border-bottom:2px solid var(--border)}
+.theme-header h2{font-size:1.2rem;font-weight:800;color:var(--navy)}
+.theme-badge{font-size:.7rem;font-weight:700;background:var(--navy);color:#fff;border-radius:6px;padding:3px 10px}
+.block{background:#fff;border-radius:14px;padding:20px 22px;margin-bottom:16px;border:1.5px solid var(--border);box-shadow:0 2px 12px rgba(26,39,68,.06)}
+.block-title{font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.block-title.def{color:var(--navy)}
+.block-title.chiffres{color:#1a5c3c}
+.block-title.piege{color:var(--warn)}
+.block-title.metier{color:#7b4a00}
+.block.chiffres{background:#eafaf1;border-color:#b7e4c7}
+.block.piege{background:#fff3cd;border-color:#ffc107}
+.block.metier{background:#fff8e0;border-color:var(--gold)}
+dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.85rem;line-height:1.5}
+dt{font-weight:700;color:var(--navy);white-space:nowrap}
+dd{color:var(--text)}
+ul.items{list-style:none;padding:0;display:flex;flex-direction:column;gap:6px;font-size:.85rem}
+ul.items li{padding-left:16px;position:relative;line-height:1.5;color:var(--text)}
+ul.items li::before{content:"›";position:absolute;left:0;color:var(--gold);font-weight:700}
+ul.items li strong{color:var(--navy)}
+.num-row{display:flex;flex-wrap:wrap;gap:10px}
+.num-pill{background:#fff;border:2px solid var(--ok);border-radius:10px;padding:8px 14px;text-align:center;min-width:120px}
+.num-pill .val{font-size:1.1rem;font-weight:800;color:var(--ok);display:block}
+.num-pill .lbl{font-size:.72rem;color:var(--muted);display:block}
+.warn-row{display:flex;flex-direction:column;gap:7px}
+.warn-item{display:flex;gap:10px;font-size:.84rem;line-height:1.5}
+.warn-icon{flex-shrink:0;font-size:1rem;margin-top:1px}
+.metier-row{display:flex;flex-direction:column;gap:10px}
+.metier-item{border-left:3px solid var(--gold);padding:6px 10px;font-size:.84rem;line-height:1.6;color:var(--text)}
+.metier-item strong{color:var(--navy);display:block;margin-bottom:2px}
+.bareme-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:4px}
+.bareme-table th{background:var(--navy);color:#fff;padding:6px 10px;text-align:left}
+.bareme-table td{padding:5px 10px;border-bottom:1px solid var(--border)}
+.bareme-table tr:nth-child(even) td{background:var(--bg)}
+@media(max-width:600px){header{padding:22px 18px 20px}main{padding:22px 14px}.days-grid{grid-template-columns:1fr}.main-tabs{padding:0 8px}.main-tab{padding:12px 14px;font-size:.8rem}dl{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -62,18 +116,25 @@ main{max-width:900px;margin:0 auto;padding:36px 20px}
     <div class="stat-pill"><span>20</span> th&egrave;mes focus</div>
   </div>
 </header>
+<div class="main-tabs">
+  <button class="main-tab active" onclick="showMainTab('lecons',this)">&#128197; Le&ccedil;ons</button>
+  <button class="main-tab" onclick="showMainTab('revisions',this)">&#128218; R&eacute;visions</button>
+</div>
 <main>
-  <div class="process-box">
+
+<!-- ══════════════════ TAB LEÇONS ══════════════════ -->
+<div id="tab-lecons" class="tab-pane active">
+  <div class="process-box" style="margin-top:4px">
     <h3>&#9889; Comment &ccedil;a marche</h3>
     <div class="process-steps">
       <div class="process-step"><div class="step-num">1</div>Tu envoies tes captures d&#8217;&eacute;cran du jour (ZIP ou images)</div>
       <div class="process-step"><div class="step-num">2</div>Tu pr&eacute;cises les th&egrave;mes cl&eacute;s &agrave; retenir</div>
-      <div class="process-step"><div class="step-num">3</div>Claude g&eacute;n&egrave;re : Flashcards &middot; Quiz &middot; Focus &middot; Fiche PDF &middot; Cas pratiques</div>
+      <div class="process-step"><div class="step-num">3</div>Claude g&eacute;n&egrave;re : Flashcards &middot; Quiz &middot; Focus &middot; Fiche &middot; Cas pratiques</div>
       <div class="process-step"><div class="step-num">4</div>Tu r&eacute;vises ici &mdash; flashcards, quiz g&eacute;n&eacute;ral, mini-quiz par th&egrave;me, fiche imprimable</div>
     </div>
   </div>
   <div class="section-title">&#128197; Le&ccedil;ons disponibles</div>
-  <div class="days-grid" id="days-grid">
+  <div class="days-grid">
     <div class="day-card available">
       <div class="day-badge">Jour 01</div>
       <div class="day-date">23 juin 2026</div>
@@ -83,11 +144,7 @@ main{max-width:900px;margin:0 auto;padding:36px 20px}
         <span class="topic-tag">Ch.2 &mdash; Cat&eacute;gories</span>
         <span class="topic-tag">Ch.3 &mdash; Interm&eacute;diation</span>
       </div>
-      <div class="day-stats">
-        <span>&#127183; 42 cartes</span>
-        <span>&#128221; 15 questions</span>
-        <span>&#127919; 3 focus</span>
-      </div>
+      <div class="day-stats"><span>&#127183; 42 cartes</span><span>&#128221; 15 questions</span><span>&#127919; 3 focus</span></div>
       <div class="day-score no-score" id="score-jour01">Quiz non encore effectu&eacute;</div>
       <a href="./Jour 01 - L'Assurance/flashcards-quiz.html" class="btn-open">Ouvrir la le&ccedil;on &rarr;</a>
     </div>
@@ -103,11 +160,7 @@ main{max-width:900px;margin:0 auto;padding:36px 20px}
         <span class="topic-tag">4 ordres</span>
         <span class="topic-tag">Repr&eacute;sentation</span>
       </div>
-      <div class="day-stats">
-        <span>&#127183; 41 cartes</span>
-        <span>&#128221; 15 questions</span>
-        <span>&#127919; 6 focus</span>
-      </div>
+      <div class="day-stats"><span>&#127183; 41 cartes</span><span>&#128221; 15 questions</span><span>&#127919; 6 focus</span></div>
       <div class="day-score no-score" id="score-jour02">Quiz non encore effectu&eacute;</div>
       <a href="./Jour%2002%20-%20R%C3%A9gimes%20matrimoniaux%20%26%20Succession/flashcards-quiz.html" class="btn-open">Ouvrir la le&ccedil;on &rarr;</a>
     </div>
@@ -122,11 +175,7 @@ main{max-width:900px;margin:0 auto;padding:36px 20px}
         <span class="topic-tag">3 types testaments</span>
         <span class="topic-tag">3 types de legs</span>
       </div>
-      <div class="day-stats">
-        <span>&#127183; 30 cartes</span>
-        <span>&#128221; 15 questions</span>
-        <span>&#127919; 3 focus</span>
-      </div>
+      <div class="day-stats"><span>&#127183; 30 cartes</span><span>&#128221; 15 questions</span><span>&#127919; 3 focus</span></div>
       <div class="day-score no-score" id="score-jour03">Quiz non encore effectu&eacute;</div>
       <a href="./Jour 03 - Succession, testaments/flashcards-quiz.html" class="btn-open">Ouvrir la le&ccedil;on &rarr;</a>
     </div>
@@ -143,11 +192,7 @@ main{max-width:900px;margin:0 auto;padding:36px 20px}
         <span class="topic-tag">R&egrave;gle 15 ans</span>
         <span class="topic-tag">Cas pratiques</span>
       </div>
-      <div class="day-stats">
-        <span>&#127183; 21 cartes</span>
-        <span>&#128221; 15 questions</span>
-        <span>&#127919; 4 focus</span>
-      </div>
+      <div class="day-stats"><span>&#127183; 21 cartes</span><span>&#128221; 15 questions</span><span>&#127919; 4 focus</span></div>
       <div class="day-score no-score" id="score-jour04">Quiz non encore effectu&eacute;</div>
       <a href="./Jour%2004%20-%20Donations%2C%20DDV%20%26%20Fiscalit%C3%A9/flashcards-quiz.html" class="btn-open">Ouvrir la le&ccedil;on &rarr;</a>
     </div>
@@ -158,18 +203,14 @@ main{max-width:900px;margin:0 auto;padding:36px 20px}
       <div class="day-topics">
         <span class="topic-tag">Loi TEPA</span>
         <span class="topic-tag">Bar&egrave;me succession</span>
-        <span class="topic-tag">Exon&eacute;rations totales</span>
+        <span class="topic-tag">Ex&oacute;n&eacute;rations totales</span>
         <span class="topic-tag">20% abattement RP</span>
         <span class="topic-tag">Assurance-vie</span>
         <span class="topic-tag">Pacte Dutreil</span>
         <span class="topic-tag">Adoption pl&eacute;ni&egrave;re</span>
         <span class="topic-tag">Adoption simple</span>
       </div>
-      <div class="day-stats">
-        <span>&#127183; 20 cartes</span>
-        <span>&#128221; 15 questions</span>
-        <span>&#127919; 4 focus</span>
-      </div>
+      <div class="day-stats"><span>&#127183; 20 cartes</span><span>&#128221; 15 questions</span><span>&#127919; 4 focus</span></div>
       <div class="day-score no-score" id="score-jour05">Quiz non encore effectu&eacute;</div>
       <a href="./Jour%2005%20-%20Fiscalit%C3%A9%2C%20Succession%20%26%20Adoption/flashcards-quiz.html" class="btn-open">Ouvrir la le&ccedil;on &rarr;</a>
     </div>
@@ -187,17 +228,721 @@ main{max-width:900px;margin:0 auto;padding:36px 20px}
     <div class="info-card"><h3>&#127183; Flashcards</h3><p>Cartes &agrave; retourner par clic. Navigation avant/arri&egrave;re et m&eacute;lange al&eacute;atoire.</p></div>
     <div class="info-card"><h3>&#128221; Quiz QCM</h3><p>15 questions avec correction imm&eacute;diate, explication et r&eacute;cap des erreurs.</p></div>
     <div class="info-card"><h3>&#127919; Focus</h3><p>Th&egrave;mes cl&eacute;s du jour : cartes cibl&eacute;es + mini-quiz par th&egrave;me.</p></div>
-    <div class="info-card"><h3>&#128196; Fiche PDF</h3><p>Fiche de r&eacute;vision compl&egrave;te, imprimable depuis le navigateur.</p></div>
+    <div class="info-card"><h3>&#128196; Fiche</h3><p>Fiche de r&eacute;vision compl&egrave;te, imprimable depuis le navigateur.</p></div>
     <div class="info-card"><h3>&#128203; Cas pratiques</h3><p>Exercices du cours avec &eacute;nonc&eacute;, pi&egrave;ges &agrave; &eacute;viter et solution d&eacute;taill&eacute;e.</p></div>
   </div>
+</div><!-- /tab-lecons -->
+
+<!-- ══════════════════ TAB RÉVISIONS ══════════════════ -->
+<div id="tab-revisions" class="tab-pane">
+
+  <div class="rev-subnav">
+    <button class="rev-subbtn active" id="rbtn-essentiel" onclick="showRev('essentiel')">&#128203; Fiche Essentielle</button>
+    <button class="rev-subbtn" id="rbtn-focus" onclick="showRev('focus')">&#127919; Focus Compil&eacute;s</button>
+  </div>
+
+  <!-- ══ FICHE ESSENTIELLE ══ -->
+  <div id="rev-essentiel" class="rev-pane active">
+    <div class="theme-nav" id="tnav-ess">
+      <button class="theme-btn active" onclick="showTheme('ess','t-assurance',this)">&#128275; Assurance</button>
+      <button class="theme-btn" onclick="showTheme('ess','t-regimes',this)">&#128145; R&eacute;gimes</button>
+      <button class="theme-btn" onclick="showTheme('ess','t-succession',this)">&#128181; Succession</button>
+      <button class="theme-btn" onclick="showTheme('ess','t-conjoint',this)">&#128141; Conjoint &amp; D&eacute;membrement</button>
+      <button class="theme-btn" onclick="showTheme('ess','t-testaments',this)">&#128213; Testaments &amp; Legs</button>
+      <button class="theme-btn" onclick="showTheme('ess','t-donations',this)">&#127873; Donations &amp; DDV</button>
+      <button class="theme-btn" onclick="showTheme('ess','t-fiscal-don',this)">&#128202; Fiscalit&eacute; Donations</button>
+      <button class="theme-btn" onclick="showTheme('ess','t-fiscal-succ',this)">&#127981; Fiscalit&eacute; Succession</button>
+      <button class="theme-btn" onclick="showTheme('ess','t-adoption',this)">&#128106; Adoption</button>
+    </div>
+
+    <!-- T1 : L'ASSURANCE -->
+    <div class="theme-section active" id="ess-t-assurance">
+      <div class="theme-header">
+        <h2>&#128275; L&#8217;Assurance</h2>
+        <span class="theme-badge">Jour 01</span>
+      </div>
+      <div class="block">
+        <div class="block-title def">&#128218; D&eacute;finitions cl&eacute;s</div>
+        <dl>
+          <dt>Assurance</dt><dd>Transfert de risque d&rsquo;un assur&eacute; vers un assureur contre paiement d&rsquo;une prime</dd>
+          <dt>Souscripteur</dt><dd>Celui qui signe et paye le contrat (peut &ne; assur&eacute; et &ne; b&eacute;n&eacute;ficiaire)</dd>
+          <dt>Soci&eacute;t&eacute;s anonymes</dt><dd>But lucratif, d&eacute;tenues par actionnaires</dd>
+          <dt>Mutuelles Livre I</dt><dd>Code des assurances &mdash; assurances de personnes (vie, sant&eacute;, d&eacute;c&egrave;s)</dd>
+          <dt>Mutuelles Livre II</dt><dd>Code de la mutualit&eacute; &mdash; compl&eacute;mentaires sant&eacute;, but non lucratif, membres = soci&eacute;taires</dd>
+          <dt>Institutions de pr&eacute;voyance</dt><dd>Gestion paritaire employeurs + salari&eacute;s, pr&eacute;voyance collective</dd>
+          <dt>COA</dt><dd>Courtier en Op&eacute;rations d&rsquo;Assurance &mdash; mandataire du CLIENT, ind&eacute;pendant</dd>
+          <dt>AOA</dt><dd>Agent G&eacute;n&eacute;ral d&rsquo;Assurances &mdash; mandataire de l&rsquo;ASSUREUR, li&eacute; &agrave; une compagnie</dd>
+          <dt>MIA / MIIA</dt><dd>Mandataires d&rsquo;interm&eacute;diaire &mdash; agissent pour le compte d&rsquo;un COA ou AOA</dd>
+          <dt>ORIAS</dt><dd>Registre obligatoire d&rsquo;immatriculation de tous les interm&eacute;diaires en assurance</dd>
+        </dl>
+      </div>
+      <div class="block chiffres">
+        <div class="block-title chiffres">&#128200; Chiffres &agrave; retenir</div>
+        <div class="num-row">
+          <div class="num-pill"><span class="val">30 jours</span><span class="lbl">D&eacute;lai r&eacute;tractation AV</span></div>
+          <div class="num-pill"><span class="val">40%</span><span class="lbl">Imposition rente viagère (&lt; 70 ans)</span></div>
+          <div class="num-pill"><span class="val">70%</span><span class="lbl">Imposition rente viagère (&ge; 70 ans)</span></div>
+        </div>
+      </div>
+      <div class="block piege">
+        <div class="block-title piege">&#9888; Pi&egrave;ges &agrave; &eacute;viter</div>
+        <div class="warn-row">
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>Mutuelle <strong>L1 &ne; L2</strong> : L1 = assurance vie/sant&eacute; (code assurances) ; L2 = compl&eacute;mentaire sant&eacute; (code mutualit&eacute;)</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>COA = pour le client / AOA = pour l&rsquo;assureur &mdash; confusion fr&eacute;quente &agrave; l&rsquo;examen</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>Souscripteur (signe &amp; paye) &ne; Assur&eacute; (sur qui repose le risque) &ne; B&eacute;n&eacute;ficiaire</span></div>
+        </div>
+      </div>
+      <div class="block metier">
+        <div class="block-title metier">&#128188; Conseil M&eacute;tier &mdash; CGP 20 ans d&rsquo;exp&eacute;rience</div>
+        <div class="metier-row">
+          <div class="metier-item"><strong>V&eacute;rifier son statut avant tout</strong>Avant la premi&egrave;re rencontre client, s&rsquo;assurer de son immatriculation ORIAS &agrave; jour &mdash; c&rsquo;est une obligation r&eacute;glementaire, pas une formalit&eacute;.</div>
+          <div class="metier-item"><strong>Besoin d&rsquo;abord, produit ensuite</strong>Face &agrave; un client cherchant de l&rsquo;&eacute;pargne : identifier d&rsquo;abord le besoin r&eacute;el (liquidit&eacute; ? transmission ? rente ?) avant toute recommandation de produit assurance.</div>
+          <div class="metier-item"><strong>Devoir de conseil du COA</strong>Le courtier a un devoir de conseil renforc&eacute; &mdash; toute recommandation doit &ecirc;tre motiv&eacute;e par &eacute;crit. C&rsquo;est une protection pour le client ET pour vous.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T2 : RÉGIMES MATRIMONIAUX -->
+    <div class="theme-section" id="ess-t-regimes">
+      <div class="theme-header">
+        <h2>&#128145; R&eacute;gimes matrimoniaux</h2>
+        <span class="theme-badge">Jour 02</span>
+      </div>
+      <div class="block">
+        <div class="block-title def">&#128218; D&eacute;finitions cl&eacute;s</div>
+        <dl>
+          <dt>R&eacute;gime l&eacute;gal (CRA)</dt><dd>Communaut&eacute; r&eacute;duite aux acqu&ecirc;ts &mdash; s&rsquo;applique sans contrat de mariage</dd>
+          <dt>Biens propres</dt><dd>Biens poss&eacute;d&eacute;s avant mariage + re&ccedil;us par donation ou h&eacute;ritage pendant le mariage</dd>
+          <dt>Biens communs</dt><dd>Biens acquis pendant le mariage par l&rsquo;un ou l&rsquo;autre des &eacute;poux</dd>
+          <dt>S&eacute;paration de biens</dt><dd>Chaque &eacute;poux garde ses biens, aucune masse commune &mdash; n&eacute;cessite un contrat de mariage</dd>
+          <dt>Participation aux acqu&ecirc;ts</dt><dd>Fonctionne comme s&eacute;paration pendant le mariage, mais &agrave; la dissolution on partage la diff&eacute;rence de patrimoine</dd>
+          <dt>Communaut&eacute; universelle</dt><dd>Tout est commun (biens ant&eacute;rieurs + acquis) &mdash; souvent avec clause d&rsquo;attribution int&eacute;grale au conjoint</dd>
+        </dl>
+      </div>
+      <div class="block piege">
+        <div class="block-title piege">&#9888; Pi&egrave;ges &agrave; &eacute;viter</div>
+        <div class="warn-row">
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span><strong>S&eacute;paration de corps &ne; S&eacute;paration de biens</strong> &mdash; la s&eacute;paration de corps est une s&eacute;paration judiciaire (on ne vit plus ensemble) mais le r&eacute;gime matrimonial peut rester la CRA</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>En CRA, les dettes professionnelles d&rsquo;un &eacute;poux n&rsquo;engagent pas les biens propres de l&rsquo;autre (protection limit&eacute;e mais r&eacute;elle)</span></div>
+        </div>
+      </div>
+      <div class="block metier">
+        <div class="block-title metier">&#128188; Conseil M&eacute;tier</div>
+        <div class="metier-row">
+          <div class="metier-item"><strong>Question syst&eacute;matique en bilan patrimonial</strong>Toujours demander le r&eacute;gime matrimonial &mdash; il conditionne TOUTE la strat&eacute;gie de transmission. Un client qui se croit &laquo; s&eacute;par&eacute; de biens &raquo; mais n&rsquo;a pas de contrat de mariage est en CRA.</div>
+          <div class="metier-item"><strong>S&eacute;paration de biens pour les entrepreneurs</strong>Pour un chef d&rsquo;entreprise, la s&eacute;paration de biens prot&egrave;ge le conjoint des risques professionnels &mdash; &agrave; recommander syst&eacute;matiquement.</div>
+          <div class="metier-item"><strong>Changement de r&eacute;gime possible</strong>Apr&egrave;s 2 ans de mariage, les &eacute;poux peuvent changer de r&eacute;gime &mdash; &agrave; mentionner si le r&eacute;gime actuel est inadapt&eacute; &agrave; la situation.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T3 : SUCCESSION -->
+    <div class="theme-section" id="ess-t-succession">
+      <div class="theme-header">
+        <h2>&#128181; Succession &mdash; Masse &amp; Ordres</h2>
+        <span class="theme-badge">Jour 02</span>
+      </div>
+      <div class="block">
+        <div class="block-title def">&#128218; D&eacute;finitions cl&eacute;s</div>
+        <dl>
+          <dt>Masse successorale</dt><dd>Actif net = Actif brut &minus; Passif (dettes, frais fun&eacute;raires, IFI r&eacute;siduel&hellip;)</dd>
+          <dt>R&eacute;serve h&eacute;r&eacute;ditaire</dt><dd>Part minimale garantie aux enfants &mdash; d&rsquo;ordre public, on ne peut pas la supprimer</dd>
+          <dt>Quotit&eacute; disponible</dt><dd>Ce que le d&eacute;funt peut librement transmettre = 1 &minus; r&eacute;serve</dd>
+          <dt>Repr&eacute;sentation</dt><dd>Un enfant pr&eacute;d&eacute;c&eacute;d&eacute; est repr&eacute;sent&eacute; par ses propres enfants (petits-enfants du d&eacute;funt)</dd>
+        </dl>
+      </div>
+      <div class="block chiffres">
+        <div class="block-title chiffres">&#128200; R&eacute;serve &amp; Quotit&eacute;</div>
+        <table class="bareme-table">
+          <tr><th>Nombre d&rsquo;enfants</th><th>R&eacute;serve</th><th>Quotit&eacute; disponible</th></tr>
+          <tr><td>1 enfant</td><td><strong>1/2</strong></td><td>1/2</td></tr>
+          <tr><td>2 enfants</td><td><strong>2/3</strong></td><td>1/3</td></tr>
+          <tr><td>3 enfants et +</td><td><strong>3/4</strong></td><td>1/4</td></tr>
+        </table>
+        <br>
+        <strong style="font-size:.82rem;color:var(--navy)">Les 4 ordres d&rsquo;h&eacute;ritiers :</strong>
+        <table class="bareme-table" style="margin-top:6px">
+          <tr><th>Ordre</th><th>Qui ?</th></tr>
+          <tr><td>1er</td><td>Descendants (enfants, petits-enfants&hellip;)</td></tr>
+          <tr><td>2&egrave;me</td><td>Ascendants privil&eacute;gi&eacute;s (parents) + Collatéraux privil&eacute;gi&eacute;s (fr&egrave;res/soeurs)</td></tr>
+          <tr><td>3&egrave;me</td><td>Ascendants ordinaires (grands-parents)</td></tr>
+          <tr><td>4&egrave;me</td><td>Collatéraux ordinaires (cousins, oncles, tantes&hellip;)</td></tr>
+        </table>
+      </div>
+      <div class="block piege">
+        <div class="block-title piege">&#9888; Pi&egrave;ges &agrave; &eacute;viter</div>
+        <div class="warn-row">
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>L&rsquo;ordre sup&eacute;rieur <strong>exclut totalement</strong> l&rsquo;ordre inf&eacute;rieur &mdash; si des enfants sont vivants, les parents n&rsquo;h&eacute;ritent PAS</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>Le conjoint survivant <strong>n&rsquo;est pas dans les 4 ordres</strong> &mdash; ses droits sont distincts et se superposent aux ordres</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>La r&eacute;serve h&eacute;r&eacute;ditaire est <strong>d&rsquo;ordre public</strong> &mdash; aucun testament ne peut la supprimer</span></div>
+        </div>
+      </div>
+      <div class="block metier">
+        <div class="block-title metier">&#128188; Conseil M&eacute;tier</div>
+        <div class="metier-row">
+          <div class="metier-item"><strong>Cartographier la famille compl&egrave;te</strong>Toujours dresser l&rsquo;arbre familial complet en bilan patrimonial &mdash; un enfant d&rsquo;un premier lit oubli&eacute; peut g&eacute;n&eacute;rer des actions en r&eacute;duction par la suite.</div>
+          <div class="metier-item"><strong>Contourner l&eacute;galement la r&eacute;serve</strong>Pour transmettre davantage hors r&eacute;serve : assurance-vie (hors succession) + donations de son vivant dans la quotit&eacute; disponible &mdash; jamais par testament seul.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T4 : CONJOINT & DÉMEMBREMENT -->
+    <div class="theme-section" id="ess-t-conjoint">
+      <div class="theme-header">
+        <h2>&#128141; Droits du conjoint &amp; D&eacute;membrement</h2>
+        <span class="theme-badge">Jour 03</span>
+      </div>
+      <div class="block">
+        <div class="block-title def">&#128218; D&eacute;finitions cl&eacute;s</div>
+        <dl>
+          <dt>Enfants communs</dt><dd>Conjoint au choix : <strong>1/4 en PP</strong> OU <strong>100% en usufruit</strong></dd>
+          <dt>Enfants non communs</dt><dd>Conjoint forc&eacute;ment : <strong>1/4 en PP seulement</strong> &mdash; pas d&rsquo;option usufruit total</dd>
+          <dt>Usufruit (UF)</dt><dd>Droit d&rsquo;utiliser le bien et d&rsquo;en percevoir les revenus (loyers, dividendes&hellip;)</dd>
+          <dt>Nue-propri&eacute;t&eacute; (NP)</dt><dd>Propri&eacute;t&eacute; sans la jouissance &mdash; le nu-propri&eacute;taire r&eacute;cup&egrave;re la PP au d&eacute;c&egrave;s de l&rsquo;usufruitier</dd>
+          <dt>PP = UF + NP</dt><dd>La pleine propri&eacute;t&eacute; se reconstitue automatiquement au d&eacute;c&egrave;s de l&rsquo;usufruitier, <strong>sans droits de succession</strong></dd>
+        </dl>
+      </div>
+      <div class="block chiffres">
+        <div class="block-title chiffres">&#128200; Bar&egrave;me fiscal de l&rsquo;usufruit</div>
+        <table class="bareme-table">
+          <tr><th>&Acirc;ge de l&rsquo;usufruitier</th><th>Valeur UF</th><th>Valeur NP</th></tr>
+          <tr><td>Moins de 21 ans</td><td>90%</td><td>10%</td></tr>
+          <tr><td>21 &agrave; 30 ans</td><td>80%</td><td>20%</td></tr>
+          <tr><td>31 &agrave; 40 ans</td><td>70%</td><td>30%</td></tr>
+          <tr><td>41 &agrave; 50 ans</td><td>60%</td><td>40%</td></tr>
+          <tr><td>51 &agrave; 60 ans</td><td>50%</td><td>50%</td></tr>
+          <tr><td>61 &agrave; 70 ans</td><td>40%</td><td>60%</td></tr>
+          <tr><td>71 &agrave; 80 ans</td><td>30%</td><td>70%</td></tr>
+          <tr><td>81 &agrave; 90 ans</td><td>20%</td><td>80%</td></tr>
+          <tr><td>Plus de 90 ans</td><td>10%</td><td>90%</td></tr>
+        </table>
+      </div>
+      <div class="block piege">
+        <div class="block-title piege">&#9888; Pi&egrave;ges &agrave; &eacute;viter</div>
+        <div class="warn-row">
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>En pr&eacute;sence d&rsquo;enfants <strong>non communs</strong>, le conjoint n&rsquo;a PAS le choix de l&rsquo;usufruit total &mdash; protection des enfants du 1er lit</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>Les droits de succession se calculent sur la <strong>valeur de la NP</strong> (pas la PP) &mdash; &eacute;conomie fiscale r&eacute;elle lors d&rsquo;une donation avec r&eacute;serve d&rsquo;usufruit</span></div>
+        </div>
+      </div>
+      <div class="block metier">
+        <div class="block-title metier">&#128188; Conseil M&eacute;tier</div>
+        <div class="metier-row">
+          <div class="metier-item"><strong>Le d&eacute;membrement : outil de transmission puissant</strong>Donner la NP aux enfants maintenant, garder l&rsquo;UF = z&eacute;ro droits &agrave; payer sur la PP &agrave; terme. Plus on le fait t&ocirc;t, plus la NP est valoris&eacute;e bas (jeunesse de l&rsquo;usufruitier) = moins de droits.</div>
+          <div class="metier-item"><strong>Usufruit du logement familial</strong>Le conjoint qui choisit l&rsquo;usufruit total peut rester dans le logement &mdash; souvent la priorit&eacute; &eacute;motionnelle. Ne pas oublier de pr&eacute;senter les deux options clairement.</div>
+          <div class="metier-item"><strong>Familles recompos&eacute;es</strong>En pr&eacute;sence d&rsquo;enfants non communs, anticiper avec assurance-vie pour avantager le conjoint au-del&agrave; de son 1/4 PP l&eacute;gal.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T5 : TESTAMENTS & LEGS -->
+    <div class="theme-section" id="ess-t-testaments">
+      <div class="theme-header">
+        <h2>&#128213; Testaments &amp; Legs</h2>
+        <span class="theme-badge">Jour 03</span>
+      </div>
+      <div class="block">
+        <div class="block-title def">&#128218; Les 3 formes de testament</div>
+        <dl>
+          <dt>Olographe</dt><dd>Enti&egrave;rement &eacute;crit &agrave; la main, dat&eacute; et sign&eacute; &mdash; aucun notaire requis, risque de perte ou de falsification</dd>
+          <dt>Authentique</dt><dd>Dict&eacute; au notaire devant 2 t&eacute;moins (ou 2 notaires) &mdash; le plus s&eacute;curis&eacute;, conserv&eacute; au rang des minutes</dd>
+          <dt>Mystique</dt><dd>Remis cacheté au notaire, contenu secret &mdash; rare en pratique</dd>
+        </dl>
+        <br>
+        <div class="block-title def" style="margin-top:4px">&#128218; Les 3 types de legs</div>
+        <dl>
+          <dt>Universel</dt><dd>L&rsquo;ensemble du patrimoine (ou la quotit&eacute; disponible) &mdash; le l&eacute;gataire universel recueille tout le disponible</dd>
+          <dt>&Agrave; titre universel</dt><dd>Une fraction d&eacute;finie du patrimoine (ex : &laquo; la moiti&eacute; de mes biens &raquo;)</dd>
+          <dt>Particulier</dt><dd>Un bien d&eacute;termin&eacute; (ex : &laquo; mon appartement de Lorient &raquo;)</dd>
+        </dl>
+      </div>
+      <div class="block piege">
+        <div class="block-title piege">&#9888; Pi&egrave;ges &agrave; &eacute;viter</div>
+        <div class="warn-row">
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>Un testament olographe <strong>non dat&eacute; est nul</strong> &mdash; date = condition de validit&eacute; absolue</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>L&eacute;gataire universel &ne; tout lui revient si des r&eacute;servataires existent &mdash; <strong>la r&eacute;serve prime toujours</strong> sur le testament</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>Testament &ne; contrat &mdash; on peut le r&eacute;voquer ou le modifier <strong>librement et &agrave; tout moment</strong></span></div>
+        </div>
+      </div>
+      <div class="block metier">
+        <div class="block-title metier">&#128188; Conseil M&eacute;tier</div>
+        <div class="metier-row">
+          <div class="metier-item"><strong>FCDDV syst&eacute;matique</strong>Pour tout testament olographe : recommander le d&eacute;p&ocirc;t au Fichier Central des Dispositions des Derni&egrave;res Volont&eacute;s (FCDDV) &mdash; sans &ccedil;a, le testament peut ne jamais &ecirc;tre retrouv&eacute;.</div>
+          <div class="metier-item"><strong>Testament authentique pour patrimoines complexes</strong>D&egrave;s qu&rsquo;il y a plusieurs enfants, une entreprise, ou des biens &agrave; l&rsquo;&eacute;tranger : recommander le notaire. L&rsquo;authenticit&eacute; &eacute;vite toute contestation.</div>
+          <div class="metier-item"><strong>P&eacute;dagogie sur les limites</strong>Beaucoup de clients pensent pouvoir tout d&eacute;cider par testament. Expliquer clairement que la r&eacute;serve h&eacute;r&eacute;ditaire est intouchable &mdash; m&ecirc;me avec le meilleur notaire.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T6 : DONATIONS & DDV -->
+    <div class="theme-section" id="ess-t-donations">
+      <div class="theme-header">
+        <h2>&#127873; Donations &amp; DDV</h2>
+        <span class="theme-badge">Jour 04</span>
+      </div>
+      <div class="block">
+        <div class="block-title def">&#128218; D&eacute;finitions cl&eacute;s</div>
+        <dl>
+          <dt>Donation</dt><dd>Transmission d&rsquo;un bien du vivant, &agrave; titre gratuit, avec acceptation du donataire</dd>
+          <dt>DDV</dt><dd>Donation au Dernier Vivant &mdash; acte notari&eacute; augmentant les droits du conjoint survivant au-del&agrave; de la loi</dd>
+          <dt>D&eacute;sh&eacute;ritement</dt><dd>Impossible en France pour les h&eacute;ritiers r&eacute;servataires &mdash; seul un <strong>juge</strong> peut prononcer l&rsquo;indignit&eacute;</dd>
+          <dt>Indignit&eacute;</dt><dd>Sanction judiciaire (ex : meurtre du d&eacute;funt) &mdash; &ne; d&eacute;sh&eacute;ritement, c&rsquo;est une exclusion prononc&eacute;e par le tribunal</dd>
+        </dl>
+        <br>
+        <div class="block-title def" style="margin-top:4px">&#128218; DDV &mdash; 3 options pour le conjoint</div>
+        <ul class="items">
+          <li>100% en <strong>usufruit</strong></li>
+          <li>Quotit&eacute; disponible ordinaire en <strong>pleine propri&eacute;t&eacute;</strong></li>
+          <li>1/4 en PP + 3/4 en UF (option <strong>mixte</strong>)</li>
+        </ul>
+        <br>
+        <div class="block-title def" style="margin-top:4px">&#128218; Types de donations</div>
+        <dl>
+          <dt>Donation simple</dt><dd>Acte notari&eacute; classique, rapport &agrave; la succession obligatoire</dd>
+          <dt>Donation-partage</dt><dd>Partage anticip&eacute; entre enfants &mdash; la valeur est <strong>fig&eacute;e &agrave; la date de donation</strong> (protection contre r&eacute;&eacute;valuation)</dd>
+          <dt>Don manuel</dt><dd>Don de la main &agrave; la main (argent, objet) &mdash; d&eacute;clarable, dans les abattements si d&eacute;clar&eacute;</dd>
+          <dt>Avec r&eacute;serve d&rsquo;usufruit</dt><dd>Le donateur garde l&rsquo;usufruit, transmet la nue-propri&eacute;t&eacute; &mdash; droits calcul&eacute;s sur la NP seulement</dd>
+        </dl>
+      </div>
+      <div class="block chiffres">
+        <div class="block-title chiffres">&#128200; Chiffre cl&eacute;</div>
+        <div class="num-row">
+          <div class="num-pill"><span class="val">15 ans</span><span class="lbl">D&eacute;lai de renouvellement des abattements</span></div>
+        </div>
+      </div>
+      <div class="block piege">
+        <div class="block-title piege">&#9888; Pi&egrave;ges &agrave; &eacute;viter</div>
+        <div class="warn-row">
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>La donation-partage <strong>fige les valeurs</strong> &agrave; la date de donation &rarr; si un bien prend de la valeur, les enfants ne peuvent pas le r&eacute;clamer &mdash; &eacute;vite les conflits</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>Un don manuel non d&eacute;clar&eacute; peut &ecirc;tre <strong>rappel&eacute; &agrave; la succession</strong> m&ecirc;me apr&egrave;s 15 ans si d&eacute;couvert</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>Donations tardives (proche du d&eacute;c&egrave;s) &mdash; risque de requalification si l&rsquo;&eacute;tat de sant&eacute; &eacute;tait d&eacute;grad&eacute; &agrave; la signature</span></div>
+        </div>
+      </div>
+      <div class="block metier">
+        <div class="block-title metier">&#128188; Conseil M&eacute;tier</div>
+        <div class="metier-row">
+          <div class="metier-item"><strong>DDV quasi-syst&eacute;matique</strong>Pour tout couple mari&eacute; : recommander la DDV. Environ 200&euro; chez le notaire, peut &eacute;conomiser des centaines de milliers d&rsquo;euros de droits pour le conjoint. ROI imm&eacute;diat.</div>
+          <div class="metier-item"><strong>Donation-partage plutôt que donation simple</strong>D&egrave;s qu&rsquo;il y a plusieurs enfants : donation-partage &gt; donation simple. Elle neutralise les r&eacute;&eacute;valuations et pr&eacute;vient les contentieux fraternels &agrave; la succession.</div>
+          <div class="metier-item"><strong>Commencer t&ocirc;t</strong>Chaque ann&eacute;e qui passe sans donation = une ann&eacute;e de renouvellement perdue. La strat&eacute;gie 15 ans glissants doit s&rsquo;anticiper d&egrave;s 40-50 ans.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T7 : FISCALITÉ DES DONATIONS -->
+    <div class="theme-section" id="ess-t-fiscal-don">
+      <div class="theme-header">
+        <h2>&#128202; Fiscalit&eacute; des donations &mdash; Abattements</h2>
+        <span class="theme-badge">Jour 04</span>
+      </div>
+      <div class="block chiffres">
+        <div class="block-title chiffres">&#128200; Tableau des abattements (tous les 15 ans)</div>
+        <table class="bareme-table">
+          <tr><th>Lien de parent&eacute;</th><th>Abattement</th></tr>
+          <tr><td>Enfant (ou parent)</td><td><strong>100 000 &euro;</strong></td></tr>
+          <tr><td>Petit-enfant</td><td><strong>31 865 &euro;</strong></td></tr>
+          <tr><td>Arri&egrave;re-petit-enfant</td><td><strong>5 310 &euro;</strong></td></tr>
+          <tr><td>Conjoint / Partenaire PACS</td><td><strong>80 724 &euro;</strong></td></tr>
+          <tr><td>Fr&egrave;re ou s&oelig;ur</td><td><strong>15 932 &euro;</strong></td></tr>
+          <tr><td>Neveu ou ni&egrave;ce</td><td><strong>7 967 &euro;</strong></td></tr>
+          <tr><td>+ Handicap (cumulable !)</td><td><strong>+ 159 325 &euro;</strong></td></tr>
+        </table>
+        <div style="margin-top:10px;padding:10px 12px;background:#fff;border-radius:8px;border:1.5px solid var(--ok);font-size:.84rem">
+          &#128161; Enfant handicap&eacute; = 100 000 + 159 325 = <strong style="color:var(--ok)">259 325 &euro;</strong> d&rsquo;abattement total
+        </div>
+      </div>
+      <div class="block piege">
+        <div class="block-title piege">&#9888; Pi&egrave;ge MAJEUR</div>
+        <div class="warn-row">
+          <div class="warn-item"><span class="warn-icon">&#128680;</span><span><strong>L&rsquo;abattement handicap SE CUMULE</strong> avec l&rsquo;abattement de parent&eacute; &mdash; c&rsquo;est LE pi&egrave;ge classique de l&rsquo;examen. Un enfant handicap&eacute; b&eacute;n&eacute;ficie de DEUX abattements, pas d&rsquo;un seul.</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>La r&egrave;gle des <strong>15 ans est un d&eacute;lai de rappel fiscal</strong> &mdash; passé ce d&eacute;lai, les donations ant&eacute;rieures ne s&rsquo;imputent plus sur l&rsquo;abattement</span></div>
+        </div>
+      </div>
+      <div class="block metier">
+        <div class="block-title metier">&#128188; Conseil M&eacute;tier</div>
+        <div class="metier-row">
+          <div class="metier-item"><strong>Strat&eacute;gie 15 ans glissants</strong>Un client de 50 ans avec 3 enfants peut transmettre 300 000&euro; en franchise totale maintenant, et renouveler l&rsquo;int&eacute;gralit&eacute; &agrave; 65 ans &rarr; 600 000&euro; transmis sans droits de son vivant.</div>
+          <div class="metier-item"><strong>Abattement handicap : ne jamais l&rsquo;oublier</strong>Syst&eacute;matiquement poser la question lors du bilan patrimonial : &laquo; Avez-vous un enfant ou petit-enfant en situation de handicap ? &raquo; Les familles n&rsquo;ont souvent pas conscience de cet avantage.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T8 : FISCALITÉ SUCCESSION -->
+    <div class="theme-section" id="ess-t-fiscal-succ">
+      <div class="theme-header">
+        <h2>&#127981; Fiscalit&eacute; de la succession</h2>
+        <span class="theme-badge">Jour 05</span>
+      </div>
+      <div class="block">
+        <div class="block-title def">&#128218; Loi TEPA (22 ao&ucirc;t 2007)</div>
+        <dl>
+          <dt>Conjoint mari&eacute;</dt><dd>Exon&eacute;ration <strong>totale</strong> de droits de succession &mdash; 0%</dd>
+          <dt>Partenaire PACS</dt><dd>Exon&eacute;ration <strong>totale</strong> &mdash; 0%</dd>
+          <dt>Concubin (union libre)</dt><dd><strong>Aucune exon&eacute;ration</strong> &mdash; tax&eacute; &agrave; 60% (taux des non-parents)</dd>
+        </dl>
+      </div>
+      <div class="block chiffres">
+        <div class="block-title chiffres">&#128200; Chiffres cl&eacute;s</div>
+        <div class="num-row">
+          <div class="num-pill"><span class="val">0%</span><span class="lbl">Conjoint / PACS</span></div>
+          <div class="num-pill"><span class="val">60%</span><span class="lbl">Concubin</span></div>
+          <div class="num-pill"><span class="val">20%</span><span class="lbl">Abattement sur la RP</span></div>
+          <div class="num-pill"><span class="val">152 500&euro;</span><span class="lbl">Exon&eacute;ration AV / b&eacute;n&eacute;ficiaire</span></div>
+          <div class="num-pill"><span class="val">75%</span><span class="lbl">Exon&eacute;ration Pacte Dutreil</span></div>
+          <div class="num-pill"><span class="val">30 500&euro;</span><span class="lbl">Abattement AV primes apr&egrave;s 70 ans (global)</span></div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="block-title def">&#128218; Exon&eacute;rations &amp; dispositifs</div>
+        <dl>
+          <dt>Fr&egrave;res/soeurs</dt><dd>Exon&eacute;ration totale si : c&eacute;libataire / veuf / divorc&eacute; OU s&eacute;par&eacute; + vivait avec le d&eacute;funt depuis 5+ ans + &gt; 50 ans OU invalide (<strong>3 conditions cumulatives</strong>)</dd>
+          <dt>20% RP</dt><dd>Abattement de 20% sur la valeur de la r&eacute;sidence principale si des h&eacute;ritiers continuent &agrave; l&rsquo;occuper (conditions strictes)</dd>
+          <dt>Assurance-vie</dt><dd>Primes vers&eacute;es <strong>avant 70 ans</strong> : exon&eacute;ration par b&eacute;n&eacute;ficiaire jusqu&rsquo;&agrave; 152 500&euro;, puis 20% jusqu&rsquo;&agrave; 700 000&euro;, puis 31,25%</dd>
+          <dt>Pacte Dutreil</dt><dd>Exon&eacute;ration de 75% sur les titres d&rsquo;entreprise transmis &mdash; engagement collectif 2 ans + individuel 4 ans + direction 3 ans</dd>
+        </dl>
+      </div>
+      <div class="block piege">
+        <div class="block-title piege">&#9888; Pi&egrave;ges &agrave; &eacute;viter</div>
+        <div class="warn-row">
+          <div class="warn-item"><span class="warn-icon">&#128680;</span><span>Le <strong>concubin n&rsquo;est PAS prot&eacute;g&eacute; par TEPA</strong> &mdash; 60% de droits sur tout. C&rsquo;est l&rsquo;un des arguments les plus forts pour recommander le mariage ou le PACS.</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>AV <strong>apr&egrave;s 70 ans</strong> : r&eacute;gime fiscal diff&eacute;rent &mdash; abattement unique de 30 500&euro; <em>tous b&eacute;n&eacute;ficiaires confondus</em> (et non 152 500&euro; par b&eacute;n&eacute;ficiaire)</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>L&rsquo;exon&eacute;ration des fr&egrave;res/soeurs exige les <strong>3 conditions cumulatives</strong> &mdash; ne pas en oublier une</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>Pacte Dutreil : l&rsquo;engagement collectif de 2 ans doit &ecirc;tre <strong>ant&eacute;rieur &agrave; la transmission</strong> &mdash; &agrave; anticiper</span></div>
+        </div>
+      </div>
+      <div class="block metier">
+        <div class="block-title metier">&#128188; Conseil M&eacute;tier</div>
+        <div class="metier-row">
+          <div class="metier-item"><strong>Le concubin : alerte syst&eacute;matique</strong>D&egrave;s qu&rsquo;un client en union libre &eacute;voque son partenaire, poser la question du r&eacute;gime et du patrimoine &agrave; transmettre. 60% de droits, c&rsquo;est souvent un choc &mdash; et le mariage ou le PACS se pr&eacute;sentent alors comme des &eacute;vidences.</div>
+          <div class="metier-item"><strong>AV = outil #1 de transmission</strong>152 500&euro; par b&eacute;n&eacute;ficiaire hors succession &mdash; la clause b&eacute;n&eacute;ficiaire est &agrave; r&eacute;diger avec soin, en &eacute;vitant &laquo; mes h&eacute;ritiers &raquo; (rentre dans la succession). Nommer les personnes explicitement.</div>
+          <div class="metier-item"><strong>Dutreil : anticiper des ann&eacute;es avant</strong>Pour les clients chefs d&rsquo;entreprise : l&rsquo;engagement collectif de 2 ans impose une anticipation. Ne peut pas se d&eacute;cider &agrave; la derni&egrave;re minute. Mettre en place bien avant la transmission.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- T9 : ADOPTION -->
+    <div class="theme-section" id="ess-t-adoption">
+      <div class="theme-header">
+        <h2>&#128106; Adoption</h2>
+        <span class="theme-badge">Jour 05</span>
+      </div>
+      <div class="block">
+        <div class="block-title def">&#128218; D&eacute;finitions cl&eacute;s</div>
+        <dl>
+          <dt>Adoption pl&eacute;ni&egrave;re</dt><dd>Rupture totale avec la famille d&rsquo;origine. L&rsquo;adopt&eacute; int&egrave;gre pleinement la famille adoptive avec <strong>tous les droits successoraux</strong> d&rsquo;un enfant biologique</dd>
+          <dt>Adoption simple</dt><dd>Liens avec la famille d&rsquo;origine <strong>maintenus</strong>. Droits successoraux dans les 2 familles, mais r&egrave;gles diff&eacute;rentes &mdash; peut limiter les abattements c&ocirc;t&eacute; adoptif</dd>
+          <dt>Exception cl&eacute;</dt><dd>L&rsquo;adoption <strong>simple</strong> de l&rsquo;enfant du conjoint = &eacute;quivaut &agrave; une adoption <strong>pl&eacute;ni&egrave;re</strong> au niveau successoral &rarr; l&rsquo;enfant est trait&eacute; comme un enfant biologique</dd>
+        </dl>
+      </div>
+      <div class="block piege">
+        <div class="block-title piege">&#9888; Pi&egrave;ges &agrave; &eacute;viter</div>
+        <div class="warn-row">
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>Adoption simple &ne; adoption pl&eacute;ni&egrave;re au sens g&eacute;n&eacute;ral &mdash; mais l&rsquo;<strong>exception enfant du conjoint</strong> r&eacute;tablit l&rsquo;&eacute;galit&eacute; successorale</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>Ne pas confondre les cons&eacute;quences <strong>civiles</strong> (liens de famille) avec les cons&eacute;quences <strong>fiscales</strong> (droits de succession)</span></div>
+          <div class="warn-item"><span class="warn-icon">&#9888;</span><span>L&rsquo;adoption pl&eacute;ni&egrave;re est <strong>irr&eacute;versible</strong> &mdash; d&eacute;cision lourde &agrave; ne pas pr&eacute;cipiter</span></div>
+        </div>
+      </div>
+      <div class="block metier">
+        <div class="block-title metier">&#128188; Conseil M&eacute;tier</div>
+        <div class="metier-row">
+          <div class="metier-item"><strong>Familles recompos&eacute;es : terrain min&eacute;</strong>Les familles recompos&eacute;es sont une source fr&eacute;quente de litiges successoraux. Toujours v&eacute;rifier le statut juridique de chaque enfant avant toute recommandation.</div>
+          <div class="metier-item"><strong>Adoption de l&rsquo;enfant du conjoint</strong>Si la famille veut l&rsquo;&eacute;galit&eacute; successorale, l&rsquo;adoption simple suffit &mdash; pas besoin de l&rsquo;adoption pl&eacute;ni&egrave;re (qui coupe les liens avec l&rsquo;autre famille). C&rsquo;est un avantage fiscal et civil &agrave; faible co&ucirc;t.</div>
+          <div class="metier-item"><strong>Tripl&eacute; gagnant pour familles recompos&eacute;es</strong>DDV + assurance-vie bien r&eacute;dig&eacute;e + adoption de l&rsquo;enfant du conjoint = les 3 outils &agrave; d&eacute;ployer pour &eacute;viter les tensions successorales.</div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /rev-essentiel -->
+
+  <!-- ══ FOCUS COMPILÉS ══ -->
+  <div id="rev-focus" class="rev-pane">
+    <div class="theme-nav" id="tnav-foc">
+      <button class="theme-btn active" onclick="showTheme('foc','f-assurance',this)">&#128275; Assurance</button>
+      <button class="theme-btn" onclick="showTheme('foc','f-regimes',this)">&#128145; R&eacute;gimes</button>
+      <button class="theme-btn" onclick="showTheme('foc','f-succession',this)">&#128181; Succession</button>
+      <button class="theme-btn" onclick="showTheme('foc','f-conjoint',this)">&#128141; Conjoint &amp; D&eacute;membrement</button>
+      <button class="theme-btn" onclick="showTheme('foc','f-testaments',this)">&#128213; Testaments &amp; Legs</button>
+      <button class="theme-btn" onclick="showTheme('foc','f-donations',this)">&#127873; Donations &amp; DDV</button>
+      <button class="theme-btn" onclick="showTheme('foc','f-abattements',this)">&#128202; Abattements</button>
+      <button class="theme-btn" onclick="showTheme('foc','f-tepa',this)">&#127981; TEPA &amp; Exon&eacute;rations</button>
+      <button class="theme-btn" onclick="showTheme('foc','f-adoption',this)">&#128106; Adoption</button>
+    </div>
+
+    <!-- FOCUS : ASSURANCE -->
+    <div class="theme-section active" id="foc-f-assurance">
+      <div class="theme-header"><h2>&#128275; Assurance &mdash; Focus J1</h2><span class="theme-badge">3 focus</span></div>
+      <div class="block">
+        <div class="block-title def">Focus 1 &mdash; Le secteur de l&rsquo;assurance</div>
+        <ul class="items">
+          <li><strong>Soci&eacute;t&eacute;s anonymes (SA)</strong> : but lucratif, actionnaires, distribue des dividendes</li>
+          <li><strong>Mutuelles Livre I</strong> (Code des assurances) : assurances de personnes &mdash; vie, sant&eacute;, pr&eacute;voyance</li>
+          <li><strong>Mutuelles Livre II</strong> (Code de la mutualit&eacute;) : compl&eacute;mentaire sant&eacute;, but non lucratif, pas de b&eacute;n&eacute;ficiaires &mdash; membres = soci&eacute;taires</li>
+          <li><strong>Institutions de pr&eacute;voyance</strong> : gestion paritaire (employeurs + salari&eacute;s), pr&eacute;voyance collective obligatoire</li>
+        </ul>
+      </div>
+      <div class="block">
+        <div class="block-title def">Focus 2 &mdash; Les interm&eacute;diaires en assurance</div>
+        <ul class="items">
+          <li><strong>COA</strong> (Courtier) : mandataire du CLIENT, ind&eacute;pendant, peut proposer plusieurs assureurs &mdash; devoir de conseil renforc&eacute;</li>
+          <li><strong>AOA</strong> (Agent G&eacute;n&eacute;ral) : mandataire de l&rsquo;ASSUREUR, li&eacute; &agrave; une ou plusieurs compagnies par mandat</li>
+          <li><strong>MIA</strong> : Mandataire d&rsquo;Interm&eacute;diaire d&rsquo;Assurance &mdash; distribue pour le compte d&rsquo;un COA ou AOA</li>
+          <li><strong>MIIA</strong> : Mandataire d&rsquo;Interm&eacute;diaire en Op&eacute;rations d&rsquo;Assurance</li>
+          <li><strong>ORIAS</strong> : immatriculation obligatoire pour tous les interm&eacute;diaires &mdash; registre public consultable</li>
+        </ul>
+      </div>
+      <div class="block">
+        <div class="block-title def">Focus 3 &mdash; Cat&eacute;gories d&rsquo;assurance</div>
+        <ul class="items">
+          <li><strong>Assurances Vie</strong> : &eacute;pargne, retraite, d&eacute;c&egrave;s-vie, pr&eacute;voyance individuelle (branches 20 &agrave; 26)</li>
+          <li><strong>IARD</strong> (Non-Vie) : Incendie, Accidents, Risques Divers &mdash; auto, habitation, RC pro&hellip;</li>
+          <li><strong>Dommages corporels</strong> : accident, maladie, invalidit&eacute; &mdash; pont entre vie et non-vie</li>
+          <li>Distinction important : assurance vie = <strong>contrat de capitalisation</strong> (valeur de rachat) ; IARD = <strong>pas de valeur de rachat</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FOCUS : RÉGIMES -->
+    <div class="theme-section" id="foc-f-regimes">
+      <div class="theme-header"><h2>&#128145; R&eacute;gimes matrimoniaux &mdash; Focus J2</h2><span class="theme-badge">3 focus</span></div>
+      <div class="block">
+        <div class="block-title def">Focus 1 &mdash; Communaut&eacute; r&eacute;duite aux acqu&ecirc;ts (CRA)</div>
+        <ul class="items">
+          <li>R&eacute;gime <strong>l&eacute;gal par d&eacute;faut</strong> (sans contrat de mariage)</li>
+          <li><strong>Biens propres</strong> : ant&eacute;rieurs au mariage + re&ccedil;us par h&eacute;ritage ou donation</li>
+          <li><strong>Biens communs (acqu&ecirc;ts)</strong> : tout ce qui est acquis pendant le mariage, peu importe lequel des &eacute;poux paye</li>
+          <li>Dettes professionnelles de l&rsquo;un &ne; engagent pas les biens propres de l&rsquo;autre</li>
+        </ul>
+      </div>
+      <div class="block">
+        <div class="block-title def">Focus 2 &mdash; Communaut&eacute; universelle &amp; R&eacute;gimes communautaires</div>
+        <ul class="items">
+          <li><strong>Communaut&eacute; universelle</strong> : TOUT est commun (biens pr&eacute;maritaux inclus) &mdash; contrat de mariage obligatoire</li>
+          <li>Clause d&rsquo;<strong>attribution int&eacute;grale</strong> : tout va au conjoint survivant sans droits de succession</li>
+          <li><strong>Avantage</strong> : protection maximale du conjoint ; <strong>Inconv&eacute;nient</strong> : les enfants ne re&ccedil;oivent rien au 1er d&eacute;c&egrave;s</li>
+        </ul>
+      </div>
+      <div class="block">
+        <div class="block-title def">Focus 3 &mdash; R&eacute;gimes s&eacute;paratistes</div>
+        <ul class="items">
+          <li><strong>S&eacute;paration de biens</strong> : chacun est propri&eacute;taire de ses biens, pas de masse commune &mdash; contrat de mariage</li>
+          <li><strong>Participation aux acqu&ecirc;ts</strong> : pendant le mariage = s&eacute;par&eacute;s ; &agrave; la dissolution = on calcule l&rsquo;enrichissement et on en partage la moiti&eacute;</li>
+          <li>S&eacute;paration de biens adapt&eacute;e aux entrepreneurs (prot&egrave;ge le conjoint des risques pro)</li>
+          <li>Rappel : <strong>S&eacute;paration de corps &ne; S&eacute;paration de biens</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FOCUS : SUCCESSION -->
+    <div class="theme-section" id="foc-f-succession">
+      <div class="theme-header"><h2>&#128181; Succession &mdash; Focus J2</h2><span class="theme-badge">3 focus</span></div>
+      <div class="block">
+        <div class="block-title def">Focus 1 &mdash; Masse successorale</div>
+        <ul class="items">
+          <li><strong>Masse brute</strong> = valeur de tous les biens du d&eacute;funt au jour du d&eacute;c&egrave;s</li>
+          <li><strong>Masse nette</strong> = Masse brute &minus; Passif (dettes, frais fun&eacute;raires, IFI, d&eacute;penses de conservation&hellip;)</li>
+          <li>Les <strong>donations ant&eacute;rieures</strong> sont rappel&eacute;es fictivement pour calculer la r&eacute;serve (mais pas les primes d&rsquo;AV)</li>
+          <li><strong>R&eacute;serv / Quotit&eacute;</strong> : 1 enfant = 1/2 QD ; 2 = 1/3 QD ; 3+ = 1/4 QD</li>
+        </ul>
+      </div>
+      <div class="block">
+        <div class="block-title def">Focus 2 &mdash; Les 4 ordres d&rsquo;h&eacute;ritiers</div>
+        <ul class="items">
+          <li><strong>1er ordre</strong> : Descendants (enfants &gt; petits-enfants&hellip;) &mdash; excluent tous les autres</li>
+          <li><strong>2&egrave;me ordre</strong> : Parents (ascendants privil&eacute;gi&eacute;s) + Fr&egrave;res/S&oelig;urs (collatéraux privil&eacute;gi&eacute;s)</li>
+          <li><strong>3&egrave;me ordre</strong> : Grands-parents (ascendants ordinaires)</li>
+          <li><strong>4&egrave;me ordre</strong> : Oncles, tantes, cousins (collatéraux ordinaires jusqu&rsquo;au 6&egrave;me degr&eacute;)</li>
+          <li>Chaque ordre exclut totalement l&rsquo;ordre suivant &mdash; le conjoint n&rsquo;est pas dans les ordres</li>
+        </ul>
+      </div>
+      <div class="block">
+        <div class="block-title def">Focus 3 &mdash; La repr&eacute;sentation successorale</div>
+        <ul class="items">
+          <li>Un enfant <strong>pr&eacute;d&eacute;c&eacute;d&eacute;</strong> (ou renonçant) est repr&eacute;sent&eacute; par ses propres enfants</li>
+          <li>Les repr&eacute;sentants partagent la <strong>part de leur auteur</strong> (part par souche, non par t&ecirc;te)</li>
+          <li>Exemple : 2 enfants dont 1 pr&eacute;d&eacute;c&eacute;d&eacute; avec 3 enfants &rarr; l&rsquo;enfant vivant re&ccedil;oit 1/2, les 3 petits-enfants se partagent 1/2</li>
+          <li>La repr&eacute;sentation joue aussi pour les fr&egrave;res et s&oelig;urs (repr&eacute;sent&eacute;s par leurs enfants)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FOCUS : CONJOINT & DÉMEMBREMENT -->
+    <div class="theme-section" id="foc-f-conjoint">
+      <div class="theme-header"><h2>&#128141; Conjoint survivant &amp; D&eacute;membrement &mdash; Focus J3</h2><span class="theme-badge">2 focus</span></div>
+      <div class="block">
+        <div class="block-title def">Focus 1 &mdash; Droits du conjoint survivant</div>
+        <ul class="items">
+          <li><strong>Enfants communs uniquement</strong> : conjoint choisit entre 1/4 PP ou 100% UF</li>
+          <li><strong>Enfants non communs</strong> (ou mixtes) : conjoint re&ccedil;oit forc&eacute;ment 1/4 PP, sans option UF</li>
+          <li>En l&rsquo;absence d&rsquo;enfants : droits plus &eacute;tendus selon pr&eacute;sence des parents du d&eacute;funt</li>
+          <li>Le choix UF total donne le <strong>maintien dans le logement</strong> + perception des loyers/dividendes</li>
+        </ul>
+      </div>
+      <div class="block">
+        <div class="block-title def">Focus 2 &mdash; Usufruit, Nue-propri&eacute;t&eacute; &amp; Bar&egrave;me</div>
+        <ul class="items">
+          <li><strong>Usufruit</strong> = droit d&rsquo;usage + droit aux fruits (loyers, dividendes)</li>
+          <li><strong>Nue-propri&eacute;t&eacute;</strong> = propri&eacute;t&eacute; sans jouissance &mdash; r&eacute;cup&egrave;re la PP automatiquement au d&eacute;c&egrave;s de l&rsquo;UF</li>
+          <li>Bar&egrave;me d&eacute;croissant par tranche de 10 ans : UF = 90% (&lt;21 ans) &rarr; 10% (&gt;90 ans)</li>
+          <li>Droits calcul&eacute;s sur la <strong>valeur de la NP</strong> seulement &rarr; &eacute;conomie fiscale imm&eacute;diate</li>
+          <li>A l&rsquo;extinction de l&rsquo;UF : r&eacute;union gratuite, <strong>sans nouveaux droits de succession</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FOCUS : TESTAMENTS & LEGS -->
+    <div class="theme-section" id="foc-f-testaments">
+      <div class="theme-header"><h2>&#128213; Testaments &amp; Legs &mdash; Focus J3</h2><span class="theme-badge">1 focus</span></div>
+      <div class="block">
+        <div class="block-title def">Focus 1 &mdash; Formes de testaments et types de legs</div>
+        <ul class="items">
+          <li><strong>Testament olographe</strong> : manuscrit int&eacute;gralement + dat&eacute; + sign&eacute; (sans notaire)</li>
+          <li><strong>Testament authentique</strong> : dict&eacute; au notaire devant 2 t&eacute;moins &mdash; s&eacute;curit&eacute; maximale</li>
+          <li><strong>Testament mystique</strong> : remis cacheté au notaire &mdash; usage rare</li>
+          <li><strong>Legs universel</strong> : tout le patrimoine disponible (ou quotit&eacute; disponible)</li>
+          <li><strong>Legs &agrave; titre universel</strong> : fraction du patrimoine (ex : 1/3 de mes biens)</li>
+          <li><strong>Legs particulier</strong> : bien d&eacute;sign&eacute; (ex : &laquo; ma r&eacute;sidence secondaire &raquo;)</li>
+          <li>Testament = acte unilat&eacute;ral r&eacute;vocable &agrave; tout moment, r&eacute;serve h&eacute;r&eacute;ditaire prime toujours</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FOCUS : DONATIONS & DDV -->
+    <div class="theme-section" id="foc-f-donations">
+      <div class="theme-header"><h2>&#127873; Donations &amp; DDV &mdash; Focus J4</h2><span class="theme-badge">3 focus</span></div>
+      <div class="block">
+        <div class="block-title def">Focus 1 &mdash; La Donation au Dernier Vivant (DDV)</div>
+        <ul class="items">
+          <li>Acte notari&eacute; permettant d&rsquo;&eacute;largir les droits du conjoint survivant au-del&agrave; de la loi</li>
+          <li><strong>Option 1</strong> : 100% en usufruit (maintien dans le logement + revenus)</li>
+          <li><strong>Option 2</strong> : Quotit&eacute; disponible ordinaire en pleine propri&eacute;t&eacute;</li>
+          <li><strong>Option 3</strong> : 1/4 PP + 3/4 UF (option mixte)</li>
+          <li>Applicable uniquement en pr&eacute;sence d&rsquo;enfants (sans enfants, la loi est d&eacute;j&agrave; plus g&eacute;n&eacute;reuse)</li>
+        </ul>
+      </div>
+      <div class="block">
+        <div class="block-title def">Focus 2 &mdash; R&eacute;serve h&eacute;r&eacute;ditaire &amp; Indignit&eacute;</div>
+        <ul class="items">
+          <li><strong>R&eacute;serve</strong> : 1 enfant = 1/2, 2 enfants = 2/3, 3+ = 3/4 de la succession</li>
+          <li><strong>Quotit&eacute; disponible</strong> = 1 &minus; r&eacute;serve &mdash; librement transmissible par testament ou donation</li>
+          <li><strong>Action en r&eacute;duction</strong> : les r&eacute;servataires peuvent attaquer les donations qui empi&egrave;tent sur leur r&eacute;serve</li>
+          <li><strong>Indignit&eacute; successorale</strong> : exclusion judiciaire (meurtre du d&eacute;funt, violence grave) &mdash; prononc&eacute;e par le tribunal</li>
+          <li>D&eacute;sh&eacute;ritement direct <strong>impossible</strong> pour les r&eacute;servataires</li>
+        </ul>
+      </div>
+      <div class="block">
+        <div class="block-title def">Focus 3 &mdash; Types de donations</div>
+        <ul class="items">
+          <li><strong>Donation simple</strong> : acte notari&eacute;, rapport &agrave; succession (valeur au jour du d&eacute;c&egrave;s)</li>
+          <li><strong>Donation-partage</strong> : partage anticip&eacute;, valeur fig&eacute;e au jour de la donation &mdash; &eacute;vite les conflits de r&eacute;&eacute;valuation</li>
+          <li><strong>Don manuel</strong> : remise directe, pas de notaire, mais d&eacute;clarable (formulaire CERFA 2735)</li>
+          <li><strong>Donation avec r&eacute;serve d&rsquo;usufruit</strong> : donateur garde l&rsquo;UF, donne la NP &mdash; droits sur la NP seulement</li>
+          <li><strong>R&egrave;gle 15 ans</strong> : les abattements se renouvellent int&eacute;gralement apr&egrave;s 15 ans sans donation</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FOCUS : ABATTEMENTS -->
+    <div class="theme-section" id="foc-f-abattements">
+      <div class="theme-header"><h2>&#128202; Abattements fiscaux &mdash; Focus J4</h2><span class="theme-badge">1 focus</span></div>
+      <div class="block chiffres">
+        <div class="block-title chiffres">Focus 1 &mdash; Tableau complet des abattements (donations &amp; successions)</div>
+        <table class="bareme-table">
+          <tr><th>Lien</th><th>Abattement</th><th>Notes</th></tr>
+          <tr><td>Enfant / Parent</td><td><strong>100 000 &euro;</strong></td><td>Tous les 15 ans</td></tr>
+          <tr><td>Petit-enfant</td><td><strong>31 865 &euro;</strong></td><td>Tous les 15 ans</td></tr>
+          <tr><td>Arri&egrave;re-PE</td><td><strong>5 310 &euro;</strong></td><td>Tous les 15 ans</td></tr>
+          <tr><td>Conjoint / PACS</td><td><strong>80 724 &euro;</strong></td><td>Donation &mdash; succession = 0% (TEPA)</td></tr>
+          <tr><td>Fr&egrave;re / S&oelig;ur</td><td><strong>15 932 &euro;</strong></td><td>Ou exon&eacute;ration totale si conditions TEPA</td></tr>
+          <tr><td>Neveu / Ni&egrave;ce</td><td><strong>7 967 &euro;</strong></td><td></td></tr>
+          <tr><td>+ Handicap</td><td><strong>+159 325 &euro;</strong></td><td style="color:var(--warn)"><strong>CUMULABLE avec abattement de parent&eacute; !</strong></td></tr>
+        </table>
+        <div style="margin-top:10px;padding:10px 14px;background:#fff;border-radius:8px;border:2px solid var(--warn);font-size:.84rem">
+          &#128680; <strong>LE pi&egrave;ge de l&rsquo;examen :</strong> enfant handicap&eacute; = 100 000 + 159 325 = <strong>259 325 &euro;</strong> d&rsquo;abattement (pas 159 325 seuls)
+        </div>
+      </div>
+    </div>
+
+    <!-- FOCUS : TEPA & EXONÉRATIONS -->
+    <div class="theme-section" id="foc-f-tepa">
+      <div class="theme-header"><h2>&#127981; TEPA &amp; Exon&eacute;rations &mdash; Focus J5</h2><span class="theme-badge">3 focus</span></div>
+      <div class="block">
+        <div class="block-title def">Focus 1 &mdash; Loi TEPA 2007 &amp; Exon&eacute;rations totales</div>
+        <ul class="items">
+          <li><strong>TEPA (22/08/2007)</strong> : conjoint mari&eacute; et partenaire PACS = <strong>0% de droits de succession</strong></li>
+          <li><strong>Concubin (union libre)</strong> : aucune exon&eacute;ration &mdash; taxé &agrave; <strong>60%</strong> comme un &eacute;tranger &agrave; la famille</li>
+          <li><strong>Fr&egrave;res / S&oelig;urs</strong> : exon&eacute;ration totale si (3 conditions cumulatives) :<br>
+            &bull; C&eacute;libataire, veuf(ve), divorc&eacute;(e) ou s&eacute;par&eacute;(e) DE CORPS<br>
+            &bull; Domicilié(e) chez le d&eacute;funt au moins 5 ans avant le d&eacute;c&egrave;s<br>
+            &bull; &Acirc;g&eacute;(e) de plus de 50 ans OU atteint(e) d&rsquo;une infirmit&eacute;</li>
+        </ul>
+      </div>
+      <div class="block">
+        <div class="block-title def">Focus 2 &mdash; Exon&eacute;rations partielles</div>
+        <ul class="items">
+          <li><strong>20% R&eacute;sidence Principale</strong> : abattement de 20% sur la valeur de la RP si des h&eacute;ritiers (conjoint, enfants, fr/soeurs sous conditions) continuent &agrave; l&rsquo;occuper</li>
+          <li><strong>Assurance-vie</strong> : primes avant 70 ans &rarr; exon&eacute;ration par b&eacute;n&eacute;ficiaire : 152 500&euro;, puis 20% jusqu&rsquo;&agrave; 700 000&euro;, puis 31,25%</li>
+          <li><strong>Assurance-vie apr&egrave;s 70 ans</strong> : abattement GLOBAL de 30 500&euro; tous b&eacute;n&eacute;ficiaires + int&eacute;r&ecirc;ts exon&eacute;r&eacute;s</li>
+          <li><strong>Pacte Dutreil</strong> : 75% d&rsquo;exon&eacute;ration sur titres d&rsquo;entreprise &mdash; engagement collectif 2 ans + individuel 4 ans + direction 3 ans</li>
+        </ul>
+      </div>
+      <div class="block chiffres">
+        <div class="block-title chiffres">Focus 3 &mdash; Bar&egrave;me des droits de succession (ligne directe)</div>
+        <table class="bareme-table">
+          <tr><th>Tranche taxable</th><th>Taux</th></tr>
+          <tr><td>Jusqu&rsquo;&agrave; 8 072 &euro;</td><td>5%</td></tr>
+          <tr><td>8 072 &agrave; 12 109 &euro;</td><td>10%</td></tr>
+          <tr><td>12 109 &agrave; 15 932 &euro;</td><td>15%</td></tr>
+          <tr><td>15 932 &agrave; 552 324 &euro;</td><td>20%</td></tr>
+          <tr><td>552 324 &agrave; 902 838 &euro;</td><td>30%</td></tr>
+          <tr><td>902 838 &agrave; 1 805 677 &euro;</td><td>40%</td></tr>
+          <tr><td>Au-del&agrave; de 1 805 677 &euro;</td><td>45%</td></tr>
+        </table>
+        <div style="margin-top:8px;font-size:.8rem;color:var(--muted)">Fr&egrave;res/S&oelig;urs : 35-45% &bull; Oncles/Neveux : 55% &bull; Non-parents : 60%</div>
+      </div>
+    </div>
+
+    <!-- FOCUS : ADOPTION -->
+    <div class="theme-section" id="foc-f-adoption">
+      <div class="theme-header"><h2>&#128106; Adoption &mdash; Focus J5</h2><span class="theme-badge">1 focus</span></div>
+      <div class="block">
+        <div class="block-title def">Focus 1 &mdash; Adoption pl&eacute;ni&egrave;re vs Adoption simple</div>
+        <ul class="items">
+          <li><strong>Adoption pl&eacute;ni&egrave;re</strong> : rupture totale avec famille d&rsquo;origine, int&egrave;gre compl&egrave;tement la famille adoptive &mdash; irr&eacute;versible</li>
+          <li><strong>Adoption simple</strong> : liens avec famille d&rsquo;origine maintenus, droits dans les 2 familles &mdash; moins de droits c&ocirc;t&eacute; adoptif dans certains cas</li>
+          <li><strong>Exception cl&eacute;</strong> : adoption SIMPLE de l&rsquo;enfant de son conjoint = &eacute;quivaut &agrave; une adoption PL&Eacute;NI&Egrave;RE au niveau de la succession</li>
+          <li>Dans ce cas : l&rsquo;enfant est trait&eacute; comme un enfant biologique &mdash; abattement 100 000&euro; + barème ligne directe</li>
+          <li>Familles recompos&eacute;es : strat&eacute;gie = adoption simple enfant du conjoint + DDV + AV bien r&eacute;dig&eacute;e</li>
+        </ul>
+      </div>
+    </div>
+  </div><!-- /rev-focus -->
+
+</div><!-- /tab-revisions -->
 </main>
+
 <script>
+function showMainTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('tab-' + id).classList.add('active');
+  document.querySelectorAll('.main-tab').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+function showRev(id) {
+  document.querySelectorAll('.rev-pane').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('rev-' + id).classList.add('active');
+  document.querySelectorAll('.rev-subbtn').forEach(function(b){b.classList.remove('active')});
+  document.getElementById('rbtn-' + id).classList.add('active');
+}
+function showTheme(prefix, id, btn) {
+  var scope = document.getElementById('rev-' + prefix);
+  scope.querySelectorAll('.theme-section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById(prefix + '-' + id).classList.add('active');
+  var nav = document.getElementById('tnav-' + (prefix === 'ess' ? 'ess' : 'foc'));
+  nav.querySelectorAll('.theme-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
 try {
-  const scores = JSON.parse(localStorage.getItem('cgp_scores') || '{}');
+  var scores = JSON.parse(localStorage.getItem('cgp_scores') || '{}');
   ['jour01','jour02','jour03','jour04','jour05'].forEach(function(k){
     if(scores[k]){
-      const s=scores[k];
-      const el=document.getElementById('score-'+k);
+      var s=scores[k], el=document.getElementById('score-'+k);
       if(el){el.className='day-score has-score';el.textContent='Dernier quiz : '+s.score+'/'+s.total+' ('+s.pct+'%) — '+s.date;}
     }
   });
