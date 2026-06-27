@@ -56,10 +56,10 @@ main{max-width:900px;margin:0 auto;padding:36px 20px}
   <h1>&#128218; Formation CGP</h1>
   <p>Cap Finances &middot; Lucas &middot; Lorient</p>
   <div class="stats-bar">
-    <div class="stat-pill"><span id="stat-days">4</span> jours disponibles</div>
-    <div class="stat-pill"><span>134</span> flashcards</div>
-    <div class="stat-pill"><span>60</span> questions quiz</div>
-    <div class="stat-pill"><span>16</span> th&egrave;mes focus</div>
+    <div class="stat-pill"><span id="stat-days">5</span> jours disponibles</div>
+    <div class="stat-pill"><span>154</span> flashcards</div>
+    <div class="stat-pill"><span>75</span> questions quiz</div>
+    <div class="stat-pill"><span>20</span> th&egrave;mes focus</div>
   </div>
 </header>
 <main>
@@ -151,8 +151,30 @@ main{max-width:900px;margin:0 auto;padding:36px 20px}
       <div class="day-score no-score" id="score-jour04">Quiz non encore effectu&eacute;</div>
       <a href="./Jour%2004%20-%20Donations%2C%20DDV%20%26%20Fiscalit%C3%A9/flashcards-quiz.html" class="btn-open">Ouvrir la le&ccedil;on &rarr;</a>
     </div>
-    <div class="day-card locked">
+    <div class="day-card available">
       <div class="day-badge">Jour 05</div>
+      <div class="day-date">27 juin 2026</div>
+      <div class="day-title">Fiscalit&eacute;, Succession &amp; Adoption</div>
+      <div class="day-topics">
+        <span class="topic-tag">Loi TEPA</span>
+        <span class="topic-tag">Bar&egrave;me succession</span>
+        <span class="topic-tag">Exon&eacute;rations totales</span>
+        <span class="topic-tag">20% abattement RP</span>
+        <span class="topic-tag">Assurance-vie</span>
+        <span class="topic-tag">Pacte Dutreil</span>
+        <span class="topic-tag">Adoption pl&eacute;ni&egrave;re</span>
+        <span class="topic-tag">Adoption simple</span>
+      </div>
+      <div class="day-stats">
+        <span>&#127183; 20 cartes</span>
+        <span>&#128221; 15 questions</span>
+        <span>&#127919; 4 focus</span>
+      </div>
+      <div class="day-score no-score" id="score-jour05">Quiz non encore effectu&eacute;</div>
+      <a href="./Jour%2005%20-%20Fiscalit%C3%A9%2C%20Succession%20%26%20Adoption/flashcards-quiz.html" class="btn-open">Ouvrir la le&ccedil;on &rarr;</a>
+    </div>
+    <div class="day-card locked">
+      <div class="day-badge">Jour 06</div>
       <div class="day-date">&Agrave; venir</div>
       <div class="day-title">Prochain cours</div>
       <div class="day-topics"><span class="topic-tag">Envoyer les slides</span></div>
@@ -172,7 +194,7 @@ main{max-width:900px;margin:0 auto;padding:36px 20px}
 <script>
 try {
   const scores = JSON.parse(localStorage.getItem('cgp_scores') || '{}');
-  ['jour01','jour02','jour03','jour04'].forEach(function(k){
+  ['jour01','jour02','jour03','jour04','jour05'].forEach(function(k){
     if(scores[k]){
       const s=scores[k];
       const el=document.getElementById('score-'+k);
