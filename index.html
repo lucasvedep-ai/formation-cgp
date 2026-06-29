@@ -110,10 +110,10 @@ ul.items li strong{color:var(--navy)}
   <h1>&#128218; Formation CGP</h1>
   <p>Cap Finances &middot; Lucas &middot; Lorient</p>
   <div class="stats-bar">
-    <div class="stat-pill"><span id="stat-days">5</span> jours disponibles</div>
-    <div class="stat-pill"><span>154</span> flashcards</div>
-    <div class="stat-pill"><span>75</span> questions quiz</div>
-    <div class="stat-pill"><span>20</span> th&egrave;mes focus</div>
+    <div class="stat-pill"><span id="stat-days">6</span> jours disponibles</div>
+    <div class="stat-pill"><span>174</span> flashcards</div>
+    <div class="stat-pill"><span>90</span> questions quiz</div>
+    <div class="stat-pill"><span>24</span> th&egrave;mes focus</div>
   </div>
 </header>
 <div class="main-tabs">
@@ -214,8 +214,22 @@ ul.items li strong{color:var(--navy)}
       <div class="day-score no-score" id="score-jour05">Quiz non encore effectu&eacute;</div>
       <a href="./Jour%2005%20-%20Fiscalit%C3%A9%2C%20Succession%20%26%20Adoption/flashcards-quiz.html" class="btn-open">Ouvrir la le&ccedil;on &rarr;</a>
     </div>
-    <div class="day-card locked">
+    <div class="day-card available">
       <div class="day-badge">Jour 06</div>
+      <div class="day-date">28 juin 2026</div>
+      <div class="day-title">Assurance-Vie &amp; Fiscalit&eacute;</div>
+      <div class="day-topics">
+        <span class="topic-tag">Art. 990I</span>
+        <span class="topic-tag">Art. 757B</span>
+        <span class="topic-tag">Clause b&eacute;n&eacute;ficiaire</span>
+        <span class="topic-tag">R&eacute;tractation 30j</span>
+      </div>
+      <div class="day-stats"><span>&#127183; 20 cartes</span><span>&#128221; 15 questions</span><span>&#127919; 4 focus</span></div>
+      <div class="day-score no-score" id="score-jour06">Quiz non encore effectu&eacute;</div>
+      <a href="./Jour%2006%20-%20Assurance-Vie/flashcards-quiz.html" class="btn-open">Ouvrir la le&ccedil;on &rarr;</a>
+    </div>
+    <div class="day-card locked">
+      <div class="day-badge">Jour 07</div>
       <div class="day-date">&Agrave; venir</div>
       <div class="day-title">Prochain cours</div>
       <div class="day-topics"><span class="topic-tag">Envoyer les slides</span></div>
@@ -244,15 +258,15 @@ ul.items li strong{color:var(--navy)}
   <!-- ══ FICHE ESSENTIELLE ══ -->
   <div id="rev-essentiel" class="rev-pane active">
     <div class="theme-nav" id="tnav-ess">
-      <button class="theme-btn active" onclick="showTheme('ess-t-assurance','tnav-ess',this)">&#128275; Assurance</button>
-      <button class="theme-btn" onclick="showTheme('ess-t-regimes','tnav-ess',this)">&#128145; R&eacute;gimes</button>
-      <button class="theme-btn" onclick="showTheme('ess-t-succession','tnav-ess',this)">&#128181; Succession</button>
-      <button class="theme-btn" onclick="showTheme('ess-t-conjoint','tnav-ess',this)">&#128141; Conjoint &amp; D&eacute;membrement</button>
-      <button class="theme-btn" onclick="showTheme('ess-t-testaments','tnav-ess',this)">&#128213; Testaments &amp; Legs</button>
-      <button class="theme-btn" onclick="showTheme('ess-t-donations','tnav-ess',this)">&#127873; Donations &amp; DDV</button>
-      <button class="theme-btn" onclick="showTheme('ess-t-fiscal-don','tnav-ess',this)">&#128202; Fiscalit&eacute; Donations</button>
-      <button class="theme-btn" onclick="showTheme('ess-t-fiscal-succ','tnav-ess',this)">&#127981; Fiscalit&eacute; Succession</button>
-      <button class="theme-btn" onclick="showTheme('ess-t-adoption','tnav-ess',this)">&#128106; Adoption</button>
+      <button class="theme-btn active" onclick="showEssTheme('ess-t-assurance',this)">&#128275; Assurance</button>
+      <button class="theme-btn" onclick="showEssTheme('ess-t-regimes',this)">&#128145; R&eacute;gimes</button>
+      <button class="theme-btn" onclick="showEssTheme('ess-t-succession',this)">&#128181; Succession</button>
+      <button class="theme-btn" onclick="showEssTheme('ess-t-conjoint',this)">&#128141; Conjoint &amp; D&eacute;membrement</button>
+      <button class="theme-btn" onclick="showEssTheme('ess-t-testaments',this)">&#128213; Testaments &amp; Legs</button>
+      <button class="theme-btn" onclick="showEssTheme('ess-t-donations',this)">&#127873; Donations &amp; DDV</button>
+      <button class="theme-btn" onclick="showEssTheme('ess-t-fiscal-don',this)">&#128202; Fiscalit&eacute; Donations</button>
+      <button class="theme-btn" onclick="showEssTheme('ess-t-fiscal-succ',this)">&#127981; Fiscalit&eacute; Succession</button>
+      <button class="theme-btn" onclick="showEssTheme('ess-t-adoption',this)">&#128106; Adoption</button>
     </div>
 
     <!-- T1 : L'ASSURANCE -->
@@ -654,15 +668,15 @@ ul.items li strong{color:var(--navy)}
   <!-- ══ FOCUS COMPILÉS ══ -->
   <div id="rev-focus" class="rev-pane">
     <div class="theme-nav" id="tnav-foc">
-      <button class="theme-btn active" onclick="showTheme('foc-f-assurance','tnav-foc',this)">&#128275; Assurance</button>
-      <button class="theme-btn" onclick="showTheme('foc-f-regimes','tnav-foc',this)">&#128145; R&eacute;gimes</button>
-      <button class="theme-btn" onclick="showTheme('foc-f-succession','tnav-foc',this)">&#128181; Succession</button>
-      <button class="theme-btn" onclick="showTheme('foc-f-conjoint','tnav-foc',this)">&#128141; Conjoint &amp; D&eacute;membrement</button>
-      <button class="theme-btn" onclick="showTheme('foc-f-testaments','tnav-foc',this)">&#128213; Testaments &amp; Legs</button>
-      <button class="theme-btn" onclick="showTheme('foc-f-donations','tnav-foc',this)">&#127873; Donations &amp; DDV</button>
-      <button class="theme-btn" onclick="showTheme('foc-f-abattements','tnav-foc',this)">&#128202; Abattements</button>
-      <button class="theme-btn" onclick="showTheme('foc-f-tepa','tnav-foc',this)">&#127981; TEPA &amp; Exon&eacute;rations</button>
-      <button class="theme-btn" onclick="showTheme('foc-f-adoption','tnav-foc',this)">&#128106; Adoption</button>
+      <button class="theme-btn active" onclick="showFocTheme('foc-f-assurance',this)">&#128275; Assurance</button>
+      <button class="theme-btn" onclick="showFocTheme('foc-f-regimes',this)">&#128145; R&eacute;gimes</button>
+      <button class="theme-btn" onclick="showFocTheme('foc-f-succession',this)">&#128181; Succession</button>
+      <button class="theme-btn" onclick="showFocTheme('foc-f-conjoint',this)">&#128141; Conjoint &amp; D&eacute;membrement</button>
+      <button class="theme-btn" onclick="showFocTheme('foc-f-testaments',this)">&#128213; Testaments &amp; Legs</button>
+      <button class="theme-btn" onclick="showFocTheme('foc-f-donations',this)">&#127873; Donations &amp; DDV</button>
+      <button class="theme-btn" onclick="showFocTheme('foc-f-abattements',this)">&#128202; Abattements</button>
+      <button class="theme-btn" onclick="showFocTheme('foc-f-tepa',this)">&#127981; TEPA &amp; Exon&eacute;rations</button>
+      <button class="theme-btn" onclick="showFocTheme('foc-f-adoption',this)">&#128106; Adoption</button>
     </div>
 
     <!-- FOCUS : ASSURANCE -->
@@ -930,18 +944,21 @@ function showRev(id) {
   document.querySelectorAll('.rev-subbtn').forEach(function(b){b.classList.remove('active')});
   document.getElementById('rbtn-' + id).classList.add('active');
 }
-function showTheme(sectionId, navId, btn) {
-  var section = document.getElementById(sectionId);
-  if (!section) return;
-  section.parentElement.querySelectorAll('.theme-section').forEach(function(s){s.classList.remove('active')});
-  section.classList.add('active');
-  var nav = document.getElementById(navId);
-  if (nav) nav.querySelectorAll('.theme-btn').forEach(function(b){b.classList.remove('active')});
+function showEssTheme(id, btn) {
+  document.querySelectorAll('#rev-essentiel .theme-section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('#tnav-ess .theme-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+function showFocTheme(id, btn) {
+  document.querySelectorAll('#rev-focus .theme-section').forEach(function(s){s.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('#tnav-foc .theme-btn').forEach(function(b){b.classList.remove('active')});
   btn.classList.add('active');
 }
 try {
   var scores = JSON.parse(localStorage.getItem('cgp_scores') || '{}');
-  ['jour01','jour02','jour03','jour04','jour05'].forEach(function(k){
+  ['jour01','jour02','jour03','jour04','jour05','jour06'].forEach(function(k){
     if(scores[k]){
       var s=scores[k], el=document.getElementById('score-'+k);
       if(el){el.className='day-score has-score';el.textContent='Dernier quiz : '+s.score+'/'+s.total+' ('+s.pct+'%) — '+s.date;}
