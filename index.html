@@ -931,7 +931,8 @@ function showRev(id) {
   document.getElementById('rbtn-' + id).classList.add('active');
 }
 function showTheme(prefix, id, btn) {
-  var scope = document.getElementById('rev-' + prefix);
+  var paneId = prefix === 'ess' ? 'rev-essentiel' : 'rev-focus';
+  var scope = document.getElementById(paneId);
   scope.querySelectorAll('.theme-section').forEach(function(s){s.classList.remove('active')});
   document.getElementById(prefix + '-' + id).classList.add('active');
   var nav = document.getElementById('tnav-' + (prefix === 'ess' ? 'ess' : 'foc'));
