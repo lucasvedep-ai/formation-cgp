@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jour 06 — Assurance-Vie | Formation CGP</title>
+<style>
+:root{
+  --navy:#1a2744;--navy2:#253460;--gold:#c9a227;--gold2:#e8c84a;
+  --bg:#f4f6fb;--white:#fff;--text:#1a2744;--muted:#5a6a8a;
+  --ok:#2d8a4e;--ok-bg:#eafaf1;--err:#c0392b;--err-bg:#fdf3f2;
+  --border:#dce3f0;--shadow:0 8px 32px rgba(26,39,68,.1);
+  --accent:#1a2744;--card:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:28px 32px 22px}
+header h1{font-size:1.4rem;font-weight:800;margin-bottom:4px}
+header p{font-size:.82rem;color:rgba(255,255,255,.55)}
+.tab-bar{display:flex;gap:0;background:var(--navy2);overflow-x:auto}
+.tab-btn{background:none;border:none;color:rgba(255,255,255,.5);font-size:.78rem;font-weight:700;padding:12px 18px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:.15s}
+.tab-btn.active{color:#fff;border-bottom-color:var(--gold2)}
+.tab-pane{display:none;padding:24px 20px;max-width:860px;margin:0 auto}
+.tab-pane.active{display:block}
+/* cards */
+.card-wrap{perspective:1000px;cursor:pointer;margin:0 auto 20px;max-width:580px}
+.card-inner{position:relative;width:100%;min-height:180px;transform-style:preserve-3d;transition:.5s}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-face{position:absolute;width:100%;min-height:180px;backface-visibility:hidden;border-radius:18px;padding:28px 28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-shadow:var(--shadow)}
+.card-front{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff}
+.card-back{background:#fff;transform:rotateY(180deg);border:2px solid var(--border)}
+.card-front .ch-badge{font-size:.65rem;font-weight:800;background:rgba(255,255,255,.15);border-radius:99px;padding:3px 10px;margin-bottom:12px;letter-spacing:.06em}
+.card-q{font-size:1.05rem;font-weight:700;line-height:1.4}
+.card-back .card-a{font-size:.9rem;color:var(--text);line-height:1.6;white-space:pre-line}
+.card-nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:4px}
+.card-nav button{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer}
+.card-nav button:hover{background:var(--navy2)}
+.card-counter{text-align:center;font-size:.78rem;color:var(--muted);margin-bottom:14px}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filter-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:6px 14px;font-size:.76rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.12s}
+.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+/* quiz */
+.quiz-q{background:#fff;border-radius:16px;padding:22px 24px;margin-bottom:16px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.quiz-q p{font-size:.95rem;font-weight:700;margin-bottom:14px;line-height:1.4}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:.86rem;cursor:pointer;text-align:left;transition:.12s;font-weight:500}
+.quiz-opt:hover{border-color:var(--navy);background:#eef1f8}
+.quiz-opt.correct{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:700}
+.quiz-opt.wrong{background:var(--err-bg);border-color:var(--err);color:var(--err)}
+.quiz-exp{font-size:.82rem;color:var(--muted);background:var(--bg);border-radius:8px;padding:10px 12px;margin-top:10px;display:none;line-height:1.5}
+.quiz-summary{background:#fff;border-radius:16px;padding:24px;text-align:center;border:1.5px solid var(--border)}
+/* focus */
+.focus-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.focus-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.12s}
+.focus-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.focus-pane{display:none}
+.focus-pane.active{display:block}
+.focus-resume{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:14px;padding:16px 18px;margin-bottom:18px;font-size:.88rem;font-weight:600;line-height:1.5}
+/* fiche */
+.fiche-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.fiche-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.12s}
+.fiche-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.fiche-section{display:none}
+.fiche-section.active{display:block}
+.fiche-block{background:#fff;border-radius:14px;padding:20px 22px;margin-bottom:14px;border:1.5px solid var(--border)}
+.fiche-block h3{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.fiche-table{width:100%;border-collapse:collapse;font-size:.84rem;margin-top:6px}
+.fiche-table th{background:var(--navy);color:#fff;padding:7px 10px;text-align:left}
+.fiche-table td{padding:6px 10px;border-bottom:1px solid var(--border)}
+.fiche-table tr:nth-child(even) td{background:var(--bg)}
+.fiche-hl{background:#fff3cd;border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+.fiche-warn{background:#fff0f0;border-left:4px solid var(--err);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+.fiche-ok{background:var(--ok-bg);border-left:4px solid var(--ok);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+dl.fiche-dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.84rem}
+dl.fiche-dl dt{font-weight:700;color:var(--navy);white-space:nowrap}
+dl.fiche-dl dd{color:var(--text);line-height:1.5}
+/* cas pratiques */
+.cas{background:#fff;border-radius:16px;padding:24px;margin-bottom:18px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.cas-title{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.cas-ref{font-size:.7rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;color:var(--muted);font-weight:600}
+.cas-enonce{font-size:.86rem;line-height:1.6;margin-bottom:14px;color:var(--text)}
+.cas-piege{background:#fff3cd;border-radius:8px;padding:10px 14px;font-size:.82rem;margin-bottom:14px;line-height:1.5}
+.cas-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:10px}
+.cas-solution{display:none;background:var(--ok-bg);border-radius:8px;padding:14px 16px;font-size:.84rem;line-height:1.6;border:1px solid var(--ok)}
+@media(max-width:600px){header{padding:20px 16px}.tab-pane{padding:18px 14px}dl.fiche-dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>&#128218; Jour 06 &mdash; Assurance-Vie</h1>
+  <p>Articles 990I &amp; 757B &middot; Clause b&eacute;n&eacute;ficiaire &middot; D&eacute;lai de r&eacute;tractation</p>
+</header>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('flashcards',this)">&#127183; Flashcards</button>
+  <button class="tab-btn" onclick="showTab('quiz',this)">&#128221; Quiz</button>
+  <button class="tab-btn" onclick="showTab('focus',this)">&#127919; Focus</button>
+  <button class="tab-btn" onclick="showTab('fiche',this)">&#128196; Fiche</button>
+  <button class="tab-btn" onclick="showTab('exercices',this)">&#127947; Exercices</button>
+  <button class="tab-btn" onclick="showTab('cas',this)">&#128203; Cas pratiques</button>
+</div>
+
+<!-- ══ FLASHCARDS ══ -->
+<div id="tab-flashcards" class="tab-pane active">
+  <div class="filter-bar" id="filter-bar">
+    <button class="filter-btn active" onclick="filterCards(0,this)">Tous (20)</button>
+    <button class="filter-btn" onclick="filterCards(1,this)">Ch.1 — Contrat AV</button>
+    <button class="filter-btn" onclick="filterCards(2,this)">Ch.2 — Art. 990I</button>
+    <button class="filter-btn" onclick="filterCards(3,this)">Ch.3 — Art. 757B</button>
+    <button class="filter-btn" onclick="filterCards(4,this)">Ch.4 — Clause &amp; R&eacute;tractation</button>
+  </div>
+  <div class="card-counter" id="card-counter">Carte 1 / 20</div>
+  <div class="card-wrap" onclick="flipCard()">
+    <div class="card-inner" id="card-inner">
+      <div class="card-face card-front">
+        <div class="ch-badge" id="card-ch">Ch. 1</div>
+        <div class="card-q" id="card-q">...</div>
+      </div>
+      <div class="card-face card-back">
+        <div class="card-a" id="card-a">...</div>
+      </div>
+    </div>
+  </div>
+  <div class="card-nav">
+    <button onclick="prevCard()">&#8592; Préc.</button>
+    <button onclick="shuffleCards()">&#128256; Mélanger</button>
+    <button onclick="nextCard()">Suiv. &#8594;</button>
+  </div>
+</div>
+
+<!-- ══ QUIZ ══ -->
+<div id="tab-quiz" class="tab-pane">
+  <div id="quiz-container"></div>
+  <div id="quiz-summary" class="quiz-summary" style="display:none"></div>
+  <button id="quiz-submit" onclick="submitQuiz()" style="display:block;margin:0 auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Valider le quiz</button>
+  <button id="quiz-reset" onclick="resetQuiz()" style="display:none;margin:16px auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Recommencer</button>
+</div>
+
+<!-- ══ FOCUS ══ -->
+<div id="tab-focus" class="tab-pane">
+  <div class="focus-nav" id="focus-nav"></div>
+  <div id="focus-content"></div>
+</div>
+
+<!-- ══ FICHE ══ -->
+<div id="tab-fiche" class="tab-pane">
+  <div class="fiche-nav">
+    <button class="fiche-btn active" onclick="j6go('r')">&#128196; Vue d&rsquo;ensemble</button>
+    <button class="fiche-btn" onclick="j6go('1')">990I &mdash; avant 70 ans</button>
+    <button class="fiche-btn" onclick="j6go('2')">757B &mdash; apr&egrave;s 70 ans</button>
+    <button class="fiche-btn" onclick="j6go('3')">Clause &amp; R&eacute;tractation</button>
+  </div>
+  <div id="fiche-r" class="fiche-section active">
+    <div class="fiche-block">
+      <h3>&#128218; L&rsquo;assurance-vie en bref</h3>
+      <dl class="fiche-dl">
+        <dt>D&eacute;finition</dt><dd>Contrat assureur ↔ souscripteur : versement d&rsquo;un capital au b&eacute;n&eacute;ficiaire au d&eacute;c&egrave;s de l&rsquo;assur&eacute;</dd>
+        <dt>Fonds euros</dt><dd>Capital garanti, effet cliquet (gains d&eacute;finitivement acquis)</dd>
+        <dt>UC</dt><dd>Unit&eacute;s de compte : capital non garanti, fluctue avec les march&eacute;s</dd>
+        <dt>Avantage cl&eacute;</dt><dd>Transmission <strong>hors succession</strong> (sauf clause b&eacute;n&eacute;ficiaire mal r&eacute;dig&eacute;e)</dd>
+      </dl>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Fiscalit&eacute; au d&eacute;c&egrave;s — vue synth&eacute;tique</h3>
+      <table class="fiche-table">
+        <tr><th></th><th>Art. 990I (avant 70 ans)</th><th>Art. 757B (apr&egrave;s 70 ans)</th></tr>
+        <tr><td>Abattement</td><td><strong>152 500 &euro;</strong> / b&eacute;n&eacute;ficiaire</td><td><strong>30 500 &euro;</strong> global</td></tr>
+        <tr><td>Gains</td><td>Inclus dans l&rsquo;assiette</td><td><strong>Exon&eacute;r&eacute;s</strong></td></tr>
+        <tr><td>Taux</td><td>20 % puis 31,25 %</td><td>Bar&egrave;me droits succession</td></tr>
+        <tr><td>Conjoint/PACS</td><td>Exon&eacute;r&eacute; (TEPA)</td><td>Exon&eacute;r&eacute; (TEPA)</td></tr>
+      </table>
+    </div>
+  </div>
+  <div id="fiche-1" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Article 990I — Primes vers&eacute;es AVANT 70 ans</h3>
+      <dl class="fiche-dl">
+        <dt>Champ</dt><dd>Primes vers&eacute;es avant les 70 ans de l&rsquo;assur&eacute; + gains g&eacute;n&eacute;r&eacute;s</dd>
+        <dt>R&eacute;gime</dt><dd>Hors succession &mdash; pr&eacute;l&egrave;vement sui generis autonome</dd>
+        <dt>Abattement</dt><dd><strong>152 500 &euro; PAR b&eacute;n&eacute;ficiaire</strong>, tous contrats AV confondus</dd>
+      </dl>
+      <table class="fiche-table" style="margin-top:12px">
+        <tr><th>Fraction taxable par b&eacute;n&eacute;ficiaire</th><th>Taux</th></tr>
+        <tr><td>Jusqu&rsquo;&agrave; 700 000 &euro;</td><td><strong>20 %</strong></td></tr>
+        <tr><td>Au-del&agrave; de 700 000 &euro;</td><td><strong>31,25 %</strong></td></tr>
+      </table>
+    </div>
+    <div class="fiche-hl">&#128161; <strong>Avantage strat&eacute;gique :</strong> en d&eacute;signant plusieurs b&eacute;n&eacute;ficiaires, on multiplie l&rsquo;abattement. 3 b&eacute;n&eacute;ficiaires = 3 × 152 500 = <strong>457 500 &euro;</strong> transmis en franchise.</div>
+    <div class="fiche-warn">&#9888; Conjoint/PACS = exon&eacute;ration totale (TEPA). Concubin = PAS d&rsquo;exon&eacute;ration &mdash; tax&eacute; au taux 990I.</div>
+  </div>
+  <div id="fiche-2" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Article 757B — Primes vers&eacute;es APR&Egrave;S 70 ans</h3>
+      <dl class="fiche-dl">
+        <dt>Champ</dt><dd>Primes vers&eacute;es apr&egrave;s les 70 ans de l&rsquo;assur&eacute; (les gains sont exon&eacute;r&eacute;s)</dd>
+        <dt>R&eacute;int&egrave;gre</dt><dd>La masse successorale &mdash; soumis aux droits de succession classiques</dd>
+        <dt>Abattement</dt><dd><strong>30 500 &euro; GLOBAL</strong> pour tous les b&eacute;n&eacute;ficiaires de tous les contrats</dd>
+        <dt>Gains</dt><dd><strong>Totalement exon&eacute;r&eacute;s</strong> &mdash; c&rsquo;est le principal avantage de 757B</dd>
+        <dt>Bar&egrave;me</dt><dd>Droits de succession selon lien de parent&eacute; (ligne directe, fr/s&oelig;ur, etc.)</dd>
+      </dl>
+    </div>
+    <div class="fiche-ok">&#128200; <strong>Comparaison 990I vs 757B :</strong> 990I est en g&eacute;n&eacute;ral plus favorable pour les gros capitaux avec peu de b&eacute;n&eacute;ficiaires. 757B est int&eacute;ressant si les gains repr&eacute;sentent une part importante du capital (les gains &eacute;tant exon&eacute;r&eacute;s).</div>
+    <div class="fiche-warn">&#9888; L&rsquo;abattement 757B de 30 500 &euro; est GLOBAL et non par b&eacute;n&eacute;ficiaire &mdash; contrairement &agrave; 990I.</div>
+  </div>
+  <div id="fiche-3" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128213; Clause b&eacute;n&eacute;ficiaire</h3>
+      <dl class="fiche-dl">
+        <dt>D&eacute;finition</dt><dd>D&eacute;signation par le souscripteur des personnes qui recevront le capital au d&eacute;c&egrave;s</dd>
+        <dt>Acceptation</dt><dd>Clause accept&eacute;e = souscripteur bloqu&eacute; (rachats/arbitrages/modif interdits sans accord du b&eacute;n&eacute;ficiaire)</dd>
+      </dl>
+      <div class="fiche-warn" style="margin-top:10px">&#128680; &laquo; Mes h&eacute;ritiers &raquo; = les capitaux r&eacute;int&egrave;grent la succession &mdash; perte totale de l&rsquo;avantage hors succession. <strong>Toujours nommer les b&eacute;n&eacute;ficiaires pr&eacute;cis&eacute;ment.</strong></div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#8987; D&eacute;lai de r&eacute;tractation</h3>
+      <dl class="fiche-dl">
+        <dt>D&eacute;lai</dt><dd><strong>30 jours calendaires</strong> &agrave; compter de la r&eacute;ception du contrat</dd>
+        <dt>Modalit&eacute;</dt><dd>Lettre recommand&eacute;e avec AR &agrave; l&rsquo;assureur</dd>
+        <dt>Effet</dt><dd>Restitution int&eacute;grale des primes + int&eacute;r&ecirc;ts l&eacute;gaux sous 30 jours</dd>
+        <dt>Prorogation</dt><dd>Si documents obligatoires non remis : <strong>d&eacute;lai ne court pas</strong> &mdash; renonciation possible &agrave; tout moment</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EXERCICES ══ -->
+<div id="tab-exercices" class="tab-pane">
+  <div style="background:#fff;border-radius:16px;padding:24px;border:1.5px solid var(--border)">
+    <h3 style="font-size:1rem;font-weight:800;color:var(--navy);margin-bottom:12px">&#127947; Exercices du cours</h3>
+    <p style="font-size:.86rem;color:var(--muted);line-height:1.6">Les exercices du cours J6 seront ajout&eacute;s ici. En attendant, entra&icirc;ne-toi sur les cas pratiques ci-dessous.</p>
+  </div>
+</div>
+
+<!-- ══ CAS PRATIQUES ══ -->
+<div id="tab-cas" class="tab-pane">
+
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;1 <span class="cas-ref">Art. 990I</span></div>
+    <div class="cas-enonce">
+      <strong>&#201;nonc&eacute; :</strong> Mme Martin d&eacute;c&egrave;de &agrave; 72 ans. Avant ses 70 ans, elle avait vers&eacute; <strong>200 000 &euro;</strong> sur une assurance-vie. &Agrave; son d&eacute;c&egrave;s, le contrat vaut <strong>260 000 &euro;</strong> (60 000 &euro; de gains). Elle a d&eacute;sign&eacute; son fils unique comme b&eacute;n&eacute;ficiaire.<br><br>
+      <strong>Question :</strong> Quel est le pr&eacute;l&egrave;vement &agrave; payer par le fils ?
+    </div>
+    <div class="cas-piege">&#9888; <strong>Pi&egrave;ge :</strong> L&rsquo;assiette 990I inclut les gains &mdash; c&rsquo;est le capital TOTAL (260 000 &euro;) et non les seules primes.</div>
+    <button class="cas-btn" onclick="toggleCas('c1')">Voir la solution</button>
+    <div class="cas-solution" id="c1">
+      <strong>Application de l&rsquo;article 990I :</strong><br>
+      Capital transmis : 260 000 &euro; (primes + gains, tout est inclus)<br>
+      Abattement 990I : &minus; 152 500 &euro;<br>
+      Base taxable : 107 500 &euro;<br>
+      Pr&eacute;l&egrave;vement : 107 500 &times; 20 % = <strong>21 500 &euro;</strong><br><br>
+      Si le b&eacute;n&eacute;ficiaire avait &eacute;t&eacute; le conjoint : <strong>0 &euro;</strong> (exon&eacute;ration TEPA totale).<br>
+      Si 2 enfants b&eacute;n&eacute;ficiaires (chacun re&ccedil;oit 130 000 &euro;) : 130 000 &minus; 152 500 = 0 &euro; de pr&eacute;l&egrave;vement &rarr; <strong>transmission totalement libre de taxes</strong>.
+    </div>
+  </div>
+
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;2 <span class="cas-ref">Art. 757B</span></div>
+    <div class="cas-enonce">
+      <strong>&#201;nonc&eacute; :</strong> M. Leblanc d&eacute;c&egrave;de &agrave; 80 ans. Apr&egrave;s ses 70 ans, il avait vers&eacute; <strong>90 000 &euro;</strong> sur une AV. Ces primes ont g&eacute;n&eacute;r&eacute; <strong>25 000 &euro;</strong> de gains. Ses deux enfants sont d&eacute;sign&eacute;s &agrave; parts &eacute;gales.<br><br>
+      <strong>Question :</strong> Calculer les droits de succession dus par chaque enfant.
+    </div>
+    <div class="cas-piege">&#9888; <strong>Pi&egrave;ges :</strong> 1) Les gains (25 000 &euro;) sont totalement exon&eacute;r&eacute;s. 2) L&rsquo;abattement de 30 500 &euro; est global, pas par b&eacute;n&eacute;ficiaire.</div>
+    <button class="cas-btn" onclick="toggleCas('c2')">Voir la solution</button>
+    <div class="cas-solution" id="c2">
+      <strong>Application de l&rsquo;article 757B :</strong><br>
+      Gains (25 000 &euro;) : <strong>totalement exon&eacute;r&eacute;s</strong><br>
+      Primes versées : 90 000 &euro;<br>
+      Abattement 757B global : &minus; 30 500 &euro;<br>
+      Base taxable globale : 59 500 &euro;<br>
+      R&eacute;partition entre 2 enfants : 29 750 &euro; chacun<br><br>
+      Droits de succession en ligne directe (après abattement personnel de 100 000 &euro;/enfant par ailleurs) :<br>
+      Si abattement 100 000 &euro; d&eacute;j&agrave; utilis&eacute; pour d&rsquo;autres biens : 29 750 &euro; &times; 20 % = <strong>5 950 &euro;/enfant</strong><br><br>
+      <em>Note : l&rsquo;abattement 100 000 &euro; des droits de succession est commun &agrave; tous les biens du d&eacute;funt, pas sp&eacute;cifique &agrave; l&rsquo;AV.</em>
+    </div>
+  </div>
+
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;3 <span class="cas-ref">D&eacute;lai de r&eacute;tractation</span></div>
+    <div class="cas-enonce">
+      <strong>&#201;nonc&eacute; :</strong> M. Petit a souscrit une AV en 2021. L&rsquo;assureur ne lui a jamais remis la notice d&rsquo;information ni les conditions g&eacute;n&eacute;rales. En 2026, M. Petit r&eacute;alise que le contrat ne lui convient pas et souhaite y renoncer.<br><br>
+      <strong>Question :</strong> Peut-il encore exercer son droit de renonciation 5 ans apr&egrave;s la souscription ?
+    </div>
+    <div class="cas-piege">&#9888; <strong>Pi&egrave;ge fr&eacute;quent :</strong> Beaucoup pensent que pass&eacute; 30 jours, c&rsquo;est irr&eacute;m&eacute;diablement fini. C&rsquo;est FAUX si l&rsquo;assureur a failli &agrave; ses obligations d&rsquo;information.</div>
+    <button class="cas-btn" onclick="toggleCas('c3')">Voir la solution</button>
+    <div class="cas-solution" id="c3">
+      <strong>Oui &mdash; prorogation l&eacute;gale du d&eacute;lai :</strong><br><br>
+      L&rsquo;art. L132-5-2 du Code des assurances pr&eacute;voit que le d&eacute;lai de 30 jours ne court qu&rsquo;&agrave; compter de la remise des documents obligatoires (notice + conditions g&eacute;n&eacute;rales + bordereau de r&eacute;nonciation).<br><br>
+      Si ces documents n&rsquo;ont pas &eacute;t&eacute; remis : <strong>le d&eacute;lai ne commence jamais &agrave; courir</strong>.<br><br>
+      M. Petit peut exercer son droit de renonciation en 2026 par <strong>lettre recommand&eacute;e avec AR</strong>.<br>
+      L&rsquo;assureur doit restituer toutes les primes + <strong>int&eacute;r&ecirc;ts l&eacute;gaux</strong> dans les 30 jours.<br><br>
+      <em>&#128188; Conseil m&eacute;tier : v&eacute;rifier syst&eacute;matiquement que tous les documents ont bien &eacute;t&eacute; remis au client lors de la souscription &mdash; sinon le contrat reste contestable ind&eacute;finiment.</em>
+    </div>
+  </div>
+
+</div><!-- /tab-cas -->
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+var CARDS = [{"ch": 1, "q": "Définition d'un contrat d'assurance-vie", "a": "Contrat par lequel l'assureur verse un capital ou une rente au bénéficiaire désigné lors du décès de l'assuré (ou à terme). En échange, le souscripteur verse des primes."}, {"ch": 1, "q": "Les 4 acteurs d'un contrat AV", "a": "1. Souscripteur : signe et paye\n2. Assuré : vie ou décès sur lequel repose le risque\n3. Bénéficiaire : reçoit le capital\n4. Assureur : gère et garantit le contrat\n⚠ Souscripteur ≠ Assuré ≠ Bénéficiaire"}, {"ch": 1, "q": "Fonds en euros vs Unités de compte (UC)", "a": "Fonds en euros : capital garanti, effet cliquet (gains définitivement acquis), rendement modéré.\nUC : capital NON garanti, fluctue avec les marchés, potentiel de rendement plus élevé."}, {"ch": 1, "q": "Qu'est-ce que l'effet cliquet ?", "a": "Mécanisme propre aux fonds en euros : les intérêts crédités chaque année sont définitivement acquis. Même si les marchés chutent, les gains passés ne sont jamais repris."}, {"ch": 1, "q": "Contrat monosupport vs multisupport", "a": "Monosupport : uniquement fonds en euros (garanti).\nMultisupport : fonds euros + UC — permet d'arbitrer entre sécurité et performance selon le profil de risque du client."}, {"ch": 2, "q": "À quoi s'applique l'article 990I du CGI ?", "a": "Aux capitaux décès issus des primes versées AVANT les 70 ans de l'assuré. Régime fiscal autonome, hors succession — prélèvement sui generis."}, {"ch": 2, "q": "Abattement prévu par l'article 990I", "a": "152 500 € PAR BÉNÉFICIAIRE, tous contrats d'assurance-vie confondus. Chaque bénéficiaire profite de cet abattement indépendamment des autres."}, {"ch": 2, "q": "Taux de prélèvement après abattement 990I", "a": "• 20 % sur la fraction taxable jusqu'à 700 000 € (soit capital ≤ 852 500 €)\n• 31,25 % au-delà de 700 000 € de fraction taxable (soit capital > 852 500 €)"}, {"ch": 2, "q": "Quelle est l'assiette taxable sous 990I ?", "a": "Le capital TOTAL transmis au bénéficiaire : primes versées avant 70 ans + gains générés sur ces primes. Les gains sont INCLUS (contrairement à 757B)."}, {"ch": 2, "q": "Qui est exonéré au titre de l'article 990I ?", "a": "Le conjoint marié et le partenaire PACS sont totalement exonérés (loi TEPA 2007). Le concubin n'est PAS exonéré — taxé au taux de 20 % puis 31,25 %."}, {"ch": 3, "q": "À quoi s'applique l'article 757B du CGI ?", "a": "Aux primes versées APRÈS les 70 ans de l'assuré. Ces primes réintègrent la succession et sont soumises aux droits de succession selon le lien de parenté."}, {"ch": 3, "q": "Abattement prévu par l'article 757B", "a": "30 500 € GLOBAL pour l'ensemble des bénéficiaires de l'ensemble des contrats AV du défunt. Ce n'est PAS un abattement par bénéficiaire — il est partagé entre tous."}, {"ch": 3, "q": "Qu'est-ce qui est exonéré sous l'article 757B ?", "a": "Les gains (intérêts et plus-values) générés sur les primes versées après 70 ans sont TOTALEMENT exonérés. Seules les primes elles-mêmes (au-delà de 30 500 €) sont taxées."}, {"ch": 3, "q": "Quel barème s'applique sur la part taxable de l'article 757B ?", "a": "Le barème normal des droits de succession selon le lien de parenté entre assuré et bénéficiaire (ligne directe, frères/sœurs, etc.)."}, {"ch": 3, "q": "990I vs 757B : quelle est la règle fondamentale ?", "a": "Avant 70 ans → 990I : abattement de 152 500 € PAR bénéficiaire, gains TAXÉS.\nAprès 70 ans → 757B : abattement de 30 500 € GLOBAL, gains EXONÉRÉS.\n→ Verser avant 70 ans est généralement plus favorable pour les gros capitaux."}, {"ch": 4, "q": "Délai de rétractation d'un souscripteur AV", "a": "30 jours calendaires à compter de la date de première information (réception du contrat ou du premier avis de valeur de rachat). Délai légal impératif."}, {"ch": 4, "q": "Comment exercer la renonciation à une AV ?", "a": "Envoi d'une lettre recommandée avec accusé de réception à l'assureur dans les 30 jours. L'assureur doit restituer intégralement les primes + intérêts légaux dans les 30 jours suivants."}, {"ch": 4, "q": "Que se passe-t-il si l'assureur n'a pas remis les documents obligatoires ?", "a": "Le délai de 30 jours ne court pas. Prorogation légale : le souscripteur peut exercer son droit de renonciation à tout moment, même des années après la souscription."}, {"ch": 4, "q": "La clause bénéficiaire : définition et piège principal", "a": "Désignation par le souscripteur des personnes qui recevront le capital au décès. PIÈGE : écrire 'mes héritiers' fait rentrer le capital dans la succession (perd l'avantage hors succession). Toujours nommer les bénéficiaires explicitement."}, {"ch": 4, "q": "Clause bénéficiaire acceptée : conséquences", "a": "Dès que le bénéficiaire accepte formellement la clause, le souscripteur NE PEUT PLUS : racheter, arbitrer, modifier les bénéficiaires — sans l'accord écrit du bénéficiaire acceptant. À utiliser avec prudence."}];
+var QUIZ  = [{"q": "Quelle est la durée du délai de rétractation d'une assurance-vie ?", "opts": ["14 jours", "30 jours", "45 jours", "60 jours"], "a": 1, "e": "30 jours calendaires à compter de la réception du contrat (art. L132-5-1 Code des assurances)."}, {"q": "L'article 990I s'applique aux primes versées...", "opts": ["Avant les 70 ans de l'assuré", "Après les 70 ans de l'assuré", "À tout âge indifféremment", "Uniquement avant 60 ans"], "a": 0, "e": "990I = primes AVANT 70 ans. 757B = primes APRÈS 70 ans. C'est l'âge au moment du versement qui compte."}, {"q": "Quel est l'abattement prévu par l'article 990I ?", "opts": ["30 500 € global", "80 724 € par bénéficiaire", "100 000 € par bénéficiaire", "152 500 € par bénéficiaire"], "a": 3, "e": "152 500 € PAR bénéficiaire, tous contrats confondus. C'est l'un des avantages majeurs de l'AV souscrite avant 70 ans."}, {"q": "Sous 990I, quel est le taux après l'abattement et jusqu'à 852 500 € ?", "opts": ["15 %", "20 %", "25 %", "31,25 %"], "a": 1, "e": "20 % sur la fraction taxable entre 0 et 700 000 € (soit jusqu'à un capital de 852 500 €). Puis 31,25 % au-delà."}, {"q": "L'article 757B s'applique aux primes versées...", "opts": ["Avant les 70 ans de l'assuré", "Après les 70 ans de l'assuré", "Uniquement sur fonds en euros", "Quel que soit l'âge"], "a": 1, "e": "757B = primes APRÈS 70 ans. Ces primes réintègrent la masse successorale taxable."}, {"q": "L'abattement de l'article 757B est de...", "opts": ["152 500 € par bénéficiaire", "80 724 € global", "30 500 € global pour tous bénéficiaires", "30 500 € par bénéficiaire"], "a": 2, "e": "30 500 € GLOBAL partagé entre tous les bénéficiaires de tous les contrats du défunt. Très différent des 152 500 € par bénéficiaire de l'article 990I."}, {"q": "Sous l'article 757B, que deviennent les gains générés après 70 ans ?", "opts": ["Taxés comme les primes", "Taxés à 20 %", "Totalement exonérés", "Taxés au barème successoral"], "a": 2, "e": "Les gains (intérêts, plus-values) sont EXONÉRÉS sous 757B. Seules les primes nettes > 30 500 € sont taxées. C'est le principal avantage de 757B."}, {"q": "Qui est totalement exonéré sur les capitaux AV au décès (toutes primes) ?", "opts": ["Les enfants", "Le conjoint marié ou partenaire PACS", "Les frères et sœurs", "Les petits-enfants"], "a": 1, "e": "Conjoint marié et partenaire PACS = exonération totale (loi TEPA 2007), que ce soit sous 990I ou 757B."}, {"q": "Si l'assureur n'a pas remis les documents obligatoires, le délai de rétractation...", "opts": ["Reste de 30 jours", "Passe à 60 jours", "Ne court pas — renonciation possible à tout moment", "Passe à 1 an"], "a": 2, "e": "Prorogation légale : le délai ne court pas si l'assureur n'a pas remis les documents obligatoires (notice d'information, CGV). Le souscripteur peut renoncer des années plus tard."}, {"q": "La clause bénéficiaire acceptée par le bénéficiaire...", "opts": ["Permet au souscripteur de tout modifier librement", "Bloque les opérations du souscripteur sans l'accord du bénéficiaire", "N'a pas d'effet juridique", "Annule le contrat"], "a": 1, "e": "Une clause acceptée 'gèle' le contrat : rachats, arbitrages, modifications du bénéficiaire = impossibles sans l'accord écrit du bénéficiaire acceptant."}, {"q": "Mettre 'mes héritiers' en clause bénéficiaire...", "opts": ["Est la formulation conseillée", "Fait rentrer les capitaux dans la succession", "Exonère totalement les bénéficiaires", "Optimise automatiquement les droits"], "a": 1, "e": "'Mes héritiers' = les capitaux réintègrent la succession et perdent l'avantage hors succession de l'AV. Toujours nommer les bénéficiaires explicitement."}, {"q": "Sous 990I, les gains (intérêts) générés par les primes versées avant 70 ans sont-ils taxés ?", "opts": ["Non, totalement exonérés", "Oui, inclus dans l'assiette taxable", "Seulement au-delà de 4 600 €", "Taxés séparément à 7,5 %"], "a": 1, "e": "Sous 990I, l'assiette = capital TOTAL (primes + gains). C'est la différence fondamentale avec 757B où les gains sont exonérés."}, {"q": "Quel taux s'applique sous 990I au-delà de 852 500 € de capital transmis ?", "opts": ["20 %", "25 %", "30 %", "31,25 %"], "a": 3, "e": "31,25 % au-delà de 700 000 € de fraction taxable (soit capital > 852 500 €). Ce taux élevé justifie la diversification des bénéficiaires."}, {"q": "L'effet cliquet des fonds en euros signifie que...", "opts": ["Le taux est garanti à l'avance", "Les gains définitivement acquis ne peuvent être repris", "Le capital peut descendre en dessous des primes", "L'assureur peut reprendre les intérêts versés"], "a": 1, "e": "Effet cliquet = les intérêts crédités chaque année sont définitivement acquis. Même en cas de crise financière, l'assureur ne peut pas reprendre les gains passés."}, {"q": "Pour les capitaux AV importants, quand est-il généralement préférable de verser ?", "opts": ["Après 70 ans (gains exonérés sous 757B)", "Avant 70 ans (152 500 € par bénéficiaire sous 990I)", "L'âge n'a aucune importance", "Uniquement entre 60 et 65 ans"], "a": 1, "e": "Avant 70 ans = 990I avec 152 500 € PAR bénéficiaire. En multipliant les bénéficiaires, on peut transmettre de très gros capitaux en franchise quasi-totale."}];
+var FOCUS = {"art990i": {"titre": "Article 990I — Primes avant 70 ans", "cartes": [5, 6, 7, 8, 9, 10], "quiz": [1, 2, 3, 4, 8, 12, 13, 15], "resume": "Primes avant 70 ans → hors succession → 152 500 €/bénéficiaire → 20 % puis 31,25 %"}, "art757b": {"titre": "Article 757B — Primes après 70 ans", "cartes": [11, 12, 13, 14, 15], "quiz": [5, 6, 7, 8], "resume": "Primes après 70 ans → succession → 30 500 € global → gains EXONÉRÉS"}, "clause": {"titre": "Clause bénéficiaire & Transmission", "cartes": [19, 20], "quiz": [10, 11], "resume": "Clause bénéficiaire = clé de la transmission AV — rédaction précise indispensable"}, "retractation": {"titre": "Délai de rétractation & Renonciation", "cartes": [16, 17, 18], "quiz": [1, 9], "resume": "30 jours calendaires — prorogation légale si documents non remis"}};
+var CH_LABELS = {1:'Ch.1 — Contrat AV', 2:'Ch.2 — Art. 990I', 3:'Ch.3 — Art. 757B', 4:'Ch.4 — Clause & Rétractation'};
+
+// ─── FLASHCARDS ─────────────────────────────────────────────────────────────
+var filteredCards = CARDS.slice();
+var cardIdx = 0;
+
+function showCard() {
+  var ci = document.getElementById('card-inner');
+  if (ci) ci.classList.remove('flipped');
+  var c = filteredCards[cardIdx];
+  document.getElementById('card-q').textContent = c.q;
+  document.getElementById('card-a').textContent = c.a;
+  document.getElementById('card-ch').textContent = CH_LABELS[c.ch] || 'Ch.'+c.ch;
+  document.getElementById('card-counter').textContent = 'Carte '+(cardIdx+1)+' / '+filteredCards.length;
+}
+function flipCard() { document.getElementById('card-inner').classList.toggle('flipped'); }
+function nextCard() { cardIdx = (cardIdx+1) % filteredCards.length; showCard(); }
+function prevCard() { cardIdx = (cardIdx-1+filteredCards.length) % filteredCards.length; showCard(); }
+function shuffleCards() {
+  for(var i=filteredCards.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=filteredCards[i];filteredCards[i]=filteredCards[j];filteredCards[j]=t;}
+  cardIdx=0; showCard();
+}
+function filterCards(ch, btn) {
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  filteredCards = ch===0 ? CARDS.slice() : CARDS.filter(function(c){return c.ch===ch;});
+  cardIdx=0; showCard();
+}
+
+// ─── QUIZ ────────────────────────────────────────────────────────────────────
+function buildQuiz() {
+  var html = '';
+  QUIZ.forEach(function(q, i) {
+    html += '<div class="quiz-q" id="qq'+i+'">';
+    html += '<p>'+(i+1)+'. '+q.q+'</p><div class="quiz-opts">';
+    q.opts.forEach(function(o, j) {
+      html += '<button class="quiz-opt" onclick="pickOpt('+i+','+j+',this)">'+o+'</button>';
+    });
+    html += '</div><div class="quiz-exp" id="qe'+i+'">'+q.e+'</div></div>';
+  });
+  document.getElementById('quiz-container').innerHTML = html;
+}
+var quizAnswers = {};
+function pickOpt(qi, oi, btn) {
+  var qq = document.getElementById('qq'+qi);
+  if (qq.classList.contains('done')) return;
+  qq.classList.add('done');
+  quizAnswers[qi] = oi;
+  qq.querySelectorAll('.quiz-opt').forEach(function(b,j){
+    if(j===QUIZ[qi].a) b.classList.add('correct');
+    else if(j===oi) b.classList.add('wrong');
+  });
+  document.getElementById('qe'+qi).style.display='block';
+}
+function submitQuiz() {
+  var score=0;
+  QUIZ.forEach(function(q,i){if(quizAnswers[i]===q.a)score++;});
+  var pct=Math.round(score/QUIZ.length*100);
+  document.getElementById('quiz-summary').style.display='block';
+  document.getElementById('quiz-summary').innerHTML='<h3 style="font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:8px">Résultat : '+score+'/'+QUIZ.length+' ('+pct+'%)</h3>'+(pct>=80?'<p style="color:var(--ok);font-weight:700">Excellent !</p>':'<p style="color:var(--muted)">Continue à travailler les points manqués.</p>');
+  document.getElementById('quiz-submit').style.display='none';
+  document.getElementById('quiz-reset').style.display='block';
+  try{var sc=JSON.parse(localStorage.getItem('cgp_scores')||'{}');sc['jour06']={score:score,total:QUIZ.length,pct:pct,date:new Date().toLocaleDateString('fr-FR')};localStorage.setItem('cgp_scores',JSON.stringify(sc));}catch(e){}
+}
+function resetQuiz() { quizAnswers={}; buildQuiz(); document.getElementById('quiz-summary').style.display='none'; document.getElementById('quiz-submit').style.display='block'; document.getElementById('quiz-reset').style.display='none'; }
+
+// ─── FOCUS ───────────────────────────────────────────────────────────────────
+function buildFocus() {
+  var keys = Object.keys(FOCUS);
+  var navHtml = '', contentHtml = '';
+  keys.forEach(function(k, i) {
+    var f = FOCUS[k];
+    navHtml += '<button class="focus-btn'+(i===0?' active':'')+'" onclick="showFocus(''+k+'',this)">'+f.titre+'</button>';
+    contentHtml += '<div class="focus-pane'+(i===0?' active':'')+'" id="focus-'+k+'">';
+    contentHtml += '<div class="focus-resume">'+f.resume+'</div>';
+    contentHtml += '<div style="font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em">Flashcards associées</div>';
+    f.cartes.forEach(function(ci){
+      var c = CARDS[ci-1];
+      if(!c) return;
+      contentHtml += '<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer" onclick="this.querySelector('.ans').style.display=this.querySelector('.ans').style.display==='block'?'none':'block'">';
+      contentHtml += '<div style="font-size:.86rem;font-weight:700;color:var(--navy)">'+c.q+'</div>';
+      contentHtml += '<div class="ans" style="display:none;font-size:.83rem;color:var(--muted);margin-top:8px;white-space:pre-line;line-height:1.5">'+c.a+'</div></div>';
+    });
+    contentHtml += '</div>';
+  });
+  document.getElementById('focus-nav').innerHTML = navHtml;
+  document.getElementById('focus-content').innerHTML = contentHtml;
+}
+function showFocus(k, btn) {
+  document.querySelectorAll('.focus-pane').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('focus-'+k).classList.add('active');
+  document.querySelectorAll('.focus-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+
+// ─── FICHE ───────────────────────────────────────────────────────────────────
+function j6go(id) {
+  ['r','1','2','3'].forEach(function(x){
+    var el=document.getElementById('fiche-'+x);
+    if(el) el.classList.remove('active');
+  });
+  var target=document.getElementById('fiche-'+id);
+  if(target) target.classList.add('active');
+  document.querySelectorAll('.fiche-btn').forEach(function(b){b.classList.remove('active')});
+  var btns=document.querySelectorAll('.fiche-btn');
+  var map={'r':0,'1':1,'2':2,'3':3};
+  if(btns[map[id]]) btns[map[id]].classList.add('active');
+}
+
+// ─── CAS PRATIQUES ───────────────────────────────────────────────────────────
+function toggleCas(id) {
+  var el=document.getElementById(id);
+  el.style.display=el.style.display==='block'?'none':'block';
+}
+
+// ─── TABS ────────────────────────────────────────────────────────────────────
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+window.onload = function() { showCard(); buildQuiz(); buildFocus(); };
+</script>
+</body>
+</html>
