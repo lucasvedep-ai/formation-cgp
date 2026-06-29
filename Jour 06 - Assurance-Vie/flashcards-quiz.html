@@ -370,14 +370,14 @@ function buildFocus() {
   var navHtml = '', contentHtml = '';
   keys.forEach(function(k, i) {
     var f = FOCUS[k];
-    navHtml += '<button class="focus-btn'+(i===0?' active':'')+'" onclick="showFocus(''+k+'',this)">'+f.titre+'</button>';
+    navHtml += '<button class="focus-btn'+(i===0?' active':'')+'" data-key="'+k+'" onclick="showFocus(this.dataset.key,this)">'+f.titre+'</button>';
     contentHtml += '<div class="focus-pane'+(i===0?' active':'')+'" id="focus-'+k+'">';
     contentHtml += '<div class="focus-resume">'+f.resume+'</div>';
     contentHtml += '<div style="font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em">Flashcards associées</div>';
     f.cartes.forEach(function(ci){
       var c = CARDS[ci-1];
       if(!c) return;
-      contentHtml += '<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer" onclick="this.querySelector('.ans').style.display=this.querySelector('.ans').style.display==='block'?'none':'block'">';
+      contentHtml += '<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer" onclick="toggleAns(this)">';
       contentHtml += '<div style="font-size:.86rem;font-weight:700;color:var(--navy)">'+c.q+'</div>';
       contentHtml += '<div class="ans" style="display:none;font-size:.83rem;color:var(--muted);margin-top:8px;white-space:pre-line;line-height:1.5">'+c.a+'</div></div>';
     });
@@ -405,6 +405,12 @@ function j6go(id) {
   var btns=document.querySelectorAll('.fiche-btn');
   var map={'r':0,'1':1,'2':2,'3':3};
   if(btns[map[id]]) btns[map[id]].classList.add('active');
+}
+
+// ─── FOCUS HELPERS ───────────────────────────────────────────────────────────
+function toggleAns(el) {
+  var ans = el.querySelector('.ans');
+  ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
 }
 
 // ─── CAS PRATIQUES ───────────────────────────────────────────────────────────
