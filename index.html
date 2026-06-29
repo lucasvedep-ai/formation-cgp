@@ -244,15 +244,15 @@ ul.items li strong{color:var(--navy)}
   <!-- ══ FICHE ESSENTIELLE ══ -->
   <div id="rev-essentiel" class="rev-pane active">
     <div class="theme-nav" id="tnav-ess">
-      <button class="theme-btn active" onclick="showTheme('ess','t-assurance',this)">&#128275; Assurance</button>
-      <button class="theme-btn" onclick="showTheme('ess','t-regimes',this)">&#128145; R&eacute;gimes</button>
-      <button class="theme-btn" onclick="showTheme('ess','t-succession',this)">&#128181; Succession</button>
-      <button class="theme-btn" onclick="showTheme('ess','t-conjoint',this)">&#128141; Conjoint &amp; D&eacute;membrement</button>
-      <button class="theme-btn" onclick="showTheme('ess','t-testaments',this)">&#128213; Testaments &amp; Legs</button>
-      <button class="theme-btn" onclick="showTheme('ess','t-donations',this)">&#127873; Donations &amp; DDV</button>
-      <button class="theme-btn" onclick="showTheme('ess','t-fiscal-don',this)">&#128202; Fiscalit&eacute; Donations</button>
-      <button class="theme-btn" onclick="showTheme('ess','t-fiscal-succ',this)">&#127981; Fiscalit&eacute; Succession</button>
-      <button class="theme-btn" onclick="showTheme('ess','t-adoption',this)">&#128106; Adoption</button>
+      <button class="theme-btn active" onclick="showTheme('ess-t-assurance','tnav-ess',this)">&#128275; Assurance</button>
+      <button class="theme-btn" onclick="showTheme('ess-t-regimes','tnav-ess',this)">&#128145; R&eacute;gimes</button>
+      <button class="theme-btn" onclick="showTheme('ess-t-succession','tnav-ess',this)">&#128181; Succession</button>
+      <button class="theme-btn" onclick="showTheme('ess-t-conjoint','tnav-ess',this)">&#128141; Conjoint &amp; D&eacute;membrement</button>
+      <button class="theme-btn" onclick="showTheme('ess-t-testaments','tnav-ess',this)">&#128213; Testaments &amp; Legs</button>
+      <button class="theme-btn" onclick="showTheme('ess-t-donations','tnav-ess',this)">&#127873; Donations &amp; DDV</button>
+      <button class="theme-btn" onclick="showTheme('ess-t-fiscal-don','tnav-ess',this)">&#128202; Fiscalit&eacute; Donations</button>
+      <button class="theme-btn" onclick="showTheme('ess-t-fiscal-succ','tnav-ess',this)">&#127981; Fiscalit&eacute; Succession</button>
+      <button class="theme-btn" onclick="showTheme('ess-t-adoption','tnav-ess',this)">&#128106; Adoption</button>
     </div>
 
     <!-- T1 : L'ASSURANCE -->
@@ -654,15 +654,15 @@ ul.items li strong{color:var(--navy)}
   <!-- ══ FOCUS COMPILÉS ══ -->
   <div id="rev-focus" class="rev-pane">
     <div class="theme-nav" id="tnav-foc">
-      <button class="theme-btn active" onclick="showTheme('foc','f-assurance',this)">&#128275; Assurance</button>
-      <button class="theme-btn" onclick="showTheme('foc','f-regimes',this)">&#128145; R&eacute;gimes</button>
-      <button class="theme-btn" onclick="showTheme('foc','f-succession',this)">&#128181; Succession</button>
-      <button class="theme-btn" onclick="showTheme('foc','f-conjoint',this)">&#128141; Conjoint &amp; D&eacute;membrement</button>
-      <button class="theme-btn" onclick="showTheme('foc','f-testaments',this)">&#128213; Testaments &amp; Legs</button>
-      <button class="theme-btn" onclick="showTheme('foc','f-donations',this)">&#127873; Donations &amp; DDV</button>
-      <button class="theme-btn" onclick="showTheme('foc','f-abattements',this)">&#128202; Abattements</button>
-      <button class="theme-btn" onclick="showTheme('foc','f-tepa',this)">&#127981; TEPA &amp; Exon&eacute;rations</button>
-      <button class="theme-btn" onclick="showTheme('foc','f-adoption',this)">&#128106; Adoption</button>
+      <button class="theme-btn active" onclick="showTheme('foc-f-assurance','tnav-foc',this)">&#128275; Assurance</button>
+      <button class="theme-btn" onclick="showTheme('foc-f-regimes','tnav-foc',this)">&#128145; R&eacute;gimes</button>
+      <button class="theme-btn" onclick="showTheme('foc-f-succession','tnav-foc',this)">&#128181; Succession</button>
+      <button class="theme-btn" onclick="showTheme('foc-f-conjoint','tnav-foc',this)">&#128141; Conjoint &amp; D&eacute;membrement</button>
+      <button class="theme-btn" onclick="showTheme('foc-f-testaments','tnav-foc',this)">&#128213; Testaments &amp; Legs</button>
+      <button class="theme-btn" onclick="showTheme('foc-f-donations','tnav-foc',this)">&#127873; Donations &amp; DDV</button>
+      <button class="theme-btn" onclick="showTheme('foc-f-abattements','tnav-foc',this)">&#128202; Abattements</button>
+      <button class="theme-btn" onclick="showTheme('foc-f-tepa','tnav-foc',this)">&#127981; TEPA &amp; Exon&eacute;rations</button>
+      <button class="theme-btn" onclick="showTheme('foc-f-adoption','tnav-foc',this)">&#128106; Adoption</button>
     </div>
 
     <!-- FOCUS : ASSURANCE -->
@@ -930,13 +930,13 @@ function showRev(id) {
   document.querySelectorAll('.rev-subbtn').forEach(function(b){b.classList.remove('active')});
   document.getElementById('rbtn-' + id).classList.add('active');
 }
-function showTheme(prefix, id, btn) {
-  var paneId = prefix === 'ess' ? 'rev-essentiel' : 'rev-focus';
-  var scope = document.getElementById(paneId);
-  scope.querySelectorAll('.theme-section').forEach(function(s){s.classList.remove('active')});
-  document.getElementById(prefix + '-' + id).classList.add('active');
-  var nav = document.getElementById('tnav-' + (prefix === 'ess' ? 'ess' : 'foc'));
-  nav.querySelectorAll('.theme-btn').forEach(function(b){b.classList.remove('active')});
+function showTheme(sectionId, navId, btn) {
+  var section = document.getElementById(sectionId);
+  if (!section) return;
+  section.parentElement.querySelectorAll('.theme-section').forEach(function(s){s.classList.remove('active')});
+  section.classList.add('active');
+  var nav = document.getElementById(navId);
+  if (nav) nav.querySelectorAll('.theme-btn').forEach(function(b){b.classList.remove('active')});
   btn.classList.add('active');
 }
 try {
