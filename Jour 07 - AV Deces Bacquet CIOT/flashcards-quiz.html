@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jour 07 — AV Décès : Bacquet &amp; CIOT | Formation CGP</title>
+<style>
+:root{
+  --navy:#1a2744;--navy2:#253460;--gold:#c9a227;--gold2:#e8c84a;
+  --bg:#f4f6fb;--white:#fff;--text:#1a2744;--muted:#5a6a8a;
+  --ok:#2d8a4e;--ok-bg:#eafaf1;--err:#c0392b;--err-bg:#fdf3f2;
+  --border:#dce3f0;--shadow:0 8px 32px rgba(26,39,68,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:28px 32px 22px}
+header h1{font-size:1.4rem;font-weight:800;margin-bottom:4px}
+header p{font-size:.82rem;color:rgba(255,255,255,.55)}
+.tab-bar{display:flex;background:var(--navy2);overflow-x:auto}
+.tab-btn{background:none;border:none;color:rgba(255,255,255,.5);font-size:.78rem;font-weight:700;padding:12px 18px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:.15s}
+.tab-btn.active{color:#fff;border-bottom-color:var(--gold2)}
+.tab-pane{display:none;padding:24px 20px;max-width:860px;margin:0 auto}
+.tab-pane.active{display:block}
+.card-wrap{perspective:1000px;cursor:pointer;margin:0 auto 20px;max-width:580px}
+.card-inner{position:relative;width:100%;min-height:180px;transform-style:preserve-3d;transition:.5s}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-face{position:absolute;width:100%;min-height:180px;backface-visibility:hidden;border-radius:18px;padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-shadow:var(--shadow)}
+.card-front{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff}
+.card-back{background:#fff;transform:rotateY(180deg);border:2px solid var(--border)}
+.ch-badge{font-size:.65rem;font-weight:800;background:rgba(255,255,255,.15);border-radius:99px;padding:3px 10px;margin-bottom:12px;letter-spacing:.06em}
+.card-q{font-size:1.05rem;font-weight:700;line-height:1.4}
+.card-a{font-size:.88rem;color:var(--text);line-height:1.6;white-space:pre-line}
+.card-nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:4px}
+.card-nav button{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer}
+.card-counter{text-align:center;font-size:.78rem;color:var(--muted);margin-bottom:14px}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filter-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:6px 14px;font-size:.76rem;font-weight:700;color:var(--muted);cursor:pointer}
+.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.quiz-q{background:#fff;border-radius:16px;padding:22px 24px;margin-bottom:16px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.quiz-q p{font-size:.95rem;font-weight:700;margin-bottom:14px;line-height:1.4}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:.86rem;cursor:pointer;text-align:left;transition:.12s;font-weight:500}
+.quiz-opt:hover{border-color:var(--navy);background:#eef1f8}
+.quiz-opt.correct{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:700}
+.quiz-opt.wrong{background:var(--err-bg);border-color:var(--err);color:var(--err)}
+.quiz-exp{font-size:.82rem;color:var(--muted);background:var(--bg);border-radius:8px;padding:10px 12px;margin-top:10px;display:none;line-height:1.5}
+.quiz-summary{background:#fff;border-radius:16px;padding:24px;text-align:center;border:1.5px solid var(--border)}
+.focus-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.focus-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer}
+.focus-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.focus-pane{display:none}
+.focus-pane.active{display:block}
+.focus-resume{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:14px;padding:16px 18px;margin-bottom:18px;font-size:.88rem;font-weight:600;line-height:1.5}
+.fiche-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.fiche-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer}
+.fiche-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.fiche-section{display:none}
+.fiche-section.active{display:block}
+.fiche-block{background:#fff;border-radius:14px;padding:20px 22px;margin-bottom:14px;border:1.5px solid var(--border)}
+.fiche-block h3{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.fiche-table{width:100%;border-collapse:collapse;font-size:.83rem;margin-top:8px}
+.fiche-table th{background:var(--navy);color:#fff;padding:7px 10px;text-align:left}
+.fiche-table td{padding:6px 10px;border-bottom:1px solid var(--border)}
+.fiche-table tr:nth-child(even) td{background:var(--bg)}
+.fiche-hl{background:#fff3cd;border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+.fiche-warn{background:#fff0f0;border-left:4px solid var(--err);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+.fiche-ok{background:var(--ok-bg);border-left:4px solid var(--ok);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+dl.fiche-dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.84rem}
+dl.fiche-dl dt{font-weight:700;color:var(--navy);white-space:nowrap}
+dl.fiche-dl dd{line-height:1.5}
+.exo{background:#fff;border-radius:16px;padding:24px;margin-bottom:20px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.exo-title{font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.exo-tag{font-size:.7rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;color:var(--muted);font-weight:600}
+.exo-questions{background:#c0392b;color:#fff;border-radius:10px;padding:10px 14px;font-size:.82rem;line-height:1.7;margin:12px 0}
+.exo-enonce{background:var(--bg);border-radius:10px;padding:12px 14px;font-size:.84rem;line-height:1.6;margin:10px 0}
+.exo-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;margin-top:10px;display:block}
+.exo-solution{display:none;margin-top:14px;border-top:1.5px solid var(--border);padding-top:14px}
+.exo-step{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:.83rem;margin-bottom:8px;line-height:1.6}
+.exo-step strong{color:var(--navy)}
+.cas{background:#fff;border-radius:16px;padding:24px;margin-bottom:18px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.cas-title{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:6px}
+.cas-ref{font-size:.7rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;color:var(--muted)}
+.cas-enonce{font-size:.86rem;line-height:1.6;margin-bottom:14px}
+.cas-piege{background:#fff3cd;border-radius:8px;padding:10px 14px;font-size:.82rem;margin-bottom:14px;line-height:1.5}
+.cas-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:10px}
+.cas-solution{display:none;background:var(--ok-bg);border-radius:8px;padding:14px 16px;font-size:.84rem;line-height:1.6;border:1px solid var(--ok)}
+@media(max-width:600px){header{padding:20px 16px}.tab-pane{padding:18px 14px}dl.fiche-dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>&#128218; Jour 07 &mdash; AV en cas de d&eacute;c&egrave;s</h1>
+  <p>R&eacute;ponses minist&eacute;rielles Bacquet (2010) &amp; CIOT (2016) &middot; Exercices succession</p>
+</header>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('flashcards',this)">&#127183; Flashcards</button>
+  <button class="tab-btn" onclick="showTab('quiz',this)">&#128221; Quiz</button>
+  <button class="tab-btn" onclick="showTab('focus',this)">&#127919; Focus</button>
+  <button class="tab-btn" onclick="showTab('fiche',this)">&#128196; Fiche</button>
+  <button class="tab-btn" onclick="showTab('exercices',this)">&#127947; Exercices</button>
+  <button class="tab-btn" onclick="showTab('cas',this)">&#128203; Cas pratiques</button>
+</div>
+
+<!-- FLASHCARDS -->
+<div id="tab-flashcards" class="tab-pane active">
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCards(0,this)">Tous (20)</button>
+    <button class="filter-btn" onclick="filterCards(1,this)">Ch.1 — Contexte</button>
+    <button class="filter-btn" onclick="filterCards(2,this)">Ch.2 — Bacquet</button>
+    <button class="filter-btn" onclick="filterCards(3,this)">Ch.3 — CIOT</button>
+    <button class="filter-btn" onclick="filterCards(4,this)">Ch.4 — Strat&eacute;gies</button>
+  </div>
+  <div class="card-counter" id="card-counter">Carte 1 / 20</div>
+  <div class="card-wrap" onclick="flipCard()">
+    <div class="card-inner" id="card-inner">
+      <div class="card-face card-front">
+        <div class="ch-badge" id="card-ch">Ch. 1</div>
+        <div class="card-q" id="card-q">...</div>
+      </div>
+      <div class="card-face card-back">
+        <div class="card-a" id="card-a">...</div>
+      </div>
+    </div>
+  </div>
+  <div class="card-nav">
+    <button onclick="prevCard()">&#8592; Pr&eacute;c.</button>
+    <button onclick="shuffleCards()">&#128256; M&eacute;langer</button>
+    <button onclick="nextCard()">Suiv. &#8594;</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="tab-quiz" class="tab-pane">
+  <div id="quiz-container"></div>
+  <div id="quiz-summary" class="quiz-summary" style="display:none"></div>
+  <button id="quiz-submit" onclick="submitQuiz()" style="display:block;margin:0 auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Valider le quiz</button>
+  <button id="quiz-reset" onclick="resetQuiz()" style="display:none;margin:16px auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Recommencer</button>
+</div>
+
+<!-- FOCUS -->
+<div id="tab-focus" class="tab-pane">
+  <div class="focus-nav" id="focus-nav"></div>
+  <div id="focus-content"></div>
+</div>
+
+<!-- FICHE -->
+<div id="tab-fiche" class="tab-pane">
+  <div class="fiche-nav">
+    <button class="fiche-btn active" onclick="j7go('r')">Vue d&rsquo;ensemble</button>
+    <button class="fiche-btn" onclick="j7go('1')">Bacquet 2010</button>
+    <button class="fiche-btn" onclick="j7go('2')">CIOT 2016</button>
+    <button class="fiche-btn" onclick="j7go('3')">Synth&egrave;se &amp; Calculs</button>
+  </div>
+  <div id="fiche-r" class="fiche-section active">
+    <div class="fiche-block">
+      <h3>&#128218; Contexte &mdash; AV en cas de d&eacute;c&egrave;s</h3>
+      <dl class="fiche-dl">
+        <dt>Probl&egrave;me</dt><dd>AV souscrite avec fonds communs (r&eacute;gime l&eacute;gal) : la valeur de rachat du contrat du conjoint survivant entre-t-elle dans la succession du d&eacute;funt ?</dd>
+        <dt>Bacquet 2010</dt><dd>Oui &rarr; moiti&eacute; dans masse civile <strong>ET tax&eacute;e</strong></dd>
+        <dt>CIOT 2016</dt><dd>Oui &rarr; moiti&eacute; dans masse civile <strong>MAIS exon&eacute;r&eacute;e de droits</strong></dd>
+        <dt>S&eacute;paration de biens</dt><dd>Ni Bacquet ni CIOT &mdash; pas de fonds communs</dd>
+      </dl>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Comparatif rapide</h3>
+      <table class="fiche-table">
+        <tr><th></th><th>Bacquet (2010)</th><th>CIOT (2016)</th></tr>
+        <tr><td>Masse civile</td><td>+1/2 AV conjoint</td><td>+1/2 AV conjoint</td></tr>
+        <tr><td>Masse fiscale</td><td>+1/2 AV conjoint</td><td><strong>0€ (exon&eacute;r&eacute;)</strong></td></tr>
+        <tr><td>Frais enfants</td><td>Augment&eacute;s</td><td><strong>Inchang&eacute;s</strong></td></tr>
+        <tr><td>R&eacute;gimes concern&eacute;s</td><td>Communaut&eacute;</td><td>Communaut&eacute;</td></tr>
+      </table>
+    </div>
+  </div>
+  <div id="fiche-1" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; RM Bacquet &mdash; 29/06/2010</h3>
+      <dl class="fiche-dl">
+        <dt>Principe</dt><dd>L&rsquo;AV souscrite par un &eacute;poux avec des fonds communs est un actif de communaut&eacute;</dd>
+        <dt>Cons&eacute;quence</dt><dd>La MOITI&Eacute; de la valeur de rachat entre dans la masse successorale du d&eacute;funt</dd>
+        <dt>Impact fiscal</dt><dd>Cette moiti&eacute; EST tax&eacute;e &rarr; augmentation des droits de succession des enfants</dd>
+        <dt>L&rsquo;AV se d&eacute;noue ?</dt><dd>Non &mdash; elle continue de vivre. 990I/757B s&rsquo;appliquent au 2&egrave;me d&eacute;c&egrave;s</dd>
+      </dl>
+      <div class="fiche-warn" style="margin-top:12px">&#9888; Exemple : AV Mme = 300 000&euro; (fonds communs). Mr d&eacute;c&egrave;de &rarr; 150 000&euro; entrent dans sa succession ET sont tax&eacute;s (augmentation frais pour enfants).</div>
+    </div>
+  </div>
+  <div id="fiche-2" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; RM CIOT &mdash; 01/02/2016</h3>
+      <dl class="fiche-dl">
+        <dt>Principe</dt><dd>Confirme Bacquet : la moiti&eacute; de l&rsquo;AV entre dans la masse CIVILE</dd>
+        <dt>Innovation</dt><dd><strong>Cette somme est EXON&Eacute;R&Eacute;E de droits de succession</strong></dd>
+        <dt>Impact fiscal</dt><dd>0&euro; de droits suppl&eacute;mentaires pour les enfants</dd>
+        <dt>Impact civil</dt><dd>La masse civile reste augment&eacute;e (impact sur calcul usufruit/NP)</dd>
+      </dl>
+      <div class="fiche-ok" style="margin-top:12px">&#10004; Depuis CIOT, l&rsquo;urgence de restructurer les AV financ&eacute;es avec fonds communs est moindre &mdash; l&rsquo;impact fiscal est neutralis&eacute;.</div>
+    </div>
+  </div>
+  <div id="fiche-3" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Calcul capital d&eacute;c&egrave;s net &mdash; Art. 990I</h3>
+      <ol style="font-size:.84rem;line-height:1.8;padding-left:18px">
+        <li>PS = gains &times; 17,2&nbsp;%</li>
+        <li>Capital net PS = primes + (gains &minus; PS)</li>
+        <li>Part/b&eacute;n&eacute;ficiaire = capital net PS &divide; nb b&eacute;n&eacute;ficiaires</li>
+        <li>Taxe = (part &minus; 152&nbsp;500&euro;) &times; 20&nbsp;% <em>(si &le; 852&nbsp;500&euro;)</em></li>
+        <li>Capital net = part &minus; taxe</li>
+      </ol>
+      <div class="fiche-hl" style="margin-top:10px">Conjoint/PACS = exon&eacute;r&eacute; totalement (TEPA) &rarr; capital net = capital brut</div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Bar&egrave;me usufruit &mdash; &Acirc;ge du conjoint</h3>
+      <table class="fiche-table">
+        <tr><th>&Acirc;ge</th><th>Usufruit</th><th>Nue-propri&eacute;t&eacute;</th></tr>
+        <tr><td>Moins de 21 ans</td><td>90%</td><td>10%</td></tr>
+        <tr><td>21 &mdash; 30 ans</td><td>80%</td><td>20%</td></tr>
+        <tr><td>31 &mdash; 40 ans</td><td>70%</td><td>30%</td></tr>
+        <tr><td>41 &mdash; 50 ans</td><td>60%</td><td>40%</td></tr>
+        <tr><td>51 &mdash; 60 ans</td><td>50%</td><td>50%</td></tr>
+        <tr><td><strong>61 &mdash; 70 ans</strong></td><td><strong>40%</strong></td><td><strong>60%</strong></td></tr>
+        <tr><td>71 &mdash; 80 ans</td><td>30%</td><td>70%</td></tr>
+        <tr><td>81 &mdash; 90 ans</td><td>20%</td><td>80%</td></tr>
+        <tr><td>Plus de 90 ans</td><td>10%</td><td>90%</td></tr>
+      </table>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Quotit&eacute; disponible selon nombre d&rsquo;enfants</h3>
+      <table class="fiche-table">
+        <tr><th>Nb enfants</th><th>R&eacute;serve</th><th>Quotit&eacute; disponible</th></tr>
+        <tr><td>1 enfant</td><td>1/2</td><td>1/2</td></tr>
+        <tr><td>2 enfants</td><td>2/3</td><td>1/3</td></tr>
+        <tr><td>3 enfants</td><td>3/4</td><td>1/4</td></tr>
+        <tr><td>4 enfants et +</td><td>4/5</td><td>1/5</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- EXERCICES -->
+<div id="tab-exercices" class="tab-pane">
+
+  <div class="exo">
+    <div class="exo-title">Exercice n&deg;1 <span class="exo-tag">R&eacute;gime l&eacute;gal &middot; 100% usufruit</span></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Mr &amp; Mme EXEMPLE &mdash; mari&eacute;s 1978, r&eacute;gime l&eacute;gal, pas de contrat, 64 ans, 2 enfants m&ecirc;me lit. Madame a choisi l&rsquo;option 100% usufruit.</p>
+    <div class="exo-enonce">
+      <strong>Patrimoine de Mr :</strong><br>
+      BUF &mdash; R&eacute;sidence principale : 550 000&euro; (commune) &bull; R&eacute;sidence secondaire : 300 000&euro; (h&eacute;ritage Mr &rarr; bien propre)<br>
+      Disponibilit&eacute;s &mdash; Livret A : 20 000&euro; &bull; LDD : 12 000&euro; (ouverts apr&egrave;s mariage &rarr; communs)<br>
+      &Eacute;pargne &mdash; PEL Mr : 60 000&euro; (2000) &bull; PEL Mme : 50 000&euro; (2008) &bull; PEA Mr : 35 000&euro; (2007) &rarr; tous communs<br>
+      AV Mr : 540 000&euro; (dont 20 000&euro; int&eacute;r&ecirc;ts), jan. 2000, b&eacute;n&eacute;ficiaire : ses enfants<br>
+      AV Mme : 300 000&euro; (dont 30 000&euro; int&eacute;r&ecirc;ts), jan. 2005, b&eacute;n&eacute;ficiaire : le conjoint
+    </div>
+    <div class="exo-questions">Calculer : ① Masse successorale civile &amp; fiscale ② H&eacute;ritage Mme ③ H&eacute;ritage enfants ④ Frais de succession ⑤ Capital net AV d&eacute;nou&eacute;</div>
+    <button class="exo-btn" onclick="toggleExo('exo1')">Voir la solution</button>
+    <div class="exo-solution" id="exo1">
+      <div class="exo-step"><strong>Biens propres Mr :</strong> 300 000&euro; (r&eacute;sidence secondaire, h&eacute;ritage)</div>
+      <div class="exo-step"><strong>Biens communs :</strong> 550 000 + 20 000 + 12 000 + 60 000 + 50 000 + 35 000 = <strong>727 000&euro;</strong></div>
+      <div class="exo-step"><strong>AV Mme (CIOT) :</strong> valeur rachat 300 000&euro; &rarr; 1/2 = 150 000&euro; en masse civile, exon&eacute;r&eacute;e fiscalement</div>
+      <div class="exo-step"><strong>Masse civile :</strong> 300 000 + 727 000/2 + 150 000 = 300 000 + 363 500 + 150 000 = <strong>813 500&euro;</strong><br>
+      <strong>Masse fiscale :</strong> 813 500 &minus; abatt. 20% RP (550 000&times;20%&times;50%=55 000) &minus; CIOT (150 000) = <strong>608 500&euro;</strong></div>
+      <div style="overflow-x:auto;margin-top:10px">
+        <table class="fiche-table">
+          <tr><th></th><th>Valeur civile</th><th>Valeur fiscale</th><th>Part taxable</th><th>Frais</th></tr>
+          <tr><td><strong>Conjoint 100% US</strong><br><small>(64 ans = 40% US)</small></td><td>40% &times; 813 500 = <strong>325 400&euro;</strong></td><td>40% &times; 608 500 = 243 400&euro;</td><td>0&euro;</td><td>0&euro;</td></tr>
+          <tr><td><strong>Enfant 1</strong><br><small>50% NP (60%)</small></td><td>60% &times; (813 500/2) = <strong>244 050&euro;</strong></td><td>60% &times; (608 500/2) = 182 550&euro;</td><td>82 550&euro;</td><td>(82 550&times;20%) &minus; 1 806 = <strong>14 704&euro;</strong></td></tr>
+          <tr><td><strong>Enfant 2</strong><br><small>50% NP (60%)</small></td><td>244 050&euro;</td><td>182 550&euro;</td><td>82 550&euro;</td><td><strong>14 704&euro;</strong></td></tr>
+        </table>
+      </div>
+      <div class="exo-step" style="margin-top:12px"><strong>AV Mr (990I) &mdash; 2 enfants b&eacute;n&eacute;ficiaires :</strong><br>
+      PS : 20 000 &times; 17,2% = 3 440&euro; &rarr; Capital net PS : 520 000 + 16 560 = 536 560&euro;<br>
+      Par b&eacute;n&eacute;ficiaire : 536 560 / 2 = <strong>268 280&euro;</strong><br>
+      Taxe 990I : (268 280 &minus; 152 500) &times; 20% = 115 780 &times; 20% = 23 156&euro;<br>
+      Capital net : 268 280 &minus; 23 156 = <strong>245 124&euro; par enfant</strong></div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-title">Exercice n&deg;2 <span class="exo-tag">S&eacute;paration de biens &middot; DDV &middot; 1/4 PP + 3/4 US</span></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Mr &amp; Mme ENTRA&Icirc;NEMENT &mdash; mari&eacute;s 1975, s&eacute;paration de biens, DDV. 64 ans. Mme 2 enfants 1er lit, Mr 1 enfant 1&egrave;re union. <strong>Monsieur a choisi 1/4 PP + 3/4 usufruit.</strong></p>
+    <div class="exo-enonce">
+      <strong>Patrimoine de Mme :</strong><br>
+      R&eacute;sidence principale : 300 000&euro; (achet&eacute;e par Mme 2001, bien propre Mme)<br>
+      Appartement Lille : 120 000&euro; (h&eacute;ritage Mme, bien propre)<br>
+      PEL Mme : 55 000&euro; (2008, bien propre Mme)<br><br>
+      <strong>Patrimoine de Mr (biens propres, non h&eacute;rit&eacute;s de Mme) :</strong><br>
+      RS : 500 000&euro; (h&eacute;ritage) &bull; Livret A : 20 000&euro; &bull; LDD : 10 000&euro;<br><br>
+      AV Mr : 140 000&euro; (dont 20 000&euro; int.), jan. 2000, b&eacute;n&eacute;ficiaire : son enfant<br>
+      AV Mme : 620 000&euro; (dont 30 000&euro; int.), jan. 2005, b&eacute;n&eacute;ficiaires : conjoint + 3 enfants &agrave; parts &eacute;gales
+    </div>
+    <div class="exo-questions">Calculer : ① Masse successorale civile &amp; fiscale ② H&eacute;ritage Mr ③ H&eacute;ritage enfants ④ Frais de succession ⑤ Capital net AV d&eacute;nou&eacute;e</div>
+    <button class="exo-btn" onclick="toggleExo('exo2')">Voir la solution</button>
+    <div class="exo-solution" id="exo2">
+      <div class="exo-step"><strong>R&eacute;gime s&eacute;paration de biens &rarr; ni Bacquet ni CIOT !</strong><br>Seuls les biens propres de Mme entrent dans sa succession.</div>
+      <div class="exo-step"><strong>Masse civile :</strong> RP 300 000 + appart. 120 000 + PEL 55 000 = <strong>475 000&euro;</strong><br>
+      <strong>Masse fiscale :</strong> (300 000 &minus; 20%&times;300 000) + 120 000 + 55 000 = 240 000 + 120 000 + 55 000 = <strong>415 000&euro;</strong></div>
+      <div style="overflow-x:auto;margin-top:10px">
+        <table class="fiche-table">
+          <tr><th></th><th>Valeur civile</th><th>Valeur fiscale</th><th>Part taxable</th><th>Frais</th></tr>
+          <tr><td><strong>Mr</strong><br><small>1/4 PP + 3/4 US</small><br><small>(64 ans = 40%)</small></td><td>(1/4&times;475 000)+(3/4&times;475 000&times;40%)<br>= 118 750 + 142 500 = <strong>261 250&euro;</strong></td><td>(1/4&times;415 000)+(3/4&times;415 000&times;40%)<br>= 103 750 + 124 500 = <strong>228 250&euro;</strong></td><td>0&euro;</td><td>0&euro;</td></tr>
+          <tr><td><strong>Enfant 1 de Mme</strong><br><small>1/2 des 3/4 NP</small></td><td>(475 000&minus;261 250)/2 = 213 750/2 = <strong>106 875&euro;</strong></td><td>(415 000&minus;228 250)/2 = 186 750/2 = <strong>93 375&euro;</strong></td><td>0&euro;<br><small>(93 375 &lt; 100 000)</small></td><td>0&euro;</td></tr>
+          <tr><td><strong>Enfant 2 de Mme</strong></td><td>106 875&euro;</td><td>93 375&euro;</td><td>0&euro;</td><td>0&euro;</td></tr>
+        </table>
+      </div>
+      <div class="exo-step" style="margin-top:12px"><strong>AV Mme (990I) &mdash; 4 b&eacute;n&eacute;ficiaires :</strong><br>
+      PS : 30 000 &times; 17,2% = 5 160&euro; &rarr; Capital net PS : 590 000 + 24 840 = 614 840&euro;<br>
+      Par b&eacute;n&eacute;ficiaire : 614 840 / 4 = <strong>153 710&euro;</strong><br>
+      Taxe 990I (enfants) : (153 710 &minus; 152 500) &times; 20% = 1 210 &times; 20% = <strong>242&euro;</strong><br>
+      Capital net enfants : 153 710 &minus; 242 = <strong>153 468&euro;</strong><br>
+      Mr (conjoint) : <strong>153 710&euro;</strong> (exon&eacute;r&eacute; TEPA)</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-title">Exercice n&deg;3 <span class="exo-tag">R&eacute;gime l&eacute;gal &middot; DDV &middot; Quotit&eacute; disponible &middot; AV apr&egrave;s 70 ans</span></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Mr &amp; Mme LEGRIS &mdash; mari&eacute;s 1978, r&eacute;gime l&eacute;gal, DDV. 74 ans tous les deux. 4 enfants m&ecirc;me lit. <strong>Madame a choisi la quotit&eacute; disponible.</strong></p>
+    <div class="exo-enonce">
+      <strong>Patrimoine :</strong><br>
+      RS : 350 000&euro; (h&eacute;ritage Mr, bien propre) &bull; RP : 750 000&euro; (achet&eacute;e apr&egrave;s mariage, commune)<br>
+      Livret A : 20 000&euro; &bull; LDD : 15 000&euro; (apr&egrave;s mariage &rarr; communs)<br>
+      PEL Mr : 50 000&euro; (2000) &bull; PEL Mme : 80 000&euro; (2008) &bull; PEA Mr : 25 000&euro; (2007) &rarr; tous communs<br>
+      <strong>AV Mr : 320 000&euro;</strong> (dont 15 000&euro; int.), versement total apr&egrave;s 70 ans &#9888;, jan. 2021, b&eacute;n&eacute;ficiaires : enfants<br>
+      AV Mme : 330 000&euro; (dont 30 000&euro; int.), jan. 2005, b&eacute;n&eacute;ficiaire : le conjoint
+    </div>
+    <div class="exo-questions">Calculer : ① Masse successorale civile &amp; fiscale ② H&eacute;ritage Mme (quotit&eacute; disponible) ③ H&eacute;ritage enfants ④ Frais de succession ⑤ Capital net AV d&eacute;nou&eacute;e (757B)</div>
+    <button class="exo-btn" onclick="toggleExo('exo3')">Voir la solution</button>
+    <div class="exo-solution" id="exo3">
+      <div class="exo-step"><strong>Biens propres Mr :</strong> 350 000&euro; (RS h&eacute;ritage)</div>
+      <div class="exo-step"><strong>Biens communs :</strong> 750 000 + 20 000 + 15 000 + 50 000 + 80 000 + 25 000 = <strong>940 000&euro;</strong></div>
+      <div class="exo-step"><strong>AV Mme (CIOT) :</strong> valeur rachat 330 000&euro; &rarr; 1/2 = 165 000&euro; en masse civile, exon&eacute;r&eacute;e fiscalement</div>
+      <div class="exo-step"><strong>Masse civile :</strong> 350 000 + 940 000/2 + 165 000 = 350 000 + 470 000 + 165 000 = <strong>985 000&euro;</strong><br>
+      <strong>Masse fiscale :</strong> 985 000 &minus; abatt. 20% RP (750 000&times;20%&times;50%=75 000) &minus; CIOT (165 000) = <strong>745 000&euro;</strong></div>
+      <div class="exo-step"><strong>Quotit&eacute; disponible avec 4 enfants = 1/5</strong><br>
+      Mme re&ccedil;oit 1/5 de la succession en PP. Les 4 enfants se partagent les 4/5.</div>
+      <div style="overflow-x:auto;margin-top:10px">
+        <table class="fiche-table">
+          <tr><th></th><th>Valeur civile</th><th>Valeur fiscale</th><th>Part taxable</th><th>Frais</th></tr>
+          <tr><td><strong>Mme (quotit&eacute; dispo.)</strong><br><small>1/5 PP</small></td><td>1/5 &times; 985 000 = <strong>197 000&euro;</strong></td><td>1/5 &times; 745 000 = 149 000&euro;</td><td>0&euro;</td><td>0&euro;</td></tr>
+          <tr><td><strong>Chaque enfant</strong><br><small>1/4 des 4/5</small></td><td>4/5 &times; 985 000 / 4 = <strong>197 000&euro;</strong></td><td>4/5 &times; 745 000 / 4 = <strong>149 000&euro;</strong></td><td>49 000&euro;<br><small>(149 000&minus;100 000)</small></td><td>(49 000&times;20%)&minus;1 806 = <strong>7 994&euro;</strong></td></tr>
+        </table>
+      </div>
+      <div class="exo-step" style="margin-top:12px"><strong>AV Mr (757B) &mdash; primes APR&Egrave;S 70 ans, 4 enfants :</strong><br>
+      Gains 15 000&euro; &rarr; totalement exon&eacute;r&eacute;s<br>
+      Primes nettes : 320 000 &minus; 15 000 = 305 000&euro;<br>
+      Abattement 757B global : &minus; 30 500&euro;<br>
+      Base taxable totale : 274 500&euro; &rarr; par enfant : 274 500/4 = <strong>68 625&euro;</strong><br>
+      Droits succession (si abatt. 100 000&euro; d&eacute;j&agrave; &eacute;puis&eacute; par l&rsquo;h&eacute;ritage) : 68 625 &times; 20% &minus; 1 806 = <strong>11 919&euro; par enfant</strong><br>
+      Capital net par enfant : 68 625 &minus; 11 919 = <strong>56 706&euro;</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- CAS PRATIQUES -->
+<div id="tab-cas" class="tab-pane">
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;1 <span class="cas-ref">Impact CIOT</span></div>
+    <div class="cas-enonce">Mr D&eacute;c&egrave;de &agrave; 67 ans. R&eacute;gime l&eacute;gal. Mme a une AV de 400 000&euro; financ&eacute;e avec fonds communs. 2 enfants.<br><strong>Question :</strong> Quel montant entre dans la masse civile ? Quel montant est tax&eacute; ?</div>
+    <div class="cas-piege">&#9888; Piège classique : confondre masse civile et masse fiscale depuis CIOT.</div>
+    <button class="cas-btn" onclick="toggleCas('c1')">Voir la r&eacute;ponse</button>
+    <div class="cas-solution" id="c1">
+      Masse civile : 400 000 / 2 = <strong>200 000&euro; entrent dans la succession de Mr</strong> (CIOT confirme Bacquet sur ce point)<br><br>
+      Masse fiscale : <strong>0&euro; suppl&eacute;mentaire</strong> gr&acirc;ce &agrave; CIOT &mdash; ces 200 000&euro; sont exon&eacute;r&eacute;s de droits de succession.<br><br>
+      R&eacute;sultat : les enfants ne paient aucun droit sur la valeur de rachat de l&rsquo;AV Mme. Depuis CIOT, cet &eacute;cueil fiscal a &eacute;t&eacute; &eacute;limin&eacute;.
+    </div>
+  </div>
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;2 <span class="cas-ref">990I avec PS</span></div>
+    <div class="cas-enonce">AV de 500 000&euro; (dont 50 000&euro; d&rsquo;int&eacute;r&ecirc;ts), 2 enfants b&eacute;n&eacute;ficiaires, primes vers&eacute;es avant 70 ans.<br><strong>Question :</strong> Calculer le capital net re&ccedil;u par chaque enfant.</div>
+    <div class="cas-piege">&#9888; Attention : les PS r&eacute;duisent d&rsquo;abord le capital, AVANT d&rsquo;appliquer l&rsquo;abattement 990I.</div>
+    <button class="cas-btn" onclick="toggleCas('c2')">Voir la r&eacute;ponse</button>
+    <div class="cas-solution" id="c2">
+      PS : 50 000 &times; 17,2% = 8 600&euro;<br>
+      Capital net PS : 450 000 + (50 000 &minus; 8 600) = 450 000 + 41 400 = <strong>491 400&euro;</strong><br>
+      Par b&eacute;n&eacute;ficiaire : 491 400 / 2 = <strong>245 700&euro;</strong><br>
+      Taxe 990I : (245 700 &minus; 152 500) &times; 20% = 93 200 &times; 20% = 18 640&euro;<br>
+      <strong>Capital net par enfant : 245 700 &minus; 18 640 = 227 060&euro;</strong>
+    </div>
+  </div>
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;3 <span class="cas-ref">Bacquet/CIOT en s&eacute;paration de biens ?</span></div>
+    <div class="cas-enonce">Mr et Mme MARTIN sont mari&eacute;s sous r&eacute;gime de s&eacute;paration de biens. Mme a une AV de 250 000&euro; financ&eacute;e avec ses fonds propres. Mr d&eacute;c&egrave;de.<br><strong>Question :</strong> La moiti&eacute; de l&rsquo;AV Mme entre-t-elle dans la succession de Mr ?</div>
+    <div class="cas-piege">&#9888; Piège : beaucoup &eacute;tendent Bacquet/CIOT &agrave; tous les r&eacute;gimes matrimoniaux.</div>
+    <button class="cas-btn" onclick="toggleCas('c3')">Voir la r&eacute;ponse</button>
+    <div class="cas-solution" id="c3">
+      <strong>Non.</strong> Bacquet et CIOT s&rsquo;appliquent UNIQUEMENT aux r&eacute;gimes communautaires.<br><br>
+      En s&eacute;paration de biens : l&rsquo;AV de Mme est financ&eacute;e avec ses fonds propres. Il n&rsquo;y a pas d&rsquo;actif commun. La valeur de rachat de l&rsquo;AV de Mme n&rsquo;entre donc PAS dans la succession de Mr.<br><br>
+      L&rsquo;AV de Mme sera soumise &agrave; 990I ou 757B uniquement lors de son propre d&eacute;c&egrave;s.
+    </div>
+  </div>
+</div>
+
+<script>
+var CARDS = [{"ch": 1, "q": "Qu'est-ce que la valeur de rachat d'une AV non dénouée ?", "a": "La valeur du contrat d'assurance-vie à la date du décès du premier époux, avant tout dénouement. Le contrat continue de vivre pour le conjoint survivant — seule sa valeur actuelle est prise en compte dans la succession."}, {"ch": 1, "q": "Qu'est-ce qu'une AV financée avec des fonds communs ?", "a": "Une AV souscrite par un époux marié sous régime légal (communauté réduite aux acquêts) en utilisant des fonds acquis pendant le mariage. Les deux époux sont co-propriétaires de ces fonds à parts égales."}, {"ch": 1, "q": "L'AV du conjoint survivant se dénoue-t-elle au 1er décès ?", "a": "Non. L'AV du conjoint survivant continue de vivre. C'est précisément le problème soulevé par Bacquet/CIOT : même non dénouée, sa valeur entre dans la succession du défunt."}, {"ch": 1, "q": "Bacquet/CIOT s'appliquent-elles en séparation de biens ?", "a": "Non — uniquement aux régimes communautaires (légal, communauté universelle). En séparation de biens, chaque époux finance son AV avec ses propres fonds → pas d'actif commun → ni Bacquet ni CIOT."}, {"ch": 2, "q": "Que dit la réponse ministérielle Bacquet (29/06/2010) ?", "a": "Si un époux (régime légal) souscrit une AV avec des fonds communs, la valeur de rachat de ce contrat NON dénoué constitue un actif de communauté. Au décès du premier époux, la MOITIÉ de cette valeur entre dans la masse successorale."}, {"ch": 2, "q": "Quelle est la conséquence principale de Bacquet pour les enfants ?", "a": "La masse successorale est augmentée de la moitié de la valeur de rachat de l'AV du conjoint survivant → les droits de succession payés par les enfants sont plus élevés."}, {"ch": 2, "q": "Quel montant entre dans la masse successorale selon Bacquet ?", "a": "La MOITIÉ de la valeur de rachat de l'AV du conjoint survivant. Exemple : AV Mme = 300 000€ → 150 000€ entrent dans la succession de Mr (et sont taxés)."}, {"ch": 2, "q": "L'AV elle-même se dénoue-t-elle sous Bacquet ?", "a": "Non. L'AV du conjoint survivant continue à vivre. Les articles 990I/757B ne s'appliqueront qu'au dénouement définitif au décès du 2ème époux."}, {"ch": 3, "q": "Que dit la réponse ministérielle CIOT (01/02/2016) ?", "a": "La moitié de la valeur de rachat de l'AV du conjoint survivant entre toujours dans la masse CIVILE (confirmation Bacquet). MAIS cette somme est désormais EXONÉRÉE DE DROITS DE SUCCESSION."}, {"ch": 3, "q": "Différence fondamentale Bacquet vs CIOT ?", "a": "Bacquet : la moitié entre dans la masse civile ET est taxée → frais pour enfants.\nCIOT : la moitié entre dans la masse civile MAIS est exonérée fiscalement → 0€ de frais supplémentaires."}, {"ch": 3, "q": "CIOT annule-t-elle complètement Bacquet ?", "a": "Fiscalement oui : les enfants ne paient plus de droits sur la moitié de l'AV du survivant.\nCivilement non : la masse civile reste augmentée → impact sur réserve héréditaire et calculs usufruit/NP."}, {"ch": 3, "q": "CIOT s'applique-t-elle à une AV financée avec fonds propres ?", "a": "Non. CIOT (comme Bacquet) ne concerne que les AV financées avec des fonds communs. AV financée avec fonds propres = aucune inclusion dans la masse successorale."}, {"ch": 4, "q": "Comment calculer le capital décès net sous 990I avec PS ?", "a": "1. PS = gains × 17,2%\n2. Capital net PS = primes + (gains − PS)\n3. Part/bénéf. = capital net PS ÷ nb bénéficiaires\n4. Taxe = (part − 152 500€) × 20% [si < 852 500€]\n5. Capital net = part − taxe"}, {"ch": 4, "q": "Que sont les prélèvements sociaux (PS) sur une AV ?", "a": "Taxe de 17,2% sur les gains (intérêts + plus-values) d'une AV. Au décès : PS = gains × 17,2% → réduit le capital décès versé aux bénéficiaires. Les primes ne sont jamais soumises aux PS."}, {"ch": 4, "q": "Valeur de l'usufruit à 64 ans selon le barème fiscal ?", "a": "40%. Barème par tranche d'âge :\n< 21 ans : 90% | 21-30 : 80% | 31-40 : 70% | 41-50 : 60%\n51-60 : 50% | 61-70 : 40% | 71-80 : 30% | 81-90 : 20% | > 90 : 10%"}, {"ch": 4, "q": "Option 100% usufruit du conjoint : que reçoivent les enfants ?", "a": "La nue-propriété de 100% de la succession. Valeur fiscale NP = 100% − valeur usufruit. À 64 ans : NP = 60%. Avantage : au décès du survivant, les enfants récupèrent la pleine propriété sans droits supplémentaires."}, {"ch": 4, "q": "Option 1/4 PP + 3/4 usufruit : comment répartir ?", "a": "Le conjoint reçoit 1/4 en pleine propriété + 3/4 en usufruit.\nLes enfants reçoivent la nue-propriété des 3/4 restants.\nValeur civile conjoint = (1/4 × masse) + (3/4 × masse × valeur usufruit%)."}, {"ch": 4, "q": "Quotité disponible pour 4 enfants ?", "a": "1/5 (un cinquième). La réserve héréditaire pour 4 enfants = 4/5. Le conjoint peut choisir la quotité disponible (1/5 PP) ou l'usufruit de toute la succession."}, {"ch": 4, "q": "Conseil CGP — Comment neutraliser l'effet Bacquet/CIOT ?", "a": "1. Financer l'AV avec des fonds propres (héritage, donation reçue avant mariage)\n2. Considérer un changement de régime matrimonial\nNote : CIOT neutralise l'effet FISCAL de Bacquet → l'urgence est moindre depuis 2016."}, {"ch": 4, "q": "Sous 757B, quelle est l'assiette taxable après 70 ans ?", "a": "Primes NETTES uniquement (gains exonérés) − abattement GLOBAL de 30 500€ partagé entre tous les bénéficiaires de tous les contrats. Soumis au barème des droits de succession selon lien de parenté."}];
+var QUIZ  = [{"q": "La RM Bacquet concerne les AV souscrites avec...", "opts": ["Des fonds propres uniquement", "Des fonds communs, régime légal", "Tout type de fonds", "Des fonds étrangers"], "a": 1, "e": "Bacquet (et CIOT) s'appliquent uniquement aux AV financées avec des fonds communs sous régime légal ou communauté universelle."}, {"q": "Selon Bacquet, quelle fraction de l'AV du conjoint survivant entre dans la succession ?", "opts": ["La totalité", "Le tiers", "La moitié", "Le quart"], "a": 2, "e": "La MOITIÉ de la valeur de rachat de l'AV du conjoint survivant entre dans la masse successorale du défunt."}, {"q": "Que change CIOT par rapport à Bacquet ?", "opts": ["La part qui entre dans la masse passe à 1/3", "La part civile est supprimée", "La part civile reste mais est exonérée fiscalement", "Les PS ne s'appliquent plus"], "a": 2, "e": "CIOT : la moitié entre toujours dans la masse CIVILE (même chose que Bacquet) MAIS est exonérée de droits de succession. Impact fiscal = 0€."}, {"q": "CIOT s'applique-t-elle en séparation de biens ?", "opts": ["Oui, toujours", "Non, jamais", "Oui si AV > 100 000€", "Oui si DDV"], "a": 1, "e": "Ni Bacquet ni CIOT ne s'appliquent en séparation de biens — pas de fonds communs, pas d'actif commun à intégrer."}, {"q": "Valeur de l'usufruit pour un conjoint de 64 ans ?", "opts": ["30 %", "40 %", "50 %", "60 %"], "a": 1, "e": "40% selon le barème fiscal (tranche 61-70 ans). La nue-propriété vaut donc 60%."}, {"q": "Calcul 990I — les prélèvements sociaux s'appliquent sur...", "opts": ["Le capital total", "Les primes uniquement", "Les gains (intérêts) uniquement", "Les primes après abattement"], "a": 2, "e": "PS = 17,2% sur les gains uniquement (intérêts et plus-values). Les primes ne sont jamais soumises aux PS."}, {"q": "Pour 4 enfants, la quotité disponible est de...", "opts": ["1/4", "1/3", "1/5", "1/6"], "a": 2, "e": "Avec 4 enfants, réserve = 4/5, quotité disponible = 1/5. Le conjoint peut recueillir au maximum 1/5 en PP."}, {"q": "L'AV du conjoint survivant se dénoue-t-elle au 1er décès ?", "opts": ["Oui, automatiquement", "Non, elle continue de vivre", "Oui si le conjoint est assuré", "Seulement si fonds propres"], "a": 1, "e": "L'AV ne se dénoue pas au 1er décès si l'assuré est le conjoint survivant. Seule la VALEUR DE RACHAT est prise en compte (Bacquet/CIOT)."}, {"q": "Quelle RM a corrigé l'impact FISCAL de Bacquet ?", "opts": ["RM Bacquet elle-même", "RM CIOT (01/02/2016)", "Loi TEPA 2007", "Loi de finances 2018"], "a": 1, "e": "La RM CIOT du 01/02/2016 a exonéré de droits de succession la part de l'AV qui entre dans la masse successorale, neutralisant l'impact fiscal de Bacquet."}, {"q": "Sous 757B, que deviennent les gains sur primes versées après 70 ans ?", "opts": ["Taxés à 20%", "Taxés au barème succession", "Totalement exonérés", "Soumis aux PS uniquement"], "a": 2, "e": "Sous 757B, les gains sont totalement exonérés. Seules les primes nettes (au-delà de l'abattement global de 30 500€) sont soumises au barème des droits de succession."}, {"q": "Abattement 990I par bénéficiaire ?", "opts": ["30 500€", "80 724€", "100 000€", "152 500€"], "a": 3, "e": "152 500€ par bénéficiaire, tous contrats AV confondus. C'est l'abattement clé de l'article 990I du CGI."}, {"q": "Abattement 757B (total pour tous bénéficiaires) ?", "opts": ["30 500€", "100 000€", "152 500€", "305 000€"], "a": 0, "e": "30 500€ GLOBAL partagé entre tous les bénéficiaires de tous les contrats AV du défunt. Attention : c'est un abattement collectif, pas par bénéficiaire."}, {"q": "Option 100% usufruit — à 64 ans, les enfants reçoivent en valeur fiscale...", "opts": ["40% de la succession", "60% de la succession", "100% de la succession", "80% de la succession"], "a": 1, "e": "NP = 100% − usufruit = 100% − 40% = 60%. Les enfants reçoivent la nue-propriété de 60% de la masse fiscale."}, {"q": "Dans l'exercice EXEMPLE, Mr décède. L'AV Mme (300 000€) financée fonds communs : que dit CIOT ?", "opts": ["150 000€ entrent dans la masse et sont taxés", "300 000€ hors succession", "150 000€ entrent dans la masse civile mais 0€ de droits", "300 000€ entrent dans la masse et sont taxés"], "a": 2, "e": "CIOT : moitié = 150 000€ entre dans la masse CIVILE (augmente la base de calcul) mais est exonérée de droits de succession. Impact fiscal = 0€ pour les enfants."}, {"q": "En séparation de biens, l'AV Mme (620 000€, bénéficiaire conjoint + enfants) entre-t-elle dans la succession de Mme ?", "opts": ["Oui, la totalité", "Non, hors succession — 990I s'applique", "Oui, la moitié selon CIOT", "Oui selon Bacquet"], "a": 1, "e": "Séparation de biens = pas de fonds communs → ni Bacquet ni CIOT. L'AV est hors succession → 990I s'applique au dénouement. Le conjoint bénéficiaire est exonéré."}];
+var FOCUS = {"bacquet": {"titre": "RM Bacquet — Mécanique", "cartes": [1, 2, 3, 4, 5, 6, 7, 8], "resume": "Bacquet 2010 : 1/2 valeur rachat AV conjoint survivant → masse successorale (taxée)"}, "ciot": {"titre": "RM CIOT — Neutralisation", "cartes": [9, 10, 11, 12], "resume": "CIOT 2016 : 1/2 masse civile OUI — mais EXONÉRÉE de droits de succession"}, "calcul990i": {"titre": "Calcul 990I avec PS", "cartes": [13, 14], "resume": "PS 17,2% sur gains → capital net / nb bénéficiaires → abattement 152 500€/béné → taxe 20%"}, "options": {"titre": "Options du conjoint survivant", "cartes": [15, 16, 17, 18, 19, 20], "resume": "Usufruit 100%, 1/4PP + 3/4US, quotité disponible — barème fiscal de l'usufruit"}};
+var CH_LABELS = {1:'Ch.1 — Contexte',2:'Ch.2 — Bacquet',3:'Ch.3 — CIOT',4:'Ch.4 — Stratégies'};
+
+var filteredCards = CARDS.slice(), cardIdx = 0;
+function showCard(){
+  var ci=document.getElementById('card-inner');
+  if(ci) ci.classList.remove('flipped');
+  var c=filteredCards[cardIdx];
+  document.getElementById('card-q').textContent=c.q;
+  document.getElementById('card-a').textContent=c.a;
+  document.getElementById('card-ch').textContent=CH_LABELS[c.ch]||'Ch.'+c.ch;
+  document.getElementById('card-counter').textContent='Carte '+(cardIdx+1)+' / '+filteredCards.length;
+}
+function flipCard(){document.getElementById('card-inner').classList.toggle('flipped');}
+function nextCard(){cardIdx=(cardIdx+1)%filteredCards.length;showCard();}
+function prevCard(){cardIdx=(cardIdx-1+filteredCards.length)%filteredCards.length;showCard();}
+function shuffleCards(){for(var i=filteredCards.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=filteredCards[i];filteredCards[i]=filteredCards[j];filteredCards[j]=t;}cardIdx=0;showCard();}
+function filterCards(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  filteredCards=ch===0?CARDS.slice():CARDS.filter(function(c){return c.ch===ch;});
+  cardIdx=0;showCard();
+}
+
+function buildQuiz(){
+  var html='';
+  QUIZ.forEach(function(q,i){
+    html+='<div class="quiz-q" id="qq'+i+'"><p>'+(i+1)+'. '+q.q+'</p><div class="quiz-opts">';
+    q.opts.forEach(function(o,j){html+='<button class="quiz-opt" onclick="pickOpt('+i+','+j+',this)">'+o+'</button>';});
+    html+='</div><div class="quiz-exp" id="qe'+i+'">'+q.e+'</div></div>';
+  });
+  document.getElementById('quiz-container').innerHTML=html;
+}
+var quizAnswers={};
+function pickOpt(qi,oi,btn){
+  var qq=document.getElementById('qq'+qi);
+  if(qq.classList.contains('done'))return;
+  qq.classList.add('done');quizAnswers[qi]=oi;
+  qq.querySelectorAll('.quiz-opt').forEach(function(b,j){if(j===QUIZ[qi].a)b.classList.add('correct');else if(j===oi)b.classList.add('wrong');});
+  document.getElementById('qe'+qi).style.display='block';
+}
+function submitQuiz(){
+  var score=0;QUIZ.forEach(function(q,i){if(quizAnswers[i]===q.a)score++;});
+  var pct=Math.round(score/QUIZ.length*100);
+  document.getElementById('quiz-summary').style.display='block';
+  document.getElementById('quiz-summary').innerHTML='<h3 style="font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:8px">Résultat : '+score+'/'+QUIZ.length+' ('+pct+'%)</h3>'+(pct>=80?'<p style="color:var(--ok);font-weight:700">Excellent !</p>':'<p style="color:var(--muted)">Revois les points manqués.</p>');
+  document.getElementById('quiz-submit').style.display='none';
+  document.getElementById('quiz-reset').style.display='block';
+  try{var sc=JSON.parse(localStorage.getItem('cgp_scores')||'{}');sc['jour07']={score:score,total:QUIZ.length,pct:pct,date:new Date().toLocaleDateString('fr-FR')};localStorage.setItem('cgp_scores',JSON.stringify(sc));}catch(e){}
+}
+function resetQuiz(){quizAnswers={};buildQuiz();document.getElementById('quiz-summary').style.display='none';document.getElementById('quiz-submit').style.display='block';document.getElementById('quiz-reset').style.display='none';}
+
+function buildFocus(){
+  var keys=Object.keys(FOCUS);
+  var navHtml='',contentHtml='';
+  keys.forEach(function(k,i){
+    var f=FOCUS[k];
+    navHtml+='<button class="focus-btn'+(i===0?' active':'')+'" data-key="'+k+'" onclick="showFocus(this.dataset.key,this)">'+f.titre+'</button>';
+    contentHtml+='<div class="focus-pane'+(i===0?' active':'')+'" id="focus-'+k+'">';
+    contentHtml+='<div class="focus-resume">'+f.resume+'</div>';
+    contentHtml+='<div style="font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em">Flashcards</div>';
+    f.cartes.forEach(function(ci){
+      var c=CARDS[ci-1];if(!c)return;
+      contentHtml+='<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer" onclick="toggleAns(this)">';
+      contentHtml+='<div style="font-size:.86rem;font-weight:700;color:var(--navy)">'+c.q+'</div>';
+      contentHtml+='<div class="ans" style="display:none;font-size:.83rem;color:var(--muted);margin-top:8px;white-space:pre-line;line-height:1.5">'+c.a+'</div></div>';
+    });
+    contentHtml+='</div>';
+  });
+  document.getElementById('focus-nav').innerHTML=navHtml;
+  document.getElementById('focus-content').innerHTML=contentHtml;
+}
+function showFocus(k,btn){
+  document.querySelectorAll('.focus-pane').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('focus-'+k).classList.add('active');
+  document.querySelectorAll('.focus-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+function toggleAns(el){var ans=el.querySelector('.ans');ans.style.display=ans.style.display==='block'?'none':'block';}
+
+function j7go(id){
+  ['r','1','2','3'].forEach(function(x){var el=document.getElementById('fiche-'+x);if(el)el.classList.remove('active');});
+  var t=document.getElementById('fiche-'+id);if(t)t.classList.add('active');
+  var btns=document.querySelectorAll('.fiche-btn');
+  var map={r:0,1:1,2:2,3:3};
+  btns.forEach(function(b){b.classList.remove('active')});
+  if(btns[map[id]])btns[map[id]].classList.add('active');
+}
+
+function toggleExo(id){var el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block';}
+function toggleCas(id){var el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block';}
+
+function showTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+
+window.onload=function(){showCard();buildQuiz();buildFocus();};
+</script>
+</body>
+</html>
