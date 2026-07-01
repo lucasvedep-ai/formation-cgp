@@ -110,10 +110,10 @@ ul.items li strong{color:var(--navy)}
   <h1>&#128218; Formation CGP</h1>
   <p>Cap Finances &middot; Lucas &middot; Lorient</p>
   <div class="stats-bar">
-    <div class="stat-pill"><span id="stat-days">7</span> jours disponibles</div>
-    <div class="stat-pill"><span>194</span> flashcards</div>
-    <div class="stat-pill"><span>105</span> questions quiz</div>
-    <div class="stat-pill"><span>28</span> th&egrave;mes focus</div>
+    <div class="stat-pill"><span id="stat-days">8</span> jours disponibles</div>
+    <div class="stat-pill"><span>234</span> flashcards</div>
+    <div class="stat-pill"><span>135</span> questions quiz</div>
+    <div class="stat-pill"><span>32</span> th&egrave;mes focus</div>
   </div>
 </header>
 <div class="main-tabs">
@@ -242,8 +242,22 @@ ul.items li strong{color:var(--navy)}
       <div class="day-score no-score" id="score-jour07">Quiz non encore effectu&eacute;</div>
       <a href="./Jour%2007%20-%20AV%20Deces%20Bacquet%20CIOT/flashcards-quiz.html" class="btn-open">Ouvrir la le&ccedil;on &rarr;</a>
     </div>
-    <div class="day-card locked">
+    <div class="day-card available">
       <div class="day-badge">Jour 08</div>
+      <div class="day-date">2 juillet 2026</div>
+      <div class="day-title">Imp&ocirc;t sur le revenu &amp; Retraite</div>
+      <div class="day-topics">
+        <span class="topic-tag">Tranches IR</span>
+        <span class="topic-tag">CEHR &amp; IFI</span>
+        <span class="topic-tag">Trimestres</span>
+        <span class="topic-tag">16 caisses</span>
+      </div>
+      <div class="day-stats"><span>&#127183; 40 cartes</span><span>&#128221; 30 questions</span><span>&#127919; 4 focus</span></div>
+      <div class="day-score no-score" id="score-jour08">Quiz non encore effectu&eacute;</div>
+      <a href="./Jour%2008%20-%20Impots%20et%20Retraite/flashcards-quiz.html" class="btn-open">Ouvrir la le&ccedil;on &rarr;</a>
+    </div>
+    <div class="day-card locked">
+      <div class="day-badge">Jour 09</div>
       <div class="day-date">&Agrave; venir</div>
       <div class="day-title">Prochain cours</div>
       <div class="day-topics"><span class="topic-tag">Envoyer les slides</span></div>
@@ -972,7 +986,7 @@ function showFocTheme(id, btn) {
 }
 try {
   var scores = JSON.parse(localStorage.getItem('cgp_scores') || '{}');
-  ['jour01','jour02','jour03','jour04','jour05','jour06','jour07'].forEach(function(k){
+  ['jour01','jour02','jour03','jour04','jour05','jour06','jour07','jour08'].forEach(function(k){
     if(scores[k]){
       var s=scores[k], el=document.getElementById('score-'+k);
       if(el){el.className='day-score has-score';el.textContent='Dernier quiz : '+s.score+'/'+s.total+' ('+s.pct+'%) — '+s.date;}
