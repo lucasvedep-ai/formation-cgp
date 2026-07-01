@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jour 08 &mdash; Imp&ocirc;t sur le revenu &amp; Retraite | Formation CGP</title>
+<style>
+:root{
+  --navy:#1a2744;--navy2:#253460;--gold:#c9a227;--gold2:#e8c84a;
+  --bg:#f4f6fb;--white:#fff;--text:#1a2744;--muted:#5a6a8a;
+  --ok:#2d8a4e;--ok-bg:#eafaf1;--err:#c0392b;--err-bg:#fdf3f2;
+  --border:#dce3f0;--shadow:0 8px 32px rgba(26,39,68,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:28px 32px 22px}
+header h1{font-size:1.4rem;font-weight:800;margin-bottom:4px}
+header p{font-size:.82rem;color:rgba(255,255,255,.55)}
+.tab-bar{display:flex;background:var(--navy2);overflow-x:auto}
+.tab-btn{background:none;border:none;color:rgba(255,255,255,.5);font-size:.78rem;font-weight:700;padding:12px 18px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:.15s}
+.tab-btn.active{color:#fff;border-bottom-color:var(--gold2)}
+.tab-pane{display:none;padding:24px 20px;max-width:860px;margin:0 auto}
+.tab-pane.active{display:block}
+.card-wrap{perspective:1000px;cursor:pointer;margin:0 auto 20px;max-width:580px}
+.card-inner{position:relative;width:100%;min-height:180px;transform-style:preserve-3d;transition:.5s}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-face{position:absolute;width:100%;min-height:180px;backface-visibility:hidden;border-radius:18px;padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-shadow:var(--shadow)}
+.card-front{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff}
+.card-back{background:#fff;transform:rotateY(180deg);border:2px solid var(--border)}
+.ch-badge{font-size:.65rem;font-weight:800;background:rgba(255,255,255,.15);border-radius:99px;padding:3px 10px;margin-bottom:12px;letter-spacing:.06em}
+.card-q{font-size:1.05rem;font-weight:700;line-height:1.4}
+.card-a{font-size:.88rem;color:var(--text);line-height:1.6;white-space:pre-line}
+.card-nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:4px}
+.card-nav button{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer}
+.card-counter{text-align:center;font-size:.78rem;color:var(--muted);margin-bottom:14px}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filter-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:6px 14px;font-size:.76rem;font-weight:700;color:var(--muted);cursor:pointer}
+.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.quiz-q{background:#fff;border-radius:16px;padding:22px 24px;margin-bottom:16px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.quiz-q p{font-size:.95rem;font-weight:700;margin-bottom:14px;line-height:1.4}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:.86rem;cursor:pointer;text-align:left;transition:.12s;font-weight:500}
+.quiz-opt:hover{border-color:var(--navy);background:#eef1f8}
+.quiz-opt.correct{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:700}
+.quiz-opt.wrong{background:var(--err-bg);border-color:var(--err);color:var(--err)}
+.quiz-exp{font-size:.82rem;color:var(--muted);background:var(--bg);border-radius:8px;padding:10px 12px;margin-top:10px;display:none;line-height:1.5}
+.quiz-summary{background:#fff;border-radius:16px;padding:24px;text-align:center;border:1.5px solid var(--border)}
+.focus-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.focus-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer}
+.focus-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.focus-pane{display:none}
+.focus-pane.active{display:block}
+.focus-resume{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:14px;padding:16px 18px;margin-bottom:18px;font-size:.88rem;font-weight:600;line-height:1.5}
+.fiche-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.fiche-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer}
+.fiche-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.fiche-section{display:none}
+.fiche-section.active{display:block}
+.fiche-block{background:#fff;border-radius:14px;padding:20px 22px;margin-bottom:14px;border:1.5px solid var(--border)}
+.fiche-block h3{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.fiche-table{width:100%;border-collapse:collapse;font-size:.83rem;margin-top:8px}
+.fiche-table th{background:var(--navy);color:#fff;padding:7px 10px;text-align:left}
+.fiche-table td{padding:6px 10px;border-bottom:1px solid var(--border)}
+.fiche-table tr:nth-child(even) td{background:var(--bg)}
+.fiche-hl{background:#fff3cd;border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+.fiche-warn{background:#fff0f0;border-left:4px solid var(--err);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+.fiche-ok{background:var(--ok-bg);border-left:4px solid var(--ok);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+dl.fiche-dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.84rem}
+dl.fiche-dl dt{font-weight:700;color:var(--navy);white-space:nowrap}
+dl.fiche-dl dd{line-height:1.5}
+.exo{background:#fff;border-radius:16px;padding:24px;margin-bottom:20px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.exo-title{font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.exo-tag{font-size:.7rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;color:var(--muted);font-weight:600}
+.exo-questions{background:#c0392b;color:#fff;border-radius:10px;padding:10px 14px;font-size:.82rem;line-height:1.7;margin:12px 0}
+.exo-enonce{background:var(--bg);border-radius:10px;padding:12px 14px;font-size:.84rem;line-height:1.6;margin:10px 0}
+.exo-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;margin-top:10px;display:block}
+.exo-solution{display:none;margin-top:14px;border-top:1.5px solid var(--border);padding-top:14px}
+.exo-step{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:.83rem;margin-bottom:8px;line-height:1.6}
+.exo-step strong{color:var(--navy)}
+.cas{background:#fff;border-radius:16px;padding:24px;margin-bottom:18px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.cas-title{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:6px}
+.cas-ref{font-size:.7rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;color:var(--muted)}
+.cas-enonce{font-size:.86rem;line-height:1.6;margin-bottom:14px}
+.cas-piege{background:#fff3cd;border-radius:8px;padding:10px 14px;font-size:.82rem;margin-bottom:14px;line-height:1.5}
+.cas-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:10px}
+.cas-solution{display:none;background:var(--ok-bg);border-radius:8px;padding:14px 16px;font-size:.84rem;line-height:1.6;border:1px solid var(--ok)}
+@media(max-width:600px){header{padding:20px 16px}.tab-pane{padding:18px 14px}dl.fiche-dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>&#128218; Jour 08 &mdash; Imp&ocirc;t sur le revenu &amp; La Retraite</h1>
+  <p>Tranches IR &middot; Plafonnements &middot; CEHR &middot; IFI &middot; Trimestres &middot; Les 16 caisses</p>
+</header>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('flashcards',this)">&#127183; Flashcards</button>
+  <button class="tab-btn" onclick="showTab('quiz',this)">&#128221; Quiz</button>
+  <button class="tab-btn" onclick="showTab('focus',this)">&#127919; Focus</button>
+  <button class="tab-btn" onclick="showTab('fiche',this)">&#128196; Fiche</button>
+  <button class="tab-btn" onclick="showTab('exercices',this)">&#127947; Exercices</button>
+  <button class="tab-btn" onclick="showTab('cas',this)">&#128203; Cas pratiques</button>
+</div>
+
+<!-- FLASHCARDS -->
+<div id="tab-flashcards" class="tab-pane active">
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCards(0,this)">Tous (40)</button>
+    <button class="filter-btn" onclick="filterCards(1,this)">IR &mdash; Parts &amp; Tranches</button>
+    <button class="filter-btn" onclick="filterCards(2,this)">IR &mdash; Plafonnements</button>
+    <button class="filter-btn" onclick="filterCards(3,this)">Retraite &mdash; Bases</button>
+    <button class="filter-btn" onclick="filterCards(4,this)">Retraite &mdash; Caisses</button>
+  </div>
+  <div class="card-counter" id="card-counter">Carte 1 / 40</div>
+  <div class="card-wrap" onclick="flipCard()">
+    <div class="card-inner" id="card-inner">
+      <div class="card-face card-front">
+        <div class="ch-badge" id="card-ch">Ch. 1</div>
+        <div class="card-q" id="card-q">...</div>
+      </div>
+      <div class="card-face card-back">
+        <div class="card-a" id="card-a">...</div>
+      </div>
+    </div>
+  </div>
+  <div class="card-nav">
+    <button onclick="prevCard()">&#8592; Pr&eacute;c.</button>
+    <button onclick="shuffleCards()">&#128256; M&eacute;langer</button>
+    <button onclick="nextCard()">Suiv. &#8594;</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="tab-quiz" class="tab-pane">
+  <div id="quiz-container"></div>
+  <div id="quiz-summary" class="quiz-summary" style="display:none"></div>
+  <button id="quiz-submit" onclick="submitQuiz()" style="display:block;margin:0 auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Valider le quiz</button>
+  <button id="quiz-reset" onclick="resetQuiz()" style="display:none;margin:16px auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Recommencer</button>
+</div>
+
+<!-- FOCUS -->
+<div id="tab-focus" class="tab-pane">
+  <div class="focus-nav" id="focus-nav"></div>
+  <div id="focus-content"></div>
+</div>
+
+<!-- FICHE -->
+<div id="tab-fiche" class="tab-pane">
+  <div class="fiche-nav">
+    <button class="fiche-btn active" onclick="j8go('r')">Vue d&rsquo;ensemble</button>
+    <button class="fiche-btn" onclick="j8go('1')">IR &mdash; Parts &amp; Tranches</button>
+    <button class="fiche-btn" onclick="j8go('2')">IR &mdash; Plafonnements</button>
+    <button class="fiche-btn" onclick="j8go('3')">Retraite &mdash; Bases</button>
+    <button class="fiche-btn" onclick="j8go('4')">Les Caisses</button>
+  </div>
+
+  <!-- VUE D'ENSEMBLE -->
+  <div id="fiche-r" class="fiche-section active">
+    <div class="fiche-block">
+      <h3>&#128200; J8 en un coup d&rsquo;&oelig;il</h3>
+      <table class="fiche-table">
+        <tr><th>Th&egrave;me</th><th>Cl&eacute; 1</th><th>Cl&eacute; 2</th></tr>
+        <tr><td><strong>Parts IR</strong></td><td>Couple : 2 parts</td><td>+0,5/enfant (1er, 2e) ; +1 pour le 3e</td></tr>
+        <tr><td><strong>Tranches IR</strong></td><td>5 tranches : 0% / 11% / 30% / 41% / 45%</td><td>Formules rapides par tranche</td></tr>
+        <tr><td><strong>Plafond QF</strong></td><td>1 807€ / demi-part</td><td>Comparer avantage r&eacute;el vs plafond</td></tr>
+        <tr><td><strong>Niches fiscales</strong></td><td>Plafond 10 000€</td><td>R&eacute;duction (perdu) vs Cr&eacute;dit (rembours&eacute;)</td></tr>
+        <tr><td><strong>CEHR</strong></td><td>C&eacute;libataire : d&egrave;s 250 001€</td><td>Taux 3% puis 4%</td></tr>
+        <tr><td><strong>IFI</strong></td><td>Seuil 1 300 000€</td><td>Calcul &agrave; partir de 800 000€</td></tr>
+        <tr><td><strong>Retraite l&eacute;gal</strong></td><td>64 ans (n&eacute;s apr&egrave;s 1973)</td><td>67 ans = taux plein automatique</td></tr>
+        <tr><td><strong>Trimestres</strong></td><td>172T requis (n&eacute;s 1973+)</td><td>1T = 1 803€ en 2026</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- IR PARTS & TRANCHES -->
+  <div id="fiche-1" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Parts fiscales &mdash; Couple mari&eacute;/pacs&eacute;</h3>
+      <table class="fiche-table">
+        <tr><th>Situation</th><th>Parts</th></tr>
+        <tr><td>Sans enfant</td><td>2 parts</td></tr>
+        <tr><td>1 enfant</td><td>2,5 parts</td></tr>
+        <tr><td>2 enfants</td><td>3 parts</td></tr>
+        <tr><td>3 enfants</td><td>4 parts</td></tr>
+        <tr><td>+ invalide dans le foyer</td><td>+0,5 part suppl&eacute;mentaire</td></tr>
+      </table>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Tranches IR 2024 &mdash; Par part de quotient familial</h3>
+      <table class="fiche-table">
+        <tr><th>Tranche</th><th>Taux</th><th>Formule rapide</th></tr>
+        <tr><td>&le; 11 600€</td><td>0%</td><td>&mdash;</td></tr>
+        <tr><td>11 601€ &ndash; 29 579€</td><td>11%</td><td>(R &times; 0,11) &minus; (1 276 &times; N)</td></tr>
+        <tr><td>29 580€ &ndash; 84 577€</td><td>30%</td><td>(R &times; 0,30) &minus; (6 896,01 &times; N)</td></tr>
+        <tr><td>84 578€ &ndash; 181 917€</td><td>41%</td><td>(R &times; 0,41) &minus; (16 199,48 &times; N)</td></tr>
+        <tr><td>&gt; 181 917€</td><td>45%</td><td>(R &times; 0,45) &minus; (23 476,16 &times; N)</td></tr>
+      </table>
+      <div class="fiche-hl" style="margin-top:12px">R = revenu total imposable &bull; N = nombre de parts</div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Exemple &mdash; Th&eacute;o &amp; Charlotte (mari&eacute;s, 2 enfants, 78 000€)</h3>
+      <div class="exo-step"><strong>Avec 3 parts (tranche 11%) :</strong> (78 000 &times; 0,11) &minus; (1 276 &times; 3) = 8 580 &minus; 3 828 = <strong>4 752€</strong></div>
+      <div class="exo-step"><strong>Sans enfants (2 parts, tranche 30%) :</strong> (78 000 &times; 0,30) &minus; (6 896,01 &times; 2) = 23 400 &minus; 13 792,02 = <strong>9 607,98€</strong></div>
+      <div class="exo-step"><strong>Avantage r&eacute;el du QF :</strong> 9 607,98 &minus; 4 752 = <strong>4 855,98€</strong></div>
+      <div class="exo-step"><strong>Plafond (2 demi-parts) :</strong> 2 &times; 1 807 = <strong>3 614€</strong></div>
+      <div class="fiche-warn">4 855,98 &gt; 3 614 &rarr; plafonnement s&rsquo;applique<br><strong>Imp&ocirc;t final = 9 607,98 &minus; 3 614 = 5 993,98€</strong></div>
+    </div>
+  </div>
+
+  <!-- IR PLAFONNEMENTS -->
+  <div id="fiche-2" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Niches fiscales &mdash; Plafond 10 000€</h3>
+      <table class="fiche-table">
+        <tr><th>Type</th><th>D&eacute;finition</th><th>Exemples</th></tr>
+        <tr><td><strong>D&eacute;ductions</strong></td><td>D&eacute;duites du revenu imposable</td><td>PER, pensions alimentaires, frais r&eacute;els, t&eacute;l&eacute;travail</td></tr>
+        <tr><td><strong>R&eacute;ductions</strong></td><td>D&eacute;duites de l&rsquo;imp&ocirc;t &mdash; exc&eacute;dent <strong>perdu</strong></td><td>Pinel, dons associations, frais d&eacute;pendance, scolarit&eacute;</td></tr>
+        <tr><td><strong>Cr&eacute;dits</strong></td><td>D&eacute;duits de l&rsquo;imp&ocirc;t &mdash; exc&eacute;dent <strong>rembours&eacute;</strong></td><td>Garde enfants, salarié domicile, transition &eacute;nerg&eacute;tique</td></tr>
+      </table>
+      <div class="fiche-ok" style="margin-top:10px">Hors plafond 10 000€ : quotient familial &amp; dons organismes d&rsquo;int&eacute;r&ecirc;t g&eacute;n&eacute;ral</div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; CEHR &mdash; Contribution Exceptionnelle sur les Hauts Revenus</h3>
+      <table class="fiche-table">
+        <tr><th>RFR</th><th>C&eacute;libataire / Veuf / Divorc&eacute;</th><th>Mari&eacute; / Pacs&eacute;</th></tr>
+        <tr><td>&le; 250 000€</td><td>0%</td><td>0%</td></tr>
+        <tr><td>250 001 &ndash; 500 000€</td><td>3%</td><td>0%</td></tr>
+        <tr><td>500 001 &ndash; 1 000 000€</td><td>4%</td><td>3%</td></tr>
+        <tr><td>&gt; 1 000 000€</td><td>4%</td><td>4%</td></tr>
+      </table>
+      <div class="fiche-hl" style="margin-top:10px">Exemple : c&eacute;libataire RFR 400 000€ &rarr; (400 000 &minus; 250 000) &times; 3% = <strong>4 500€</strong></div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; IFI &mdash; Imp&ocirc;t sur la Fortune Immobili&egrave;re (depuis 01/01/2018)</h3>
+      <table class="fiche-table">
+        <tr><th>Valeur patrimoine net</th><th>Taux</th></tr>
+        <tr><td>&le; 800 000€</td><td>0%</td></tr>
+        <tr><td>800 001€ &ndash; 1 300 000€</td><td>0,50%</td></tr>
+        <tr><td>1 300 001€ &ndash; 2 570 000€</td><td>0,70%</td></tr>
+        <tr><td>2 570 001€ &ndash; 5 000 000€</td><td>1%</td></tr>
+        <tr><td>5 000 001€ &ndash; 10 000 000€</td><td>1,25%</td></tr>
+        <tr><td>&gt; 10 000 000€</td><td>1,50%</td></tr>
+      </table>
+      <div class="fiche-hl" style="margin-top:10px">Seuil : &ge; 1 300 000€ &bull; Calcul d&egrave;s 800 000€ &bull; D&eacute;cote entre 1,3M et 1,4M : 17 500€ &minus; 1,25% &times; valeur</div>
+      <div class="fiche-warn" style="margin-top:6px">Abattement 30% r&eacute;sidence principale &bull; Dons organismes : r&eacute;duction = 75% (limite 50 000€)<br>Exon&eacute;rations : biens pro, biens ruraux bail long terme (partielle), bois/for&ecirc;ts (75%)</div>
+      <div class="exo-step" style="margin-top:10px"><strong>Exemple IFI 1 500 000€ :</strong><br>(1 300 000 &minus; 800 000) &times; 0,50% + (1 500 000 &minus; 1 300 000) &times; 0,70%<br>= 2 500 + 1 400 = <strong>3 900€</strong></div>
+    </div>
+  </div>
+
+  <!-- RETRAITE BASES -->
+  <div id="fiche-3" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Validation des trimestres (2026)</h3>
+      <table class="fiche-table">
+        <tr><th>Trimestres valid&eacute;s</th><th>Salaire minimum brut</th></tr>
+        <tr><td>1 trimestre</td><td>1 803€</td></tr>
+        <tr><td>2 trimestres</td><td>3 606€</td></tr>
+        <tr><td>3 trimestres</td><td>5 409€</td></tr>
+        <tr><td>4 trimestres</td><td>7 212€</td></tr>
+      </table>
+      <div class="fiche-hl" style="margin-top:10px">= 150 &times; SMIC horaire &bull; 2 mois de travail au SMIC suffisent pour valider les 4 trimestres &bull; Rachat possible : max 12 trimestres</div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; P&eacute;riodes assimil&eacute;es (sans cotiser)</h3>
+      <table class="fiche-table">
+        <tr><th>Situation</th><th>Trimestres valid&eacute;s</th></tr>
+        <tr><td>Ch&ocirc;mage indemnис&eacute;</td><td>50 jours = 1 trimestre</td></tr>
+        <tr><td>Arr&ecirc;t maladie</td><td>60 jours cons&eacute;cutifs = 1T (max 4T/an)</td></tr>
+        <tr><td>Cong&eacute; parental</td><td>4 trimestres</td></tr>
+        <tr><td>Service militaire</td><td>Selon dur&eacute;e</td></tr>
+        <tr><td>Enfants</td><td>4 trimestres suppl&eacute;mentaires par enfant</td></tr>
+        <tr><td>Invalidit&eacute;</td><td>Prise en compte</td></tr>
+      </table>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; &Acirc;ges l&eacute;gaux de d&eacute;part (simplifi&eacute;)</h3>
+      <table class="fiche-table">
+        <tr><th>N&eacute;(e)</th><th>&Acirc;ge l&eacute;gal</th><th>Trimestres requis</th></tr>
+        <tr><td>1948 ou avant</td><td>60 ans</td><td>160 T</td></tr>
+        <tr><td>1952</td><td>60 ans 9 mois</td><td>164 T</td></tr>
+        <tr><td>1958&ndash;1961</td><td>62 ans</td><td>167&ndash;168 T</td></tr>
+        <tr><td>1965&ndash;1966</td><td>63 ans</td><td>172 T</td></tr>
+        <tr><td>1968&ndash;1969</td><td>64 ans</td><td>172 T</td></tr>
+        <tr><td><strong>1973 et apr&egrave;s</strong></td><td><strong>64 ans</strong></td><td><strong>172 T</strong></td></tr>
+      </table>
+      <div class="fiche-ok" style="margin-top:10px"><strong>67 ans = taux plein automatique</strong> (m&ecirc;me sans 172T, mais pension proratisée)</div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; D&eacute;parts anticip&eacute;s</h3>
+      <dl class="fiche-dl">
+        <dt>Carri&egrave;re longue</dt><dd>D&eacute;but avant 18 ans &rarr; d&eacute;part possible avant 64 ans</dd>
+        <dt>Handicap</dt><dd>D&egrave;s 55 ans (sous conditions)</dd>
+        <dt>Invalidit&eacute; / inaptitude</dt><dd>62 ans &agrave; taux plein (carri&egrave;re p&eacute;nible)</dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- LES CAISSES -->
+  <div id="fiche-4" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Salari&eacute;s du priv&eacute;</h3>
+      <table class="fiche-table">
+        <tr><th>Profil</th><th>Base</th><th>Compl&eacute;mentaire</th></tr>
+        <tr><td>Industrie, commerce, services</td><td>CNAV</td><td>AGIRC-ARRCO</td></tr>
+        <tr><td>Agriculture (salari&eacute;s)</td><td>MSA</td><td>ARRCO + AGIRC</td></tr>
+        <tr><td>Agents non titulaires &Eacute;tat/collectivit&eacute;s</td><td>CNAV</td><td>IRCANTEC</td></tr>
+        <tr><td>Personnel navigant aviation civile</td><td>CNAV</td><td>CRPN</td></tr>
+        <tr><td>Statut particulier (SNCF, RATP, mines...)</td><td colspan="2">Caisses sp&eacute;ciales (CPRPSNCF, CRP RATP, CNIEG...)</td></tr>
+      </table>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Fonctionnaires</h3>
+      <table class="fiche-table">
+        <tr><th>Profil</th><th>Base</th><th>Compl&eacute;mentaire</th></tr>
+        <tr><td>Fonctionnaires &Eacute;tat, magistrats, militaires</td><td>Service Retraite de l&rsquo;&Eacute;tat</td><td>RAFP</td></tr>
+        <tr><td>Agents territoriaux et hospitaliers</td><td>CNRACL</td><td>Retraite additionnelle</td></tr>
+        <tr><td>Ouvriers de l&rsquo;&Eacute;tat</td><td colspan="2">FSPOELIE</td></tr>
+      </table>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Non-salari&eacute;s (TNS)</h3>
+      <table class="fiche-table">
+        <tr><th>Profil</th><th>Caisse(s)</th></tr>
+        <tr><td>Exploitants agricoles</td><td>MSA (base + compl&eacute;mentaire)</td></tr>
+        <tr><td>Artisans, commer&ccedil;ants, industriels</td><td>SSI (base) + RCI (compl&eacute;mentaire)</td></tr>
+        <tr><td>Professions lib&eacute;rales &mdash; base</td><td>CNAVPL</td></tr>
+        <tr><td>M&eacute;decins</td><td>CARMF</td></tr>
+        <tr><td>Infirmiers, kin&eacute;sith&eacute;rapeutes</td><td>CARPIMKO</td></tr>
+        <tr><td>Pharmaciens</td><td>CAVP</td></tr>
+        <tr><td>Avocats</td><td>CNBF</td></tr>
+        <tr><td>Experts-comptables</td><td>CAVEC</td></tr>
+        <tr><td>Arch., ing., ost., psy. (lib&eacute;raux divers)</td><td>CIPAV</td></tr>
+        <tr><td>Agents g&eacute;n&eacute;raux d&rsquo;assurances</td><td>CAVAMAC</td></tr>
+        <tr><td>V&eacute;t&eacute;rinaires</td><td>CARPV</td></tr>
+        <tr><td>Notaires</td><td>CPRN</td></tr>
+        <tr><td>Artistes, auteurs</td><td>CNAV + IRCEC</td></tr>
+        <tr><td>Marins</td><td>ENIM</td></tr>
+        <tr><td>Membres des cultes</td><td>CAVIMAC + ARRCO</td></tr>
+      </table>
+      <div class="fiche-hl" style="margin-top:10px">Point vs Annuit&eacute; &mdash; &Agrave; point : cotisations &rarr; points &rarr; pension = nb points &times; valeur du point &bull; Par annuit&eacute; : calcul sur moyenne revenus carri&egrave;re</div>
+    </div>
+  </div>
+</div>
+
+<!-- EXERCICES -->
+<div id="tab-exercices" class="tab-pane">
+
+  <div class="exo">
+    <div class="exo-title">Exercice n&deg;1 <span class="exo-tag">Calcul IR &middot; Plafonnement QF</span></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Mr &amp; Mme DURAND &mdash; mari&eacute;s, r&eacute;gime l&eacute;gal, 2 enfants &agrave; charge, revenus imposables totaux : 95 000€</p>
+    <div class="exo-enonce">
+      Calculer l&rsquo;imp&ocirc;t sur le revenu du foyer DURAND en appliquant le barème 2024.<br>
+      <strong>Donn&eacute;es :</strong> Revenus bruts : 95 000€ &bull; Couple + 2 enfants = 3 parts &bull; Par part : 95 000 / 3 = 31 666,67€
+    </div>
+    <div class="exo-questions">&#9312; Identifier la tranche applicable par part &#9313; Calculer l&rsquo;imp&ocirc;t brut avec 3 parts &#9314; Calculer l&rsquo;imp&ocirc;t sans enfants (2 parts) &#9315; V&eacute;rifier si le plafonnement QF s&rsquo;applique &#9316; D&eacute;terminer l&rsquo;imp&ocirc;t final</div>
+    <button class="exo-btn" onclick="toggleExo('exo1')">Voir la solution</button>
+    <div class="exo-solution" id="exo1">
+      <div class="exo-step"><strong>&#9312; Tranche :</strong> 31 666,67€ &gt; 29 579€ &rarr; tranche &agrave; 30%</div>
+      <div class="exo-step"><strong>&#9313; Avec 3 parts (tranche 30%) :</strong><br>(95 000 &times; 0,30) &minus; (6 896,01 &times; 3) = 28 500 &minus; 20 688,03 = <strong>7 811,97€</strong></div>
+      <div class="exo-step"><strong>&#9314; Sans enfants (2 parts) :</strong><br>Par part : 95 000 / 2 = 47 500€ &rarr; toujours tranche 30%<br>(95 000 &times; 0,30) &minus; (6 896,01 &times; 2) = 28 500 &minus; 13 792,02 = <strong>14 707,98€</strong></div>
+      <div class="exo-step"><strong>&#9315; Plafonnement QF :</strong><br>Avantage r&eacute;el = 14 707,98 &minus; 7 811,97 = <strong>6 896,01€</strong><br>Plafond (2 demi-parts) = 2 &times; 1 807 = <strong>3 614€</strong><br>6 896,01 &gt; 3 614 &rarr; <strong>plafonnement s&rsquo;applique</strong></div>
+      <div class="exo-step"><strong>&#9316; Imp&ocirc;t final :</strong> 14 707,98 &minus; 3 614 = <strong>11 093,98€</strong></div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-title">Exercice n&deg;2 <span class="exo-tag">Calcul IFI &middot; Bar&egrave;me progressif</span></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">M. RICHAUD &mdash; patrimoine immobilier net taxable : 2 000 000€ (r&eacute;sidence principale &eacute;valu&eacute;e 700 000€ avant abattement)</p>
+    <div class="exo-enonce">
+      <strong>Patrimoine brut :</strong> RP 700 000€ + autres biens 1 700 000€ = 2 400 000€<br>
+      <strong>Abattement RP :</strong> 700 000 &times; 30% = 210 000€<br>
+      <strong>Patrimoine net taxable :</strong> 2 400 000 &minus; 210 000 = 2 190 000€
+    </div>
+    <div class="exo-questions">&#9312; V&eacute;rifier l&rsquo;assujettissement &#9313; Appliquer le bar&egrave;me IFI &#9314; Calculer l&rsquo;IFI total</div>
+    <button class="exo-btn" onclick="toggleExo('exo2')">Voir la solution</button>
+    <div class="exo-solution" id="exo2">
+      <div class="exo-step"><strong>&#9312; Seuil :</strong> 2 190 000€ &ge; 1 300 000€ &rarr; <strong>assujetti &agrave; l&rsquo;IFI</strong></div>
+      <div class="exo-step"><strong>&#9313; Bar&egrave;me progressif :</strong><br>
+        Tranche 0% (0 &rarr; 800 000€) : 0€<br>
+        Tranche 0,50% (800 001 &rarr; 1 300 000€) : 500 000 &times; 0,50% = <strong>2 500€</strong><br>
+        Tranche 0,70% (1 300 001 &rarr; 2 190 000€) : 890 000 &times; 0,70% = <strong>6 230€</strong>
+      </div>
+      <div class="exo-step"><strong>&#9314; IFI total :</strong> 2 500 + 6 230 = <strong>8 730€</strong></div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-title">Exercice n&deg;3 <span class="exo-tag">Retraite &middot; Validation de trimestres</span></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Julien, n&eacute; en 1985, a travaill&eacute; 3 mois en 2026 et gagn&eacute; 5 200€ brut. Il a aussi eu 65 jours de ch&ocirc;mage indemnис&eacute; dans l&rsquo;ann&eacute;e.</p>
+    <div class="exo-enonce">
+      Combien de trimestres Julien valide-t-il en 2026 ? Quel est son &acirc;ge l&eacute;gal de d&eacute;part &agrave; la retraite ?
+    </div>
+    <div class="exo-questions">&#9312; Trimestres valid&eacute;s par le salaire &#9313; Trimestres assimil&eacute;s ch&ocirc;mage &#9314; Total 2026 &#9315; &Acirc;ge l&eacute;gal et trimestres requis</div>
+    <button class="exo-btn" onclick="toggleExo('exo3')">Voir la solution</button>
+    <div class="exo-solution" id="exo3">
+      <div class="exo-step"><strong>&#9312; Salaire :</strong> 5 200€ &gt; 5 409€ ? Non &rarr; 5 200€ &lt; 5 409€ mais &ge; 3 606€<br>
+        5 200 / 1 803 = 2,88 &rarr; <strong>2 trimestres valid&eacute;s</strong> (5 200 &ge; 3 606€)</div>
+      <div class="exo-step"><strong>&#9313; Ch&ocirc;mage :</strong> 65 jours &divide; 50 = 1,3 &rarr; <strong>1 trimestre assimil&eacute;</strong></div>
+      <div class="exo-step"><strong>&#9314; Total 2026 :</strong> 2 + 1 = <strong>3 trimestres valid&eacute;s</strong> (maximum 4 par an)</div>
+      <div class="exo-step"><strong>&#9315; Julien n&eacute; en 1985 (apr&egrave;s 1973) :</strong><br>&Acirc;ge l&eacute;gal = <strong>64 ans</strong><br>Trimestres requis = <strong>172 trimestres</strong> (43 ans de cotisation)</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CAS PRATIQUES -->
+<div id="tab-cas" class="tab-pane">
+
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;1 <span class="cas-ref">CEHR &middot; C&eacute;libataire</span></div>
+    <div class="cas-enonce">Mme FONTAINE, 52 ans, c&eacute;libataire, dirig&eacute;e d&rsquo;entreprise. RFR 2024 : 620 000€.<br><strong>Question :</strong> Quel est son CEHR ?</div>
+    <div class="cas-piege">&#9888; Pi&egrave;ge : ne pas oublier que les tranches sont cumulatives (comme l&rsquo;IR).</div>
+    <button class="cas-btn" onclick="toggleCas('c1')">Voir la r&eacute;ponse</button>
+    <div class="cas-solution" id="c1">
+      Tranche 1 (250 001 &rarr; 500 000€) : 250 000 &times; 3% = <strong>7 500€</strong><br>
+      Tranche 2 (500 001 &rarr; 620 000€) : 120 000 &times; 4% = <strong>4 800€</strong><br>
+      <strong>CEHR total = 7 500 + 4 800 = 12 300€</strong>
+    </div>
+  </div>
+
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;2 <span class="cas-ref">IFI &middot; Dons &amp; exon&eacute;rations</span></div>
+    <div class="cas-enonce">M. DUVAL a un patrimoine immobilier net de 1 800 000€ (dont une for&ecirc;t de 200 000€ et biens pro de 150 000€). Il fait un don de 40 000€ &agrave; un organisme d&rsquo;utilit&eacute; publique.<br><strong>Question :</strong> Quel est son IFI apr&egrave;s r&eacute;ductions ?</div>
+    <div class="cas-piege">&#9888; Pi&egrave;ge : les biens professionnels et les 75% de la for&ecirc;t sont exon&eacute;r&eacute;s &mdash; ne pas les inclure dans la base.</div>
+    <button class="cas-btn" onclick="toggleCas('c2')">Voir la r&eacute;ponse</button>
+    <div class="cas-solution" id="c2">
+      <strong>Base taxable :</strong><br>
+      1 800 000 &minus; 150 000 (biens pro, exon&eacute;r&eacute;s) &minus; (200 000 &times; 75%) (for&ecirc;t) = 1 800 000 &minus; 150 000 &minus; 150 000 = <strong>1 500 000€</strong><br><br>
+      <strong>IFI brut :</strong><br>
+      (1 300 000 &minus; 800 000) &times; 0,50% + (1 500 000 &minus; 1 300 000) &times; 0,70%<br>
+      = 2 500 + 1 400 = <strong>3 900€</strong><br><br>
+      <strong>R&eacute;duction don :</strong> 40 000 &times; 75% = 30 000€<br>
+      <strong>IFI final :</strong> 3 900 &minus; 3 900 = <strong>0€</strong> (la r&eacute;duction efface l&rsquo;IFI)
+    </div>
+  </div>
+
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;3 <span class="cas-ref">Retraite &middot; Diagnostic CGP</span></div>
+    <div class="cas-enonce">Client : M. LEFORT, 58 ans, n&eacute; en 1966, m&eacute;decin lib&eacute;ral. Il a cotis&eacute; 140 trimestres &agrave; ce jour et a arr&ecirc;t&eacute; de travailler 18 mois pour maladie grave (il y a 10 ans).<br><strong>Questions :</strong> Quelle(s) caisse(s) de retraite le concernent ? &Agrave; quel &acirc;ge peut-il partir ? A-t-il ses 172 trimestres ?</div>
+    <div class="cas-piege">&#9888; Pi&egrave;ge : l&rsquo;arr&ecirc;t maladie donne des trimestres assimil&eacute;s &mdash; et les m&eacute;decins ont une caisse sp&eacute;cifique.</div>
+    <button class="cas-btn" onclick="toggleCas('c3')">Voir la r&eacute;ponse</button>
+    <div class="cas-solution" id="c3">
+      <strong>Caisses de M. LEFORT (m&eacute;decin lib&eacute;ral) :</strong><br>
+      &bull; Retraite de base : <strong>CNAVPL</strong><br>
+      &bull; Retraite compl&eacute;mentaire : <strong>CARMF</strong> (Caisse Autonome de Retraite des M&eacute;decins de France)<br><br>
+      <strong>&Acirc;ge l&eacute;gal (n&eacute; en 1966) :</strong> 63 ans (tableau de la r&eacute;forme)<br>
+      <strong>Trimestres requis :</strong> 172 T<br><br>
+      <strong>Trimestres de M. LEFORT :</strong><br>
+      Cotis&eacute;s : 140 T<br>
+      Assimil&eacute;s maladie : 18 mois = 6 trimestres d&rsquo;arr&ecirc;t maladie (60j/trim, max 4T/an &rarr; estim&eacute; 6T sur 18 mois)<br>
+      Total estim&eacute; : 140 + 6 = <strong>146 T</strong><br><br>
+      Il lui manque 172 &minus; 146 = <strong>26 trimestres</strong>. Avec 6 ans de travail suppl&eacute;mentaires (63 ans &rarr; 69 ans) il peut combler. Rachat possible : 12T max.
+    </div>
+  </div>
+
+</div>
+
+<script>
+var CARDS = [{"ch": 1, "q": "Combien de parts fiscales pour un couple marié sans enfant ?", "a": "2 parts"}, {"ch": 1, "q": "Combien de parts pour un couple marié avec 1 enfant ?", "a": "2,5 parts (2 + 0,5)"}, {"ch": 1, "q": "Combien de parts pour un couple marié avec 2 enfants ?", "a": "3 parts (2 + 0,5 + 0,5)"}, {"ch": 1, "q": "Combien de parts pour un couple marié avec 3 enfants ?", "a": "4 parts (2 + 0,5 + 0,5 + 1)\nLe 3e enfant compte pour 1 part entière"}, {"ch": 1, "q": "Taux IR sur la tranche 11 601€ – 29 579€ par part (2024) ?", "a": "11%\nFormule rapide : (R × 0,11) − (1 276 × N)"}, {"ch": 1, "q": "Taux IR sur la tranche 29 580€ – 84 577€ par part (2024) ?", "a": "30%\nFormule rapide : (R × 0,30) − (6 896,01 × N)"}, {"ch": 1, "q": "Taux IR sur la tranche 84 578€ – 181 917€ par part (2024) ?", "a": "41%\nFormule rapide : (R × 0,41) − (16 199,48 × N)"}, {"ch": 1, "q": "Taux IR au-delà de 181 917€ par part (2024) ?", "a": "45%\nFormule rapide : (R × 0,45) − (23 476,16 × N)"}, {"ch": 1, "q": "Théo & Charlotte (mariés, 2 enfants, 78 000€). Impôt calculé AVEC les 3 parts ?", "a": "(78 000 × 0,11) − (1 276 × 3) = 8 580 − 3 828 = 4 752€"}, {"ch": 1, "q": "Même exemple Théo & Charlotte : impôt calculé SANS les enfants (2 parts) ?", "a": "(78 000 × 0,30) − (6 896,01 × 2) = 23 400 − 13 792,02 = 9 607,98€"}, {"ch": 2, "q": "Quel est le plafonnement du quotient familial par demi-part supplémentaire ?", "a": "1 807€ par demi-part (2024)\nPour 2 enfants → plafond = 3 614€\nPour 3 enfants → plafond = 7 228€"}, {"ch": 2, "q": "Dans l'exemple Théo & Charlotte : le plafonnement QF s'applique-t-il ? Impôt final ?", "a": "Oui — avantage réel = 9 607,98 − 4 752 = 4 855,98€\nPlafond (2 demi-parts) = 3 614€\n4 855,98 > 3 614 → plafonnement s'applique\nImpôt final = 9 607,98 − 3 614 = 5 993,98€"}, {"ch": 2, "q": "Quel est le plafond des niches fiscales ? Que sont les exceptions ?", "a": "10 000€/an (réductions + crédits cumulés)\nHors plafond : quotient familial et dons à organismes d'intérêt général"}, {"ch": 2, "q": "Différence clé entre réduction et crédit d'impôt ?", "a": "Réduction : excédent PERDU si impôt dû < réduction\nCrédit : excédent REMBOURSÉ par le Trésor"}, {"ch": 2, "q": "Citer 3 déductions fiscales (déduites du revenu)", "a": "Pensions alimentaires, versements sur PER, frais réels professionnels, télétravail, frais de formation"}, {"ch": 2, "q": "Citer 3 crédits d'impôt (excédent remboursé)", "a": "Garde d'enfants, cotisations syndicales, transition énergétique, salarié à domicile, soutien scolaire"}, {"ch": 2, "q": "À partir de quel RFR le CEHR s'applique-t-il pour un célibataire ?", "a": "250 001€ de RFR\nTaux 3% entre 250 001€ et 500 000€\nTaux 4% au-delà de 500 000€"}, {"ch": 2, "q": "Barème CEHR pour un couple marié/pacsé ?", "a": "0% jusqu'à 500 000€\n3% de 500 001€ à 1 000 000€\n4% au-delà de 1 000 000€"}, {"ch": 2, "q": "Quel est le seuil et la base de calcul de l'IFI ?", "a": "Seuil : patrimoine immobilier net ≥ 1 300 000€\nMais calcul à partir de 800 000€ (1ère tranche à 0,50%)"}, {"ch": 2, "q": "Abattement résidence principale et dons à l'IFI ?", "a": "RP : abattement 30% sur sa valeur\nDons organismes : réduction = 75% du don, limite 50 000€"}, {"ch": 3, "q": "Combien faut-il gagner en 2026 pour valider 1 trimestre de retraite ?", "a": "1 803€ brut (= 150 × SMIC horaire)"}, {"ch": 3, "q": "Minimum annuel pour valider les 4 trimestres en 2026 ?", "a": "7 212€ brut dans l'année\n2 mois de travail au SMIC suffisent pour les 4 trimestres"}, {"ch": 3, "q": "Âge légal de départ à la retraite (nés après 1er janvier 1969) ?", "a": "64 ans"}, {"ch": 3, "q": "À quel âge obtient-on le taux plein automatiquement (sans décote) ?", "a": "67 ans — pension calculée au prorata des trimestres cotisés"}, {"ch": 3, "q": "Combien de trimestres pour le taux plein (nés après 1973) ?", "a": "172 trimestres (43 ans de cotisations)"}, {"ch": 3, "q": "Combien de trimestres peut-on racheter au maximum ?", "a": "12 trimestres (= 3 années)"}, {"ch": 3, "q": "Quelles périodes non travaillées donnent des trimestres assimilés ?", "a": "Chômage : 50 jours → 1T\nArrêt maladie : 60 jours consécutifs → 1T (max 4T/an)\nCongé parental : 4T\nService militaire\nEnfants : 4T supplémentaires\nInvalidité"}, {"ch": 3, "q": "Quels cas permettent un départ anticipé à la retraite ?", "a": "Carrière longue (début avant 18 ans) : avant 64 ans\nHandicap : dès 55 ans\nCarrière pénible / inaptitude : 62 ans à taux plein"}, {"ch": 3, "q": "Qu'est-ce que l'ASPA et comment est-elle financée ?", "a": "Allocation de Solidarité aux Personnes Âgées (ex-minimum vieillesse)\nMinimum social financé par l'État — pas une pension de retraite\nConditions : 65 ans, résident français, conditions de ressources"}, {"ch": 3, "q": "Montant de l'ASPA ?", "a": "Personne seule : 12 523,08€/an (1 043,59€/mois)\nCouple : 19 442,16€/an (1 620,18€/mois)"}, {"ch": 4, "q": "Caisse de base et complémentaire pour les salariés du privé (industrie/commerce) ?", "a": "Base : CNAV (Caisse Nationale d'Assurance Vieillesse)\nComplémentaire : AGIRC-ARRCO (fusion janvier 2019)"}, {"ch": 4, "q": "Caisse pour les agents non titulaires de l'État et collectivités publiques ?", "a": "Base : CNAV\nComplémentaire : IRCANTEC"}, {"ch": 4, "q": "Caisse pour les fonctionnaires de l'État, magistrats et militaires ?", "a": "Base : Service Retraite de l'État\nComplémentaire : RAFP"}, {"ch": 4, "q": "Caisse pour les agents de la fonction publique territoriale et hospitalière ?", "a": "Base : CNRACL\nComplémentaire : Retraite additionnelle"}, {"ch": 4, "q": "Caisse pour les exploitants agricoles ?", "a": "MSA — Mutualité Sociale Agricole"}, {"ch": 4, "q": "Caisse pour les artisans, commerçants et industriels ?", "a": "SSI — Sécurité Sociale des Indépendants\nComplémentaire : RCI (Retraite Complémentaire des Indépendants)"}, {"ch": 4, "q": "Caisse de base et complémentaire pour les professions libérales ?", "a": "Base : CNAVPL\nComplémentaire : sections pro spécialisées\nCARMF (médecins), CARPIMKO (infirmiers/kiné),\nCAVP (pharmaciens), CNBF (avocats), CIPAV (libéraux divers)"}, {"ch": 4, "q": "Caisse pour les salariés de l'agriculture ?", "a": "Base : MSA\nComplémentaire : ARRCO + AGIRC"}, {"ch": 4, "q": "Différence entre retraite à point et par annuité ?", "a": "À point : cotisations → achat de points, pension = nb points × valeur du point\n(Ex : 4 000€ cotisation, point = 400€ → 10 points)\nPar annuité : calculée sur la moyenne des revenus de carrière"}, {"ch": 4, "q": "Qu'est-ce que AGIRC-ARRCO ?", "a": "Caisse de retraite complémentaire des salariés du privé\nFusion ARRCO (non-cadres) + AGIRC (cadres) en janvier 2019\nFonctionne en retraite à POINT"}];
+var QUIZ  = [{"q": "Un couple marié avec 3 enfants a combien de parts fiscales ?", "opts": ["3 parts", "3,5 parts", "4 parts", "5 parts"], "a": 2, "e": "2 (couple) + 0,5 (1er) + 0,5 (2e) + 1 (3e) = 4 parts. Le 3e enfant compte pour 1 part entière."}, {"q": "La tranche à 11% de l'IR 2024 s'étend jusqu'à :", "opts": ["25 000€", "27 478€", "29 579€", "32 000€"], "a": 2, "e": "La tranche à 11% va de 11 601€ à 29 579€ par part de quotient familial."}, {"q": "La formule rapide pour l'IR à 30% est :", "opts": ["R × 0,30", "(R × 0,30) − (N × 6 896,01)", "(R × 0,30) + (N × 6 896)", "R × 0,30 − 6 896"], "a": 1, "e": "(R × 0,30) − (6 896,01 × N) où R = revenu total imposable, N = nombre de parts."}, {"q": "Le plafonnement du QF est de ____ par demi-part supplémentaire :", "opts": ["1 000€", "1 500€", "1 807€", "2 500€"], "a": 2, "e": "1 807€ par demi-part (2024). Couple avec 2 enfants → plafond = 2 × 1 807 = 3 614€."}, {"q": "Un crédit d'impôt de 900€ pour un contribuable devant 300€ d'impôt :", "opts": ["Lui économise 300€", "Lui est remboursé 600€", "Lui économise 900€", "N'a aucun effet"], "a": 1, "e": "Les crédits sont remboursables. Excédent = 900 − 300 = 600€ remboursés par le Trésor."}, {"q": "Lequel est une RÉDUCTION d'impôt (excédent PERDU) ?", "opts": ["Garde d'enfants", "Salarié à domicile", "Investissement Pinel", "Transition énergétique"], "a": 2, "e": "Le Pinel est une réduction (excédent perdu). Les 3 autres sont des crédits d'impôt (remboursables)."}, {"q": "Le plafond des niches fiscales (réductions + crédits) est de :", "opts": ["5 000€", "8 000€", "10 000€", "15 000€"], "a": 2, "e": "10 000€/an. Hors plafond : le quotient familial et les dons à des organismes d'intérêt général."}, {"q": "Le CEHR s'applique pour un célibataire à partir de :", "opts": ["100 000€", "150 000€", "250 001€", "500 001€"], "a": 2, "e": "250 001€ de RFR pour un célibataire. Pour un couple, le CEHR démarre à 500 001€."}, {"q": "Taux CEHR pour un couple marié avec RFR de 700 000€ ?", "opts": ["0%", "3%", "4%", "5%"], "a": 1, "e": "Pour un couple, le taux de 3% s'applique entre 500 001€ et 1 000 000€. 700 000€ → 3%."}, {"q": "L'IFI s'applique à partir d'un patrimoine immobilier de :", "opts": ["800 000€", "1 000 000€", "1 300 000€", "2 000 000€"], "a": 2, "e": "Seuil = 1 300 000€. Mais le calcul commence à 800 000€ (1ère tranche à 0,50%)."}, {"q": "L'abattement sur la résidence principale pour l'IFI est de :", "opts": ["20%", "25%", "30%", "40%"], "a": 2, "e": "30% d'abattement sur la valeur de la résidence principale pour le calcul de l'IFI."}, {"q": "Taux IFI entre 1 300 001€ et 2 570 000€ :", "opts": ["0,50%", "0,70%", "1%", "1,25%"], "a": 1, "e": "0,70% pour cette tranche. La tranche 800k-1,3M est à 0,50%, les suivantes montent progressivement."}, {"q": "La réduction IFI pour les dons à des organismes est de :", "opts": ["50% max 25 000€", "66% max 50 000€", "75% max 50 000€", "100% max 10 000€"], "a": 2, "e": "75% du montant du don, dans la limite de 50 000€ de réduction IFI."}, {"q": "Sont exonérés d'IFI à 75% :", "opts": ["Résidences secondaires", "Actions d'entreprise", "Bois et forêts", "Comptes épargne"], "a": 2, "e": "Les bois et forêts bénéficient d'une exonération d'IFI à hauteur de 75%. Aussi : biens ruraux avec bail long terme."}, {"q": "Un célibataire avec RFR de 400 000€ : quel est son CEHR ?", "opts": ["2 250€", "3 750€", "4 500€", "6 000€"], "a": 2, "e": "(400 000 − 250 000) × 3% = 150 000 × 3% = 4 500€."}, {"q": "En 2026, le minimum pour valider 4 trimestres de retraite est de :", "opts": ["5 409€", "6 012€", "7 212€", "9 015€"], "a": 2, "e": "7 212€ brut dans l'année (4 × 1 803€). 2 mois de travail au SMIC suffisent pour les 4 trimestres."}, {"q": "Le maximum de trimestres rachetables est de :", "opts": ["6", "8", "12", "16"], "a": 2, "e": "12 trimestres maximum (= 3 années), pour combler les trous de carrière."}, {"q": "L'âge légal de départ à la retraite pour les nés après 1973 est de :", "opts": ["62 ans", "63 ans", "64 ans", "65 ans"], "a": 2, "e": "64 ans depuis la réforme. Pour les nés entre 1955 et 1972, l'âge varie de 62 à 63 ans 9 mois selon le tableau."}, {"q": "À 67 ans, un salarié sans les trimestres requis peut partir :", "opts": ["Avec décote permanente", "Sans décote, pension proratisée", "Uniquement avec accord de la CNAV", "Impossible avant 172 trimestres"], "a": 1, "e": "67 ans = taux plein automatique. Pas de décote, mais la pension est calculée au prorata des trimestres cotisés."}, {"q": "Combien de jours de chômage indemnisé pour valider 1 trimestre ?", "opts": ["30 jours", "50 jours", "60 jours", "90 jours"], "a": 1, "e": "50 jours de chômage indemnisé valident 1 trimestre (période assimilée)."}, {"q": "Le congé parental donne droit à :", "opts": ["1 trimestre", "2 trimestres", "4 trimestres", "8 trimestres"], "a": 2, "e": "4 trimestres assimilés pour le congé parental. En plus, chaque enfant donne droit à 4 trimestres supplémentaires."}, {"q": "Quelle caisse complémentaire pour les agents non titulaires de l'État ?", "opts": ["RAFP", "IRCANTEC", "CNRACL", "AGIRC-ARRCO"], "a": 1, "e": "IRCANTEC pour les non-titulaires. RAFP est pour les fonctionnaires titulaires."}, {"q": "CNRACL est la caisse de base de :", "opts": ["Salariés du privé", "Fonctionnaires de l'État", "Agents territoriaux et hospitaliers", "Indépendants"], "a": 2, "e": "CNRACL = Caisse Nationale de Retraite des Agents des Collectivités Locales → FPT et FPH."}, {"q": "AGIRC-ARRCO est :", "opts": ["Une caisse historique unique", "La fusion de deux caisses en 2019", "La caisse des fonctionnaires", "La caisse des indépendants"], "a": 1, "e": "Fusion AGIRC (cadres) + ARRCO (non-cadres) en janvier 2019. Retraite complémentaire des salariés du privé."}, {"q": "La caisse de base des professions libérales est :", "opts": ["SSI", "CARPIMKO", "CNAVPL", "CARMF"], "a": 2, "e": "CNAVPL = Caisse Nationale d'Assurance Vieillesse des Professions Libérales. Les sections pro gèrent le complémentaire."}, {"q": "L'ASPA est financée par :", "opts": ["Les cotisations retraite", "L'État", "Les retraités", "La CNAV"], "a": 1, "e": "L'ASPA est un minimum social financé par l'État (budget général). Ce n'est pas une pension de retraite."}, {"q": "La retraite à point fonctionne ainsi :", "opts": ["Pension = salaire moyen × 50%", "Cotisations → points, pension = points × valeur du point", "1 an travaillé = 1 point", "Réservé aux fonctionnaires"], "a": 1, "e": "Cotisations → achat de points. Ex : 4 000€ de cotisations, point vaut 400€ → 10 points. Pension = total points × valeur du point."}, {"q": "Trimestres requis pour le taux plein pour les nés après 1973 ?", "opts": ["166", "168", "172", "176"], "a": 2, "e": "172 trimestres (43 ans de cotisations) pour les nés en 1973 et après."}, {"q": "Les enfants donnent droit à combien de trimestres supplémentaires ?", "opts": ["2 trimestres", "4 trimestres", "6 trimestres", "8 trimestres"], "a": 1, "e": "Chaque enfant ouvre droit à 4 trimestres supplémentaires (en plus du congé parental qui donne aussi 4T)."}, {"q": "La MSA couvre :", "opts": ["Artisans et commerçants", "Salariés et exploitants agricoles", "Fonctionnaires", "Marins"], "a": 1, "e": "MSA = Mutualité Sociale Agricole. Elle couvre les salariés agricoles (base + ARRCO/AGIRC) ET les exploitants agricoles."}];
+var FOCUS = {"parts-tranches": {"titre": "IR — Parts & Tranches", "cartes": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "resume": "Parts : couple = 2 / +0,5 par enfant (1er et 2e) / +1 pour le 3e. Tranches 2024 : 0% / 11% / 30% / 41% / 45%"}, "plafonnements": {"titre": "IR — Plafonnements, CEHR & IFI", "cartes": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20], "resume": "QF : 1 807€/demi-part | Niches : 10 000€ plafond | CEHR : dès 250k célibataire | IFI : seuil 1,3M€, calcul à partir 800k€"}, "retraite-bases": {"titre": "Retraite — Trimestres & Âges", "cartes": [21, 22, 23, 24, 25, 26, 27, 28, 29, 30], "resume": "1T = 1 803€ (2026) | 4T = 7 212€ | Légal : 64 ans | Taux plein auto : 67 ans | 172T requis | Rachat max 12T"}, "caisses": {"titre": "Les Caisses de Retraite", "cartes": [31, 32, 33, 34, 35, 36, 37, 38, 39, 40], "resume": "CNAV (privé base) | AGIRC-ARRCO (privé compl.) | CNRACL (territoriale) | SSI (indépendants) | CNAVPL (libéraux) | MSA (agricole)"}};
+var CH_LABELS = {1:'IR — Parts & Tranches',2:'IR — Plafonnements',3:'Retraite — Bases',4:'Retraite — Caisses'};
+
+var filteredCards = CARDS.slice(), cardIdx = 0;
+function showCard(){
+  var ci=document.getElementById('card-inner');
+  if(ci) ci.classList.remove('flipped');
+  var c=filteredCards[cardIdx];
+  document.getElementById('card-q').textContent=c.q;
+  document.getElementById('card-a').textContent=c.a;
+  document.getElementById('card-ch').textContent=CH_LABELS[c.ch]||'Ch.'+c.ch;
+  document.getElementById('card-counter').textContent='Carte '+(cardIdx+1)+' / '+filteredCards.length;
+}
+function flipCard(){document.getElementById('card-inner').classList.toggle('flipped');}
+function nextCard(){cardIdx=(cardIdx+1)%filteredCards.length;showCard();}
+function prevCard(){cardIdx=(cardIdx-1+filteredCards.length)%filteredCards.length;showCard();}
+function shuffleCards(){for(var i=filteredCards.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=filteredCards[i];filteredCards[i]=filteredCards[j];filteredCards[j]=t;}cardIdx=0;showCard();}
+function filterCards(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  filteredCards=ch===0?CARDS.slice():CARDS.filter(function(c){return c.ch===ch;});
+  cardIdx=0;showCard();
+}
+
+function buildQuiz(){
+  var html='';
+  QUIZ.forEach(function(q,i){
+    html+='<div class="quiz-q" id="qq'+i+'"><p>'+(i+1)+'. '+q.q+'</p><div class="quiz-opts">';
+    q.opts.forEach(function(o,j){html+='<button class="quiz-opt" onclick="pickOpt('+i+','+j+',this)">'+o+'</button>';});
+    html+='</div><div class="quiz-exp" id="qe'+i+'">'+q.e+'</div></div>';
+  });
+  document.getElementById('quiz-container').innerHTML=html;
+}
+var quizAnswers={};
+function pickOpt(qi,oi,btn){
+  var qq=document.getElementById('qq'+qi);
+  if(qq.classList.contains('done'))return;
+  qq.classList.add('done');quizAnswers[qi]=oi;
+  qq.querySelectorAll('.quiz-opt').forEach(function(b,j){if(j===QUIZ[qi].a)b.classList.add('correct');else if(j===oi)b.classList.add('wrong');});
+  document.getElementById('qe'+qi).style.display='block';
+}
+function submitQuiz(){
+  var score=0;QUIZ.forEach(function(q,i){if(quizAnswers[i]===q.a)score++;});
+  var pct=Math.round(score/QUIZ.length*100);
+  document.getElementById('quiz-summary').style.display='block';
+  document.getElementById('quiz-summary').innerHTML='<h3 style="font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:8px">Résultat : '+score+'/'+QUIZ.length+' ('+pct+'%)</h3>'+(pct>=80?'<p style="color:var(--ok);font-weight:700">Excellent !</p>':'<p style="color:var(--muted)">Revois les points manqués.</p>');
+  document.getElementById('quiz-submit').style.display='none';
+  document.getElementById('quiz-reset').style.display='block';
+  try{var sc=JSON.parse(localStorage.getItem('cgp_scores')||'{}');sc['jour08']={score:score,total:QUIZ.length,pct:pct,date:new Date().toLocaleDateString('fr-FR')};localStorage.setItem('cgp_scores',JSON.stringify(sc));}catch(e){}
+}
+function resetQuiz(){quizAnswers={};buildQuiz();document.getElementById('quiz-summary').style.display='none';document.getElementById('quiz-submit').style.display='block';document.getElementById('quiz-reset').style.display='none';}
+
+function buildFocus(){
+  var keys=Object.keys(FOCUS);
+  var navHtml='',contentHtml='';
+  keys.forEach(function(k,i){
+    var f=FOCUS[k];
+    navHtml+='<button class="focus-btn'+(i===0?' active':'')+'" data-key="'+k+'" onclick="showFocus(this.dataset.key,this)">'+f.titre+'</button>';
+    contentHtml+='<div class="focus-pane'+(i===0?' active':'')+'" id="focus-'+k+'">';
+    contentHtml+='<div class="focus-resume">'+f.resume+'</div>';
+    contentHtml+='<div style="font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em">Flashcards</div>';
+    f.cartes.forEach(function(ci){
+      var c=CARDS[ci-1];if(!c)return;
+      contentHtml+='<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer" onclick="toggleAns(this)">';
+      contentHtml+='<div style="font-size:.86rem;font-weight:700;color:var(--navy)">'+c.q+'</div>';
+      contentHtml+='<div class="ans" style="display:none;font-size:.83rem;color:var(--muted);margin-top:8px;white-space:pre-line;line-height:1.5">'+c.a+'</div></div>';
+    });
+    contentHtml+='</div>';
+  });
+  document.getElementById('focus-nav').innerHTML=navHtml;
+  document.getElementById('focus-content').innerHTML=contentHtml;
+}
+function showFocus(k,btn){
+  document.querySelectorAll('.focus-pane').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('focus-'+k).classList.add('active');
+  document.querySelectorAll('.focus-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+function toggleAns(el){var ans=el.querySelector('.ans');ans.style.display=ans.style.display==='block'?'none':'block';}
+
+function j8go(id){
+  ['r','1','2','3','4'].forEach(function(x){var el=document.getElementById('fiche-'+x);if(el)el.classList.remove('active');});
+  var t=document.getElementById('fiche-'+id);if(t)t.classList.add('active');
+  var btns=document.querySelectorAll('.fiche-btn');
+  var map={r:0,'1':1,'2':2,'3':3,'4':4};
+  btns.forEach(function(b){b.classList.remove('active')});
+  if(btns[map[id]])btns[map[id]].classList.add('active');
+}
+
+function toggleExo(id){var el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block';}
+function toggleCas(id){var el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block';}
+
+function showTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+
+window.onload=function(){showCard();buildQuiz();buildFocus();};
+</script>
+</body>
+</html>
