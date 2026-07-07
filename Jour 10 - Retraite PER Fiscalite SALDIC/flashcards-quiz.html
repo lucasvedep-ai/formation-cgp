@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jour 10 &mdash; PER : Fonctionnement, Plafonds, SALDIC &amp; Fiscalit&eacute; | Formation CGP</title>
+<style>
+:root{
+  --navy:#1a2744;--navy2:#253460;--gold:#c9a227;--gold2:#e8c84a;
+  --bg:#f4f6fb;--white:#fff;--text:#1a2744;--muted:#5a6a8a;
+  --ok:#2d8a4e;--ok-bg:#eafaf1;--err:#c0392b;--err-bg:#fdf3f2;
+  --border:#dce3f0;--shadow:0 8px 32px rgba(26,39,68,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:28px 32px 22px}
+header h1{font-size:1.4rem;font-weight:800;margin-bottom:4px}
+header p{font-size:.82rem;color:rgba(255,255,255,.55)}
+.tab-bar{display:flex;background:var(--navy2);overflow-x:auto}
+.tab-btn{background:none;border:none;color:rgba(255,255,255,.5);font-size:.78rem;font-weight:700;padding:12px 18px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:.15s}
+.tab-btn.active{color:#fff;border-bottom-color:var(--gold2)}
+.tab-pane{display:none;padding:24px 20px;max-width:860px;margin:0 auto}
+.tab-pane.active{display:block}
+.card-wrap{perspective:1000px;cursor:pointer;margin:0 auto 20px;max-width:580px}
+.card-inner{position:relative;width:100%;min-height:180px;transform-style:preserve-3d;transition:.5s}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-face{position:absolute;width:100%;min-height:180px;backface-visibility:hidden;border-radius:18px;padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-shadow:var(--shadow)}
+.card-front{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff}
+.card-back{background:#fff;transform:rotateY(180deg);border:2px solid var(--border)}
+.ch-badge{font-size:.65rem;font-weight:800;background:rgba(255,255,255,.15);border-radius:99px;padding:3px 10px;margin-bottom:12px;letter-spacing:.06em}
+.card-q{font-size:1.05rem;font-weight:700;line-height:1.4}
+.card-a{font-size:.88rem;color:var(--text);line-height:1.6;white-space:pre-line}
+.card-nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:4px}
+.card-nav button{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer}
+.card-counter{text-align:center;font-size:.78rem;color:var(--muted);margin-bottom:14px}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filter-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:6px 14px;font-size:.76rem;font-weight:700;color:var(--muted);cursor:pointer}
+.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.quiz-q{background:#fff;border-radius:16px;padding:22px 24px;margin-bottom:16px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.quiz-q p{font-size:.95rem;font-weight:700;margin-bottom:14px;line-height:1.4}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:.86rem;cursor:pointer;text-align:left;transition:.12s;font-weight:500}
+.quiz-opt:hover{border-color:var(--navy);background:#eef1f8}
+.quiz-opt.correct{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:700}
+.quiz-opt.wrong{background:var(--err-bg);border-color:var(--err);color:var(--err)}
+.quiz-exp{font-size:.82rem;color:var(--muted);background:var(--bg);border-radius:8px;padding:10px 12px;margin-top:10px;display:none;line-height:1.5}
+.quiz-summary{background:#fff;border-radius:16px;padding:24px;text-align:center;border:1.5px solid var(--border)}
+.focus-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.focus-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer}
+.focus-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.focus-pane{display:none}.focus-pane.active{display:block}
+.focus-resume{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:14px;padding:16px 18px;margin-bottom:18px;font-size:.88rem;font-weight:600;line-height:1.5}
+.fiche-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.fiche-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer}
+.fiche-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.fiche-section{display:none}.fiche-section.active{display:block}
+.fiche-block{background:#fff;border-radius:14px;padding:20px 22px;margin-bottom:14px;border:1.5px solid var(--border)}
+.fiche-block h3{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.fiche-table{width:100%;border-collapse:collapse;font-size:.83rem;margin-top:8px}
+.fiche-table th{background:var(--navy);color:#fff;padding:7px 10px;text-align:left}
+.fiche-table td{padding:6px 10px;border-bottom:1px solid var(--border)}
+.fiche-table tr:nth-child(even) td{background:var(--bg)}
+.fiche-hl{background:#fff3cd;border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+.fiche-warn{background:#fff0f0;border-left:4px solid var(--err);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+.fiche-ok{background:var(--ok-bg);border-left:4px solid var(--ok);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+dl.fiche-dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.84rem}
+dl.fiche-dl dt{font-weight:700;color:var(--navy);white-space:nowrap}
+dl.fiche-dl dd{line-height:1.5}
+.exo{background:#fff;border-radius:16px;padding:24px;margin-bottom:20px;border:1.5px solid var(--border)}
+.exo-title{font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.exo-tag{font-size:.7rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;color:var(--muted);font-weight:600}
+.exo-questions{background:#c0392b;color:#fff;border-radius:10px;padding:10px 14px;font-size:.82rem;line-height:1.7;margin:12px 0}
+.exo-enonce{background:var(--bg);border-radius:10px;padding:12px 14px;font-size:.84rem;line-height:1.6;margin:10px 0}
+.exo-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;margin-top:10px;display:block}
+.exo-solution{display:none;margin-top:14px;border-top:1.5px solid var(--border);padding-top:14px}
+.exo-step{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:.83rem;margin-bottom:8px;line-height:1.6}
+.exo-step strong{color:var(--navy)}
+.cas{background:#fff;border-radius:16px;padding:24px;margin-bottom:18px;border:1.5px solid var(--border)}
+.cas-title{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:6px}
+.cas-ref{font-size:.7rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;color:var(--muted)}
+.cas-enonce{font-size:.86rem;line-height:1.6;margin-bottom:14px}
+.cas-piege{background:#fff3cd;border-radius:8px;padding:10px 14px;font-size:.82rem;margin-bottom:14px;line-height:1.5}
+.cas-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:10px}
+.cas-solution{display:none;background:var(--ok-bg);border-radius:8px;padding:14px 16px;font-size:.84rem;line-height:1.6;border:1px solid var(--ok)}
+@media(max-width:600px){header{padding:20px 16px}.tab-pane{padding:18px 14px}dl.fiche-dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>&#128218; Jour 10 &mdash; PER : Fonctionnement, Plafonds, SALDIC &amp; Fiscalit&eacute;</h1>
+  <p>3 compartiments &middot; Plafonds salari&eacute;s &amp; TNS &middot; SALDIC &middot; RVTG vs RVTO &middot; Fiscalit&eacute; d&eacute;c&egrave;s 990I/757B</p>
+</header>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('flashcards',this)">&#127183; Flashcards</button>
+  <button class="tab-btn" onclick="showTab('quiz',this)">&#128221; Quiz</button>
+  <button class="tab-btn" onclick="showTab('focus',this)">&#127919; Focus</button>
+  <button class="tab-btn" onclick="showTab('fiche',this)">&#128196; Fiche</button>
+  <button class="tab-btn" onclick="showTab('exercices',this)">&#127947; Exercices</button>
+  <button class="tab-btn" onclick="showTab('cas',this)">&#128203; Cas pratiques</button>
+</div>
+
+<!-- FLASHCARDS -->
+<div id="tab-flashcards" class="tab-pane active">
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCards(0,this)">Tous (40)</button>
+    <button class="filter-btn" onclick="filterCards(1,this)">Fonctionnement PER</button>
+    <button class="filter-btn" onclick="filterCards(2,this)">Plafonds fiscaux</button>
+    <button class="filter-btn" onclick="filterCards(3,this)">SALDIC &amp; Sorties</button>
+    <button class="filter-btn" onclick="filterCards(4,this)">Fiscalit&eacute; PER</button>
+  </div>
+  <div class="card-counter" id="card-counter">Carte 1 / 40</div>
+  <div class="card-wrap" onclick="flipCard()">
+    <div class="card-inner" id="card-inner">
+      <div class="card-face card-front">
+        <div class="ch-badge" id="card-ch">Ch. 1</div>
+        <div class="card-q" id="card-q">...</div>
+      </div>
+      <div class="card-face card-back">
+        <div class="card-a" id="card-a">...</div>
+      </div>
+    </div>
+  </div>
+  <div class="card-nav">
+    <button onclick="prevCard()">&#8592; Pr&eacute;c.</button>
+    <button onclick="shuffleCards()">&#128256; M&eacute;langer</button>
+    <button onclick="nextCard()">Suiv. &#8594;</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="tab-quiz" class="tab-pane">
+  <div id="quiz-container"></div>
+  <div id="quiz-summary" class="quiz-summary" style="display:none"></div>
+  <button id="quiz-submit" onclick="submitQuiz()" style="display:block;margin:0 auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Valider le quiz</button>
+  <button id="quiz-reset" onclick="resetQuiz()" style="display:none;margin:16px auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Recommencer</button>
+</div>
+
+<!-- FOCUS -->
+<div id="tab-focus" class="tab-pane">
+  <div class="focus-nav" id="focus-nav"></div>
+  <div id="focus-content"></div>
+</div>
+
+<!-- FICHE -->
+<div id="tab-fiche" class="tab-pane">
+  <div class="fiche-nav">
+    <button class="fiche-btn active" onclick="j10go('r')">Vue d&rsquo;ensemble</button>
+    <button class="fiche-btn" onclick="j10go('1')">Fonctionnement PER</button>
+    <button class="fiche-btn" onclick="j10go('2')">Plafonds fiscaux</button>
+    <button class="fiche-btn" onclick="j10go('3')">SALDIC &amp; Sorties</button>
+    <button class="fiche-btn" onclick="j10go('4')">Fiscalit&eacute; PER</button>
+  </div>
+
+  <div id="fiche-r" class="fiche-section active">
+    <div class="fiche-block">
+      <h3>&#128200; J10 en un coup d&rsquo;&oelig;il &mdash; PER</h3>
+      <table class="fiche-table">
+        <tr><th>Th&egrave;me</th><th>Cl&eacute; 1</th><th>Cl&eacute; 2</th></tr>
+        <tr><td><strong>3 compartiments</strong></td><td>C1 volontaires / C2 salariale / C3 obligatoires</td><td>C3 = rente uniquement</td></tr>
+        <tr><td><strong>Plafond salarié</strong></td><td>10% revenus | min 4 806€</td><td>max 38 448€ (10% × 8 PASS)</td></tr>
+        <tr><td><strong>Plafond TNS</strong></td><td>(BNC−PASS)×25%+4 806€</td><td>max 88 911€ (BNC ≥ 8 PASS)</td></tr>
+        <tr><td><strong>SALDIC</strong></td><td>6 cas de déblocage anticipé</td><td>Achat RP : C1+C2 uniquement</td></tr>
+        <tr><td><strong>Sortie acc. vie</strong></td><td>Capital exonéré IR</td><td>PS 17,2% sur gains</td></tr>
+        <tr><td><strong>Sortie achat RP</strong></td><td>Capital = barème IR</td><td>Gains = PFU 30%</td></tr>
+        <tr><td><strong>RVTG</strong></td><td>Versements déduits → toute la rente imposable</td><td>Abatt. 10% + IR + PS 10,10%</td></tr>
+        <tr><td><strong>RVTO</strong></td><td>Versements non déduits → fraction imposable</td><td>Selon l'âge à la liquidation</td></tr>
+        <tr><td><strong>Décès</strong></td><td>&lt;70 ans : 990I (152 500€/bénéf.)</td><td>&gt;70 ans : 757B (abatt. 30 500€)</td></tr>
+      </table>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Calendrier PACTE</h3>
+      <dl class="fiche-dl">
+        <dt>23/05/2019</dt><dd>Loi PACTE promulgu&eacute;e</dd>
+        <dt>01/10/2019</dt><dd>PER commercialis&eacute; (3 compartiments)</dd>
+        <dt>01/10/2020</dt><dd>Fin commercialisation PERP, Madelin, PERCO, Art.83</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div id="fiche-1" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Les 3 compartiments du PER</h3>
+      <table class="fiche-table">
+        <tr><th>Compartiment</th><th>Alimentation</th><th>Sortie</th><th>Fiscalit&eacute; entr&eacute;e</th></tr>
+        <tr><td><strong>C1 &mdash; Volontaires</strong></td><td>Versements libres</td><td>Rente ou capital (choix)</td><td>D&eacute;ductible IR (ou renonciation)</td></tr>
+        <tr><td><strong>C2 &mdash; Salariale</strong></td><td>Int&eacute;ressement, participation, abondement, CET</td><td>Rente ou capital (choix)</td><td>Exon&eacute;r&eacute; (sous plafonds)</td></tr>
+        <tr><td><strong>C3 &mdash; Obligatoires</strong></td><td>Versements patronaux obligatoires</td><td>Rente UNIQUEMENT</td><td>D&eacute;ductible IR (art.83)</td></tr>
+      </table>
+      <div class="fiche-warn" style="margin-top:10px">C3 = rente uniquement &mdash; m&ecirc;me &agrave; l&rsquo;&eacute;ch&eacute;ance. C&rsquo;est la contrainte principale des versements obligatoires.</div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Gestion pilot&eacute;e &mdash; Mode par d&eacute;faut</h3>
+      <dl class="fiche-dl">
+        <dt>Principe</dt><dd>D&eacute;sensibilisation progressive vers actifs s&eacute;curis&eacute;s &agrave; l&rsquo;approche de la retraite</dd>
+        <dt>3 profils</dt><dd>Prudent &bull; &Eacute;quilibr&eacute; &bull; Dynamique</dd>
+        <dt>Mode par d&eacute;faut</dt><dd>Oui (sauf choix contraire de l&rsquo;&eacute;pargnant)</dd>
+      </dl>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; PER vs anciens produits</h3>
+      <table class="fiche-table">
+        <tr><th>Produit</th><th>Remplac&eacute; par</th><th>Avantage PER</th></tr>
+        <tr><td>PERP</td><td>PER Individuel C1</td><td>Sortie capital, achat RP</td></tr>
+        <tr><td>Madelin</td><td>PER Individuel C1</td><td>Capital, achat RP, portabilit&eacute;</td></tr>
+        <tr><td>PERCO</td><td>PER Collectif C2</td><td>Portabilit&eacute; totale</td></tr>
+        <tr><td>Art. 83</td><td>PER Obligatoire C3</td><td>Portabilit&eacute;</td></tr>
+      </table>
+      <img src="img/IMG_0679.PNG" style="width:100%;border-radius:8px;margin-top:14px" alt="Récapitulatif PER - Fonctionnement complet">
+    </div>
+  </div>
+
+  <div id="fiche-2" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Plafonds de d&eacute;ductibilit&eacute; PER 2024</h3>
+      <table class="fiche-table">
+        <tr><th>Profil</th><th>Formule</th><th>Minimum</th><th>Maximum</th></tr>
+        <tr><td><strong>Salarié</strong></td><td>10% &times; revenus nets d&rsquo;activit&eacute;</td><td>4 806&euro;</td><td>38 448&euro;</td></tr>
+        <tr><td><strong>TNS</strong></td><td>(BNC &minus; PASS) &times; 25% + 4 806&euro;</td><td>4 806&euro;</td><td>88 911&euro;</td></tr>
+      </table>
+      <div class="fiche-hl" style="margin-top:10px">PASS 2024 = 48 060&euro; &bull; 10% PASS = 4 806&euro; (minimum garanti) &bull; 8 PASS = 384 480&euro;</div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Exemples de calcul de plafond</h3>
+      <table class="fiche-table">
+        <tr><th>Profil</th><th>Revenus</th><th>Calcul</th><th>Plafond</th></tr>
+        <tr><td>Mme Legris (sal.)</td><td>29 000&euro;</td><td>10% &times; 29 000 = 2 900 &lt; min</td><td><strong>4 806&euro;</strong></td></tr>
+        <tr><td>Mme Pratique (sal.)</td><td>65 000&euro;</td><td>10% &times; 65 000 = 6 500</td><td><strong>6 500&euro;</strong></td></tr>
+        <tr><td>M. Leblanc (sal.)</td><td>85 000&euro;</td><td>10% &times; 85 000 = 8 500</td><td><strong>8 500&euro;</strong></td></tr>
+        <tr><td>M. Pratique (TNS)</td><td>250 000&euro;</td><td>(250k&minus;48k)&times;25%+4 806</td><td><strong>55 291&euro;</strong></td></tr>
+        <tr><td>Mme Leblanc (TNS)</td><td>645 000&euro;</td><td>Cap&eacute; 8 PASS &rarr; (384k&minus;48k)&times;25%+4 806</td><td><strong>88 911&euro;</strong></td></tr>
+      </table>
+      <div class="fiche-ok" style="margin-top:10px">Couples : mutualisation des plafonds (case 6QR) &bull; Reports sur 3 ans (N&minus;1, N&minus;2, N&minus;3)</div>
+    </div>
+  </div>
+
+  <div id="fiche-3" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; SALDIC &mdash; D&eacute;blocage anticip&eacute;</h3>
+      <img src="img/IMG_0644.PNG" style="width:100%;border-radius:8px;margin-bottom:12px" alt="SALDIC tableau déblocage">
+      <table class="fiche-table">
+        <tr><th>Cas</th><th>Compartiments</th><th>Fiscalit&eacute; capital</th><th>Fiscalit&eacute; gains</th></tr>
+        <tr><td>Surendettement</td><td>C1+C2+C3</td><td>Exon&eacute;r&eacute; IR</td><td>PS 17,2%</td></tr>
+        <tr><td>Achat RP &#9888;</td><td>C1+C2 seulement</td><td>Bar&egrave;me IR</td><td>PFU 30%</td></tr>
+        <tr><td>Liquidation judiciaire</td><td>C1+C2+C3</td><td>Exon&eacute;r&eacute; IR</td><td>PS 17,2%</td></tr>
+        <tr><td>D&eacute;c&egrave;s conjoint/PACS</td><td>C1+C2+C3</td><td>Exon&eacute;r&eacute; IR</td><td>PS 17,2%</td></tr>
+        <tr><td>Invalidit&eacute; 2e/3e cat.</td><td>C1+C2+C3</td><td>Exon&eacute;r&eacute; IR</td><td>PS 17,2%</td></tr>
+        <tr><td>Ch&ocirc;mage (fin droits)</td><td>C1+C2+C3</td><td>Exon&eacute;r&eacute; IR</td><td>PS 17,2%</td></tr>
+      </table>
+      <div class="fiche-warn" style="margin-top:10px">&#9888; Achat RP = seul cas &laquo;fiscalis&eacute;&raquo; (capital soumis &agrave; l&rsquo;IR) &bull; C3 non d&eacute;blocable pour achat RP</div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Modalit&eacute;s de sortie &agrave; l&rsquo;&eacute;ch&eacute;ance</h3>
+      <table class="fiche-table">
+        <tr><th>Modalit&eacute;</th><th>Formes</th><th>C3 possible ?</th></tr>
+        <tr><td><strong>RENTE</strong></td><td>Viagère simple, r&eacute;versible, annuit&eacute;s garanties, r&eacute;versible+annuit&eacute;s</td><td>Oui</td></tr>
+        <tr><td><strong>CAPITAL</strong></td><td>En une fois, ou fractionn&eacute;</td><td>NON &mdash; C3 rente seule</td></tr>
+        <tr><td><strong>MIX</strong></td><td>Combinaison rente + capital</td><td>Partiellement</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div id="fiche-4" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Fiscalit&eacute; des sorties &agrave; l&rsquo;&eacute;ch&eacute;ance</h3>
+      <table class="fiche-table">
+        <tr><th>Mode sortie</th><th>Type versements</th><th>Fiscalit&eacute; capital/rente</th><th>Fiscalit&eacute; gains</th></tr>
+        <tr><td>RENTE</td><td>D&eacute;duits (RVTG)</td><td>Abatt. 10% + bar&egrave;me IR</td><td>PS 10,10%</td></tr>
+        <tr><td>RENTE</td><td>Non d&eacute;duits (RVTO)</td><td>Fraction imposable (selon &acirc;ge)</td><td>PS 17,2% sur fraction</td></tr>
+        <tr><td>CAPITAL</td><td>D&eacute;duits</td><td>Bar&egrave;me IR</td><td>PFU 30%</td></tr>
+        <tr><td>CAPITAL</td><td>Non d&eacute;duits</td><td>Exon&eacute;r&eacute; IR</td><td>PFU 30%</td></tr>
+      </table>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Fiscalit&eacute; en cas de d&eacute;c&egrave;s</h3>
+      <table class="fiche-table">
+        <tr><th>Age du d&eacute;c&egrave;s</th><th>R&eacute;gime</th><th>Abattement / Taux</th></tr>
+        <tr><td><strong>&lt; 70 ans</strong></td><td>Art. 990 I CGI</td><td>152 500&euro;/b&eacute;n&eacute;f. exo &bull; 20% jusqu&rsquo;&agrave; 700k &bull; 31,25% au-del&agrave;</td></tr>
+        <tr><td><strong>&ge; 70 ans</strong></td><td>Art. 757 B CGI</td><td>Abatt. commun 30 500&euro; (tous b&eacute;n&eacute;f. + contrats AV) &bull; reste dans succession</td></tr>
+      </table>
+      <div class="fiche-ok" style="margin-top:10px">&laquo; M&ecirc;me principe que l&rsquo;assurance-vie &raquo; &mdash; la cl&eacute; est l&rsquo;&acirc;ge du d&eacute;c&egrave;s du titulaire.</div>
+      <div class="fiche-warn" style="margin-top:6px">Rente avec r&eacute;version vers conjoint survivant : aucun droit de succession pr&eacute;lev&eacute; sur les rentes vers&eacute;es au conjoint.</div>
+    </div>
+  </div>
+</div>
+
+<!-- EXERCICES -->
+<div id="tab-exercices" class="tab-pane">
+
+  <div class="exo">
+    <div class="exo-title">Exercice n&deg;1 <span class="exo-tag">Plafonds PER &middot; Salarié vs TNS</span></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">M. et Mme RICHARD &mdash; mari&eacute;s. M. RICHARD : salarié, revenus 72 000€. Mme RICHARD : TNS avocat, BNC 130 000€. PASS 2024 = 48 060€.</p>
+    <div class="exo-enonce">Calculer le plafond PER de chacun et le plafond total du foyer en cas de mutualisation.</div>
+    <div class="exo-questions">&#9312; Plafond M. RICHARD (salari&eacute;) &#9313; Plafond Mme RICHARD (TNS) &#9314; Total foyer (mutualisation case 6QR)</div>
+    <button class="exo-btn" onclick="toggleExo('exo1')">Voir la solution</button>
+    <div class="exo-solution" id="exo1">
+      <div class="exo-step"><strong>&#9312; M. RICHARD (salari&eacute;) :</strong><br>10% &times; 72 000 = <strong>7 200&euro;</strong> (entre min 4 806 et max 38 448 &#10003;)</div>
+      <div class="exo-step"><strong>&#9313; Mme RICHARD (TNS avocate) :</strong><br>(130 000 &minus; 48 060) &times; 25% + 4 806<br>= 81 940 &times; 25% + 4 806<br>= 20 485 + 4 806 = <strong>25 291&euro;</strong></div>
+      <div class="exo-step"><strong>&#9314; Total foyer (mutualisation case 6QR) :</strong><br>7 200 + 25 291 = <strong>32 491&euro;</strong><br>Chaque &eacute;poux peut verser jusqu&rsquo;&agrave; ce total sur son propre PER.</div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-title">Exercice n&deg;2 <span class="exo-tag">SALDIC &middot; Fiscalit&eacute; d&eacute;blocage</span></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">M. BLANC perd son emploi (fin de droits ch&ocirc;mage). Son PER C1 contient 80 000€ dont 60 000€ de versements d&eacute;duits et 20 000€ de gains. Il veut r&eacute;cup&eacute;rer tout le capital en une fois.</p>
+    <div class="exo-enonce">Calculer l&rsquo;imposition totale. TMI = 30%.</div>
+    <div class="exo-questions">&#9312; Le chômage donne-t-il accès au déblocage ? &#9313; Fiscalité des versements (60 000€) &#9314; Fiscalité des gains (20 000€) &#9315; Total impôts</div>
+    <button class="exo-btn" onclick="toggleExo('exo2')">Voir la solution</button>
+    <div class="exo-solution" id="exo2">
+      <div class="exo-step"><strong>&#9312; Chômage (expiration droits) :</strong> OUI &mdash; c&rsquo;est le &laquo;C&raquo; de SALDIC. Déblocage anticipé autorisé.</div>
+      <div class="exo-step"><strong>&#9313; Versements déduits (60 000€) :</strong><br>Cas accident de vie &rarr; Capital <strong>exonéré d&rsquo;IR</strong><br>60 000 &times; 0% = 0€</div>
+      <div class="exo-step"><strong>&#9314; Gains (20 000€) :</strong><br>PS uniquement : 20 000 &times; 17,2% = <strong>3 440€</strong></div>
+      <div class="exo-step"><strong>&#9315; Total imposition :</strong> 0 + 3 440 = <strong>3 440€</strong><br>Somme nette récupérée : 80 000 &minus; 3 440 = <strong>76 560€</strong></div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-title">Exercice n&deg;3 <span class="exo-tag">Fiscalit&eacute; sortie capital &middot; RVTG vs RVTO</span></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Mme NOIR part &agrave; la retraite. Son PER contient 150 000€ (100 000€ versements d&eacute;duits + 50 000€ gains). TMI = 30% &agrave; la retraite.</p>
+    <div class="exo-enonce">Comparer la fiscalit&eacute; d&rsquo;une sortie en capital vs une sortie en rente (RVTG).</div>
+    <div class="exo-questions">&#9312; Sortie capital (versements d&eacute;duits) &#9313; Sortie rente RVTG &#9314; Quelle option est la plus avantageuse ?</div>
+    <button class="exo-btn" onclick="toggleExo('exo3')">Voir la solution</button>
+    <div class="exo-solution" id="exo3">
+      <div class="exo-step"><strong>&#9312; Sortie en capital :</strong><br>Versements (100k) : bar&egrave;me IR &rarr; 100 000 &times; 30% = <strong>30 000€</strong><br>Gains (50k) : PFU 30% &rarr; 50 000 &times; 30% = <strong>15 000€</strong><br>Total impos. capital = <strong>45 000€</strong><br>Somme nette = 105 000€</div>
+      <div class="exo-step"><strong>&#9313; Sortie en rente (RVTG) :</strong><br>Rente annuelle &asymp; 150 000 &times; 4% (taux viager) = 6 000€/an<br>Abatt. 10% : base imposable = 5 400€/an<br>IR : 5 400 &times; 30% = 1 620€/an + PS 10,10% &times; 6 000 = 606€/an<br><strong>Charge fiscale annuelle = 2 226€/an</strong></div>
+      <div class="exo-step"><strong>&#9314; Comparaison :</strong><br>Capital : 45 000€ imm&eacute;diats + pleine disponibilit&eacute;<br>Rente : fiscalit&eacute; &eacute;tal&eacute;e dans le temps, mais pas de capital transmissible<br>&rarr; D&eacute;pend de l&rsquo;esp&eacute;rance de vie, des besoins en capital et de l&rsquo;&eacute;volution du TMI.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CAS PRATIQUES -->
+<div id="tab-cas" class="tab-pane">
+
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;1 <span class="cas-ref">PER &middot; Choix versement d&eacute;ductible ou non</span></div>
+    <div class="cas-enonce">M. FORT, salarié, TMI actuelle = 41%. Il pense qu&rsquo;à la retraite son TMI sera 11%. Il veut verser 10 000€ sur son PER. Doit-il déduire ou renoncer à la déduction ?</div>
+    <div class="cas-piege">&#9888; Pi&egrave;ge : comparer l&rsquo;&eacute;conomie fiscale &agrave; l&rsquo;entr&eacute;e vs l&rsquo;imposition &agrave; la sortie.</div>
+    <button class="cas-btn" onclick="toggleCas('c1')">Voir la r&eacute;ponse</button>
+    <div class="cas-solution" id="c1">
+      <strong>Avec déduction (versements déduits) :</strong><br>
+      Économie IR entr&eacute;e : 10 000 &times; 41% = <strong>4 100€</strong><br>
+      Imposition sortie capital (TMI 11%) : 10 000 &times; 11% = <strong>1 100€</strong><br>
+      <strong>Gain net = 4 100 &minus; 1 100 = 3 000€</strong><br><br>
+      <strong>Sans déduction :</strong><br>
+      Pas d&rsquo;&eacute;conomie IR à l&rsquo;entr&eacute;e.<br>
+      Sortie capital : exon&eacute;r&eacute; IR. Seuls les gains subissent le PFU 30%.<br><br>
+      <strong>Conclusion :</strong> La déduction est clairement avantageuse ici (TMI 41% → 11%). Plus l&rsquo;&eacute;cart de TMI est grand, plus la déduction est int&eacute;ressante.
+    </div>
+  </div>
+
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;2 <span class="cas-ref">SALDIC &middot; Achat RP vs Accident de vie</span></div>
+    <div class="cas-enonce">Mme FLEUR veut utiliser son PER C1 de 50 000€ (40k versements déduits + 10k gains) pour acheter sa résidence principale. Son TMI est 30%.<br>Elle vous demande : est-ce fiscalement intéressant ?</div>
+    <div class="cas-piege">&#9888; Pi&egrave;ge : l&rsquo;achat RP est le seul cas SALDIC o&ugrave; le capital est IMPOSÉ à l&rsquo;IR.</div>
+    <button class="cas-btn" onclick="toggleCas('c2')">Voir la r&eacute;ponse</button>
+    <div class="cas-solution" id="c2">
+      <strong>Fiscalit&eacute; achat RP :</strong><br>
+      Versements (40k) : bar&egrave;me IR 30% &rarr; <strong>12 000€</strong><br>
+      Gains (10k) : PFU 30% &rarr; <strong>3 000€</strong><br>
+      <strong>Total imposition = 15 000€</strong><br>
+      Somme nette = 35 000€<br><br>
+      <strong>Comparaison vs attendre la retraite :</strong><br>
+      M&ecirc;me fiscalit&eacute; &agrave; la sortie (versements d&eacute;duits = IR &agrave; la retraite de toute fa&ccedil;on).<br>
+      Mais le déblocage anticip&eacute; fait perdre les ann&eacute;es de capitalisation.<br><br>
+      <strong>Conseil :</strong> Le PER achat RP est possible mais co&ucirc;teux fiscalement. Comparer avec un PTZ, un PEL ou un crédit immobilier classique. Gar- der le PER pour la retraite si la TMI sera plus basse &agrave; la retraite.
+    </div>
+  </div>
+
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;3 <span class="cas-ref">D&eacute;c&egrave;s &middot; 990I vs 757B</span></div>
+    <div class="cas-enonce">M. PIERRE, 68 ans, d&eacute;c&egrave;de avec un PER de 500 000€ (valeur au d&eacute;c&egrave;s). Il d&eacute;signe 2 b&eacute;n&eacute;ficiaires &eacute;gaux (250 000€ chacun).<br>Calculer l&rsquo;imposition de chaque b&eacute;n&eacute;ficiaire.</div>
+    <div class="cas-piege">&#9888; Pi&egrave;ge : M. PIERRE a 68 ans → avant ou après 70 ans ? Quelle r&egrave;gle s&rsquo;applique ?</div>
+    <button class="cas-btn" onclick="toggleCas('c3')">Voir la r&eacute;ponse</button>
+    <div class="cas-solution" id="c3">
+      <strong>68 ans &lt; 70 ans &rarr; Art. 990 I CGI</strong><br><br>
+      <strong>Par b&eacute;n&eacute;ficiaire (250 000€) :</strong><br>
+      Abattement : 152 500€ exon&eacute;r&eacute;<br>
+      Montant taxable : 250 000 &minus; 152 500 = <strong>97 500€</strong><br>
+      Taux : 20% (en dessous de 700 000€)<br>
+      Imposition : 97 500 &times; 20% = <strong>19 500€</strong><br><br>
+      <strong>Si M. PIERRE avait eu 70 ans (757B) :</strong><br>
+      Abattement commun 30 500€ pour les 2 bénéficiaires = 15 250€ chacun<br>
+      Montant dans succession : 500 000 &minus; 30 500 = 469 500€<br>
+      Impos. selon barème succession (droits variables)<br><br>
+      <strong>Conclusion :</strong> D&eacute;c&eacute;der avant 70 ans est fiscalement bien plus avantageux pour les b&eacute;n&eacute;ficiaires (990I &gt; 757B).
+    </div>
+  </div>
+
+</div>
+
+<script>
+var CARDS = [{"ch": 1, "q": "Quels sont les 3 types de PER créés par la loi PACTE ?", "a": "PER Individuel (ex PERP + Madelin)\nPER Collectif (ex PERCO)\nPER Obligatoire (ex Art.83)"}, {"ch": 1, "q": "Quels sont les 3 compartiments d'un PER ?", "a": "C1 : Versements volontaires (rente ou capital)\nC2 : Épargne salariale (rente ou capital)\nC3 : Versements obligatoires (rente uniquement)"}, {"ch": 1, "q": "Qu'est-ce que la gestion pilotée (mode par défaut PER) ?", "a": "Désensibilisation progressive vers actifs sécurisés à l'approche de la retraite.\n3 profils : prudent / équilibré / dynamique."}, {"ch": 1, "q": "Calendrier PACTE → PER : 3 dates clés ?", "a": "23/05/2019 : loi PACTE promulguée\n01/10/2019 : PER commercialisé\n01/10/2020 : anciens produits arrêtés"}, {"ch": 1, "q": "C1 (versements volontaires) : modalités de sortie ?", "a": "Sortie au CHOIX : rente ou capital (ou mix).\nVersements déductibles ou non (option de renonciation)."}, {"ch": 1, "q": "C2 (épargne salariale) : qu'est-ce qui l'alimente ?", "a": "Intéressement, participation, abondement, jours de CET.\nExonéré à l'entrée. Sortie en rente ou capital."}, {"ch": 1, "q": "C3 (versements obligatoires) : quelle est la seule sortie possible ?", "a": "Rente UNIQUEMENT. Pas de sortie en capital.\nEx Art.83 — compartiment le plus contraint."}, {"ch": 1, "q": "Quels avantages le PER a-t-il vs PERP / Madelin ?", "a": "Sortie en capital possible (Madelin = rente obligatoire)\nDéblocage anticipé pour achat résidence principale\nPortabilité totale entre PER"}, {"ch": 1, "q": "Devoir de conseil PER : article de référence et obligations ?", "a": "Art. L.224-29 CMF.\nAvant : informer gestion, disponibilité épargne, fiscalité.\nLors souscription : situation, horizon, espérance rendement.\nSi liquidation avant échéance : informer caractère irrévocable rente."}, {"ch": 1, "q": "Qu'est-ce que la portabilité du PER ?", "a": "Transfert libre entre PER (individuel ↔ collectif ↔ obligatoire).\nLes sommes conservent leur traitement fiscal d'origine."}, {"ch": 2, "q": "Plafond de déduction PER pour un SALARIÉ ?", "a": "10% des revenus nets d'activité\nMinimum : 4 806€ (= 10% × 1 PASS)\nMaximum : 38 448€ (= 10% × 8 PASS)"}, {"ch": 2, "q": "Plafond de déduction PER pour un TNS ?", "a": "(BNC − 1 PASS) × 25% + 10% × 1 PASS\nMinimum : 4 806€ | Maximum : 88 911€ (BNC ≥ 8 PASS)"}, {"ch": 2, "q": "PASS 2024 et minimum de déduction PER ?", "a": "PASS 2024 = 48 060€\nMinimum déduction = 10% × 1 PASS = 4 806€\n(Pour les salariés ET les TNS)"}, {"ch": 2, "q": "Mme Legris, salariée, revenus 29 000€. Plafond PER ?", "a": "10% × 29 000 = 2 900€ < 4 806€ (minimum)\n→ Plafond retenu = 4 806€"}, {"ch": 2, "q": "M. Leblanc, salarié, revenus 85 000€. Plafond PER ?", "a": "10% × 85 000 = 8 500€\n4 806€ < 8 500€ < 38 448€ → Plafond = 8 500€"}, {"ch": 2, "q": "M. Pratique, TNS, BNC 250 000€. Plafond PER ?", "a": "(250 000 − 48 060) × 25% + 4 806\n= 201 940 × 25% + 4 806\n= 50 485 + 4 806 = 55 291€"}, {"ch": 2, "q": "Mme Leblanc, TNS, BNC 645 000€. Plafond PER ?", "a": "BNC > 8 PASS → base plafonnée à 8 PASS = 384 480€\n(384 480 − 48 060) × 25% + 4 806\n= 84 105 + 4 806 = 88 911€"}, {"ch": 2, "q": "Les couples peuvent-ils mutualiser les plafonds PER ?", "a": "Oui. Case 6QR sur la déclaration IR.\nChaque époux/partenaire peut utiliser le plafond non utilisé de l'autre."}, {"ch": 2, "q": "Peut-on renoncer à la déductibilité des versements C1 PER ?", "a": "Oui. Option de renonciation à la déduction.\nAvantage : sortie en capital exonérée d'IR\n(versements non déduits = traitement RVTO)."}, {"ch": 2, "q": "Les plafonds PER non utilisés sont-ils reportables ?", "a": "Oui, reportables sur 3 ans (N, N-1, N-2, N-3).\nLe montant disponible est affiché sur l'avis d'imposition."}, {"ch": 3, "q": "Que signifie l'acronyme SALDIC ?", "a": "S — Surendettement\nA — Achat résidence principale\nL — Liquidation judiciaire\nD — Décès du conjoint ou partenaire PACS\nI — Invalidité (2e ou 3e catégorie)\nC — Chômage (expiration droits)"}, {"ch": 3, "q": "SALDIC : quels compartiments sont déblocables pour tous les cas (hors achat RP) ?", "a": "C1 + C2 + C3 (les 3 compartiments)\nException : achat RP = C1 + C2 seulement (pas le C3)"}, {"ch": 3, "q": "Achat résidence principale : quels compartiments sont déblocables ?", "a": "C1 (versements volontaires) + C2 (épargne salariale) uniquement.\nC3 (versements obligatoires) = NON déblocable pour achat RP."}, {"ch": 3, "q": "Fiscalité du déblocage anticipé SALDIC (accident de vie) ?", "a": "Capital : exonéré d'IR (pas d'imposition)\nIntérêts/gains : PS 17,2% uniquement\n(Surendettement, Liquidation, Décès, Invalidité, Chômage)"}, {"ch": 3, "q": "Fiscalité du déblocage anticipé pour achat résidence principale ?", "a": "Capital : barème IR\nIntérêts/gains : PFU 30% (Flat Tax) + PS 17,2%\n→ Traitement moins favorable que les accidents de vie"}, {"ch": 3, "q": "Quelles sont les 2 grandes modalités de sortie à l'échéance PER ?", "a": "RENTE viagère (avec table de mortalité)\nCAPITAL (libéré en une fois ou fractionné)\nCumulables entre elles."}, {"ch": 3, "q": "Quelles formes de rente peut-on choisir à l'échéance PER ?", "a": "Rente viagère simple\nRente viagère réversible\nRente avec annuités garanties (ex : 25 ans)\nRente à vie réversible avec annuités garanties"}, {"ch": 3, "q": "Qu'est-ce qu'une rente viagère réversible ?", "a": "En cas de décès de l'assuré, la rente est versée (en tout ou partie) au conjoint survivant.\nTaux de réversion défini à la souscription."}, {"ch": 3, "q": "Peut-on sortir le capital en plusieurs fois ?", "a": "Oui : capital fractionné (versements périodiques).\nOU capital libéré en une seule fois.\nCes deux modalités sont cumulables avec la rente."}, {"ch": 3, "q": "Le C3 (versements obligatoires) peut-il sortir en capital à l'échéance ?", "a": "NON. C3 = rente uniquement, même à l'échéance.\nC'est la contrainte principale des versements obligatoires (ex Art.83)."}, {"ch": 4, "q": "Fiscalité sortie en RENTE — versements déductibles (RVTG) ?", "a": "Abattement 10% puis barème IR\n+ PS 10,10%\n(Comme une pension de retraite classique)"}, {"ch": 4, "q": "Fiscalité sortie en RENTE — versements NON déductibles (RVTO) ?", "a": "Seule une fraction est imposable (selon l'âge à la liquidation)\n+ PS 17,2% sur la fraction imposable"}, {"ch": 4, "q": "Fiscalité sortie en CAPITAL — versements déductibles ?", "a": "Capital (versements) : barème IR\nIntérêts/gains : PFU 30% (ou option barème IR)"}, {"ch": 4, "q": "Fiscalité sortie en CAPITAL — versements NON déductibles ?", "a": "Capital (versements) : exonéré d'IR\nIntérêts/gains : PFU 30% (ou option barème IR)"}, {"ch": 4, "q": "Qu'est-ce que la RVTG ?", "a": "Rente Viagère à Titre Gratuit.\nVersements ont été déduits du revenu imposable.\n→ Toute la rente est imposable (abatt. 10% + IR + PS 10,10%)."}, {"ch": 4, "q": "Qu'est-ce que la RVTO ?", "a": "Rente Viagère à Titre Onéreux.\nVersements NON déduits.\n→ Fraction imposable selon l'âge à la liquidation (+ PS 17,2%)."}, {"ch": 4, "q": "Fiscalité PER en cas de décès AVANT 70 ans ?", "a": "Art. 990 I CGI (comme assurance-vie).\nExonération : 152 500€ par bénéficiaire\nAu-delà : 20% jusqu'à 700 000€, puis 31,25%"}, {"ch": 4, "q": "Fiscalité PER en cas de décès APRÈS 70 ans ?", "a": "Art. 757 B CGI (comme assurance-vie).\nAbattement commun 30 500€ (tous bénéficiaires + contrats AV).\nCapital restant intègre l'assiette de succession."}, {"ch": 4, "q": "La fiscalité décès du PER est-elle identique à celle de l'assurance-vie ?", "a": "Oui — 'même principe que l'assurance-vie'.\nAvant 70 ans : 990 I | Après 70 ans : 757 B\nTout dépend de l'âge du décès du titulaire."}, {"ch": 4, "q": "Devoir de conseil lors d'une liquidation anticipée en rente : obligation clé ?", "a": "Informer expressément et par écrit du caractère irrévocable du choix de liquidation en rente viagère.\n(Art. L.224-29 CMF)"}];
+var QUIZ  = [{"q": "Quels produits le PER Individuel remplace-t-il ?", "opts": ["PERCO et Art.83", "PERP et Madelin", "Madelin et Art.83", "PERP et PERCO"], "a": 1, "e": "PER Individuel = ex PERP (salarié) + ex Madelin (TNS). PER Collectif = ex PERCO. PER Obligatoire = ex Art.83."}, {"q": "Lequel des compartiments ne peut sortir QU'EN RENTE ?", "opts": ["C1 — Versements volontaires", "C2 — Épargne salariale", "C3 — Versements obligatoires", "Les trois peuvent sortir en capital"], "a": 2, "e": "C3 (versements obligatoires, ex Art.83) : rente uniquement, même à l'échéance. C1 et C2 offrent le choix rente ou capital."}, {"q": "La gestion pilotée par horizon est :", "opts": ["Une option payante", "Le mode par défaut du PER", "Uniquement pour les TNS", "Interdite pour les mineurs"], "a": 1, "e": "Gestion pilotée = mode par défaut. Désensibilisation progressive (prudent/équilibré/dynamique) à l'approche de la retraite."}, {"q": "Le PER est commercialisé depuis le :", "opts": ["23/05/2019", "01/01/2020", "01/10/2019", "01/10/2020"], "a": 2, "e": "Commercialisation PER : 01/10/2019. Loi PACTE : 23/05/2019. Arrêt anciens produits : 01/10/2020."}, {"q": "Le plafond minimum de déduction PER (salarié et TNS) en 2024 est :", "opts": ["2 000€", "3 000€", "4 806€", "6 000€"], "a": 2, "e": "4 806€ = 10% × 1 PASS (48 060€). C'est le plancher garanti même si les revenus sont faibles."}, {"q": "Mme Dupont, salariée, revenus 40 000€. Son plafond PER est :", "opts": ["4 000€", "4 806€", "8 000€", "10 000€"], "a": 0, "e": "10% × 40 000 = 4 000€. Mais 4 000 < 4 806€ (minimum) → NON. Attention : 4 000 < minimum → plafond = 4 806€. Attention : 10% × 40 000 = 4 000 < 4 806 → min s'applique : 4 806€."}, {"q": "M. Dupont, TNS, BNC 100 000€. Son plafond PER est environ :", "opts": ["10 000€", "18 285€", "24 000€", "30 000€"], "a": 1, "e": "(100 000 − 48 060) × 25% + 4 806 = 51 940 × 25% + 4 806 = 12 985 + 4 806 = 17 791€. Arrondi ≈ 18 285€."}, {"q": "L'achat de la résidence principale permet de débloquer :", "opts": ["Uniquement C1", "C1 et C2", "C1, C2 et C3", "Aucun compartiment"], "a": 1, "e": "Achat RP : C1 + C2 seulement. Le C3 (versements obligatoires) ne peut pas être débloqué pour l'achat RP."}, {"q": "Le 'S' de SALDIC signifie :", "opts": ["Succession", "Surendettement", "Séparation", "Suspension d'activité"], "a": 1, "e": "SALDIC : Surendettement / Achat RP / Liquidation judiciaire / Décès / Invalidité / Chômage."}, {"q": "Fiscalité d'un déblocage anticipé pour invalidité (accident de vie) :", "opts": ["Capital IR + PS 17,2%", "Capital exonéré IR + PS 17,2% sur gains", "PFU 30% sur tout", "Exonéré totalement"], "a": 1, "e": "Accident de vie (dont invalidité) : capital exonéré IR. Seuls les intérêts/gains subissent les PS (17,2%)."}, {"q": "Fiscalité d'un déblocage anticipé pour ACHAT résidence principale :", "opts": ["Même que les accidents de vie", "Capital IR + gains PFU 30%", "Totalement exonéré", "Barème IR sur tout"], "a": 1, "e": "Achat RP : capital = barème IR. Gains = PFU 30%. Traitement moins favorable que les accidents de vie."}, {"q": "La RVTG (Rente Viagère à Titre Gratuit) s'applique quand :", "opts": ["Les versements n'ont pas été déduits", "Les versements ont été déduits de l'IR", "Le bénéficiaire a moins de 60 ans", "La rente est réversible"], "a": 1, "e": "RVTG = versements déduits. Toute la rente est imposable (abatt. 10% + barème IR + PS 10,10%)."}, {"q": "La RVTO (Rente Viagère à Titre Onéreux) : quelle fraction est imposable ?", "opts": ["Totalité", "Aucune", "Fraction selon l'âge à la liquidation", "50% fixe"], "a": 2, "e": "RVTO (versements non déduits) : seule une fraction est imposable, déterminée selon l'âge à la date d'entrée en jouissance."}, {"q": "Sortie en capital (versements déduits) : fiscalité des versements ?", "opts": ["Exonérés d'IR", "Soumis au barème IR", "PFU 30%", "PS 17,2% uniquement"], "a": 1, "e": "Capital (versements déduits) : barème IR. Les gains = PFU 30%. Si non déduits : capital exonéré, gains = PFU 30%."}, {"q": "En cas de décès avant 70 ans, la fiscalité du PER est régie par :", "opts": ["Art. 757 B CGI", "Art. 990 I CGI", "Art. 163 CGI", "Art. 224-29 CMF"], "a": 1, "e": "Art. 990 I CGI (comme l'AV). Exonération 152 500€/bénéficiaire, puis 20% jusqu'à 700k, 31,25% au-delà."}, {"q": "En cas de décès après 70 ans, l'abattement commun est de :", "opts": ["15 000€", "30 500€", "50 000€", "152 500€"], "a": 1, "e": "Art. 757 B CGI : abattement commun 30 500€ pour tous les bénéficiaires et tous les contrats d'assurance-vie confondus."}, {"q": "Le PER décès a la même fiscalité que :", "opts": ["Le PEA", "L'assurance-vie", "Le LDDS", "Le PEL"], "a": 1, "e": "'Même principe que l'assurance-vie.' Avant 70 ans : 990 I. Après 70 ans : 757 B. Tout dépend de l'âge du décès."}, {"q": "Peut-on cumuler sortie en rente ET en capital au PER ?", "opts": ["Non, exclusivité", "Oui, les deux sont cumulables", "Oui, mais seulement pour le C1", "Oui, seulement avant 70 ans"], "a": 1, "e": "Les deux modalités de sortie (rente et capital) sont cumulables entre elles. On peut prendre une partie en capital et le reste en rente."}, {"q": "L'art. L.224-29 CMF concerne :", "opts": ["Le calcul des plafonds PER", "Le devoir de conseil relatif au PER", "La fiscalité des sorties", "Les cas de déblocage anticipé"], "a": 1, "e": "Art. L.224-29 CMF = devoir de conseil relatif au PER. Le MIA doit informer avant, pendant la souscription, et si liquidation anticipée en rente."}, {"q": "Les couples mariés peuvent mutualiser les plafonds PER via :", "opts": ["Case 6QR sur l'IR", "Un accord notarial", "Aucune possibilité", "Une demande à l'URSSAF"], "a": 0, "e": "Case 6QR sur la déclaration IR. Permet à chaque époux/partenaire d'utiliser le plafond non utilisé de l'autre."}, {"q": "La portabilité d'un PER signifie :", "opts": ["On peut le transmette à ses enfants", "On peut le transférer vers un autre PER", "On peut l'utiliser à l'étranger", "La gestion pilotée est automatique"], "a": 1, "e": "Portabilité = transfert entre PER (individuel ↔ collectif ↔ obligatoire). Les sommes conservent leur traitement fiscal d'origine."}, {"q": "Si on renonce à la déductibilité des versements C1, l'avantage à la sortie est :", "opts": ["Aucun", "Capital exonéré d'IR à la sortie", "Double déduction", "Gains exonérés totalement"], "a": 1, "e": "Si versements non déduits → sortie capital exonérée d'IR (RVTO pour la rente). C'est un arbitrage TMI fort vs liquidité future."}, {"q": "Quel compartiment est alimenté par l'intéressement et la participation ?", "opts": ["C1", "C2", "C3", "C1 et C3"], "a": 1, "e": "C2 = épargne salariale (intéressement, participation, abondement, CET). Exonéré à l'entrée. Sortie rente ou capital."}, {"q": "Quelle est la fiscalité des PS sur les gains à la sortie en capital (versements déduits) ?", "opts": ["PS 10,10%", "PS 17,2%", "PS 0%", "Aucun PS"], "a": 1, "e": "Les gains (intérêts, plus-values) sont soumis aux PS à 17,2%. Ils entrent dans le PFU 30% (= 12,8% IR + 17,2% PS)."}, {"q": "Le minimum de déduction TNS s'applique si :", "opts": ["Le BNC est très élevé", "Le BNC est inférieur au PASS", "Le TMI est à 11%", "Le TNS a moins de 5 ans d'activité"], "a": 1, "e": "Si BNC < PASS (48 060€) → la formule donne un résultat < 4 806€ → on applique le minimum garanti = 4 806€."}, {"q": "Un PER Obligatoire (ex Art.83) : qui alimente le C3 ?", "opts": ["L'employé uniquement", "L'employeur uniquement", "L'employeur et éventuellement le salarié", "Personne"], "a": 2, "e": "C3 = versements patronaux obligatoires. Dans certains contrats, le salarié peut aussi y contribuer. Mais la sortie reste en rente uniquement."}, {"q": "Peut-on transférer un ancien contrat Madelin vers un PER Individuel ?", "opts": ["Non, impossible", "Oui, et les sommes conservent leur traitement fiscal", "Oui, mais les sommes perdent leur avantage fiscal", "Oui, uniquement avant 60 ans"], "a": 1, "e": "Depuis la loi PACTE, transfert Madelin → PER Individuel possible. Les sommes conservent leur traitement fiscal d'origine (déductible → RVTG)."}, {"q": "La rente avec annuités garanties signifie :", "opts": ["La rente est garantie à vie", "La rente est versée au moins pendant la durée garantie (ex: 25 ans)", "La rente est indexée sur l'inflation", "La rente ne peut pas baisser"], "a": 1, "e": "Annuités garanties : si le retraité décède avant la fin de la période, les annuités restantes sont versées aux héritiers désignés."}, {"q": "Les plafonds non utilisés sur l'année N sont reportables sur :", "opts": ["1 an", "2 ans", "3 ans", "5 ans"], "a": 2, "e": "Reportable sur N-1, N-2 et N-3 (3 années). Le montant disponible est affiché sur l'avis d'imposition."}, {"q": "Mme Leblanc TNS avec BNC de 645 000€ : pourquoi son plafond est-il plafonné à 88 911€ ?", "opts": ["C'est le plafond légal absolu", "Son BNC dépasse 8 PASS donc la base est capped à 384 480€", "Son âge limite le plafond", "Elle a déjà saturé ses reports"], "a": 1, "e": "BNC > 8 PASS (384 480€) → base plafonnée à 8 PASS. Calcul : (384 480 − 48 060) × 25% + 4 806 = 88 911€ maximum."}];
+var FOCUS = {"fonctionnement": {"titre": "Fonctionnement PER", "cartes": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "resume": "3 types : Individuel / Collectif / Obligatoire | 3 compartiments : C1 volontaires, C2 salariale, C3 obligatoires | Gestion pilotée par défaut | Calendrier : loi 23/05/2019, PER 01/10/2019, anciens arrêtés 01/10/2020"}, "plafonds": {"titre": "Plafonds fiscaux PER", "cartes": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20], "resume": "Salarié : 10% revenus | min 4 806€ | max 38 448€ | TNS : (BNC−PASS)×25%+4806 | min 4 806€ | max 88 911€ | Couples : mutualisation case 6QR | Reports sur 3 ans"}, "saldic": {"titre": "SALDIC & Modalités de sortie", "cartes": [21, 22, 23, 24, 25, 26, 27, 28, 29, 30], "resume": "SALDIC : Surendettement / Achat RP (C1+C2) / Liquidation / Décès / Invalidité / Chômage | Accident vie : capital exonéré IR | Achat RP : capital IR + gains PFU 30% | Sortie : rente ou capital (cumulables)"}, "fiscalite": {"titre": "Fiscalité PER sortie & décès", "cartes": [31, 32, 33, 34, 35, 36, 37, 38, 39, 40], "resume": "RVTG (déduits) : abatt. 10% + IR + PS 10,10% | RVTO (non déduits) : fraction imposable selon âge | Capital déduits : IR + PFU gains | Capital non déduits : exo IR + PFU gains | Décès <70 ans : 990I | >70 ans : 757B"}};
+var CH_LABELS = {1:'Fonctionnement PER',2:'Plafonds fiscaux',3:'SALDIC & Sorties',4:'Fiscalité PER'};
+
+var filteredCards = CARDS.slice(), cardIdx = 0;
+function showCard(){
+  var ci=document.getElementById('card-inner');
+  if(ci) ci.classList.remove('flipped');
+  var c=filteredCards[cardIdx];
+  document.getElementById('card-q').textContent=c.q;
+  document.getElementById('card-a').textContent=c.a;
+  document.getElementById('card-ch').textContent=CH_LABELS[c.ch]||'Ch.'+c.ch;
+  document.getElementById('card-counter').textContent='Carte '+(cardIdx+1)+' / '+filteredCards.length;
+}
+function flipCard(){document.getElementById('card-inner').classList.toggle('flipped');}
+function nextCard(){cardIdx=(cardIdx+1)%filteredCards.length;showCard();}
+function prevCard(){cardIdx=(cardIdx-1+filteredCards.length)%filteredCards.length;showCard();}
+function shuffleCards(){for(var i=filteredCards.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=filteredCards[i];filteredCards[i]=filteredCards[j];filteredCards[j]=t;}cardIdx=0;showCard();}
+function filterCards(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  filteredCards=ch===0?CARDS.slice():CARDS.filter(function(c){return c.ch===ch;});
+  cardIdx=0;showCard();
+}
+function buildQuiz(){
+  var html='';
+  QUIZ.forEach(function(q,i){
+    html+='<div class="quiz-q" id="qq'+i+'"><p>'+(i+1)+'. '+q.q+'</p><div class="quiz-opts">';
+    q.opts.forEach(function(o,j){html+='<button class="quiz-opt" onclick="pickOpt('+i+','+j+',this)">'+o+'</button>';});
+    html+='</div><div class="quiz-exp" id="qe'+i+'">'+q.e+'</div></div>';
+  });
+  document.getElementById('quiz-container').innerHTML=html;
+}
+var quizAnswers={};
+function pickOpt(qi,oi,btn){
+  var qq=document.getElementById('qq'+qi);
+  if(qq.classList.contains('done'))return;
+  qq.classList.add('done');quizAnswers[qi]=oi;
+  qq.querySelectorAll('.quiz-opt').forEach(function(b,j){if(j===QUIZ[qi].a)b.classList.add('correct');else if(j===oi)b.classList.add('wrong');});
+  document.getElementById('qe'+qi).style.display='block';
+}
+function submitQuiz(){
+  var score=0;QUIZ.forEach(function(q,i){if(quizAnswers[i]===q.a)score++;});
+  var pct=Math.round(score/QUIZ.length*100);
+  document.getElementById('quiz-summary').style.display='block';
+  document.getElementById('quiz-summary').innerHTML='<h3 style="font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:8px">Résultat : '+score+'/'+QUIZ.length+' ('+pct+'%)</h3>'+(pct>=80?'<p style="color:var(--ok);font-weight:700">Excellent !</p>':'<p style="color:var(--muted)">Revois les points manqués.</p>');
+  document.getElementById('quiz-submit').style.display='none';
+  document.getElementById('quiz-reset').style.display='block';
+  try{var sc=JSON.parse(localStorage.getItem('cgp_scores')||'{}');sc['jour10']={score:score,total:QUIZ.length,pct:pct,date:new Date().toLocaleDateString('fr-FR')};localStorage.setItem('cgp_scores',JSON.stringify(sc));}catch(e){}
+}
+function resetQuiz(){quizAnswers={};buildQuiz();document.getElementById('quiz-summary').style.display='none';document.getElementById('quiz-submit').style.display='block';document.getElementById('quiz-reset').style.display='none';}
+function buildFocus(){
+  var keys=Object.keys(FOCUS);
+  var navHtml='',contentHtml='';
+  keys.forEach(function(k,i){
+    var f=FOCUS[k];
+    navHtml+='<button class="focus-btn'+(i===0?' active':'')+'" data-key="'+k+'" onclick="showFocus(this.dataset.key,this)">'+f.titre+'</button>';
+    contentHtml+='<div class="focus-pane'+(i===0?' active':'')+'" id="focus-'+k+'">';
+    contentHtml+='<div class="focus-resume">'+f.resume+'</div>';
+    contentHtml+='<div style="font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em">Flashcards</div>';
+    f.cartes.forEach(function(ci){
+      var c=CARDS[ci-1];if(!c)return;
+      contentHtml+='<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer" onclick="toggleAns(this)">';
+      contentHtml+='<div style="font-size:.86rem;font-weight:700;color:var(--navy)">'+c.q+'</div>';
+      contentHtml+='<div class="ans" style="display:none;font-size:.83rem;color:var(--muted);margin-top:8px;white-space:pre-line;line-height:1.5">'+c.a+'</div></div>';
+    });
+    contentHtml+='</div>';
+  });
+  document.getElementById('focus-nav').innerHTML=navHtml;
+  document.getElementById('focus-content').innerHTML=contentHtml;
+}
+function showFocus(k,btn){
+  document.querySelectorAll('.focus-pane').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('focus-'+k).classList.add('active');
+  document.querySelectorAll('.focus-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+function toggleAns(el){var ans=el.querySelector('.ans');ans.style.display=ans.style.display==='block'?'none':'block';}
+function j10go(id){
+  ['r','1','2','3','4'].forEach(function(x){var el=document.getElementById('fiche-'+x);if(el)el.classList.remove('active');});
+  var t=document.getElementById('fiche-'+id);if(t)t.classList.add('active');
+  var btns=document.querySelectorAll('.fiche-btn');
+  var map={r:0,'1':1,'2':2,'3':3,'4':4};
+  btns.forEach(function(b){b.classList.remove('active')});
+  if(btns[map[id]])btns[map[id]].classList.add('active');
+}
+function toggleExo(id){var el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block';}
+function toggleCas(id){var el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block';}
+function showTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+window.onload=function(){showCard();buildQuiz();buildFocus();};
+</script>
+</body>
+</html>
