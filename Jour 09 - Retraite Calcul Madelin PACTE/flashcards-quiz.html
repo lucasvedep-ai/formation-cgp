@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jour 09 &mdash; Retraite : Calcul, D&eacute;cote, R&eacute;version, Madelin &amp; PACTE | Formation CGP</title>
+<style>
+:root{
+  --navy:#1a2744;--navy2:#253460;--gold:#c9a227;--gold2:#e8c84a;
+  --bg:#f4f6fb;--white:#fff;--text:#1a2744;--muted:#5a6a8a;
+  --ok:#2d8a4e;--ok-bg:#eafaf1;--err:#c0392b;--err-bg:#fdf3f2;
+  --border:#dce3f0;--shadow:0 8px 32px rgba(26,39,68,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:28px 32px 22px}
+header h1{font-size:1.4rem;font-weight:800;margin-bottom:4px}
+header p{font-size:.82rem;color:rgba(255,255,255,.55)}
+.tab-bar{display:flex;background:var(--navy2);overflow-x:auto}
+.tab-btn{background:none;border:none;color:rgba(255,255,255,.5);font-size:.78rem;font-weight:700;padding:12px 18px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:.15s}
+.tab-btn.active{color:#fff;border-bottom-color:var(--gold2)}
+.tab-pane{display:none;padding:24px 20px;max-width:860px;margin:0 auto}
+.tab-pane.active{display:block}
+.card-wrap{perspective:1000px;cursor:pointer;margin:0 auto 20px;max-width:580px}
+.card-inner{position:relative;width:100%;min-height:180px;transform-style:preserve-3d;transition:.5s}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-face{position:absolute;width:100%;min-height:180px;backface-visibility:hidden;border-radius:18px;padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-shadow:var(--shadow)}
+.card-front{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff}
+.card-back{background:#fff;transform:rotateY(180deg);border:2px solid var(--border)}
+.ch-badge{font-size:.65rem;font-weight:800;background:rgba(255,255,255,.15);border-radius:99px;padding:3px 10px;margin-bottom:12px;letter-spacing:.06em}
+.card-q{font-size:1.05rem;font-weight:700;line-height:1.4}
+.card-a{font-size:.88rem;color:var(--text);line-height:1.6;white-space:pre-line}
+.card-nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:4px}
+.card-nav button{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer}
+.card-counter{text-align:center;font-size:.78rem;color:var(--muted);margin-bottom:14px}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filter-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:6px 14px;font-size:.76rem;font-weight:700;color:var(--muted);cursor:pointer}
+.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.quiz-q{background:#fff;border-radius:16px;padding:22px 24px;margin-bottom:16px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.quiz-q p{font-size:.95rem;font-weight:700;margin-bottom:14px;line-height:1.4}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:.86rem;cursor:pointer;text-align:left;transition:.12s;font-weight:500}
+.quiz-opt:hover{border-color:var(--navy);background:#eef1f8}
+.quiz-opt.correct{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:700}
+.quiz-opt.wrong{background:var(--err-bg);border-color:var(--err);color:var(--err)}
+.quiz-exp{font-size:.82rem;color:var(--muted);background:var(--bg);border-radius:8px;padding:10px 12px;margin-top:10px;display:none;line-height:1.5}
+.quiz-summary{background:#fff;border-radius:16px;padding:24px;text-align:center;border:1.5px solid var(--border)}
+.focus-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.focus-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer}
+.focus-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.focus-pane{display:none}
+.focus-pane.active{display:block}
+.focus-resume{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:14px;padding:16px 18px;margin-bottom:18px;font-size:.88rem;font-weight:600;line-height:1.5}
+.fiche-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.fiche-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer}
+.fiche-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.fiche-section{display:none}
+.fiche-section.active{display:block}
+.fiche-block{background:#fff;border-radius:14px;padding:20px 22px;margin-bottom:14px;border:1.5px solid var(--border)}
+.fiche-block h3{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.fiche-table{width:100%;border-collapse:collapse;font-size:.83rem;margin-top:8px}
+.fiche-table th{background:var(--navy);color:#fff;padding:7px 10px;text-align:left}
+.fiche-table td{padding:6px 10px;border-bottom:1px solid var(--border)}
+.fiche-table tr:nth-child(even) td{background:var(--bg)}
+.fiche-hl{background:#fff3cd;border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+.fiche-warn{background:#fff0f0;border-left:4px solid var(--err);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+.fiche-ok{background:var(--ok-bg);border-left:4px solid var(--ok);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+dl.fiche-dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.84rem}
+dl.fiche-dl dt{font-weight:700;color:var(--navy);white-space:nowrap}
+dl.fiche-dl dd{line-height:1.5}
+.exo{background:#fff;border-radius:16px;padding:24px;margin-bottom:20px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.exo-title{font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.exo-tag{font-size:.7rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;color:var(--muted);font-weight:600}
+.exo-questions{background:#c0392b;color:#fff;border-radius:10px;padding:10px 14px;font-size:.82rem;line-height:1.7;margin:12px 0}
+.exo-enonce{background:var(--bg);border-radius:10px;padding:12px 14px;font-size:.84rem;line-height:1.6;margin:10px 0}
+.exo-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;margin-top:10px;display:block}
+.exo-solution{display:none;margin-top:14px;border-top:1.5px solid var(--border);padding-top:14px}
+.exo-step{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:.83rem;margin-bottom:8px;line-height:1.6}
+.exo-step strong{color:var(--navy)}
+.cas{background:#fff;border-radius:16px;padding:24px;margin-bottom:18px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.cas-title{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:6px}
+.cas-ref{font-size:.7rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;color:var(--muted)}
+.cas-enonce{font-size:.86rem;line-height:1.6;margin-bottom:14px}
+.cas-piege{background:#fff3cd;border-radius:8px;padding:10px 14px;font-size:.82rem;margin-bottom:14px;line-height:1.5}
+.cas-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:10px}
+.cas-solution{display:none;background:var(--ok-bg);border-radius:8px;padding:14px 16px;font-size:.84rem;line-height:1.6;border:1px solid var(--ok)}
+@media(max-width:600px){header{padding:20px 16px}.tab-pane{padding:18px 14px}dl.fiche-dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>&#128218; Jour 09 &mdash; Retraite : Calcul, D&eacute;cote, R&eacute;version, Madelin &amp; PACTE</h1>
+  <p>Formule pension &middot; D&eacute;cote &amp; Surcote &middot; R&eacute;version &middot; Taux remplacement &middot; Madelin &middot; Loi PACTE &middot; PASS 48 060&euro;</p>
+</header>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('flashcards',this)">&#127183; Flashcards</button>
+  <button class="tab-btn" onclick="showTab('quiz',this)">&#128221; Quiz</button>
+  <button class="tab-btn" onclick="showTab('focus',this)">&#127919; Focus</button>
+  <button class="tab-btn" onclick="showTab('fiche',this)">&#128196; Fiche</button>
+  <button class="tab-btn" onclick="showTab('exercices',this)">&#127947; Exercices</button>
+  <button class="tab-btn" onclick="showTab('cas',this)">&#128203; Cas pratiques</button>
+</div>
+
+<!-- FLASHCARDS -->
+<div id="tab-flashcards" class="tab-pane active">
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCards(0,this)">Tous (40)</button>
+    <button class="filter-btn" onclick="filterCards(1,this)">Calcul pension</button>
+    <button class="filter-btn" onclick="filterCards(2,this)">D&eacute;cote &amp; Surcote</button>
+    <button class="filter-btn" onclick="filterCards(3,this)">R&eacute;version &amp; Taux rempl.</button>
+    <button class="filter-btn" onclick="filterCards(4,this)">Madelin &amp; PACTE</button>
+  </div>
+  <div class="card-counter" id="card-counter">Carte 1 / 40</div>
+  <div class="card-wrap" onclick="flipCard()">
+    <div class="card-inner" id="card-inner">
+      <div class="card-face card-front">
+        <div class="ch-badge" id="card-ch">Ch. 1</div>
+        <div class="card-q" id="card-q">...</div>
+      </div>
+      <div class="card-face card-back">
+        <div class="card-a" id="card-a">...</div>
+      </div>
+    </div>
+  </div>
+  <div class="card-nav">
+    <button onclick="prevCard()">&#8592; Pr&eacute;c.</button>
+    <button onclick="shuffleCards()">&#128256; M&eacute;langer</button>
+    <button onclick="nextCard()">Suiv. &#8594;</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="tab-quiz" class="tab-pane">
+  <div id="quiz-container"></div>
+  <div id="quiz-summary" class="quiz-summary" style="display:none"></div>
+  <button id="quiz-submit" onclick="submitQuiz()" style="display:block;margin:0 auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Valider le quiz</button>
+  <button id="quiz-reset" onclick="resetQuiz()" style="display:none;margin:16px auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Recommencer</button>
+</div>
+
+<!-- FOCUS -->
+<div id="tab-focus" class="tab-pane">
+  <div class="focus-nav" id="focus-nav"></div>
+  <div id="focus-content"></div>
+</div>
+
+<!-- FICHE -->
+<div id="tab-fiche" class="tab-pane">
+  <div class="fiche-nav">
+    <button class="fiche-btn active" onclick="j9go('r')">Vue d&rsquo;ensemble</button>
+    <button class="fiche-btn" onclick="j9go('1')">Calcul pension</button>
+    <button class="fiche-btn" onclick="j9go('2')">D&eacute;cote &amp; Surcote</button>
+    <button class="fiche-btn" onclick="j9go('3')">R&eacute;version</button>
+    <button class="fiche-btn" onclick="j9go('4')">Madelin &amp; PACTE</button>
+  </div>
+
+  <!-- VUE D'ENSEMBLE -->
+  <div id="fiche-r" class="fiche-section active">
+    <div class="fiche-block">
+      <h3>&#128200; J9 en un coup d&rsquo;&oelig;il</h3>
+      <table class="fiche-table">
+        <tr><th>Th&egrave;me</th><th>Cl&eacute; 1</th><th>Cl&eacute; 2</th></tr>
+        <tr><td><strong>Calcul pension</strong></td><td>SAM &times; 50% &times; (T valid&eacute;s / 172)</td><td>SAM = 25 meilleures ann&eacute;es (priv&eacute;)</td></tr>
+        <tr><td><strong>PASS 2024</strong></td><td>48 060&euro; / an (4 005&euro;/mois)</td><td>R&eacute;f&eacute;rence plafonds PER, Madelin, cotisations</td></tr>
+        <tr><td><strong>D&eacute;cote</strong></td><td>&minus;1,25% / trimestre manquant</td><td>Max 20 trimestres = 25% max</td></tr>
+        <tr><td><strong>Surcote</strong></td><td>+1,25% / trimestre apr&egrave;s taux plein</td><td>Sans plafond</td></tr>
+        <tr><td><strong>67 ans</strong></td><td>Taux plein automatique</td><td>Pension proratisée, sans d&eacute;cote</td></tr>
+        <tr><td><strong>R&eacute;version CNAV</strong></td><td>54% &mdash; mariage obligatoire</td><td>Sous conditions de ressources (~23 441&euro;)</td></tr>
+        <tr><td><strong>R&eacute;version AGIRC-ARRCO</strong></td><td>60% &mdash; &acirc;ge &ge; 55 ans</td><td>Sans conditions ressources. Remariage interdit.</td></tr>
+        <tr><td><strong>Madelin</strong></td><td>TNS &mdash; rente obligatoire</td><td>D&eacute;ductible BIC/BNC</td></tr>
+        <tr><td><strong>Loi PACTE 2019</strong></td><td>Cr&eacute;e le PER (01/10/2019)</td><td>Remplace PERP, Madelin, PERCO, Art.83</td></tr>
+      </table>
+      <div class="fiche-hl" style="margin-top:12px">&#9888; &Agrave; RETENIR : Plafond 1 PASS = <strong>48 060&euro;</strong> (2024) &mdash; r&eacute;f&eacute;rence centrale pour le calcul des plafonds retraite</div>
+    </div>
+  </div>
+
+  <!-- CALCUL PENSION -->
+  <div id="fiche-1" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Formule de calcul &mdash; R&eacute;gime g&eacute;n&eacute;ral (secteur priv&eacute;)</h3>
+      <div class="fiche-hl">Pension = <strong>SAM &times; Taux &times; (Trimestres valid&eacute;s / Trimestres requis)</strong></div>
+      <table class="fiche-table">
+        <tr><th>Composante</th><th>D&eacute;finition</th><th>Valeur</th></tr>
+        <tr><td><strong>SAM</strong></td><td>Salaire Annuel Moyen</td><td>25 meilleures ann&eacute;es, plafonn&eacute; au PASS</td></tr>
+        <tr><td><strong>Taux</strong></td><td>Taux plein (taux max)</td><td>50% (r&eacute;gime g&eacute;n&eacute;ral)</td></tr>
+        <tr><td><strong>T valid&eacute;s</strong></td><td>Trimestres r&eacute;ellement cotis&eacute;s</td><td>Cotis&eacute;s + assimil&eacute;s</td></tr>
+        <tr><td><strong>T requis</strong></td><td>Dur&eacute;e de r&eacute;f&eacute;rence</td><td>172 trimestres (n&eacute;s apr&egrave;s 1973)</td></tr>
+        <tr><td><strong>PASS 2024</strong></td><td>Plafond Annuel S&eacute;cu. Sociale</td><td>48 060&euro; / an (= 4 005&euro;/mois)</td></tr>
+      </table>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Comparatif priv&eacute; vs fonctionnaires</h3>
+      <table class="fiche-table">
+        <tr><th>Crit&egrave;re</th><th>Secteur priv&eacute;</th><th>Fonctionnaires</th></tr>
+        <tr><td>Base de calcul</td><td>25 meilleures ann&eacute;es (SAM)</td><td>6 derniers mois de traitement indiciaire</td></tr>
+        <tr><td>Taux plein</td><td>50%</td><td>75%</td></tr>
+        <tr><td>Primes incluses ?</td><td>Oui (dans le salaire)</td><td>Non (hors primes)</td></tr>
+        <tr><td>Caisse de base</td><td>CNAV</td><td>Service Retraite de l&rsquo;&Eacute;tat</td></tr>
+        <tr><td>Compl&eacute;mentaire</td><td>AGIRC-ARRCO (points)</td><td>RAFP</td></tr>
+      </table>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; AGIRC-ARRCO &mdash; Retraite &agrave; points</h3>
+      <dl class="fiche-dl">
+        <dt>Formule</dt><dd>Pension = Nb points &times; Valeur du point</dd>
+        <dt>Coefficient de solidarit&eacute;</dt><dd>&minus;10% pendant 3 ans si d&eacute;part exactement au taux plein de base</dd>
+        <dt>Comment l&rsquo;&eacute;viter</dt><dd>Attendre 1 an de plus apr&egrave;s le taux plein, ou attendre 67 ans</dd>
+        <dt>Bonus</dt><dd>+10% si d&eacute;part 1 an apr&egrave;s le taux plein (pendant 1 an)</dd>
+      </dl>
+      <div class="fiche-hl" style="margin-top:10px">Taux de remplacement moyen : ~70&ndash;75% pour salaires moyens &bull; ~50% pour hauts revenus (SAM plafonn&eacute; au PASS)</div>
+    </div>
+  </div>
+
+  <!-- DÉCOTE & SURCOTE -->
+  <div id="fiche-2" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; D&eacute;cote &mdash; Partir avant le taux plein</h3>
+      <div class="fiche-warn">D&eacute;cote = r&eacute;duction <strong>permanente et d&eacute;finitive</strong> de la pension<br>S&rsquo;applique si d&eacute;part avant taux plein ET avant 67 ans</div>
+      <table class="fiche-table">
+        <tr><th>Param&egrave;tre</th><th>Valeur</th></tr>
+        <tr><td>Taux de d&eacute;cote</td><td><strong>&minus;1,25% par trimestre manquant</strong></td></tr>
+        <tr><td>Nombre max de trimestres</td><td>20 trimestres pris en compte</td></tr>
+        <tr><td>D&eacute;cote maximale</td><td>20 &times; 1,25% = <strong>25%</strong></td></tr>
+        <tr><td>&Agrave; 67 ans</td><td>0% de d&eacute;cote (taux plein automatique)</td></tr>
+      </table>
+      <div class="exo-step" style="margin-top:12px"><strong>Exemple :</strong> 12 trimestres manquants &rarr; 12 &times; 1,25% = <strong>15% de d&eacute;cote</strong><br>Pension = SAM &times; 50% &times; (T valid&eacute;s / 172) &times; (1 &minus; 15%)</div>
+      <div class="fiche-hl">La d&eacute;cote et la proratisation (T valid&eacute;s/172) s&rsquo;appliquent <strong>simultan&eacute;ment</strong></div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Surcote &mdash; Partir apr&egrave;s le taux plein</h3>
+      <div class="fiche-ok">Surcote = majoration <strong>permanente et d&eacute;finitive</strong> de la pension<br>S&rsquo;applique pour chaque trimestre travaill&eacute; apr&egrave;s le taux plein</div>
+      <table class="fiche-table">
+        <tr><th>Param&egrave;tre</th><th>Valeur</th></tr>
+        <tr><td>Taux de surcote</td><td><strong>+1,25% par trimestre suppl&eacute;mentaire</strong></td></tr>
+        <tr><td>Plafonnement</td><td>Aucun plafond</td></tr>
+        <tr><td>Condition</td><td>Avoir atteint le taux plein (172T ET &acirc;ge l&eacute;gal)</td></tr>
+      </table>
+      <div class="exo-step" style="margin-top:12px"><strong>Exemple :</strong> 3 ans de plus = 12 trimestres &rarr; 12 &times; 1,25% = <strong>+15% de surcote</strong><br>Pension = SAM &times; 50% &times; 100% &times; 1,15</div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; R&eacute;capitulatif Taux plein</h3>
+      <table class="fiche-table">
+        <tr><th>Cas</th><th>Condition</th><th>Cons&eacute;quence</th></tr>
+        <tr><td>Taux plein dur&eacute;e</td><td>172 T valid&eacute;s + &acirc;ge l&eacute;gal (64 ans)</td><td>Pension = SAM &times; 50% &times; 100%</td></tr>
+        <tr><td>Taux plein &acirc;ge</td><td>67 ans (quelle que soit la dur&eacute;e)</td><td>Taux plein mais pension proratisée</td></tr>
+        <tr><td>D&eacute;part anticip&eacute;</td><td>Avant 172T ET avant 67 ans</td><td>D&eacute;cote + proratisation</td></tr>
+        <tr><td>D&eacute;part tard&iacute;f</td><td>Apr&egrave;s 172T ET apr&egrave;s &acirc;ge l&eacute;gal</td><td>Surcote permanente</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- RÉVERSION -->
+  <div id="fiche-3" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; R&eacute;version &mdash; Comparatif des r&eacute;gimes</h3>
+      <table class="fiche-table">
+        <tr><th>R&eacute;gime</th><th>Taux</th><th>Conditions</th><th>Ressources ?</th></tr>
+        <tr><td><strong>CNAV</strong> (priv&eacute;)</td><td><strong>54%</strong></td><td>Mariage obligatoire</td><td>Oui (~23 441&euro;/an)</td></tr>
+        <tr><td><strong>AGIRC-ARRCO</strong></td><td><strong>60%</strong></td><td>&Acirc;ge &ge; 55 ans, pas de remariage</td><td>NON</td></tr>
+        <tr><td><strong>Fonctionnaire</strong></td><td><strong>50%</strong></td><td>Mariage obligatoire</td><td>NON</td></tr>
+        <tr><td><strong>MSA</strong></td><td>54%</td><td>Mariage, ressources</td><td>Oui</td></tr>
+      </table>
+      <div class="fiche-warn">PACS et concubinage exclus de la r&eacute;version au r&eacute;gime g&eacute;n&eacute;ral (CNAV) et &agrave; l&rsquo;AGIRC-ARRCO</div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Taux de remplacement</h3>
+      <dl class="fiche-dl">
+        <dt>D&eacute;finition</dt><dd>Ratio pension / dernier salaire d&rsquo;activit&eacute;</dd>
+        <dt>Salaires moyens</dt><dd>~70&ndash;75% de taux de remplacement</dd>
+        <dt>Hauts revenus (cadres)</dt><dd>~50% car SAM plafonn&eacute; au PASS (48 060&euro;)</dd>
+        <dt>Fonctionnaires</dt><dd>~75% gr&acirc;ce au taux plein &agrave; 75%</dd>
+        <dt>Combler l&rsquo;&eacute;cart</dt><dd>PER, assurance-vie, Madelin pour les TNS</dd>
+      </dl>
+      <div class="fiche-hl" style="margin-top:10px">Plus le salaire est &eacute;lev&eacute;, plus l&rsquo;&eacute;cart entre salaire et retraite est grand &rarr; int&eacute;r&ecirc;t du conseil en retraite compl&eacute;mentaire</div>
+    </div>
+  </div>
+
+  <!-- MADELIN & PACTE -->
+  <div id="fiche-4" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Contrat Madelin &mdash; R&eacute;gime TNS (avant PACTE)</h3>
+      <table class="fiche-table">
+        <tr><th>Caract&eacute;ristique</th><th>Madelin</th><th>PER (apr&egrave;s PACTE)</th></tr>
+        <tr><td>Cible</td><td>TNS uniquement</td><td>Tous (salari&eacute;s, TNS)</td></tr>
+        <tr><td>Sortie</td><td>Rente obligatoire</td><td>Capital ou rente (choix)</td></tr>
+        <tr><td>Achat RP</td><td>Non</td><td>Oui (d&eacute;blocage anticip&eacute;)</td></tr>
+        <tr><td>Portabilit&eacute;</td><td>Limit&eacute;e</td><td>Totale entre PER</td></tr>
+        <tr><td>D&eacute;ductibilit&eacute;</td><td>BIC / BNC</td><td>BIC / BNC ou IR (salari&eacute;)</td></tr>
+        <tr><td>Commercialis&eacute; ?</td><td>Non (arr&ecirc;t&eacute; 01/10/2020)</td><td>Oui (depuis 01/10/2019)</td></tr>
+      </table>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Loi PACTE &mdash; Calendrier &amp; Plafond</h3>
+      <dl class="fiche-dl">
+        <dt>23/05/2019</dt><dd>Promulgation de la loi PACTE</dd>
+        <dt>01/10/2019</dt><dd>Commercialisation du PER (3 compartiments)</dd>
+        <dt>01/10/2020</dt><dd>Fin de commercialisation des anciens produits</dd>
+        <dt>Anciens produits</dt><dd>PERP, Madelin, PERCO, Art.83 (transfert possible vers PER)</dd>
+      </dl>
+      <div class="fiche-hl" style="margin-top:10px">Plafond 1 PASS = <strong>48 060&euro;</strong> (2024) &mdash; r&eacute;f&eacute;rence centrale pour les plafonds de d&eacute;ductibilit&eacute; Madelin et PER TNS</div>
+      <div class="fiche-ok" style="margin-top:8px"><strong>&Agrave; RETENIR :</strong> PASS 2024 = 48 060&euro; = 1 plafond de r&eacute;f&eacute;rence</div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Plafond Madelin (TNS)</h3>
+      <div class="fiche-hl">10% du b&eacute;n&eacute;fice net + 25% &times; (BN &minus; 1 PASS) &mdash; max 8 PASS</div>
+      <div class="exo-step"><strong>Exemple :</strong> TNS avec BN = 80 000&euro;<br>10% &times; 80 000 = 8 000&euro;<br>25% &times; (80 000 &minus; 48 060) = 25% &times; 31 940 = 7 985&euro;<br><strong>Total d&eacute;ductible = 15 985&euro;</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- EXERCICES -->
+<div id="tab-exercices" class="tab-pane">
+
+  <div class="exo">
+    <div class="exo-title">Exercice n&deg;1 <span class="exo-tag">Calcul pension &middot; D&eacute;cote</span></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">M. PETIT, n&eacute; en 1975, part &agrave; 64 ans avec 164 trimestres valid&eacute;s. Son SAM est de 34 000&euro;.</p>
+    <div class="exo-enonce">
+      Calculer sa pension mensuelle de retraite de base.
+      <br><strong>Donn&eacute;es :</strong> 164T valid&eacute;s &bull; 172T requis &bull; SAM = 34 000&euro; &bull; Taux plein = 50%
+    </div>
+    <div class="exo-questions">&#9312; Calculer le nombre de trimestres manquants &#9313; Calculer la d&eacute;cote &#9314; Calculer la proratisation &#9315; Calculer la pension annuelle &#9316; Calculer la pension mensuelle</div>
+    <button class="exo-btn" onclick="toggleExo('exo1')">Voir la solution</button>
+    <div class="exo-solution" id="exo1">
+      <div class="exo-step"><strong>&#9312; Trimestres manquants :</strong> 172 &minus; 164 = <strong>8 trimestres</strong></div>
+      <div class="exo-step"><strong>&#9313; D&eacute;cote :</strong> 8 &times; 1,25% = <strong>10%</strong></div>
+      <div class="exo-step"><strong>&#9314; Proratisation :</strong> 164 / 172 = <strong>0,9535</strong></div>
+      <div class="exo-step"><strong>&#9315; Pension annuelle :</strong> 34 000 &times; 50% &times; 0,9535 &times; (1 &minus; 10%)<br>= 17 000 &times; 0,9535 &times; 0,90 = <strong>14 579€/an</strong></div>
+      <div class="exo-step"><strong>&#9316; Pension mensuelle :</strong> 14 579 / 12 = <strong>1 215€/mois</strong></div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-title">Exercice n&deg;2 <span class="exo-tag">Surcote &middot; Pension optimis&eacute;e</span></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Mme GRAND, n&eacute;e en 1966, obtient son taux plein &agrave; 64 ans avec exactement 172 trimestres. Elle d&eacute;cide de travailler 3 ans de plus. Son SAM est de 28 000&euro;.</p>
+    <div class="exo-enonce">
+      Comparer sa pension &agrave; 64 ans vs &agrave; 67 ans (avec surcote).
+    </div>
+    <div class="exo-questions">&#9312; Pension &agrave; 64 ans &#9313; Nombre de trimestres suppl&eacute;mentaires &#9314; Surcote &agrave; 67 ans &#9315; Pension &agrave; 67 ans &#9316; Gain mensuel</div>
+    <button class="exo-btn" onclick="toggleExo('exo2')">Voir la solution</button>
+    <div class="exo-solution" id="exo2">
+      <div class="exo-step"><strong>&#9312; Pension &agrave; 64 ans (taux plein) :</strong><br>28 000 &times; 50% &times; (172/172) = 28 000 &times; 50% = <strong>14 000&euro;/an = 1 167&euro;/mois</strong></div>
+      <div class="exo-step"><strong>&#9313; Trimestres suppl&eacute;mentaires :</strong> 3 ans = <strong>12 trimestres</strong></div>
+      <div class="exo-step"><strong>&#9314; Surcote :</strong> 12 &times; 1,25% = <strong>+15%</strong></div>
+      <div class="exo-step"><strong>&#9315; Pension &agrave; 67 ans :</strong> 14 000 &times; 1,15 = <strong>16 100&euro;/an = 1 342&euro;/mois</strong></div>
+      <div class="exo-step"><strong>&#9316; Gain mensuel :</strong> 1 342 &minus; 1 167 = <strong>+175&euro;/mois permanents</strong></div>
+    </div>
+  </div>
+
+  <div class="exo">
+    <div class="exo-title">Exercice n&deg;3 <span class="exo-tag">Plafond Madelin &middot; TNS</span></div>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">M. LIBRE, m&eacute;decin lib&eacute;ral (TNS), B&eacute;n&eacute;fice Net 2024 = 120 000&euro;. PASS 2024 = 48 060&euro;.</p>
+    <div class="exo-enonce">
+      Calculer son plafond annuel de d&eacute;ductibilit&eacute; Madelin / PER TNS.
+    </div>
+    <div class="exo-questions">&#9312; Calculer 10% du b&eacute;n&eacute;fice &#9313; Calculer 25% de (BN &minus; PASS) &#9314; Plafond total &#9315; V&eacute;rifier vs plafond max (8 PASS)</div>
+    <button class="exo-btn" onclick="toggleExo('exo3')">Voir la solution</button>
+    <div class="exo-solution" id="exo3">
+      <div class="exo-step"><strong>&#9312; 10% du b&eacute;n&eacute;fice :</strong> 10% &times; 120 000 = <strong>12 000&euro;</strong></div>
+      <div class="exo-step"><strong>&#9313; 25% &times; (BN &minus; PASS) :</strong> 25% &times; (120 000 &minus; 48 060) = 25% &times; 71 940 = <strong>17 985&euro;</strong></div>
+      <div class="exo-step"><strong>&#9314; Plafond total :</strong> 12 000 + 17 985 = <strong>29 985&euro;</strong></div>
+      <div class="exo-step"><strong>&#9315; V&eacute;rification max :</strong> 8 PASS = 8 &times; 48 060 = 384 480&euro;<br>29 985 &lt; 384 480 &rarr; <strong>pas de plafonnement</strong><br>M. LIBRE peut d&eacute;duire jusqu&rsquo;&agrave; <strong>29 985&euro;</strong> de cotisations Madelin/PER</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CAS PRATIQUES -->
+<div id="tab-cas" class="tab-pane">
+
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;1 <span class="cas-ref">D&eacute;cote &middot; Diagnostic retraite</span></div>
+    <div class="cas-enonce">Mme DUPONT, 60 ans, n&eacute;e en 1965, a valid&eacute; 155 trimestres. Elle envisage de partir &agrave; la retraite maintenant (avant l&rsquo;&acirc;ge l&eacute;gal). Son SAM est de 30 000&euro;.<br><strong>Questions :</strong> Peut-elle partir ? Quelle serait sa d&eacute;cote ? Vaut-il mieux attendre 67 ans ?</div>
+    <div class="cas-piege">&#9888; Pi&egrave;ge : elle n&rsquo;a pas encore l&rsquo;&acirc;ge l&eacute;gal (64 ans) et n&rsquo;est pas en cas de d&eacute;part anticip&eacute; (pas de carri&egrave;re longue). V&eacute;rifier si le d&eacute;part est possible.</div>
+    <button class="cas-btn" onclick="toggleCas('c1')">Voir la r&eacute;ponse</button>
+    <div class="cas-solution" id="c1">
+      <strong>Peut-elle partir &agrave; 60 ans ?</strong> Non, sauf cas sp&eacute;cifiques (carri&egrave;re longue, handicap). L&rsquo;&acirc;ge l&eacute;gal est 64 ans (n&eacute;e en 1965).<br><br>
+      <strong>Si elle attend 64 ans (en 2029) :</strong><br>
+      T manquants : 172 &minus; 155 = 17T &rarr; D&eacute;cote = 17 &times; 1,25% = <strong>21,25%</strong><br>
+      Pension = 30 000 &times; 50% &times; (155/172) &times; (1 &minus; 21,25%) = 15 000 &times; 0,9012 &times; 0,7875 = <strong>10 641&euro;/an = 887&euro;/mois</strong><br><br>
+      <strong>Si elle attend 67 ans :</strong><br>
+      Taux plein automatique &rarr; 0% de d&eacute;cote<br>
+      Pension = 30 000 &times; 50% &times; (155+12/172) = peut valider 12T de plus entre 64 et 67 ans<br>
+      = 30 000 &times; 50% &times; (167/172) = 15 000 &times; 0,9709 = <strong>14 563&euro;/an = 1 214&euro;/mois</strong><br><br>
+      <strong>Conseil CGP :</strong> Attendre 67 ans augmente la pension de +327&euro;/mois. Envisager aussi un PER pour combler le taux de remplacement.
+    </div>
+  </div>
+
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;2 <span class="cas-ref">R&eacute;version &middot; Mariage vs PACS</span></div>
+    <div class="cas-enonce">M. BEAUMONT d&eacute;c&egrave;de &agrave; 72 ans. Il touchait une pension CNAV de 1 800&euro;/mois et une retraite AGIRC-ARRCO de 900&euro;/mois. Sa partenaire de PACS, 68 ans, n&rsquo;a aucun autre revenu.<br><strong>Question :</strong> A-t-elle droit &agrave; la r&eacute;version ?</div>
+    <div class="cas-piege">&#9888; Pi&egrave;ge : le PACS ne donne pas droit &agrave; la r&eacute;version au r&eacute;gime g&eacute;n&eacute;ral ni &agrave; l&rsquo;AGIRC-ARRCO !</div>
+    <button class="cas-btn" onclick="toggleCas('c2')">Voir la r&eacute;ponse</button>
+    <div class="cas-solution" id="c2">
+      <strong>CNAV :</strong> R&eacute;version r&eacute;serv&eacute;e aux &eacute;poux mari&eacute;s. PACS = <strong>aucun droit &agrave; r&eacute;version</strong>.<br><br>
+      <strong>AGIRC-ARRCO :</strong> M&ecirc;me constat. Mariage obligatoire.<br><br>
+      <strong>Si elle avait &eacute;t&eacute; mari&eacute;e :</strong><br>
+      &bull; CNAV : 54% &times; 1 800 = <strong>972&euro;/mois</strong> (sous r&eacute;serve de ressources &lt; 23 441&euro;/an)<br>
+      &bull; AGIRC-ARRCO : 60% &times; 900 = <strong>540&euro;/mois</strong> (pas de conditions ressources, &acirc;ge &ge; 55 ans &#10003;)<br>
+      &bull; <strong>Total r&eacute;version potentielle = 1 512&euro;/mois</strong><br><br>
+      <strong>Conseil CGP :</strong> Mettre en garde les couples pacs&eacute;s sur l&rsquo;absence de r&eacute;version. Recommander assurance d&eacute;c&egrave;s ou clause b&eacute;n&eacute;ficiaire PER/AV.
+    </div>
+  </div>
+
+  <div class="cas">
+    <div class="cas-title">Cas n&deg;3 <span class="cas-ref">Madelin &rarr; PER &middot; Conseil TNS</span></div>
+    <div class="cas-enonce">Dr MARTIN, m&eacute;decin lib&eacute;ral, 45 ans, BN 2024 = 180 000&euro;. Il a un vieux contrat Madelin avec 45 000&euro; d&eacute;j&agrave; vers&eacute;s. TMI = 45%. Il veut optimiser sa retraite.<br><strong>Questions :</strong> Quel est son plafond PER TNS ? Vaut-il mieux garder le Madelin ou transf&eacute;rer vers un PER ?</div>
+    <div class="cas-piege">&#9888; Pi&egrave;ge : la sortie Madelin est obligatoirement en rente — un avantage ou inconvénient selon la situation.</div>
+    <button class="cas-btn" onclick="toggleCas('c3')">Voir la r&eacute;ponse</button>
+    <div class="cas-solution" id="c3">
+      <strong>Plafond PER TNS 2024 :</strong><br>
+      10% &times; 180 000 = 18 000&euro;<br>
+      25% &times; (180 000 &minus; 48 060) = 25% &times; 131 940 = 32 985&euro;<br>
+      <strong>Total = 50 985&euro;/an d&eacute;ductibles</strong> (v&eacute;rifier &lt; 8 PASS = 384 480&euro; &#10003;)<br><br>
+      <strong>Avantage fiscal :</strong> 50 985 &times; 45% TMI = <strong>22 943&euro; d&rsquo;&eacute;conomie fiscale/an</strong><br><br>
+      <strong>Madelin vs PER :</strong><br>
+      &bull; Madelin : rente obligatoire &rarr; s&eacute;curit&eacute; mais pas de capital<br>
+      &bull; PER : sortie capital possible &rarr; plus de flexibilit&eacute; &agrave; la retraite, achat RP possible<br>
+      &bull; Transfert Madelin &rarr; PER : possible, montant conserve son traitement fiscal<br><br>
+      <strong>Recommandation :</strong> Transf&eacute;rer le Madelin vers un PER Individuel + versements annuels maximaux (50 985&euro;) pour optimiser la d&eacute;ductibilit&eacute; &agrave; 45%.
+    </div>
+  </div>
+
+</div>
+
+<script>
+var CARDS = [{"ch": 1, "q": "Quelle est la formule de calcul de la pension de retraite de base (régime général) ?", "a": "SAM × Taux × (Trimestres validés / Trimestres requis)\nSAM = Salaire Annuel Moyen des 25 meilleures années\nTaux max = 50% | Trimestres requis = 172"}, {"ch": 1, "q": "Qu'est-ce que le SAM (Salaire Annuel Moyen) ?", "a": "Moyenne des 25 meilleures années de salaire brut, plafonnées au PASS.\nUtilisé pour calculer la retraite de base du secteur privé."}, {"ch": 1, "q": "Quel est le taux plein de la pension de base (régime général) ?", "a": "50% du SAM.\nC'est le taux maximum applicable si toutes les conditions sont remplies."}, {"ch": 1, "q": "Quelle est la base de calcul pour les fonctionnaires (vs les 25 meilleures années du privé) ?", "a": "Les 6 derniers mois de traitement indiciaire brut.\nHors primes. Taux max = 75% (vs 50% privé)."}, {"ch": 1, "q": "Qu'est-ce que le PASS et quelle est sa valeur en 2024 ?", "a": "Plafond Annuel de la Sécurité Sociale = 48 060€ en 2024 (4 005€/mois).\nRéférence pour cotisations, retraite, PER, Madelin."}, {"ch": 1, "q": "Comment fonctionne la retraite à points (AGIRC-ARRCO) ?", "a": "Cotisations → achat de points\nPension = Nombre total de points × Valeur du point\nEx : 100 000 pts × 1,4161€ = 141 610€/an"}, {"ch": 1, "q": "Qu'est-ce que le coefficient de solidarité AGIRC-ARRCO ?", "a": "Malus temporaire de −10% pendant 3 ans si départ dès le taux plein.\nÉvité en attendant 1 an de plus après le taux plein (ou en attendant 67 ans)."}, {"ch": 1, "q": "Qu'est-ce que la retraite progressive ?", "a": "Permet de réduire son activité ET de percevoir une fraction de sa retraite tout en continuant à cotiser.\nDès 60 ans avec 150 trimestres validés."}, {"ch": 1, "q": "Pourquoi le taux de remplacement est-il plus faible pour les hauts salaires ?", "a": "La retraite de base est plafonnée au PASS (48 060€).\nLa partie du salaire au-dessus du PASS n'est pas compensée par la retraite de base."}, {"ch": 1, "q": "Quelle différence entre pension de base et pension complémentaire ?", "a": "Base : SAM × 50% max, plafonnée au PASS — régime obligatoire (CNAV)\nComplémentaire : calculée en points, sans plafond — AGIRC-ARRCO pour salariés privé"}, {"ch": 2, "q": "Qu'est-ce que la décote retraite ?", "a": "Réduction définitive et permanente de la pension si départ avant le taux plein ET avant 67 ans.\nTaux : −1,25% par trimestre manquant."}, {"ch": 2, "q": "Quel est le taux de réduction par trimestre manquant (décote) ?", "a": "−1,25% par trimestre manquant.\nMaximum 20 trimestres pris en compte → décote max = 25%."}, {"ch": 2, "q": "Quelle est la décote maximale applicable à la pension ?", "a": "25% maximum (= 20 trimestres × 1,25%).\nAu-delà de 20 trimestres manquants, la décote reste à 25%."}, {"ch": 2, "q": "La décote s'applique-t-elle à 67 ans ?", "a": "NON. À 67 ans, le taux plein est accordé automatiquement.\nMais la pension est proratisée sur les trimestres réellement cotisés."}, {"ch": 2, "q": "Qu'est-ce que la surcote retraite ?", "a": "Majoration définitive de la pension si on continue à travailler APRÈS avoir atteint le taux plein.\nTaux : +1,25% par trimestre supplémentaire. Pas de plafond."}, {"ch": 2, "q": "La surcote est-elle plafonnée ?", "a": "NON. Chaque trimestre travaillé après le taux plein = +1,25% sans limite.\nEx : 3 ans de plus = 12 trimestres → +15% de majoration permanente."}, {"ch": 2, "q": "Un salarié part avec 160 trimestres (il en manque 12 pour le taux plein). Quelle est sa décote ?", "a": "12 × 1,25% = 15% de décote\nPension = SAM × 50% × (160/172) × (1 − 15%)\nDécote + coefficient de proratisation s'appliquent TOUS les deux."}, {"ch": 2, "q": "Un salarié travaille 2 ans de plus après son taux plein. Quelle est sa surcote ?", "a": "2 ans = 8 trimestres → 8 × 1,25% = +10%\nPension = SAM × 50% × 1,10\nAucune décote car 172T atteints."}, {"ch": 2, "q": "Peut-on éviter la décote sans atteindre les 172 trimestres ?", "a": "Oui : attendre 67 ans (taux plein automatique, pension proratisée).\nOu racheter des trimestres (max 12), ou justifier d'un départ anticipé."}, {"ch": 2, "q": "Quelle différence entre décote IR et coefficient de solidarité AGIRC-ARRCO ?", "a": "Décote IR : permanente, sur la retraite de base, liée aux trimestres manquants.\nCoefficient AGIRC-ARRCO : temporaire (3 ans), −10%, si départ exactement au taux plein."}, {"ch": 3, "q": "Qu'est-ce que la pension de réversion ?", "a": "Fraction de la retraite du défunt versée au conjoint survivant.\nCondition indispensable : mariage (PACS et concubinage exclus)."}, {"ch": 3, "q": "Quel est le taux de réversion au régime général CNAV ?", "a": "54% de la pension brute du défunt.\nSoumis à conditions de ressources du conjoint survivant."}, {"ch": 3, "q": "Y a-t-il une condition de durée de mariage pour la réversion CNAV ?", "a": "NON. Pas de durée minimale de mariage requise.\nMais le mariage est obligatoire — pas de PACS, pas de concubinage."}, {"ch": 3, "q": "Quel est le plafond de ressources pour la réversion CNAV (2024) ?", "a": "~23 441€/an pour une personne seule (2024).\nLes ressources du conjoint survivant sont pris en compte."}, {"ch": 3, "q": "Quel est le taux de réversion AGIRC-ARRCO ?", "a": "60% des points du défunt.\nSans conditions de ressources, mais âge minimum 55 ans ET remariage interdit."}, {"ch": 3, "q": "Quelles sont les conditions de la réversion AGIRC-ARRCO ?", "a": "Âge minimum : 55 ans\nPas de remariage (sinon suspension)\nPas de conditions de ressources\nTaux : 60% (vs 54% CNAV)"}, {"ch": 3, "q": "Quel est le taux de réversion pour les fonctionnaires ?", "a": "50% de la pension du fonctionnaire décédé.\nAugmenté de 10% si 3 enfants élevés. Pas de conditions de ressources pour les fonctionnaires."}, {"ch": 3, "q": "Qu'est-ce que le taux de remplacement ?", "a": "Ratio retraite / dernier salaire d'activité.\nEx : pension 2 000€, dernier salaire 3 000€ → taux de remplacement = 67%."}, {"ch": 3, "q": "Quel est le taux de remplacement moyen en France ?", "a": "Environ 50 à 75% selon le niveau de revenus.\nLes hauts revenus (cadres) : ~50% car le SAM est plafonné au PASS.\nLes bas/moyens revenus : ~70-75%."}, {"ch": 3, "q": "Quels produits permettent de compenser la baisse du taux de remplacement ?", "a": "PER (Plan d'Épargne Retraite), assurance-vie, Madelin (TNS).\nObjectif : combler l'écart entre dernier salaire et pension."}, {"ch": 4, "q": "Qu'est-ce qu'un contrat Madelin ?", "a": "Contrat de retraite complémentaire pour TNS (Travailleurs Non Salariés).\nCotisations déductibles du BIC/BNC dans les limites légales."}, {"ch": 4, "q": "Qui peut souscrire un contrat Madelin ?", "a": "Les TNS : artisans, commerçants, industriels, professions libérales.\nPas les salariés (ceux-ci ont AGIRC-ARRCO)."}, {"ch": 4, "q": "Quelle est la sortie d'un contrat Madelin (vs PER) ?", "a": "Madelin : sortie obligatoirement en rente viagère. Pas de capital.\nPER : sortie possible en capital OU en rente (avantage majeur du PER)."}, {"ch": 4, "q": "Quel est le plafond de déductibilité Madelin ?", "a": "10% du bénéfice net + 25% × (BN − 1 PASS), max 8 PASS.\nPASS 2024 = 48 060€. Plafond 1 PASS = 48 060€."}, {"ch": 4, "q": "Qu'est-ce que la loi PACTE (2019) ?", "a": "Plan d'Action pour la Croissance et la Transformation des Entreprises.\nVotée le 23 mai 2019. A créé le PER unifié."}, {"ch": 4, "q": "Quels produits la loi PACTE a-t-elle remplacés par le PER ?", "a": "PERP (populaire), Madelin (TNS), PERCO (collectif), Art. 83 (obligatoire).\nPlus commercialisés depuis le 1er octobre 2020."}, {"ch": 4, "q": "Quels sont les 3 avantages majeurs du PER vs Madelin ?", "a": "1. Sortie en capital possible (Madelin = rente obligatoire)\n2. Déblocage anticipé pour achat résidence principale\n3. Portabilité entre PER"}, {"ch": 4, "q": "Quelle est la valeur du PASS 2024 et son rôle comme plafond ?", "a": "PASS 2024 = 48 060€ (plafond annuel de la Sécurité Sociale).\nPlafond 1 PASS = 48 060€ : référence pour Madelin, PER, cotisations sociales."}, {"ch": 4, "q": "Depuis quand les anciens produits retraite ne sont-ils plus commercialisés ?", "a": "1er octobre 2020.\nCalendrier PACTE : Loi 23/05/2019 → PER commercialisé 01/10/2019 → Anciens produits arrêtés 01/10/2020"}, {"ch": 4, "q": "Un contrat Madelin peut-il être transféré vers un PER ?", "a": "Oui, depuis la loi PACTE.\nLes sommes transférées conservent leur traitement fiscal d'origine.\nTransfert vers PER Individuel uniquement."}];
+var QUIZ  = [{"q": "La formule de calcul de la retraite de base est :", "opts": ["SAM × Taux × (T validés / T requis)", "SAM × 50% × Durée", "Salaire × Taux × 172", "(SAM / 25) × Taux × T"], "a": 0, "e": "SAM × Taux × (Trimestres validés / Trimestres requis). Le SAM est la moyenne des 25 meilleures années, le taux max est 50%, et les trimestres requis sont 172."}, {"q": "Le PASS 2024 vaut :", "opts": ["42 000€", "45 246€", "48 060€", "52 000€"], "a": 2, "e": "PASS 2024 = 48 060€ (soit 4 005€/mois). C'est la référence pour calculer les plafonds de déductibilité PER, Madelin, cotisations sociales."}, {"q": "Le taux plein de la pension de base (régime général) est de :", "opts": ["40%", "50%", "60%", "75%"], "a": 1, "e": "50% du SAM est le taux plein maximum pour le régime général. Les fonctionnaires ont un taux plein de 75%."}, {"q": "La base de calcul de la retraite des fonctionnaires est :", "opts": ["25 meilleures années", "Dernier salaire", "6 derniers mois de traitement indiciaire", "Moyenne des 10 dernières années"], "a": 2, "e": "Fonctionnaires : 6 derniers mois de traitement indiciaire brut (hors primes), taux max 75%."}, {"q": "La décote est de ____ par trimestre manquant :", "opts": ["0,75%", "1%", "1,25%", "2%"], "a": 2, "e": "1,25% par trimestre manquant, maximum 20 trimestres (= 25% max de décote)."}, {"q": "La décote maximale est de :", "opts": ["12,5%", "20%", "25%", "30%"], "a": 2, "e": "20 trimestres × 1,25% = 25% maximum. Au-delà de 20 trimestres manquants, la décote reste plafonnée à 25%."}, {"q": "La surcote est de ____ par trimestre après le taux plein :", "opts": ["0,75%", "1%", "1,25%", "2%"], "a": 2, "e": "+1,25% par trimestre supplémentaire après le taux plein. Pas de plafond — chaque trimestre compte."}, {"q": "À 67 ans, quelle est la décote applicable ?", "opts": ["25% (maximale)", "Calculée selon les trimestres manquants", "0% — taux plein automatique", "Dépend du régime"], "a": 2, "e": "67 ans = taux plein automatique. Pas de décote, quelle que soit la durée d'assurance. La pension est simplement proratisée."}, {"q": "Un salarié part avec 164 trimestres (il en manque 8). Sa décote est de :", "opts": ["5%", "8%", "10%", "12%"], "a": 2, "e": "8 × 1,25% = 10% de décote permanente sur la pension."}, {"q": "Le coefficient de solidarité AGIRC-ARRCO est :", "opts": ["−5% définitif", "−10% pendant 1 an", "−10% pendant 3 ans", "−15% pendant 5 ans"], "a": 2, "e": "−10% pendant 3 ans si on part exactement au taux plein de base. Évité en attendant 1 an de plus ou 67 ans."}, {"q": "Le taux de réversion CNAV est de :", "opts": ["50%", "54%", "60%", "66%"], "a": 1, "e": "54% de la pension brute du défunt, soumis à conditions de ressources (plafond ~23 441€/an en 2024)."}, {"q": "La réversion CNAV est accordée aux :", "opts": ["Mariés ET pacsés", "Mariés ET concubins", "Mariés uniquement", "Tous les couples"], "a": 2, "e": "Mariage obligatoire. PACS et concubinage exclus du droit à réversion du régime général."}, {"q": "Le taux de réversion AGIRC-ARRCO est de :", "opts": ["50%", "54%", "60%", "66%"], "a": 2, "e": "60% des points du défunt. Sans condition de ressources, mais âge minimum 55 ans et remariage interdit."}, {"q": "Pour la réversion AGIRC-ARRCO, y a-t-il une condition de ressources ?", "opts": ["Oui, comme au CNAV", "Non, mais âge ≥ 55 ans et pas de remariage", "Non, aucune condition", "Oui, plafond à 25 000€"], "a": 1, "e": "AGIRC-ARRCO : pas de conditions de ressources. Mais âge minimum 55 ans et remariage interdit (sinon suspension)."}, {"q": "Le taux de réversion pour les fonctionnaires est de :", "opts": ["50%", "54%", "60%", "75%"], "a": 0, "e": "50% pour les fonctionnaires. Majoré de 10% si 3 enfants élevés. Sans conditions de ressources."}, {"q": "Le contrat Madelin est destiné à :", "opts": ["Les salariés", "Les TNS uniquement", "Tout le monde", "Les fonctionnaires"], "a": 1, "e": "Madelin = contrat de retraite complémentaire réservé aux TNS (artisans, commerçants, libéraux). Les salariés ont l'AGIRC-ARRCO."}, {"q": "La sortie d'un contrat Madelin se fait :", "opts": ["En capital uniquement", "En rente ou capital (choix)", "En rente viagère obligatoirement", "En capital fractionné"], "a": 2, "e": "Madelin = rente viagère obligatoire. C'est la différence clé avec le PER qui permet la sortie en capital."}, {"q": "La loi PACTE a été votée le :", "opts": ["23 mai 2017", "23 mai 2019", "1er octobre 2019", "1er janvier 2020"], "a": 1, "e": "Loi PACTE du 23 mai 2019. PER commercialisé à partir du 1er octobre 2019. Anciens produits arrêtés le 1er octobre 2020."}, {"q": "Quels produits le PER remplace-t-il ?", "opts": ["PERP et Madelin seulement", "PERCO et Art.83 seulement", "PERP, Madelin, PERCO et Art.83", "Toute l'épargne retraite"], "a": 2, "e": "Le PER remplace PERP (individuel), Madelin (TNS), PERCO (collectif) et Art.83 (obligatoire). Ces 4 produits ne sont plus commercialisés depuis octobre 2020."}, {"q": "Lequel n'est PAS un avantage du PER vs Madelin :", "opts": ["Sortie en capital", "Achat résidence principale", "Rente obligatoire", "Portabilité"], "a": 2, "e": "La rente obligatoire est un INCONVÉNIENT de Madelin, pas un avantage du PER. Le PER permet justement la sortie en capital (avantage)."}, {"q": "Le taux de remplacement moyen en France pour un salarié moyen est d'environ :", "opts": ["30-40%", "50-60%", "70-75%", "85-90%"], "a": 2, "e": "70-75% pour les salaires moyens. Mais seulement 50% environ pour les hauts revenus (cadres), car la retraite de base est plafonnée au PASS."}, {"q": "Pourquoi un cadre avec salaire de 100 000€/an a un taux de remplacement faible ?", "opts": ["Il cotise moins", "Sa retraite est plafonnée au PASS (48 060€)", "Il part plus tôt", "Il n'a pas de complémentaire"], "a": 1, "e": "La retraite de base est calculée sur le SAM plafonné au PASS (48 060€). La partie du salaire au-dessus ne génère pas de retraite de base."}, {"q": "Le plafond Madelin de déductibilité est basé sur :", "opts": ["Le SMIC", "Le PASS (48 060€)", "Le revenu fiscal", "Le revenu brut"], "a": 1, "e": "Plafond Madelin = 10% bénéfice net + 25% × (BN − 1 PASS). PASS 2024 = 48 060€ = le plafond de référence."}, {"q": "Depuis quelle date les anciens produits (PERP, Madelin...) ne sont plus commercialisés ?", "opts": ["1er janvier 2019", "23 mai 2019", "1er octobre 2019", "1er octobre 2020"], "a": 3, "e": "1er octobre 2020 = fin de la commercialisation des anciens produits. PER commercialisé depuis le 1er octobre 2019."}, {"q": "Le transfert d'un Madelin vers un PER est :", "opts": ["Impossible", "Possible avec perte de l'avantage fiscal", "Possible et le traitement fiscal est conservé", "Possible uniquement avant 60 ans"], "a": 2, "e": "Depuis la loi PACTE, les contrats Madelin peuvent être transférés vers un PER Individuel. Les sommes conservent leur traitement fiscal d'origine."}, {"q": "La retraite progressive est accessible à partir de :", "opts": ["55 ans", "60 ans avec 150 trimestres", "62 ans", "64 ans"], "a": 1, "e": "Retraite progressive : dès 60 ans (= 64 ans − 4 ans) avec au moins 150 trimestres validés."}, {"q": "Un TNS avec BN de 80 000€ : quel est son plafond Madelin (calcul) ?", "opts": ["8 000€", "10 720€", "21 980€", "48 060€"], "a": 2, "e": "10% × 80 000 + 25% × (80 000 − 48 060) = 8 000 + 7 985 = 15 985€. (Note : les formules exactes varient légèrement)"}, {"q": "La décote et la proratisation s'appliquent :", "opts": ["L'une ou l'autre", "Toutes les deux simultanément", "Seulement si < 62 ans", "Seulement si > 10 trimestres manquants"], "a": 1, "e": "Les deux s'appliquent simultanément : décote (pénalité sur le taux) ET proratisation (réduction selon T cotisés / T requis)."}, {"q": "Pour éviter la décote sans avoir 172 trimestres, le salarié doit :", "opts": ["Racheter des trimestres (max 6)", "Attendre 67 ans", "Attendre 65 ans", "Partir en retraite progressive"], "a": 1, "e": "67 ans = taux plein automatique. La pension est proratisée mais sans décote. Rachat max = 12 trimestres."}, {"q": "Quel est le rôle du PASS pour les plafonds retraite et épargne ?", "opts": ["Aucun rôle", "Plafond du SAM et référence pour calculs PER/Madelin", "Uniquement pour les cotisations sociales", "Plafond de la pension complémentaire"], "a": 1, "e": "PASS 2024 = 48 060€. Plafonne le SAM de la retraite de base. Sert de référence pour les plafonds PER, Madelin, cotisations sociales."}];
+var FOCUS = {"calcul": {"titre": "Calcul de la pension", "cartes": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], "resume": "Formule : SAM × 50% × (T validés / 172) | SAM = 25 meilleures années | PASS 2024 = 48 060€ | Fonctionnaires : 6 derniers mois × 75%"}, "decote": {"titre": "Décote & Surcote", "cartes": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20], "resume": "Décote : −1,25%/trimestre manquant, max 25% (20T) | Surcote : +1,25%/trimestre après taux plein, sans plafond | 67 ans = taux plein auto"}, "reversion": {"titre": "Réversion & Taux de remplacement", "cartes": [21, 22, 23, 24, 25, 26, 27, 28, 29, 30], "resume": "CNAV : 54%, mariage obligatoire, sous conditions ressources | AGIRC-ARRCO : 60%, âge ≥ 55 ans, pas de conditions ressources | Fonctionnaires : 50%"}, "madelin": {"titre": "Madelin & Loi PACTE", "cartes": [31, 32, 33, 34, 35, 36, 37, 38, 39, 40], "resume": "Madelin : TNS, rente obligatoire, déductible BIC/BNC | PER (PACTE 2019) : capital possible, achat RP, portabilité | Plafond 1 PASS = 48 060€"}};
+var CH_LABELS = {1:'Calcul pension',2:'Décote & Surcote',3:'Réversion & Taux rempl.',4:'Madelin & PACTE'};
+
+var filteredCards = CARDS.slice(), cardIdx = 0;
+function showCard(){
+  var ci=document.getElementById('card-inner');
+  if(ci) ci.classList.remove('flipped');
+  var c=filteredCards[cardIdx];
+  document.getElementById('card-q').textContent=c.q;
+  document.getElementById('card-a').textContent=c.a;
+  document.getElementById('card-ch').textContent=CH_LABELS[c.ch]||'Ch.'+c.ch;
+  document.getElementById('card-counter').textContent='Carte '+(cardIdx+1)+' / '+filteredCards.length;
+}
+function flipCard(){document.getElementById('card-inner').classList.toggle('flipped');}
+function nextCard(){cardIdx=(cardIdx+1)%filteredCards.length;showCard();}
+function prevCard(){cardIdx=(cardIdx-1+filteredCards.length)%filteredCards.length;showCard();}
+function shuffleCards(){for(var i=filteredCards.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=filteredCards[i];filteredCards[i]=filteredCards[j];filteredCards[j]=t;}cardIdx=0;showCard();}
+function filterCards(ch,btn){
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  filteredCards=ch===0?CARDS.slice():CARDS.filter(function(c){return c.ch===ch;});
+  cardIdx=0;showCard();
+}
+
+function buildQuiz(){
+  var html='';
+  QUIZ.forEach(function(q,i){
+    html+='<div class="quiz-q" id="qq'+i+'"><p>'+(i+1)+'. '+q.q+'</p><div class="quiz-opts">';
+    q.opts.forEach(function(o,j){html+='<button class="quiz-opt" onclick="pickOpt('+i+','+j+',this)">'+o+'</button>';});
+    html+='</div><div class="quiz-exp" id="qe'+i+'">'+q.e+'</div></div>';
+  });
+  document.getElementById('quiz-container').innerHTML=html;
+}
+var quizAnswers={};
+function pickOpt(qi,oi,btn){
+  var qq=document.getElementById('qq'+qi);
+  if(qq.classList.contains('done'))return;
+  qq.classList.add('done');quizAnswers[qi]=oi;
+  qq.querySelectorAll('.quiz-opt').forEach(function(b,j){if(j===QUIZ[qi].a)b.classList.add('correct');else if(j===oi)b.classList.add('wrong');});
+  document.getElementById('qe'+qi).style.display='block';
+}
+function submitQuiz(){
+  var score=0;QUIZ.forEach(function(q,i){if(quizAnswers[i]===q.a)score++;});
+  var pct=Math.round(score/QUIZ.length*100);
+  document.getElementById('quiz-summary').style.display='block';
+  document.getElementById('quiz-summary').innerHTML='<h3 style="font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:8px">Résultat : '+score+'/'+QUIZ.length+' ('+pct+'%)</h3>'+(pct>=80?'<p style="color:var(--ok);font-weight:700">Excellent !</p>':'<p style="color:var(--muted)">Revois les points manqués.</p>');
+  document.getElementById('quiz-submit').style.display='none';
+  document.getElementById('quiz-reset').style.display='block';
+  try{var sc=JSON.parse(localStorage.getItem('cgp_scores')||'{}');sc['jour09']={score:score,total:QUIZ.length,pct:pct,date:new Date().toLocaleDateString('fr-FR')};localStorage.setItem('cgp_scores',JSON.stringify(sc));}catch(e){}
+}
+function resetQuiz(){quizAnswers={};buildQuiz();document.getElementById('quiz-summary').style.display='none';document.getElementById('quiz-submit').style.display='block';document.getElementById('quiz-reset').style.display='none';}
+
+function buildFocus(){
+  var keys=Object.keys(FOCUS);
+  var navHtml='',contentHtml='';
+  keys.forEach(function(k,i){
+    var f=FOCUS[k];
+    navHtml+='<button class="focus-btn'+(i===0?' active':'')+'" data-key="'+k+'" onclick="showFocus(this.dataset.key,this)">'+f.titre+'</button>';
+    contentHtml+='<div class="focus-pane'+(i===0?' active':'')+'" id="focus-'+k+'">';
+    contentHtml+='<div class="focus-resume">'+f.resume+'</div>';
+    contentHtml+='<div style="font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em">Flashcards</div>';
+    f.cartes.forEach(function(ci){
+      var c=CARDS[ci-1];if(!c)return;
+      contentHtml+='<div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer" onclick="toggleAns(this)">';
+      contentHtml+='<div style="font-size:.86rem;font-weight:700;color:var(--navy)">'+c.q+'</div>';
+      contentHtml+='<div class="ans" style="display:none;font-size:.83rem;color:var(--muted);margin-top:8px;white-space:pre-line;line-height:1.5">'+c.a+'</div></div>';
+    });
+    contentHtml+='</div>';
+  });
+  document.getElementById('focus-nav').innerHTML=navHtml;
+  document.getElementById('focus-content').innerHTML=contentHtml;
+}
+function showFocus(k,btn){
+  document.querySelectorAll('.focus-pane').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('focus-'+k).classList.add('active');
+  document.querySelectorAll('.focus-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+function toggleAns(el){var ans=el.querySelector('.ans');ans.style.display=ans.style.display==='block'?'none':'block';}
+
+function j9go(id){
+  ['r','1','2','3','4'].forEach(function(x){var el=document.getElementById('fiche-'+x);if(el)el.classList.remove('active');});
+  var t=document.getElementById('fiche-'+id);if(t)t.classList.add('active');
+  var btns=document.querySelectorAll('.fiche-btn');
+  var map={r:0,'1':1,'2':2,'3':3,'4':4};
+  btns.forEach(function(b){b.classList.remove('active')});
+  if(btns[map[id]])btns[map[id]].classList.add('active');
+}
+
+function toggleExo(id){var el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block';}
+function toggleCas(id){var el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block';}
+
+function showTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+
+window.onload=function(){showCard();buildQuiz();buildFocus();};
+</script>
+</body>
+</html>
