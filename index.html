@@ -110,10 +110,10 @@ ul.items li strong{color:var(--navy)}
   <h1>&#128218; Formation CGP</h1>
   <p>Cap Finances &middot; Lucas &middot; Lorient</p>
   <div class="stats-bar">
-    <div class="stat-pill"><span id="stat-days">11</span> jours disponibles</div>
-    <div class="stat-pill"><span>354</span> flashcards</div>
-    <div class="stat-pill"><span>225</span> questions quiz</div>
-    <div class="stat-pill"><span>44</span> th&egrave;mes focus</div>
+    <div class="stat-pill"><span id="stat-days">12</span> jours disponibles</div>
+    <div class="stat-pill"><span>394</span> flashcards</div>
+    <div class="stat-pill"><span>255</span> questions quiz</div>
+    <div class="stat-pill"><span>48</span> th&egrave;mes focus</div>
   </div>
 </header>
 <div class="main-tabs">
@@ -298,14 +298,28 @@ ul.items li strong{color:var(--navy)}
       <div class="day-score no-score" id="score-jour11">Quiz non encore effectu&eacute;</div>
       <a href="./Jour%2011%20-%20Pr%C3%A9voyance/flashcards-quiz.html" class="btn-open">Ouvrir la le&ccedil;on &rarr;</a>
     </div>
-    <div class="day-card locked">
-      <div class="day-badge">Jour 12</div>
-      <div class="day-date">&Agrave; venir</div>
-      <div class="day-title">Prochain cours</div>
-      <div class="day-topics"><span class="topic-tag">Envoyer les slides</span></div>
-      <div class="day-stats"><span>&mdash; cartes</span><span>&mdash; questions</span></div>
-      <button class="btn-locked">Non disponible</button>
-    </div>
+          <div class="day-card">
+        <div class="day-badge">Jour 12</div>
+        <div class="day-date">9 juillet 2026</div>
+        <div class="day-title">Fiscalit&eacute; des produits financiers</div>
+        <div class="day-topics">
+          <span class="topic-tag">Flat Tax / PFU</span>
+          <span class="topic-tag">Assurance-Vie</span>
+          <span class="topic-tag">Livrets</span>
+          <span class="topic-tag">PEL / CEL</span>
+          <span class="topic-tag">PEA</span>
+        </div>
+        <div class="day-stats"><span>40 cartes</span><span>30 questions</span></div>
+        <a href="./Jour%2012%20-%20Fiscalite%20des%20produits%20financiers/flashcards-quiz.html" class="btn-start">Commencer &rarr;</a>
+      </div>
+      <div class="day-card locked">
+        <div class="day-badge">Jour 13</div>
+        <div class="day-date">&Agrave; venir</div>
+        <div class="day-title">Prochain cours</div>
+        <div class="day-topics"><span class="topic-tag">Envoyer les slides</span></div>
+        <div class="day-stats"><span>&mdash; cartes</span><span>&mdash; questions</span></div>
+        <button class="btn-locked">Non disponible</button>
+      </div>
   </div>
   <div class="section-title">&#128204; Ressources</div>
   <div class="info-grid">
@@ -1028,7 +1042,7 @@ function showFocTheme(id, btn) {
 }
 try {
   var scores = JSON.parse(localStorage.getItem('cgp_scores') || '{}');
-  ['jour01','jour02','jour03','jour04','jour05','jour06','jour07','jour08','jour09','jour10','jour11'].forEach(function(k){
+  ['jour01','jour02','jour03','jour04','jour05','jour06','jour07','jour08','jour09','jour10','jour11','jour12'].forEach(function(k){
     if(scores[k]){
       var s=scores[k], el=document.getElementById('score-'+k);
       if(el){el.className='day-score has-score';el.textContent='Dernier quiz : '+s.score+'/'+s.total+' ('+s.pct+'%) — '+s.date;}
