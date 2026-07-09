@@ -3,634 +3,597 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Jour 12 — Fiscalité des produits financiers</title>
+<title>Jour 12 &mdash; Fiscalit&eacute; des produits financiers | Formation CGP</title>
 <style>
+:root{
+  --navy:#1a2744;--navy2:#253460;--gold:#c9a227;--gold2:#e8c84a;
+  --bg:#f4f6fb;--white:#fff;--text:#1a2744;--muted:#5a6a8a;
+  --ok:#2d8a4e;--ok-bg:#eafaf1;--err:#c0392b;--err-bg:#fdf3f2;
+  --border:#dce3f0;--shadow:0 8px 32px rgba(26,39,68,.1);
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}
-a{color:#60a5fa}
-.header{background:linear-gradient(135deg,#1e3a5f,#1e4d8c);padding:20px 24px;border-bottom:2px solid #2563eb}
-.header h1{font-size:1.4rem;font-weight:700;color:#fff}
-.header p{font-size:.85rem;color:#93c5fd;margin-top:4px}
-.tabs{display:flex;gap:4px;padding:12px 16px;background:#161b27;border-bottom:1px solid #1e293b;overflow-x:auto;flex-wrap:nowrap}
-.tab-btn{padding:8px 14px;border:none;border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:600;white-space:nowrap;background:#1e293b;color:#94a3b8;transition:all .2s}
-.tab-btn.active{background:#2563eb;color:#fff}
-.tab-btn:hover:not(.active){background:#334155;color:#e2e8f0}
-.tab-content{display:none;padding:20px 16px;max-width:900px;margin:0 auto}
-.tab-content.active{display:block}
-/* Score bar */
-.score-bar{background:#1e293b;border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
-.score-bar span{font-size:.82rem;color:#94a3b8}
-.score-val{font-weight:700;color:#60a5fa;font-size:1rem}
-/* Chapter nav */
-.ch-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.ch-btn{padding:6px 12px;border:1px solid #334155;border-radius:6px;cursor:pointer;font-size:.78rem;background:#1e293b;color:#94a3b8;transition:all .2s}
-.ch-btn.active{background:#2563eb;border-color:#2563eb;color:#fff}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+a{color:var(--navy)}
+header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:28px 32px 22px}
+header h1{font-size:1.4rem;font-weight:800;margin-bottom:4px}
+header p{font-size:.82rem;color:rgba(255,255,255,.55)}
+.tab-bar{display:flex;background:var(--navy2);overflow-x:auto}
+.tab-btn{background:none;border:none;color:rgba(255,255,255,.5);font-size:.78rem;font-weight:700;padding:12px 18px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:.15s}
+.tab-btn.active{color:#fff;border-bottom-color:var(--gold2)}
+.tab-btn:hover:not(.active){color:rgba(255,255,255,.8)}
+.tab-pane{display:none;padding:24px 20px;max-width:860px;margin:0 auto}
+.tab-pane.active{display:block}
+/* Filter bar */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filter-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:6px 14px;font-size:.76rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.12s}
+.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
 /* Flashcard */
-.card-counter{text-align:center;font-size:.82rem;color:#64748b;margin-bottom:8px}
-.fc-wrap{perspective:1000px;margin-bottom:20px}
-.fc{width:100%;min-height:200px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer}
-.fc.flipped{transform:rotateY(180deg)}
-.fc-front,.fc-back{position:absolute;width:100%;min-height:200px;backface-visibility:hidden;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
-.fc-front{background:linear-gradient(135deg,#1e3a5f,#1e2d4a);border:1px solid #2563eb}
-.fc-back{background:linear-gradient(135deg,#1a3320,#1e3a24);border:1px solid #22c55e;transform:rotateY(180deg)}
-.fc-front .q{font-size:1.1rem;font-weight:600;color:#e2e8f0;line-height:1.5}
-.fc-back .a{font-size:.95rem;color:#86efac;line-height:1.6}
-.fc-hint{font-size:.75rem;color:#475569;margin-top:12px}
-.fc-nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
-.fc-nav button,.btn{padding:8px 18px;border:none;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600;transition:all .2s}
-.btn-prev{background:#1e293b;color:#94a3b8}
-.btn-next{background:#2563eb;color:#fff}
-.btn-flip{background:#7c3aed;color:#fff}
-.btn-prev:hover{background:#334155}
-.btn-next:hover{background:#1d4ed8}
-.btn-flip:hover{background:#6d28d9}
+.card-counter{text-align:center;font-size:.78rem;color:var(--muted);margin-bottom:14px}
+.card-wrap{perspective:1000px;cursor:pointer;margin:0 auto 20px;max-width:580px}
+.card-inner{position:relative;width:100%;min-height:180px;transform-style:preserve-3d;transition:.5s}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-face{position:absolute;width:100%;min-height:180px;backface-visibility:hidden;border-radius:18px;padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-shadow:var(--shadow)}
+.card-front{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff}
+.card-back{background:var(--white);transform:rotateY(180deg);border:2px solid var(--border)}
+.ch-badge{font-size:.65rem;font-weight:800;background:rgba(255,255,255,.15);border-radius:99px;padding:3px 10px;margin-bottom:12px;letter-spacing:.06em}
+.card-q{font-size:1.05rem;font-weight:700;line-height:1.4}
+.card-a{font-size:.88rem;color:var(--text);line-height:1.6;white-space:pre-line}
+.card-nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:4px}
+.card-nav button{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;transition:.12s}
+.card-nav button:hover{background:var(--navy2)}
+.card-mark{display:flex;gap:10px;justify-content:center;margin-top:10px}
+.btn-ok{background:var(--ok);color:#fff;border:none;border-radius:8px;padding:7px 18px;font-size:.82rem;font-weight:700;cursor:pointer}
+.btn-ko{background:var(--err);color:#fff;border:none;border-radius:8px;padding:7px 18px;font-size:.82rem;font-weight:700;cursor:pointer}
+.score-line{text-align:center;font-size:.78rem;color:var(--muted);margin-bottom:10px}
 /* Quiz */
-.q-block{background:#1e293b;border-radius:12px;padding:18px;margin-bottom:14px;border:1px solid #334155}
-.q-text{font-size:.95rem;font-weight:600;color:#e2e8f0;margin-bottom:12px}
-.q-num{font-size:.75rem;color:#60a5fa;margin-bottom:4px}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.opt{padding:10px 14px;border:1px solid #334155;border-radius:8px;cursor:pointer;font-size:.85rem;color:#cbd5e1;background:#0f1117;transition:all .2s;text-align:left}
-.opt:hover{border-color:#2563eb;color:#e2e8f0}
-.opt.correct{background:#14532d;border-color:#22c55e;color:#86efac}
-.opt.wrong{background:#450a0a;border-color:#ef4444;color:#fca5a5}
-.q-result{font-size:.8rem;margin-top:8px;font-weight:600}
-.quiz-score-box{background:#1e293b;border-radius:12px;padding:20px;text-align:center;margin-top:16px;display:none}
-.quiz-score-box h3{font-size:1.3rem;color:#60a5fa;margin-bottom:8px}
+.quiz-q{background:var(--white);border-radius:16px;padding:22px 24px;margin-bottom:16px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.quiz-q p{font-size:.95rem;font-weight:700;margin-bottom:14px;line-height:1.4}
+.quiz-qnum{font-size:.72rem;color:var(--muted);font-weight:600;margin-bottom:6px}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:.86rem;cursor:pointer;text-align:left;transition:.12s;font-weight:500}
+.quiz-opt:hover{border-color:var(--navy);background:#eef1f8}
+.quiz-opt.correct{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:700}
+.quiz-opt.wrong{background:var(--err-bg);border-color:var(--err);color:var(--err)}
+.quiz-result{font-size:.8rem;margin-top:8px;font-weight:600}
+.quiz-live{text-align:center;font-size:.82rem;color:var(--muted);margin-bottom:16px}
+.quiz-final{background:var(--white);border-radius:16px;padding:24px;text-align:center;border:1.5px solid var(--border);display:none;margin-top:16px}
+.quiz-final h3{font-size:1.3rem;color:var(--navy);margin-bottom:8px}
 /* Focus */
-.focus-list{display:flex;flex-direction:column;gap:12px}
-.focus-item{background:#1e293b;border-radius:12px;border:1px solid #334155;overflow:hidden}
-.focus-header{padding:14px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .2s}
-.focus-header:hover{background:#273548}
-.focus-header h3{font-size:.95rem;font-weight:700;color:#e2e8f0}
-.focus-header .arrow{color:#60a5fa;transition:transform .3s;font-size:1rem}
-.focus-body{display:none;padding:16px 18px;border-top:1px solid #334155}
+.focus-item{background:var(--white);border-radius:16px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:12px;box-shadow:0 2px 10px rgba(26,39,68,.05)}
+.focus-header{padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .15s}
+.focus-header:hover{background:#f0f2f8}
+.focus-header h3{font-size:.9rem;font-weight:800;color:var(--navy)}
+.focus-arrow{color:var(--navy);font-size:.9rem;transition:transform .3s}
+.focus-body{display:none;padding:16px 20px;border-top:1.5px solid var(--border)}
 .focus-body.open{display:block}
-.focus-cards{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
-.focus-card{background:#0f1117;border-radius:8px;padding:12px;border:1px solid #1e3a5f}
-.focus-card .fq{font-size:.82rem;color:#93c5fd;font-weight:600;margin-bottom:4px}
-.focus-card .fa{font-size:.82rem;color:#86efac;line-height:1.5}
-.key-points{background:#0f2217;border-radius:8px;padding:14px;margin-bottom:12px;border:1px solid #166534}
-.key-points h4{font-size:.82rem;color:#4ade80;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em}
-.key-points ul{list-style:none;display:flex;flex-direction:column;gap:4px}
-.key-points li{font-size:.85rem;color:#86efac;padding-left:16px;position:relative}
-.key-points li::before{content:"✓";position:absolute;left:0;color:#22c55e}
-img.schema{width:100%;border-radius:10px;margin:12px 0;border:1px solid #334155}
+.focus-resume{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.86rem;font-weight:600;line-height:1.6}
+.focus-card{background:var(--bg);border-radius:10px;padding:12px 14px;margin-bottom:8px;border:1px solid var(--border)}
+.focus-card .fq{font-size:.8rem;font-weight:700;color:var(--navy);margin-bottom:4px}
+.focus-card .fa{font-size:.8rem;color:var(--muted);line-height:1.5;white-space:pre-line}
 /* Fiche */
-.fiche-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.fiche-btn{padding:6px 14px;border:1px solid #334155;border-radius:20px;cursor:pointer;font-size:.78rem;font-weight:600;background:#1e293b;color:#94a3b8;transition:all .2s}
-.fiche-btn.active{background:#7c3aed;border-color:#7c3aed;color:#fff}
-.fiche-section{display:none}
-.fiche-section.active{display:block}
-.fiche-section h2{font-size:1.1rem;font-weight:700;color:#e2e8f0;margin-bottom:14px;border-bottom:2px solid #7c3aed;padding-bottom:8px}
-.fiche-section h3{font-size:.9rem;font-weight:700;color:#c4b5fd;margin:14px 0 8px}
-.fiche-section p{font-size:.88rem;color:#cbd5e1;line-height:1.7;margin-bottom:10px}
-.fiche-section ul{list-style:none;display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
-.fiche-section li{font-size:.85rem;color:#cbd5e1;padding-left:18px;position:relative;line-height:1.5}
-.fiche-section li::before{content:"▸";position:absolute;left:0;color:#7c3aed}
-.recap-table{width:100%;border-collapse:collapse;font-size:.8rem;margin:12px 0}
-.recap-table th{background:#1e3a5f;color:#93c5fd;padding:8px 10px;text-align:left;font-weight:700;border:1px solid #334155}
-.recap-table td{padding:7px 10px;border:1px solid #1e293b;color:#cbd5e1;vertical-align:top}
-.recap-table tr:nth-child(even) td{background:#0d1320}
-.recap-table tr:nth-child(odd) td{background:#111827}
-.badge-ex{display:inline-block;background:#1e3a5f;color:#93c5fd;border-radius:4px;padding:2px 6px;font-size:.7rem;font-weight:700;margin-right:4px}
-.badge-ft{display:inline-block;background:#4c1d95;color:#c4b5fd;border-radius:4px;padding:2px 6px;font-size:.7rem;font-weight:700}
+.fiche-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.fiche-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer;transition:.12s}
+.fiche-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.fiche-section{display:none}.fiche-section.active{display:block}
+.fiche-block{background:var(--white);border-radius:14px;padding:20px 22px;margin-bottom:14px;border:1.5px solid var(--border)}
+.fiche-block h3{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.fiche-block p{font-size:.86rem;color:var(--text);line-height:1.7;margin-bottom:8px}
+.fiche-block ul{list-style:none;margin-bottom:10px}
+.fiche-block ul li{font-size:.85rem;color:var(--text);padding:3px 0 3px 16px;position:relative;line-height:1.5}
+.fiche-block ul li::before{content:"▸";position:absolute;left:0;color:var(--navy)}
+.fiche-table{width:100%;border-collapse:collapse;font-size:.83rem;margin-top:8px}
+.fiche-table th{background:var(--navy);color:#fff;padding:7px 10px;text-align:left;font-weight:700}
+.fiche-table td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.fiche-table tr:nth-child(even) td{background:var(--bg)}
+.fiche-hl{background:#fff3cd;border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+.fiche-ok{background:var(--ok-bg);border-left:4px solid var(--ok);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+.fiche-warn{background:var(--err-bg);border-left:4px solid var(--err);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.84rem;margin:8px 0;line-height:1.5}
+.fiche-note{background:#fff3e0;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:10px 14px;font-size:.82rem;margin:8px 0;line-height:1.5;color:#92400e}
+img.schema{width:100%;border-radius:10px;margin:10px 0;border:1px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.08)}
+.formula-box{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:12px;margin:8px 0;font-family:monospace;font-size:.85rem;color:var(--navy);white-space:pre-line}
 /* Tableau +/- */
-.pm-table{width:100%;border-collapse:collapse;font-size:.82rem;margin:14px 0}
-.pm-table th{padding:10px 12px;text-align:left;font-weight:700;border:1px solid #334155}
-.pm-table th:first-child{background:#1e293b;color:#e2e8f0;width:22%}
-.pm-table th.plus{background:#14532d;color:#4ade80;text-align:center;width:39%}
-.pm-table th.minus{background:#450a0a;color:#f87171;text-align:center;width:39%}
-.pm-table td{padding:8px 12px;border:1px solid #1e293b;vertical-align:top;line-height:1.6}
-.pm-table tr:nth-child(odd) td{background:#0f1117}
-.pm-table tr:nth-child(even) td{background:#111827}
-.pm-table td:first-child{font-weight:700;color:#c4b5fd;background:#160d2e}
-.pm-table td.plus-cell{color:#86efac}
-.pm-table td.minus-cell{color:#fca5a5}
-.pm-note{background:#1a1200;border:1px solid #854d0e;border-radius:8px;padding:12px;margin-bottom:14px;font-size:.82rem;color:#fbbf24}
+.pm-table{width:100%;border-collapse:collapse;font-size:.82rem;margin:10px 0}
+.pm-table th{padding:8px 12px;text-align:left;font-weight:800;border:1px solid var(--border)}
+.pm-table th:first-child{background:var(--navy);color:#fff;width:20%}
+.pm-table th.plus-h{background:var(--ok);color:#fff;text-align:center;width:40%}
+.pm-table th.minus-h{background:var(--err);color:#fff;text-align:center;width:40%}
+.pm-table td{padding:8px 12px;border:1px solid var(--border);vertical-align:top;line-height:1.7}
+.pm-table tr:nth-child(odd) td{background:var(--white)}
+.pm-table tr:nth-child(even) td{background:var(--bg)}
+.pm-table td:first-child{font-weight:800;color:var(--navy);background:#eef1f8}
+.pm-table td.plus-td{color:var(--ok)}
+.pm-table td.minus-td{color:var(--err)}
 /* Exercices */
-.exo-block{background:#1e293b;border-radius:12px;padding:18px;margin-bottom:16px;border:1px solid #334155}
-.exo-block h3{font-size:.9rem;font-weight:700;color:#60a5fa;margin-bottom:10px}
-.exo-block p,.exo-block ul{font-size:.88rem;color:#cbd5e1;line-height:1.7;margin-bottom:8px}
-.exo-block ul{list-style:none;padding-left:0}
-.exo-block ul li{padding-left:16px;position:relative}
-.exo-block ul li::before{content:"•";position:absolute;left:0;color:#60a5fa}
-.show-ans-btn{padding:8px 16px;background:#1e3a5f;border:1px solid #2563eb;border-radius:8px;color:#93c5fd;cursor:pointer;font-size:.82rem;font-weight:600;margin-top:10px}
-.show-ans-btn:hover{background:#2563eb;color:#fff}
-.ans-block{display:none;margin-top:12px;background:#0f1117;border-radius:8px;padding:14px;border-left:3px solid #22c55e}
-.ans-block.visible{display:block}
-.ans-block h4{font-size:.82rem;color:#4ade80;margin-bottom:8px;font-weight:700}
-.ans-block p,.ans-block ul{font-size:.85rem;color:#86efac;line-height:1.7}
-.ans-block ul{list-style:none;padding-left:0}
-.ans-block ul li{padding-left:16px;position:relative}
-.ans-block ul li::before{content:"→";position:absolute;left:0;color:#22c55e}
-.formula-box{background:#0a1a1a;border:1px solid #0d9488;border-radius:8px;padding:12px;margin:8px 0;font-family:monospace;font-size:.88rem;color:#5eead4}
+.exo{background:var(--white);border-radius:16px;padding:24px;margin-bottom:20px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.exo-title{font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:4px}
+.exo-tag{font-size:.7rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:2px 8px;color:var(--muted);font-weight:600;margin-left:6px}
+.exo-enonce{background:var(--bg);border-radius:10px;padding:12px 14px;font-size:.84rem;line-height:1.6;margin:10px 0;color:var(--text)}
+.exo-questions{background:var(--navy);color:#fff;border-radius:10px;padding:10px 14px;font-size:.82rem;line-height:1.7;margin:10px 0}
+.exo-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;margin-top:10px;display:inline-block;transition:.12s}
+.exo-btn:hover{background:var(--navy2)}
+.exo-solution{display:none;margin-top:14px;border-top:1.5px solid var(--border);padding-top:14px}
+.exo-step{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:.83rem;margin-bottom:8px;line-height:1.6}
+.exo-step strong{color:var(--navy)}
+.exo-formula{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-family:monospace;font-size:.83rem;color:var(--navy);white-space:pre-line;margin:8px 0}
 /* Cas pratiques */
-.cas-block{background:#1e293b;border-radius:12px;padding:18px;margin-bottom:16px;border:1px solid #334155}
-.cas-block h3{font-size:.9rem;font-weight:700;color:#f59e0b;margin-bottom:10px}
-.cas-block .context{background:#1a1200;border-radius:8px;padding:12px;margin-bottom:10px;font-size:.85rem;color:#fde68a;line-height:1.6;border-left:3px solid #f59e0b}
-.sol-block{display:none;margin-top:12px;background:#0f1117;border-radius:8px;padding:14px;border-left:3px solid #f59e0b}
-.sol-block.visible{display:block}
-.sol-block h4{font-size:.82rem;color:#fbbf24;margin-bottom:8px;font-weight:700}
-.sol-block p,.sol-block ul{font-size:.85rem;color:#fde68a;line-height:1.7}
-.sol-block ul{list-style:none;padding-left:0}
-.sol-block ul li{padding-left:16px;position:relative}
-.sol-block ul li::before{content:"✓";position:absolute;left:0;color:#f59e0b}
+.cas{background:var(--white);border-radius:16px;padding:24px;margin-bottom:18px;border:1.5px solid var(--border);box-shadow:0 2px 10px rgba(26,39,68,.06)}
+.cas-title{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:6px}
+.cas-enonce{font-size:.86rem;line-height:1.6;margin-bottom:14px;color:var(--text)}
+.cas-piege{background:#fff3cd;border-radius:8px;padding:10px 14px;font-size:.82rem;margin-bottom:14px;line-height:1.5;border-left:3px solid var(--gold)}
+.cas-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:10px;transition:.12s}
+.cas-btn:hover{background:var(--navy2)}
+.cas-solution{display:none;background:var(--ok-bg);border-radius:8px;padding:14px 16px;font-size:.84rem;line-height:1.6;border:1px solid var(--ok)}
+.cas-solution ul{list-style:none;margin-top:6px}
+.cas-solution ul li{padding:3px 0 3px 20px;position:relative}
+.cas-solution ul li::before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:700}
+@media(max-width:600px){header{padding:20px 16px}.tab-pane{padding:16px 12px}}
 </style>
 </head>
 <body>
-<div class="header">
-  <h1>Jour 12 — Fiscalité des produits financiers</h1>
+<header>
+  <h1>&#128176; Jour 12 &mdash; Fiscalit&eacute; des produits financiers</h1>
   <p>Flat Tax &bull; Assurance-Vie &bull; Livrets &bull; PEL/CEL &bull; PEA &bull; 40 cartes &bull; 30 questions</p>
-</div>
-<div class="tabs">
-  <button class="tab-btn active" onclick="showTab('fc',this)">🃏 Flashcards</button>
-  <button class="tab-btn" onclick="showTab('quiz',this)">📝 Quiz</button>
-  <button class="tab-btn" onclick="showTab('focus',this)">🎯 Focus</button>
-  <button class="tab-btn" onclick="showTab('fiche',this)">📄 Fiche</button>
-  <button class="tab-btn" onclick="showTab('exo',this)">🏋️ Exercices</button>
-  <button class="tab-btn" onclick="showTab('cas',this)">📋 Cas pratiques</button>
+</header>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('flashcards',this)">&#127183; Flashcards</button>
+  <button class="tab-btn" onclick="showTab('quiz',this)">&#128221; Quiz</button>
+  <button class="tab-btn" onclick="showTab('focus',this)">&#127919; Focus</button>
+  <button class="tab-btn" onclick="showTab('fiche',this)">&#128196; Fiche</button>
+  <button class="tab-btn" onclick="showTab('exercices',this)">&#127947; Exercices</button>
+  <button class="tab-btn" onclick="showTab('cas',this)">&#128203; Cas pratiques</button>
 </div>
 
-<!-- ══ TAB 1 : FLASHCARDS ══ -->
-<div id="tab-fc" class="tab-content active">
-  <div class="score-bar">
-    <span>Score session :</span><span class="score-val" id="fc-score">0 / 40</span>
-    <span style="margin-left:auto;font-size:.78rem">Cliquez sur la carte pour voir la réponse</span>
+<!-- FLASHCARDS -->
+<div id="tab-flashcards" class="tab-pane active">
+  <div class="score-line">Score session : <strong id="fc-score">0 / 40</strong></div>
+  <div class="filter-bar">
+    <button class="filter-btn active" data-ch="all" onclick="filterCh(this)">Tous (40)</button>
+    <button class="filter-btn" data-ch="Flat Tax &amp; Assurance-Vie" onclick="filterCh(this)">Flat Tax &amp; AV</button>
+    <button class="filter-btn" data-ch="Livrets &amp; CAT" onclick="filterCh(this)">Livrets &amp; CAT</button>
+    <button class="filter-btn" data-ch="PEL &amp; CEL" onclick="filterCh(this)">PEL &amp; CEL</button>
+    <button class="filter-btn" data-ch="PEA" onclick="filterCh(this)">PEA</button>
   </div>
-  <div class="ch-nav">
-    <button class="ch-btn active" data-ch="all" onclick="filterCh(this)">Toutes (40)</button>
-    <button class="ch-btn" data-ch="Flat Tax &amp; Assurance-Vie" onclick="filterCh(this)">Flat Tax &amp; AV (10)</button>
-    <button class="ch-btn" data-ch="Livrets &amp; CAT" onclick="filterCh(this)">Livrets &amp; CAT (10)</button>
-    <button class="ch-btn" data-ch="PEL &amp; CEL" onclick="filterCh(this)">PEL &amp; CEL (10)</button>
-    <button class="ch-btn" data-ch="PEA" onclick="filterCh(this)">PEA (10)</button>
-  </div>
-  <div class="card-counter" id="fc-counter">Carte 1 / 40</div>
-  <div class="fc-wrap">
-    <div class="fc" id="fc-card" onclick="flipCard()">
-      <div class="fc-front"><div class="q" id="fc-q"></div><div class="fc-hint">Cliquez pour révéler</div></div>
-      <div class="fc-back"><div class="a" id="fc-a"></div></div>
+  <div class="card-counter" id="card-counter">Carte 1 / 40</div>
+  <div class="card-wrap" onclick="flipCard()">
+    <div class="card-inner" id="card-inner">
+      <div class="card-face card-front">
+        <div class="ch-badge" id="card-ch">Ch. 1</div>
+        <div class="card-q" id="card-q">...</div>
+      </div>
+      <div class="card-face card-back">
+        <div class="card-a" id="card-a">...</div>
+      </div>
     </div>
   </div>
-  <div class="fc-nav">
-    <button class="fc-nav btn btn-prev" onclick="prevCard()">← Précédente</button>
-    <button class="fc-nav btn btn-flip" onclick="flipCard()">↩ Retourner</button>
-    <button class="fc-nav btn btn-next" onclick="nextCard()">Suivante →</button>
+  <div class="card-nav">
+    <button onclick="prevCard()">&#8592; Pr&eacute;c.</button>
+    <button onclick="shuffleCards()">&#128256; M&eacute;langer</button>
+    <button onclick="nextCard()">Suiv. &#8594;</button>
   </div>
-  <div style="display:flex;gap:10px;justify-content:center;margin-top:4px">
-    <button class="fc-nav btn" style="background:#14532d;color:#86efac" onclick="markOk()">✓ Su</button>
-    <button class="fc-nav btn" style="background:#450a0a;color:#fca5a5" onclick="markKo()">✗ À revoir</button>
+  <div class="card-mark">
+    <button class="btn-ok" onclick="markOk()">&#10003; Su</button>
+    <button class="btn-ko" onclick="markKo()">&#10007; &Agrave; revoir</button>
   </div>
 </div>
 
-<!-- ══ TAB 2 : QUIZ ══ -->
-<div id="tab-quiz" class="tab-content">
-  <div class="score-bar">
-    <span>Score :</span><span class="score-val" id="quiz-live">0 / 0</span>
-  </div>
+<!-- QUIZ -->
+<div id="tab-quiz" class="tab-pane">
+  <div class="quiz-live">Score : <strong id="quiz-live">0 / 0</strong></div>
   <div id="quiz-container"></div>
-  <div class="quiz-score-box" id="quiz-final">
+  <div class="quiz-final" id="quiz-final">
     <h3 id="qf-title"></h3>
-    <p id="qf-msg" style="color:#94a3b8;font-size:.9rem;margin-top:6px"></p>
-    <button class="btn" style="background:#2563eb;color:#fff;margin-top:14px" onclick="resetQuiz()">Recommencer</button>
+    <p id="qf-msg" style="color:var(--muted);font-size:.9rem;margin-top:6px"></p>
+    <button style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.86rem;font-weight:700;cursor:pointer;margin-top:14px" onclick="resetQuiz()">Recommencer</button>
   </div>
 </div>
 
-<!-- ══ TAB 3 : FOCUS ══ -->
-<div id="tab-focus" class="tab-content">
-  <div class="focus-list">
-    <div class="focus-item">
-      <div class="focus-header" onclick="toggleFocus(this)">
-        <h3>💰 Focus 1 — Flat Tax & Assurance-Vie</h3><span class="arrow">▼</span>
-      </div>
-      <div class="focus-body">
-        <div class="key-points">
-          <h4>Points clés à retenir</h4>
-          <ul>
-            <li>FT 30% = 12,8% IR + 17,2% PS (AV, CEL, PEL)</li>
-            <li>FT 31,4% = 12,8% IR + 18,6% PS (CAT, CSL, PEA, PER)</li>
-            <li>Rachat partiel : base = (Intérêts/Valeur) × Rachat (proportion tronquée)</li>
-            <li>AV avant 27/09/2017 : 35% / 15% / 7,5% selon durée</li>
-            <li>AV après 27/09/2017 ≤150k : PFU 30% avant 8 ans / 24,7% après 8 ans</li>
-            <li>Abattement 8 ans : 4 600€ (célibataire) / 9 200€ (couple)</li>
-            <li>Fonds euros AV : PS prélevés annuellement (UC : au rachat)</li>
-          </ul>
-        </div>
-        <div class="focus-cards" id="focus-flatav"></div>
-      </div>
+<!-- FOCUS -->
+<div id="tab-focus" class="tab-pane">
+  <div class="focus-item">
+    <div class="focus-header" onclick="toggleFocus(this)">
+      <h3>&#128176; Focus 1 &mdash; Flat Tax &amp; Assurance-Vie</h3><span class="focus-arrow">&#9660;</span>
     </div>
-    <div class="focus-item">
-      <div class="focus-header" onclick="toggleFocus(this)">
-        <h3>🏦 Focus 2 — Livrets, CSL & CAT</h3><span class="arrow">▼</span>
+    <div class="focus-body">
+      <div class="focus-resume">
+        &#10003; FT 30% = 12,8% IR + 17,2% PS (AV, CEL, PEL)<br>
+        &#10003; FT 31,4% = 12,8% IR + 18,6% PS (CAT, CSL, PEA, PER)<br>
+        &#10003; Rachat partiel : base = (Int&eacute;r&ecirc;ts/Valeur) &times; Rachat — proportion tronqu&eacute;e<br>
+        &#10003; AV avant 27/09/2017 : 35% / 15% / 7,5% selon dur&eacute;e<br>
+        &#10003; AV apr&egrave;s 27/09/2017 &le;150k€ : PFU 30% avant 8 ans / 24,7% apr&egrave;s 8 ans<br>
+        &#10003; Abattement 8 ans : 4 600€ (c&eacute;libataire) / 9 200€ (couple)<br>
+        &#10003; Fonds euros AV : PS pr&eacute;lev&eacute;s annuellement (UC : au rachat)
       </div>
-      <div class="focus-body">
-        <div class="key-points">
-          <h4>Points clés à retenir</h4>
-          <ul>
-            <li>Exonérés : Livret A (22 950€), LDDS (12 000€), Jeune (1 600€), LEP (10 000€)</li>
-            <li>Taux 2026 : Livret A 2,4% / LEP 3,5% (meilleur taux garanti)</li>
-            <li>CSL : pas de plafond légal, PFU 31,4% (PS 18,6%)</li>
-            <li>CAT : min. 1 mois, taux libre, capital bloqué, PFU 31,4%</li>
-            <li>Livret Bleu = Livret A du Crédit Mutuel</li>
-          </ul>
-        </div>
-        <div class="focus-cards" id="focus-livrets"></div>
-      </div>
+      <div id="focus-flatav"></div>
     </div>
-    <div class="focus-item">
-      <div class="focus-header" onclick="toggleFocus(this)">
-        <h3>🏠 Focus 3 — PEL & CEL</h3><span class="arrow">▼</span>
-      </div>
-      <div class="focus-body">
-        <div class="key-points">
-          <h4>Points clés à retenir</h4>
-          <ul>
-            <li>PEL : 225€ ouverture, 540€/an min, plafond 61 200€, taux 2%, prêt 92 000€</li>
-            <li>PEL : RETRAIT = CLÔTURE (règle absolue)</li>
-            <li>PEL avant 2011 : exo IR 12 ans / exo PS 10 ans (2 seuils différents)</li>
-            <li>PEL 2011-2017 : exo IR+PS pendant 12 ans, puis IR barème + PS</li>
-            <li>PEL depuis 2018 : PFU 30% dès la 1ère année</li>
-            <li>CEL : disponible, taux 1%, plafond 15 300€, PFU 30%</li>
-          </ul>
-        </div>
-        <div class="focus-cards" id="focus-pelcel"></div>
-      </div>
+  </div>
+  <div class="focus-item">
+    <div class="focus-header" onclick="toggleFocus(this)">
+      <h3>&#127968; Focus 2 &mdash; Livrets, CSL &amp; CAT</h3><span class="focus-arrow">&#9660;</span>
     </div>
-    <div class="focus-item">
-      <div class="focus-header" onclick="toggleFocus(this)">
-        <h3>📈 Focus 4 — PEA</h3><span class="arrow">▼</span>
+    <div class="focus-body">
+      <div class="focus-resume">
+        &#10003; Exon&eacute;r&eacute;s : Livret A (22 950€), LDDS (12 000€), Jeune (1 600€), LEP (10 000€)<br>
+        &#10003; Taux 2026 : Livret A 2,4% / LEP 3,5% (meilleur taux garanti)<br>
+        &#10003; CSL : pas de plafond l&eacute;gal, PFU 31,4% (PS 18,6%)<br>
+        &#10003; CAT : min. 1 mois, taux libre, capital bloqu&eacute;, PFU 31,4%<br>
+        &#10003; Livret Bleu = Livret A du Cr&eacute;dit Mutuel
       </div>
-      <div class="focus-body">
-        <div class="key-points">
-          <h4>Points clés à retenir</h4>
-          <ul>
-            <li>3 types : Bancaire 150k€ / Assurance 150k€ / PEA-PME 225k€</li>
-            <li>Titres : actions sociétés européennes (UE/EEE) uniquement</li>
-            <li>Avant 5 ans : retrait = clôture + PFU 31,4%</li>
-            <li>Après 5 ans : exonération IR, PS 18,6% restent dus</li>
-            <li>Loi PACTE : retraits partiels après 5 ans sans clôture</li>
-            <li>1 seul PEA classique par personne (+ 1 PEA-PME possible)</li>
-          </ul>
-        </div>
-        <div class="focus-cards" id="focus-pea"></div>
+      <div id="focus-livrets"></div>
+    </div>
+  </div>
+  <div class="focus-item">
+    <div class="focus-header" onclick="toggleFocus(this)">
+      <h3>&#127968; Focus 3 &mdash; PEL &amp; CEL</h3><span class="focus-arrow">&#9660;</span>
+    </div>
+    <div class="focus-body">
+      <div class="focus-resume">
+        &#10003; PEL : 225€ ouverture, 540€/an min, plafond 61 200€, taux 2%, pr&ecirc;t 92 000€<br>
+        &#10003; PEL : RETRAIT = CL&Ocirc;TURE (r&egrave;gle absolue)<br>
+        &#10003; PEL avant 2011 : exo IR 12 ans / exo PS 10 ans (2 seuils diff&eacute;rents)<br>
+        &#10003; PEL 2011-2017 : exo IR+PS pendant 12 ans, puis IR bar&egrave;me + PS<br>
+        &#10003; PEL depuis 2018 : PFU 30% d&egrave;s la 1&egrave;re ann&eacute;e<br>
+        &#10003; CEL : disponible, taux 1%, plafond 15 300€, PFU 30%
       </div>
+      <div id="focus-pelcel"></div>
+    </div>
+  </div>
+  <div class="focus-item">
+    <div class="focus-header" onclick="toggleFocus(this)">
+      <h3>&#128200; Focus 4 &mdash; PEA</h3><span class="focus-arrow">&#9660;</span>
+    </div>
+    <div class="focus-body">
+      <div class="focus-resume">
+        &#10003; 3 types : Bancaire 150k€ / Assurance 150k€ / PEA-PME 225k€<br>
+        &#10003; Titres : actions soci&eacute;t&eacute;s europ&eacute;ennes (UE/EEE) uniquement<br>
+        &#10003; Avant 5 ans : retrait = cl&ocirc;ture + PFU 31,4%<br>
+        &#10003; Apr&egrave;s 5 ans : exon&eacute;ration IR, PS 18,6% restent dus<br>
+        &#10003; Loi PACTE : retraits partiels apr&egrave;s 5 ans sans cl&ocirc;ture<br>
+        &#10003; 1 seul PEA classique par personne (+ 1 PEA-PME possible)
+      </div>
+      <div id="focus-pea"></div>
     </div>
   </div>
 </div>
 
-<!-- ══ TAB 4 : FICHE ══ -->
-<div id="tab-fiche" class="tab-content">
+<!-- FICHE -->
+<div id="tab-fiche" class="tab-pane">
   <div class="fiche-nav">
-    <button class="fiche-btn active" data-sec="r" onclick="showFiche('r',this)">📊 Récap global</button>
-    <button class="fiche-btn" data-sec="1" onclick="showFiche('1',this)">💰 Flat Tax &amp; AV</button>
-    <button class="fiche-btn" data-sec="2" onclick="showFiche('2',this)">🏦 Livrets &amp; CAT</button>
-    <button class="fiche-btn" data-sec="3" onclick="showFiche('3',this)">🏠 PEL &amp; CEL</button>
-    <button class="fiche-btn" data-sec="4" onclick="showFiche('4',this)">📈 PEA</button>
-    <button class="fiche-btn" data-sec="pm" onclick="showFiche('pm',this)">⚖️ Récap +/-</button>
+    <button class="fiche-btn active" onclick="j12go('r',this)">Vue d&rsquo;ensemble</button>
+    <button class="fiche-btn" onclick="j12go('1',this)">Flat Tax &amp; AV</button>
+    <button class="fiche-btn" onclick="j12go('2',this)">Livrets &amp; CAT</button>
+    <button class="fiche-btn" onclick="j12go('3',this)">PEL &amp; CEL</button>
+    <button class="fiche-btn" onclick="j12go('4',this)">PEA</button>
+    <button class="fiche-btn" onclick="j12go('pm',this)">R&eacute;cap +/&minus;</button>
   </div>
 
-  <!-- Section r : Récap global -->
-  <div class="fiche-section active" id="fiche-r">
-    <h2>📊 Vue d'ensemble — Tableau récapitulatif complet</h2>
-    <p>Synthèse de tous les produits d'épargne : plafonds, rendements, fiscalité et taux de PS.</p>
-    <img class="schema" src="./img/IMG_0747.PNG" alt="Tableau récap PS par produit">
-    <table class="recap-table">
-      <tr>
-        <th>Produit</th><th>Plafond</th><th>Taux 2026</th><th>Fiscalité</th><th>PS</th>
-      </tr>
-      <tr><td><b>Livret A</b></td><td>22 950€</td><td>2,4%</td><td><span class="badge-ex">EXONÉRÉ</span></td><td>0%</td></tr>
-      <tr><td><b>Livret Bleu</b></td><td>22 950€</td><td>2,4%</td><td><span class="badge-ex">EXONÉRÉ</span></td><td>0%</td></tr>
-      <tr><td><b>LDDS</b></td><td>12 000€</td><td>2,4%</td><td><span class="badge-ex">EXONÉRÉ</span></td><td>0%</td></tr>
-      <tr><td><b>Livret Jeune</b></td><td>1 600€</td><td>≥ L.A.</td><td><span class="badge-ex">EXONÉRÉ</span></td><td>0%</td></tr>
-      <tr><td><b>LEP</b></td><td>10 000€</td><td>3,5%</td><td><span class="badge-ex">EXONÉRÉ</span> (sous cond.)</td><td>0%</td></tr>
-      <tr><td><b>CSL</b></td><td>Libre</td><td>Libre</td><td>PFU 31,4%</td><td>18,6%</td></tr>
-      <tr><td><b>CAT</b></td><td>Libre</td><td>Libre</td><td>PFU 31,4%</td><td>18,6%</td></tr>
-      <tr><td><b>CEL</b></td><td>15 300€</td><td>1%</td><td>PFU 30%</td><td>17,2%</td></tr>
-      <tr><td><b>PEL (≥2018)</b></td><td>61 200€</td><td>2%</td><td>PFU 30% dès an 1</td><td>17,2%</td></tr>
-      <tr><td><b>AV (&lt;8 ans, ≤150k€)</b></td><td>Sans plafond</td><td>Variable</td><td>PFU 30%</td><td>17,2%</td></tr>
-      <tr><td><b>AV (&gt;8 ans, ≤150k€)</b></td><td>Sans plafond</td><td>Variable</td><td>24,7% + abatt. 4 600€</td><td>17,2%</td></tr>
-      <tr><td><b>PEA (&gt;5 ans)</b></td><td>150 000€</td><td>Variable</td><td><span class="badge-ex">IR 0%</span> + PS</td><td>18,6%</td></tr>
-      <tr><td><b>PER</b></td><td>Sans plafond</td><td>Variable</td><td>Déductible entrée / Imposable sortie</td><td>18,6%</td></tr>
-    </table>
-  </div>
-
-  <!-- Section 1 : Flat Tax & AV -->
-  <div class="fiche-section" id="fiche-1">
-    <h2>💰 Flat Tax & Assurance-Vie</h2>
-    <h3>1. La Flat Tax / PFU</h3>
-    <p>Le Prélèvement Forfaitaire Unique s'applique à tous les revenus du capital. L'option pour le barème IR reste possible et peut être plus avantageuse pour les faibles revenus.</p>
-    <table class="recap-table">
-      <tr><th>Taux</th><th>IR</th><th>PS</th><th>Produits concernés</th></tr>
-      <tr><td><b>30%</b></td><td>12,8%</td><td>17,2%</td><td>AV, CEL, PEL</td></tr>
-      <tr><td><b>31,4%</b></td><td>12,8%</td><td>18,6%</td><td>CAT, CSL, PEA, PER</td></tr>
-    </table>
-    <h3>2. Base imposable AV</h3>
-    <img class="schema" src="./img/IMG_0719.PNG" alt="Schéma base imposable AV">
-    <div class="formula-box">Rachat total : base = Valeur totale − Versements (= 100% des intérêts)
-Rachat partiel : base = (Intérêts ÷ Valeur totale) × Montant rachat
-⚠️ Proportion tronquée (pas arrondie) à 2 décimales</div>
-    <h3>3. Fiscalité AV selon date de souscription</h3>
-    <img class="schema" src="./img/IMG_0722.PNG" alt="Fiscalité AV après 27/09/2017">
-    <table class="recap-table">
-      <tr><th>Période</th><th>&lt; 4 ans</th><th>4–8 ans</th><th>&gt; 8 ans</th></tr>
-      <tr><td><b>Avant 27/09/2017</b></td><td>PFL 35% + PS</td><td>PFL 15% + PS</td><td>PFL 7,5% + PS + abatt.</td></tr>
-      <tr><td><b>Après 27/09/2017 ≤150k€</b></td><td colspan="2">PFU 30%</td><td>24,7% (7,5%+PS) + abatt.</td></tr>
-      <tr><td><b>Après 27/09/2017 &gt;150k€</b></td><td colspan="2">PFU 30%</td><td>Fraction ≤150k→24,7% / &gt;150k→30%</td></tr>
-    </table>
-    <ul>
-      <li>Abattement 8 ans : <b>4 600€/an</b> (célibataire) ou <b>9 200€/an</b> (couple)</li>
-      <li>Fonds euros : PS prélevés <b>annuellement</b> — UC : PS uniquement <b>au rachat</b></li>
-      <li>Rappel J10 : l'AV est concurrente du PER sur la préparation retraite mais sans déductibilité à l'entrée</li>
-    </ul>
-  </div>
-
-  <!-- Section 2 : Livrets & CAT -->
-  <div class="fiche-section" id="fiche-2">
-    <h2>🏦 Livrets exonérés, CSL & CAT</h2>
-    <img class="schema" src="./img/IMG_0732.PNG" alt="Tableau livrets exonérés">
-    <h3>Livrets réglementés — totalement exonérés</h3>
-    <table class="recap-table">
-      <tr><th>Livret</th><th>Plafond</th><th>Taux 2026</th><th>Conditions</th></tr>
-      <tr><td><b>Livret A</b></td><td>22 950€</td><td>2,4%</td><td>Tout public</td></tr>
-      <tr><td><b>Livret Bleu</b></td><td>22 950€</td><td>2,4%</td><td>Crédit Mutuel — idem Livret A</td></tr>
-      <tr><td><b>LDDS</b></td><td>12 000€</td><td>2,4%</td><td>Résidents fiscaux français</td></tr>
-      <tr><td><b>Livret Jeune</b></td><td>1 600€</td><td>≥ L.A.</td><td>12 à 25 ans</td></tr>
-      <tr><td><b>LEP</b></td><td>10 000€</td><td>3,5%</td><td>Sous conditions de revenus (RFR)</td></tr>
-    </table>
-    <h3>CSL — Compte sur Livret (Livret B)</h3>
-    <ul>
-      <li>Taux libre, aucun plafond légal</li>
-      <li>Fiscalité : <b>PFU 31,4%</b> (12,8% IR + 18,6% PS)</li>
-      <li>Intérêts crédités à la 15e de chaque mois</li>
-      <li>Capital disponible à tout moment</li>
-    </ul>
-    <h3>CAT — Compte à Terme</h3>
-    <ul>
-      <li>Durée minimum : <b>1 mois</b></li>
-      <li>Taux libre négocié à l'ouverture — capital bloqué jusqu'à l'échéance</li>
-      <li>Fiscalité : <b>PFU 31,4%</b> (12,8% IR + 18,6% PS)</li>
-      <li>Utilisé pour placements court/moyen terme à taux garanti</li>
-      <li>Exemples de banques : BNP Paribas, Boursorama, CM, CIC</li>
-    </ul>
-  </div>
-
-  <!-- Section 3 : PEL & CEL -->
-  <div class="fiche-section" id="fiche-3">
-    <h2>🏠 PEL & CEL — Épargne Logement</h2>
-    <h3>PEL — Plan d'Épargne Logement</h3>
-    <ul>
-      <li>Ouverture : <b>225€</b> minimum — Versements : <b>540€/an</b> minimum (45€/mois)</li>
-      <li>Plafond des versements : <b>61 200€</b> (hors intérêts capitalisés)</li>
-      <li>⚠️ Tout retrait = <b>CLÔTURE du PEL</b></li>
-      <li>Taux 2026 : épargne <b>2%</b> / prêt <b>3,20%</b></li>
-      <li>Prêt associé : jusqu'à <b>92 000€</b></li>
-    </ul>
-    <h3>Fiscalité PEL — 3 régimes selon date d'ouverture</h3>
-    <img class="schema" src="./img/IMG_0741.jpg" alt="Résumé PEL chronologique">
-    <table class="recap-table">
-      <tr><th>Date ouverture</th><th>Fiscalité IR</th><th>PS 17,2%</th></tr>
-      <tr><td><b>Avant 2011</b></td><td>Exonéré 12 ans puis barème IR</td><td>Exonéré 10 ans puis 17,2%</td></tr>
-      <tr><td><b>2011 – 2017</b></td><td>Exonéré 12 ans puis barème IR</td><td>Exonéré 12 ans puis 17,2%</td></tr>
-      <tr><td><b>Depuis 2018</b></td><td><b>PFU 30% dès la 1ère année</b></td><td>Inclus dans PFU 30%</td></tr>
-    </table>
-    <h3>CEL — Compte Épargne Logement</h3>
-    <ul>
-      <li>Capital <b>disponible</b> à tout moment (différence majeure avec le PEL)</li>
-      <li>Taux : <b>1%</b> depuis février 2026</li>
-      <li>Plafond : <b>15 300€</b></li>
-      <li>Fiscalité : <b>PFU 30%</b> (12,8% IR + 17,2% PS)</li>
-      <li>Ouvre droit à prêt immobilier (complément du PEL)</li>
-    </ul>
-  </div>
-
-  <!-- Section 4 : PEA -->
-  <div class="fiche-section" id="fiche-4">
-    <h2>📈 PEA — Plan d'Épargne en Actions</h2>
-    <h3>Les 3 types de PEA</h3>
-    <table class="recap-table">
-      <tr><th>Type</th><th>Plafond versements</th><th>Titres éligibles</th></tr>
-      <tr><td><b>PEA Bancaire</b></td><td>150 000€</td><td>Actions européennes, OPCVM ≥75% EU</td></tr>
-      <tr><td><b>PEA Assurance</b></td><td>150 000€</td><td>Idem + sortie rente viagère défiscalisée</td></tr>
-      <tr><td><b>PEA-PME</b></td><td>225 000€</td><td>Actions/obligations PME-ETI européennes</td></tr>
-    </table>
-    <ul><li>1 seul PEA classique par personne (bancaire OU assurance) + 1 PEA-PME possible</li></ul>
-    <h3>Fiscalité PEA — chronologie clé</h3>
-    <table class="recap-table">
-      <tr><th>Durée</th><th>IR</th><th>PS</th><th>Retrait</th></tr>
-      <tr><td><b>Avant 5 ans</b></td><td>12,8% (PFU)</td><td>18,6%</td><td>Clôture (sauf exception Loi PACTE)</td></tr>
-      <tr><td><b>Après 5 ans</b></td><td><b>0% exonéré</b></td><td>18,6%</td><td>Partiel possible sans clôture (Loi PACTE)</td></tr>
-    </table>
-    <h3>Loi PACTE 2019 — changements majeurs</h3>
-    <ul>
-      <li>Retraits partiels possibles après 5 ans <b>sans clôture</b> (avant : clôture avant 8 ans)</li>
-      <li>Seuil de la franchise fiscale abaissé de 8 ans à 5 ans</li>
-    </ul>
-    <h3>Rappels cross-jours</h3>
-    <ul>
-      <li>J10 : PER vs PEA — le PER offre une déductibilité à l'entrée, le PEA une exonération à la sortie</li>
-      <li>J10 : Le PEA n'est pas un plan retraite mais peut être utilisé comme tel sur le long terme</li>
-    </ul>
-  </div>
-
-  <!-- Section pm : Récap +/- terrain -->
-  <div class="fiche-section" id="fiche-pm">
-    <h2>⚖️ Récap +/- des produits — Référence terrain</h2>
-    <div class="pm-note">
-      ℹ️ Ce tableau est une <b>référence pour le terrain</b> (entretiens clients), pas un contenu à retenir pour le test ORIAS. Il synthétise les avantages et inconvénients de chaque produit pour orienter vos recommandations.
+  <!-- r: Vue d'ensemble -->
+  <div id="fiche-r" class="fiche-section active">
+    <div class="fiche-block">
+      <h3>&#128200; Tableau r&eacute;capitulatif complet</h3>
+      <p>Synth&egrave;se de tous les produits d&rsquo;&eacute;pargne : plafonds, rendements, fiscalit&eacute; et taux de PS.</p>
+      <img class="schema" src="./img/IMG_0747.PNG" alt="Tableau r&eacute;cap PS par produit">
+      <table class="fiche-table">
+        <tr><th>Produit</th><th>Plafond</th><th>Taux 2026</th><th>Fiscalit&eacute;</th><th>PS</th></tr>
+        <tr><td><strong>Livret A</strong></td><td>22 950€</td><td>2,4%</td><td>EXON&Eacute;R&Eacute;</td><td>0%</td></tr>
+        <tr><td><strong>Livret Bleu</strong></td><td>22 950€</td><td>2,4%</td><td>EXON&Eacute;R&Eacute;</td><td>0%</td></tr>
+        <tr><td><strong>LDDS</strong></td><td>12 000€</td><td>2,4%</td><td>EXON&Eacute;R&Eacute;</td><td>0%</td></tr>
+        <tr><td><strong>Livret Jeune</strong></td><td>1 600€</td><td>&ge; L.A.</td><td>EXON&Eacute;R&Eacute; (12&ndash;25 ans)</td><td>0%</td></tr>
+        <tr><td><strong>LEP</strong></td><td>10 000€</td><td>3,5%</td><td>EXON&Eacute;R&Eacute; (sous cond.)</td><td>0%</td></tr>
+        <tr><td><strong>CSL</strong></td><td>Libre</td><td>Libre</td><td>PFU 31,4%</td><td>18,6%</td></tr>
+        <tr><td><strong>CAT</strong></td><td>Libre</td><td>Libre</td><td>PFU 31,4%</td><td>18,6%</td></tr>
+        <tr><td><strong>CEL</strong></td><td>15 300€</td><td>1%</td><td>PFU 30%</td><td>17,2%</td></tr>
+        <tr><td><strong>PEL (&ge;2018)</strong></td><td>61 200€</td><td>2%</td><td>PFU 30% d&egrave;s an 1</td><td>17,2%</td></tr>
+        <tr><td><strong>AV (&lt;8 ans, &le;150k€)</strong></td><td>Sans plafond</td><td>Variable</td><td>PFU 30%</td><td>17,2%</td></tr>
+        <tr><td><strong>AV (&gt;8 ans, &le;150k€)</strong></td><td>Sans plafond</td><td>Variable</td><td>24,7% + abatt. 4 600€</td><td>17,2%</td></tr>
+        <tr><td><strong>PEA (&gt;5 ans)</strong></td><td>150 000€</td><td>Variable</td><td>IR 0% + PS</td><td>18,6%</td></tr>
+        <tr><td><strong>PER</strong></td><td>Sans plafond</td><td>Variable</td><td>D&eacute;ductible entr&eacute;e / Imposable sortie</td><td>18,6%</td></tr>
+      </table>
     </div>
-    <table class="pm-table">
-      <tr>
-        <th></th>
-        <th class="plus">✚ Avantages</th>
-        <th class="minus">— Inconvénients</th>
-      </tr>
-      <tr>
-        <td>Livrets exonérés</td>
-        <td class="plus-cell">Disponibilité<br>Fiscalité (exonéré)</td>
-        <td class="minus-cell">Plafonds<br>Rendement faible<br>Rendement variable (État)<br>Soumis à conditions<br>Intérêts à la 15aine<br>Succession</td>
-      </tr>
-      <tr>
-        <td>CSL</td>
-        <td class="plus-cell">Disponibilité<br>Pas de plafond</td>
-        <td class="minus-cell">Rendement quasi nul<br>Fiscalité (IR + PS 18,6%)<br>Intérêts à la 15aine<br>Succession</td>
-      </tr>
-      <tr>
-        <td>CAT</td>
-        <td class="plus-cell">Placement court terme</td>
-        <td class="minus-cell">Pas modulable<br>Pénalité en cas de retrait<br>Rendement net faible (attention annuel)<br>Fiscalité<br>Succession</td>
-      </tr>
-      <tr>
-        <td>PEL</td>
-        <td class="plus-cell">Protection enfant<br>Pas tenté d'y toucher</td>
-        <td class="minus-cell">Pas modulable<br>Obligation de versement<br>Fiscalité<br>Succession<br>Durée de versements (10 ans)<br>Durée de vie (15 ans)<br>Prêt<br>Rendement faible<br>Rendement fixe</td>
-      </tr>
-      <tr>
-        <td>CEL</td>
-        <td class="plus-cell">Disponible</td>
-        <td class="minus-cell">Plafond<br>Rendement nul<br>Fiscalité<br>Prêt<br>Succession</td>
-      </tr>
-      <tr>
-        <td>PEA</td>
-        <td class="plus-cell">Fiscalité +5 ans<br>Conditions de retrait exceptionnelles<br>Rendement</td>
-        <td class="minus-cell">Plafond<br>Fiscalité 0-5 ans + pas de retrait<br>Peut tout perdre<br>Limité à l'Europe<br>Risqué<br>Gestion (temps + connaissances)<br>Succession</td>
-      </tr>
-      <tr>
-        <td>Assurance Vie</td>
-        <td class="plus-cell">Disponibilité<br>Pas de plafond<br>Multiples bénéficiaires (choisis)<br>Succession (990I et 757B)<br>Insaisissabilité<br>Rendement<br>Risque maîtrisé<br>Peut faire gérer<br>Liberté des supports</td>
-        <td class="minus-cell">Fiscalité<br>Risque<br>Fonds euros (Loi Sapin 2)<br>Frais d'entrée / Droits d'entrée</td>
-      </tr>
-      <tr>
-        <td>PER</td>
-        <td class="plus-cell">Pas de plafond<br>Protection familiale (conjoint + enfants)<br>Déductibilité<br>Rendements<br>Risque maîtrisé<br>Peut faire gérer<br>Portable<br>Succession (990I et 757B)<br>Rente viagère hors succession<br>Retraite<br>Choix du mode de retrait<br>Dispo avant retraite sous conditions<br>Droits au cantonnement</td>
-        <td class="minus-cell">Fiscalité<br>Fonds euros<br>Déductibilité jusque 70 ans max<br>Droits d'entrée</td>
-      </tr>
-    </table>
+  </div>
+
+  <!-- 1: Flat Tax & AV -->
+  <div id="fiche-1" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; La Flat Tax / PFU</h3>
+      <table class="fiche-table">
+        <tr><th>Taux</th><th>IR</th><th>PS</th><th>Produits concern&eacute;s</th></tr>
+        <tr><td><strong>30%</strong></td><td>12,8%</td><td>17,2%</td><td>AV, CEL, PEL</td></tr>
+        <tr><td><strong>31,4%</strong></td><td>12,8%</td><td>18,6%</td><td>CAT, CSL, PEA, PER</td></tr>
+      </table>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Base imposable AV</h3>
+      <img class="schema" src="./img/IMG_0719.PNG" alt="Sch&eacute;ma base imposable AV">
+      <div class="formula-box">Rachat total  : base = Valeur totale &minus; Versements (= 100% des int&eacute;r&ecirc;ts)
+Rachat partiel : base = (Int&eacute;r&ecirc;ts &divide; Valeur totale) &times; Montant rachat
+&#9888; Proportion tronqu&eacute;e (pas arrondie) &agrave; 2 d&eacute;cimales</div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Fiscalit&eacute; AV selon date de souscription</h3>
+      <img class="schema" src="./img/IMG_0722.PNG" alt="Fiscalit&eacute; AV apr&egrave;s 27/09/2017">
+      <table class="fiche-table">
+        <tr><th>P&eacute;riode</th><th>&lt; 4 ans</th><th>4&ndash;8 ans</th><th>&gt; 8 ans</th></tr>
+        <tr><td><strong>Avant 27/09/2017</strong></td><td>PFL 35% + PS</td><td>PFL 15% + PS</td><td>PFL 7,5% + PS + abatt.</td></tr>
+        <tr><td><strong>Apr&egrave;s 27/09/2017 &le;150k€</strong></td><td colspan="2">PFU 30%</td><td>24,7% (7,5%+PS) + abatt.</td></tr>
+        <tr><td><strong>Apr&egrave;s 27/09/2017 &gt;150k€</strong></td><td colspan="2">PFU 30%</td><td>Fraction &le;150k &rarr; 24,7% / &gt;150k &rarr; 30%</td></tr>
+      </table>
+      <div class="fiche-hl">Abattement 8 ans : <strong>4 600€/an</strong> (c&eacute;libataire) ou <strong>9 200€/an</strong> (couple) &bull; Fonds euros : PS pr&eacute;lev&eacute;s annuellement &bull; UC : PS au rachat uniquement</div>
+    </div>
+  </div>
+
+  <!-- 2: Livrets & CAT -->
+  <div id="fiche-2" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Livrets r&eacute;glement&eacute;s &mdash; totalement exon&eacute;r&eacute;s</h3>
+      <img class="schema" src="./img/IMG_0732.PNG" alt="Tableau livrets exon&eacute;r&eacute;s">
+      <table class="fiche-table">
+        <tr><th>Livret</th><th>Plafond</th><th>Taux 2026</th><th>Conditions</th></tr>
+        <tr><td><strong>Livret A</strong></td><td>22 950€</td><td>2,4%</td><td>Tout public</td></tr>
+        <tr><td><strong>Livret Bleu</strong></td><td>22 950€</td><td>2,4%</td><td>Cr&eacute;dit Mutuel &mdash; idem Livret A</td></tr>
+        <tr><td><strong>LDDS</strong></td><td>12 000€</td><td>2,4%</td><td>R&eacute;sidents fiscaux fran&ccedil;ais</td></tr>
+        <tr><td><strong>Livret Jeune</strong></td><td>1 600€</td><td>&ge; L.A.</td><td>12 &agrave; 25 ans</td></tr>
+        <tr><td><strong>LEP</strong></td><td>10 000€</td><td>3,5%</td><td>Sous conditions de revenus (RFR)</td></tr>
+      </table>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; CSL &mdash; Compte sur Livret (Livret B)</h3>
+      <ul>
+        <li>Taux libre, aucun plafond l&eacute;gal</li>
+        <li>Fiscalit&eacute; : <strong>PFU 31,4%</strong> (12,8% IR + 18,6% PS)</li>
+        <li>Int&eacute;r&ecirc;ts cr&eacute;dit&eacute;s &agrave; la 15e de chaque mois</li>
+        <li>Capital disponible &agrave; tout moment</li>
+      </ul>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; CAT &mdash; Compte &agrave; Terme</h3>
+      <ul>
+        <li>Dur&eacute;e minimum : <strong>1 mois</strong></li>
+        <li>Taux libre n&eacute;goci&eacute; &agrave; l&rsquo;ouverture &mdash; capital bloqu&eacute; jusqu&rsquo;&agrave; l&rsquo;&eacute;ch&eacute;ance</li>
+        <li>Fiscalit&eacute; : <strong>PFU 31,4%</strong> (12,8% IR + 18,6% PS)</li>
+        <li>Exemples de banques : BNP Paribas, Boursorama, CM, CIC</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3: PEL & CEL -->
+  <div id="fiche-3" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; PEL &mdash; Plan d&rsquo;&Eacute;pargne Logement</h3>
+      <ul>
+        <li>Ouverture : <strong>225€</strong> minimum &mdash; Versements : <strong>540€/an</strong> minimum (45€/mois)</li>
+        <li>Plafond des versements : <strong>61 200€</strong> (hors int&eacute;r&ecirc;ts)</li>
+        <li>&#9888; Tout retrait = <strong>CL&Ocirc;TURE du PEL</strong></li>
+        <li>Taux 2026 : &eacute;pargne <strong>2%</strong> / pr&ecirc;t <strong>3,20%</strong></li>
+        <li>Pr&ecirc;t associ&eacute; : jusqu&rsquo;&agrave; <strong>92 000€</strong></li>
+      </ul>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Fiscalit&eacute; PEL &mdash; 3 r&eacute;gimes selon date d&rsquo;ouverture</h3>
+      <img class="schema" src="./img/IMG_0741.jpg" alt="R&eacute;sum&eacute; PEL chronologique">
+      <table class="fiche-table">
+        <tr><th>Date ouverture</th><th>Fiscalit&eacute; IR</th><th>PS 17,2%</th></tr>
+        <tr><td><strong>Avant 2011</strong></td><td>Exon&eacute;r&eacute; 12 ans puis bar&egrave;me IR</td><td>Exon&eacute;r&eacute; 10 ans puis 17,2%</td></tr>
+        <tr><td><strong>2011 &ndash; 2017</strong></td><td>Exon&eacute;r&eacute; 12 ans puis bar&egrave;me IR</td><td>Exon&eacute;r&eacute; 12 ans puis 17,2%</td></tr>
+        <tr><td><strong>Depuis 2018</strong></td><td><strong>PFU 30% d&egrave;s la 1&egrave;re ann&eacute;e</strong></td><td>Inclus dans PFU 30%</td></tr>
+      </table>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; CEL &mdash; Compte &Eacute;pargne Logement</h3>
+      <ul>
+        <li>Capital <strong>disponible</strong> &agrave; tout moment (diff&eacute;rence majeure avec le PEL)</li>
+        <li>Taux : <strong>1%</strong> depuis f&eacute;vrier 2026</li>
+        <li>Plafond : <strong>15 300€</strong></li>
+        <li>Fiscalit&eacute; : <strong>PFU 30%</strong> (12,8% IR + 17,2% PS)</li>
+        <li>Ouvre droit &agrave; pr&ecirc;t immobilier (compl&eacute;ment du PEL)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4: PEA -->
+  <div id="fiche-4" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#128200; Les 3 types de PEA</h3>
+      <table class="fiche-table">
+        <tr><th>Type</th><th>Plafond</th><th>Titres &eacute;ligibles</th></tr>
+        <tr><td><strong>PEA Bancaire</strong></td><td>150 000€</td><td>Actions europ&eacute;ennes, OPCVM &ge;75% UE</td></tr>
+        <tr><td><strong>PEA Assurance</strong></td><td>150 000€</td><td>Idem + sortie rente viag&egrave;re d&eacute;fiscalis&eacute;e</td></tr>
+        <tr><td><strong>PEA-PME</strong></td><td>225 000€</td><td>Actions/obligations PME-ETI europ&eacute;ennes</td></tr>
+      </table>
+      <div class="fiche-hl">1 seul PEA classique par personne (bancaire OU assurance) + 1 PEA-PME possible</div>
+    </div>
+    <div class="fiche-block">
+      <h3>&#128200; Fiscalit&eacute; PEA</h3>
+      <table class="fiche-table">
+        <tr><th>Dur&eacute;e</th><th>IR</th><th>PS</th><th>Retrait</th></tr>
+        <tr><td><strong>Avant 5 ans</strong></td><td>12,8% (PFU)</td><td>18,6%</td><td>Cl&ocirc;ture (sauf exception Loi PACTE)</td></tr>
+        <tr><td><strong>Apr&egrave;s 5 ans</strong></td><td><strong>0% exon&eacute;r&eacute;</strong></td><td>18,6%</td><td>Partiel possible sans cl&ocirc;ture (Loi PACTE)</td></tr>
+      </table>
+      <div class="fiche-ok">Loi PACTE 2019 : retraits partiels possibles apr&egrave;s 5 ans sans cl&ocirc;ture (seuil abaiss&eacute; de 8 &agrave; 5 ans)</div>
+    </div>
+  </div>
+
+  <!-- pm: Récap +/- -->
+  <div id="fiche-pm" class="fiche-section">
+    <div class="fiche-block">
+      <h3>&#9878; R&eacute;cap +/&minus; des produits &mdash; R&eacute;f&eacute;rence terrain</h3>
+      <div class="fiche-note">&#9432; Tableau pour le <strong>terrain</strong> (entretiens clients), pas &agrave; retenir pour le test ORIAS.</div>
+      <table class="pm-table">
+        <tr>
+          <th></th>
+          <th class="plus-h">&#10010; Avantages</th>
+          <th class="minus-h">&mdash; Inconv&eacute;nients</th>
+        </tr>
+        <tr>
+          <td>Livrets exon&eacute;r&eacute;s</td>
+          <td class="plus-td">Disponibilit&eacute;<br>Fiscalit&eacute; (exon&eacute;r&eacute;)</td>
+          <td class="minus-td">Plafonds<br>Rendement faible<br>Rendement variable (&Eacute;tat)<br>Soumis &agrave; conditions<br>Int&eacute;r&ecirc;ts &agrave; la 15aine<br>Succession</td>
+        </tr>
+        <tr>
+          <td>CSL</td>
+          <td class="plus-td">Disponibilit&eacute;<br>Pas de plafond</td>
+          <td class="minus-td">Rendement quasi nul<br>Fiscalit&eacute; (IR + PS 18,6%)<br>Int&eacute;r&ecirc;ts &agrave; la 15aine<br>Succession</td>
+        </tr>
+        <tr>
+          <td>CAT</td>
+          <td class="plus-td">Placement court terme</td>
+          <td class="minus-td">Pas modulable<br>P&eacute;nalit&eacute; en cas de retrait<br>Rendement net faible (attention annuel)<br>Fiscalit&eacute;<br>Succession</td>
+        </tr>
+        <tr>
+          <td>PEL</td>
+          <td class="plus-td">Protection enfant<br>Pas tent&eacute; d&rsquo;y toucher</td>
+          <td class="minus-td">Pas modulable<br>Obligation de versement<br>Fiscalit&eacute;<br>Succession<br>Dur&eacute;e de versements (10 ans)<br>Dur&eacute;e de vie (15 ans)<br>Pr&ecirc;t<br>Rendement faible<br>Rendement fixe</td>
+        </tr>
+        <tr>
+          <td>CEL</td>
+          <td class="plus-td">Disponible</td>
+          <td class="minus-td">Plafond<br>Rendement nul<br>Fiscalit&eacute;<br>Pr&ecirc;t<br>Succession</td>
+        </tr>
+        <tr>
+          <td>PEA</td>
+          <td class="plus-td">Fiscalit&eacute; +5 ans<br>Conditions de retrait exceptionnelles<br>Rendement</td>
+          <td class="minus-td">Plafond<br>Fiscalit&eacute; 0-5 ans + pas de retrait<br>Peut tout perdre<br>Limit&eacute; &agrave; l&rsquo;Europe<br>Risqu&eacute;<br>Gestion (temps + connaissances)<br>Succession</td>
+        </tr>
+        <tr>
+          <td>Assurance Vie</td>
+          <td class="plus-td">Disponibilit&eacute;<br>Pas de plafond<br>Multiples b&eacute;n&eacute;ficiaires (choisis)<br>Succession (990I et 757B)<br>Insaisissabilit&eacute;<br>Rendement<br>Risque ma&icirc;tris&eacute;<br>Peut faire g&eacute;rer<br>Libert&eacute; des supports</td>
+          <td class="minus-td">Fiscalit&eacute;<br>Risque<br>Fonds euros (Loi Sapin 2)<br>Frais d&rsquo;entr&eacute;e / Droits d&rsquo;entr&eacute;e</td>
+        </tr>
+        <tr>
+          <td>PER</td>
+          <td class="plus-td">Pas de plafond<br>Protection familiale (conjoint + enfants)<br>D&eacute;ductibilit&eacute;<br>Rendements<br>Risque ma&icirc;tris&eacute;<br>Peut faire g&eacute;rer<br>Portable<br>Succession (990I et 757B)<br>Rente viag&egrave;re hors succession<br>Retraite<br>Choix du mode de retrait<br>Dispo avant retraite sous conditions<br>Droits au cantonnement</td>
+          <td class="minus-td">Fiscalit&eacute;<br>Fonds euros<br>D&eacute;ductibilit&eacute; jusque 70 ans max<br>Droits d&rsquo;entr&eacute;e</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
 
-<!-- ══ TAB 5 : EXERCICES ══ -->
-<div id="tab-exo" class="tab-content">
+<!-- EXERCICES -->
+<div id="tab-exercices" class="tab-pane">
 
-  <div class="exo-block">
-    <h3>Exercice 1 (cours) — AV avant 27/09/2017, rachat avant 4 ans</h3>
-    <p>Contrat AV souscrit le <b>10/01/2017</b>. Versement unique : <b>350 000€</b>. Valeur actuelle : <b>420 000€</b>. Rachat partiel : <b>50 000€</b> effectué avant 4 ans.</p>
-    <p><i>Calculez la base imposable et l'imposition totale.</i></p>
-    <button class="show-ans-btn" onclick="toggleAns(this)">Voir la correction</button>
-    <div class="ans-block">
-      <h4>Correction</h4>
-      <div class="formula-box">Intérêts = 420 000 − 350 000 = 70 000€
+  <div class="exo">
+    <div class="exo-title">Exercice 1 <span class="exo-tag">cours</span> &mdash; AV avant 27/09/2017, rachat avant 4 ans</div>
+    <div class="exo-enonce">Contrat AV souscrit le <strong>10/01/2017</strong>. Versement unique : <strong>350 000€</strong>. Valeur actuelle : <strong>420 000€</strong>. Rachat partiel : <strong>50 000€</strong> effectu&eacute; avant 4 ans.</div>
+    <div class="exo-questions">Calculez la base imposable et l&rsquo;imposition totale.</div>
+    <button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
+    <div class="exo-solution">
+      <div class="exo-formula">Int&eacute;r&ecirc;ts = 420 000 &minus; 350 000 = 70 000€
 Proportion = TRUNC(70 000 / 420 000 ; 2) = 0,16
-Base imposable = 0,16 × 50 000 = 8 000€</div>
-      <ul>
-        <li>Contrat AVANT 27/09/2017, durée &lt; 4 ans → PFL <b>35%</b> + PS 17,2%</li>
-        <li>PS = 8 000 × 17,2% = <b>1 376€</b></li>
-        <li>PFL 35% = 8 000 × 35% = <b>2 800€</b></li>
-        <li>→ <b>TOTAL = 4 176€</b></li>
-      </ul>
+Base imposable = 0,16 &times; 50 000 = 8 000€</div>
+      <div class="exo-step">Contrat <strong>AVANT 27/09/2017</strong>, dur&eacute;e &lt; 4 ans &rarr; PFL <strong>35%</strong> + PS 17,2%</div>
+      <div class="exo-step">PS = 8 000 &times; 17,2% = <strong>1 376€</strong></div>
+      <div class="exo-step">PFL 35% = 8 000 &times; 35% = <strong>2 800€</strong></div>
+      <div class="exo-step"><strong>&rarr; TOTAL = 4 176€</strong></div>
     </div>
   </div>
 
-  <div class="exo-block">
-    <h3>Exercice 2 (cours) — AV après 27/09/2017, rachat avant 8 ans</h3>
-    <p>Contrat AV souscrit le <b>10/01/2018</b>. Versement unique : <b>200 000€</b>. Valeur actuelle : <b>218 000€</b>. Rachat partiel : <b>18 000€</b> effectué avant 8 ans.</p>
-    <p><i>Calculez la base imposable et l'imposition totale.</i></p>
-    <button class="show-ans-btn" onclick="toggleAns(this)">Voir la correction</button>
-    <div class="ans-block">
-      <h4>Correction</h4>
-      <div class="formula-box">Intérêts = 218 000 − 200 000 = 18 000€
+  <div class="exo">
+    <div class="exo-title">Exercice 2 <span class="exo-tag">cours</span> &mdash; AV apr&egrave;s 27/09/2017, rachat avant 8 ans</div>
+    <div class="exo-enonce">Contrat AV souscrit le <strong>10/01/2018</strong>. Versement unique : <strong>200 000€</strong>. Valeur actuelle : <strong>218 000€</strong>. Rachat partiel : <strong>18 000€</strong> effectu&eacute; avant 8 ans.</div>
+    <div class="exo-questions">Calculez la base imposable et l&rsquo;imposition totale.</div>
+    <button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
+    <div class="exo-solution">
+      <div class="exo-formula">Int&eacute;r&ecirc;ts = 218 000 &minus; 200 000 = 18 000€
 Proportion = TRUNC(18 000 / 218 000 ; 2) = 0,08
-Base imposable = 0,08 × 18 000 = 1 440€</div>
-      <ul>
-        <li>Contrat APRÈS 27/09/2017, primes ≤ 150k€, durée &lt; 8 ans → <b>PFU 30%</b></li>
-        <li>PFU 30% = 1 440 × 30% = <b>432€</b> (dont 12,8% IR + 17,2% PS)</li>
-        <li>→ <b>TOTAL = 432€</b></li>
-      </ul>
+Base imposable = 0,08 &times; 18 000 = 1 440€</div>
+      <div class="exo-step">Contrat <strong>APR&Egrave;S 27/09/2017</strong>, primes &le; 150k€, dur&eacute;e &lt; 8 ans &rarr; <strong>PFU 30%</strong></div>
+      <div class="exo-step">PFU 30% = 1 440 &times; 30% = <strong>432€</strong> (dont 12,8% IR + 17,2% PS)</div>
+      <div class="exo-step"><strong>&rarr; TOTAL = 432€</strong></div>
     </div>
   </div>
 
-  <div class="exo-block">
-    <h3>Exercice 3 (cours) — AV avant 27/09/2017, rachat après 8 ans, abattement</h3>
-    <p>Célibataire. Contrat AV souscrit le <b>10/01/2008</b>. Versement unique : <b>450 000€</b>. Valeur actuelle : <b>550 000€</b>. Rachat partiel : <b>25 000€</b> effectué après 8 ans.</p>
-    <p><i>Calculez la base imposable et l'imposition totale.</i></p>
-    <button class="show-ans-btn" onclick="toggleAns(this)">Voir la correction</button>
-    <div class="ans-block">
-      <h4>Correction</h4>
-      <div class="formula-box">Intérêts = 550 000 − 450 000 = 100 000€
+  <div class="exo">
+    <div class="exo-title">Exercice 3 <span class="exo-tag">cours</span> &mdash; AV avant 27/09/2017, rachat apr&egrave;s 8 ans, abattement</div>
+    <div class="exo-enonce">C&eacute;libataire. Contrat AV souscrit le <strong>10/01/2008</strong>. Versement unique : <strong>450 000€</strong>. Valeur actuelle : <strong>550 000€</strong>. Rachat partiel : <strong>25 000€</strong> effectu&eacute; apr&egrave;s 8 ans.</div>
+    <div class="exo-questions">Calculez la base imposable et l&rsquo;imposition totale.</div>
+    <button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
+    <div class="exo-solution">
+      <div class="exo-formula">Int&eacute;r&ecirc;ts = 550 000 &minus; 450 000 = 100 000€
 Proportion = TRUNC(100 000 / 550 000 ; 2) = 0,18
-Base brute = 0,18 × 25 000 = 4 500€</div>
-      <ul>
-        <li>Contrat AVANT 27/09/2017, durée &gt; 8 ans → PFL 7,5% + PS 17,2%</li>
-        <li>Célibataire → abattement <b>4 600€</b></li>
-        <li>Base brute = 4 500€ &lt; abattement 4 600€ → <b>IR = 0€</b></li>
-        <li>PS = 4 500 × 17,2% = <b>774€</b></li>
-        <li>→ <b>TOTAL = 774€</b> (PS uniquement, IR annulé par l'abattement)</li>
-      </ul>
+Base brute = 0,18 &times; 25 000 = 4 500€</div>
+      <div class="exo-step">Contrat <strong>AVANT 27/09/2017</strong>, dur&eacute;e &gt; 8 ans &rarr; PFL 7,5% + PS 17,2%</div>
+      <div class="exo-step">C&eacute;libataire &rarr; abattement <strong>4 600€</strong> | Base brute = 4 500€ &lt; 4 600€ &rarr; <strong>IR = 0€</strong></div>
+      <div class="exo-step">PS = 4 500 &times; 17,2% = <strong>774€</strong></div>
+      <div class="exo-step"><strong>&rarr; TOTAL = 774€</strong> (PS uniquement, IR annul&eacute; par l&rsquo;abattement)</div>
     </div>
   </div>
 
-  <div class="exo-block">
-    <h3>Exercice 4 — AV après 27/09/2017, rachat avant 8 ans (à vous)</h3>
-    <p>Contrat AV souscrit le <b>15/03/2019</b>. Versement unique : <b>100 000€</b>. Valeur actuelle : <b>125 000€</b>. Rachat partiel : <b>20 000€</b> effectué après 6 ans.</p>
-    <p><i>Calculez la base imposable et l'imposition.</i></p>
-    <button class="show-ans-btn" onclick="toggleAns(this)">Voir la correction</button>
-    <div class="ans-block">
-      <h4>Correction</h4>
-      <div class="formula-box">Intérêts = 125 000 − 100 000 = 25 000€
+  <div class="exo">
+    <div class="exo-title">Exercice 4 <span class="exo-tag">&agrave; vous</span> &mdash; AV apr&egrave;s 27/09/2017, rachat avant 8 ans</div>
+    <div class="exo-enonce">Contrat AV souscrit le <strong>15/03/2019</strong>. Versement unique : <strong>100 000€</strong>. Valeur actuelle : <strong>125 000€</strong>. Rachat partiel : <strong>20 000€</strong> apr&egrave;s 6 ans.</div>
+    <div class="exo-questions">Calculez la base imposable et l&rsquo;imposition.</div>
+    <button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
+    <div class="exo-solution">
+      <div class="exo-formula">Int&eacute;r&ecirc;ts = 125 000 &minus; 100 000 = 25 000€
 Proportion = TRUNC(25 000 / 125 000 ; 2) = 0,20
-Base imposable = 0,20 × 20 000 = 4 000€</div>
-      <ul>
-        <li>Contrat APRÈS 27/09/2017, primes ≤ 150k€, 6 ans &lt; 8 ans → <b>PFU 30%</b></li>
-        <li>PFU 30% = 4 000 × 30% = <b>1 200€</b></li>
-        <li>→ <b>TOTAL = 1 200€</b></li>
-      </ul>
+Base imposable = 0,20 &times; 20 000 = 4 000€</div>
+      <div class="exo-step">Contrat <strong>APR&Egrave;S 27/09/2017</strong>, primes &le; 150k€, 6 ans &lt; 8 ans &rarr; <strong>PFU 30%</strong></div>
+      <div class="exo-step"><strong>&rarr; TOTAL = 4 000 &times; 30% = 1 200€</strong></div>
     </div>
   </div>
 
-  <div class="exo-block">
-    <h3>Exercice 5 — PEL depuis 2018, calcul imposition 1ère année</h3>
-    <p>PEL ouvert le <b>01/03/2020</b> (depuis 2018). Versements cumulés : <b>10 000€</b>. Intérêts générés en année 1 : <b>200€</b>.</p>
-    <p><i>Calculez l'imposition de ces intérêts.</i></p>
-    <button class="show-ans-btn" onclick="toggleAns(this)">Voir la correction</button>
-    <div class="ans-block">
-      <h4>Correction</h4>
-      <ul>
-        <li>PEL ouvert <b>depuis 2018</b> → PFU 30% <b>dès la 1ère année</b> (pas d'exonération)</li>
-        <li>IR = 200 × 12,8% = <b>25,60€</b></li>
-        <li>PS = 200 × 17,2% = <b>34,40€</b></li>
-        <li>→ <b>TOTAL = 60€</b> (200 × 30%)</li>
-      </ul>
-      <p>⚠️ Si le PEL avait été ouvert en 2015 (entre 2011 et 2017), ces intérêts auraient été totalement exonérés pendant les 12 premières années.</p>
+  <div class="exo">
+    <div class="exo-title">Exercice 5 <span class="exo-tag">&agrave; vous</span> &mdash; PEL depuis 2018, imposition 1&egrave;re ann&eacute;e</div>
+    <div class="exo-enonce">PEL ouvert le <strong>01/03/2020</strong> (depuis 2018). Versements cumul&eacute;s : <strong>10 000€</strong>. Int&eacute;r&ecirc;ts de l&rsquo;ann&eacute;e 1 : <strong>200€</strong>.</div>
+    <div class="exo-questions">Calculez l&rsquo;imposition de ces int&eacute;r&ecirc;ts.</div>
+    <button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
+    <div class="exo-solution">
+      <div class="exo-step">PEL ouvert <strong>depuis 2018</strong> &rarr; PFU 30% <strong>d&egrave;s la 1&egrave;re ann&eacute;e</strong> (pas d&rsquo;exon&eacute;ration)</div>
+      <div class="exo-step">IR = 200 &times; 12,8% = <strong>25,60€</strong> | PS = 200 &times; 17,2% = <strong>34,40€</strong></div>
+      <div class="exo-step"><strong>&rarr; TOTAL = 60€</strong> (200 &times; 30%)</div>
+      <div class="exo-step">&#9888; Si PEL ouvert en 2015 (2011&ndash;2017), ces int&eacute;r&ecirc;ts auraient &eacute;t&eacute; exon&eacute;r&eacute;s pendant 12 ans.</div>
     </div>
   </div>
 
 </div>
 
-<!-- ══ TAB 6 : CAS PRATIQUES ══ -->
-<div id="tab-cas" class="tab-content">
+<!-- CAS PRATIQUES -->
+<div id="tab-cas" class="tab-pane">
 
-  <div class="cas-block">
-    <h3>Cas 1 — Martine, 42 ans, 30 000€ à placer 3 ans</h3>
-    <div class="context">Martine, célibataire, TMI 30%. Elle dispose de 30 000€ d'économies qu'elle n'a pas besoin avant 3 ans (projet immobilier). Elle veut sécuriser son capital avec un bon rendement garanti. Elle a déjà un Livret A et un LDDS au plafond.</div>
-    <button class="show-ans-btn" onclick="toggleSol(this)">Voir la proposition CGP</button>
-    <div class="sol-block">
-      <h4>Analyse & proposition</h4>
+  <div class="cas">
+    <div class="cas-title">Cas 1 &mdash; Martine, 42 ans, 30 000€ &agrave; placer 3 ans</div>
+    <div class="cas-enonce">C&eacute;libataire, TMI 30%. Elle dispose de 30 000€ d&rsquo;&eacute;conomies non n&eacute;cessaires avant 3 ans (projet immobilier). Elle veut s&eacute;curiser son capital avec un bon rendement garanti. Livret A et LDDS d&eacute;j&agrave; au plafond.</div>
+    <div class="cas-piege">&#9888; Pi&egrave;ges : PEL bloqu&eacute; avec obligation de versement, AV r&eacute;cente tax&eacute;e &agrave; 30%.</div>
+    <button class="cas-btn" onclick="toggleSol(this)">Voir la proposition CGP</button>
+    <div class="cas-solution">
+      <strong>Analyse &amp; proposition :</strong>
       <ul>
-        <li><b>PEL</b> : taux 2%, mais versements obligatoires (540€/an) + capital bloqué. Sur 3 ans, clôture = perte avantages. Peu adapté si doute sur les besoins.</li>
-        <li><b>CAT 3 ans</b> : taux libre négocié (peut dépasser 2%). Capital bloqué mais c'est voulu. PFU 31,4% sur les intérêts. → Bonne option si taux attractif trouvé en banque.</li>
-        <li><b>AV fonds euros</b> : disponible, rendement ~2,5-3% en 2026, PFU 30% après 8 ans (mais contrat récent → PFU 30% avant 8 ans). Plus flexible que le CAT.</li>
-        <li><b>Recommandation</b> : CAT pour sécurité et rendement garanti sur 3 ans, ou AV si Martine souhaite garder une option de liquidité. Comparer les taux CAT du marché.</li>
+        <li><strong>CAT 3 ans</strong> : taux libre n&eacute;goci&eacute; (peut d&eacute;passer 2%). Capital bloqu&eacute; mais c&rsquo;est voulu. PFU 31,4%. Bonne option si taux attractif trouv&eacute;.</li>
+        <li><strong>AV fonds euros</strong> : disponible, rendement ~2,5-3%, PFU 30% avant 8 ans. Plus flexible que le CAT.</li>
+        <li><strong>PEL</strong> : peu adapt&eacute; (obligation 540€/an, capital bloqu&eacute;, doute sur besoin futur).</li>
+        <li>Recommandation : <strong>CAT</strong> pour s&eacute;curit&eacute; et rendement garanti, ou AV si Martine veut garder une option liquidit&eacute;. Comparer les taux CAT du march&eacute;.</li>
       </ul>
     </div>
   </div>
 
-  <div class="cas-block">
-    <h3>Cas 2 — Julien & Sophie, couple 35 ans, 200 000€ à optimiser</h3>
-    <div class="context">Couple marié, 2 enfants, TMI 30%. Ils ont 200 000€ d'épargne et un horizon de 20 ans. Objectif double : préparer la retraite ET garder des liquidités pour projets immobiliers/scolaires des enfants. Ils souhaitent optimiser leur fiscalité.</div>
-    <button class="show-ans-btn" onclick="toggleSol(this)">Voir la proposition CGP</button>
-    <div class="sol-block">
-      <h4>Analyse & proposition multi-produits</h4>
+  <div class="cas">
+    <div class="cas-title">Cas 2 &mdash; Julien &amp; Sophie, couple 35 ans, 200 000€ &agrave; optimiser</div>
+    <div class="cas-enonce">Couple mari&eacute;, 2 enfants, TMI 30%. 200 000€ d&rsquo;&eacute;pargne, horizon 20 ans. Objectif double : pr&eacute;parer la retraite ET garder des liquidit&eacute;s pour projets immobiliers/scolaires.</div>
+    <div class="cas-piege">&#9888; Pi&egrave;ge : ne pas tout mettre dans un seul produit. Combiner disponibilit&eacute;, performance et optimisation fiscale.</div>
+    <button class="cas-btn" onclick="toggleSol(this)">Voir la proposition CGP</button>
+    <div class="cas-solution">
+      <strong>Analyse &amp; proposition multi-produits :</strong>
       <ul>
-        <li><b>AV (90 000€)</b> : flexibilité maximale, abattement couple 9 200€/an après 8 ans, transmission optimisée (990I/757B). Fonds euros + UC selon profil de risque.</li>
-        <li><b>PEA (150 000€ max en 2 PEA)</b> : sur 20 ans, exonération IR après 5 ans. Potentiel de rendement supérieur (actions). Idéal pour la part "croissance long terme".</li>
-        <li><b>PER (40 000€)</b> : déductibles à l'entrée (TMI 30% → économie fiscale immédiate de 12 000€). Blocage retraite sauf exceptions. Complémentaire de l'AV.</li>
-        <li><b>Livrets réglementés</b> : garder Livret A et LDDS plafonnés pour l'épargne de précaution liquide (0% fiscalité).</li>
-        <li><b>Répartition suggérée</b> : 20% liquidités (livrets) / 30% AV (sécurité+flexibilité) / 35% PEA (performance) / 15% PER (retraite+déduction).</li>
+        <li><strong>AV (90 000€)</strong> : flexibilit&eacute;, abattement couple 9 200€/an apr&egrave;s 8 ans, transmission optimis&eacute;e (990I/757B).</li>
+        <li><strong>PEA (150 000€ max)</strong> : sur 20 ans, exon&eacute;ration IR apr&egrave;s 5 ans. Potentiel de rendement sup&eacute;rieur. Id&eacute;al pour la part &ldquo;croissance long terme&rdquo;.</li>
+        <li><strong>PER (40 000€)</strong> : d&eacute;ductibles &agrave; l&rsquo;entr&eacute;e (TMI 30% &rarr; &eacute;conomie fiscale 12 000€). Compl&eacute;mentaire de l&rsquo;AV.</li>
+        <li>R&eacute;partition : 20% liquidit&eacute;s (livrets) / 30% AV / 35% PEA / 15% PER.</li>
       </ul>
     </div>
   </div>
 
-  <div class="cas-block">
-    <h3>Cas 3 — Pierre, 50 ans, PEL ouvert en 2015</h3>
-    <div class="context">Pierre a ouvert un PEL en janvier 2015, avec 45 000€ versés. Taux du PEL = 1,5%. Les intérêts ont été exonérés jusqu'à présent. En janvier 2027 (an 12), ils deviendront imposables. Il vous demande s'il doit clôturer avant.</div>
-    <button class="show-ans-btn" onclick="toggleSol(this)">Voir la proposition CGP</button>
-    <div class="sol-block">
-      <h4>Analyse</h4>
+  <div class="cas">
+    <div class="cas-title">Cas 3 &mdash; Pierre, 50 ans, PEL ouvert en 2015</div>
+    <div class="cas-enonce">Pierre a ouvert un PEL en janvier 2015, versements cumul&eacute;s 45 000€, taux PEL = 1,5%. En janvier 2027 (an 12), les int&eacute;r&ecirc;ts deviendront imposables. Il demande s&rsquo;il doit cl&ocirc;turer avant.</div>
+    <div class="cas-piege">&#9888; PEL 2011&ndash;2017 : exon&eacute;r&eacute; IR+PS pendant 12 ans, puis IR bar&egrave;me + PS 17,2%.</div>
+    <button class="cas-btn" onclick="toggleSol(this)">Voir la proposition CGP</button>
+    <div class="cas-solution">
+      <strong>Analyse :</strong>
       <ul>
-        <li>PEL 2015 → régime 2011-2017 : <b>exonéré IR+PS pendant 12 ans</b>. À partir de l'an 12 : IR barème + PS 17,2%.</li>
-        <li>Taux PEL 1,5% → après imposition (TMI 30% + 17,2% PS = 47,2%) → rendement net ≈ <b>0,79%</b></li>
-        <li>Comparaison marché en 2027 : Livret A à 2,4% (net) >> PEL net 0,79%</li>
-        <li>→ <b>Recommandation</b> : clôturer avant l'an 12 si les taux de marché sont supérieurs (cas probable en 2027). Réinvestir sur AV ou CAT.</li>
-        <li>⚠️ Si Pierre a besoin du droit à prêt PEL à 3,20%, conserver peut être intéressant si projet immobilier proche.</li>
-        <li>⚠️ Clôturer AVANT le 12e anniversaire pour rester dans la période exonérée sur les intérêts déjà courus.</li>
+        <li>Taux PEL 1,5% &rarr; apr&egrave;s imposition (TMI 30% + 17,2% PS) &rarr; rendement net &asymp; <strong>0,79%</strong></li>
+        <li>Livret A 2,4% net &gt;&gt; PEL net 0,79% en 2027</li>
+        <li>Recommandation : <strong>cl&ocirc;turer avant l&rsquo;an 12</strong> si taux march&eacute; sup&eacute;rieurs. R&eacute;investir sur AV ou CAT.</li>
+        <li>&#9888; Si Pierre a besoin du droit &agrave; pr&ecirc;t PEL &agrave; 3,20%, conserver peut &ecirc;tre int&eacute;ressant si projet immobilier proche.</li>
       </ul>
     </div>
   </div>
@@ -638,71 +601,58 @@ Base imposable = 0,20 × 20 000 = 4 000€</div>
 </div>
 
 <script>
-var CARDS = [{"id": 1, "ch": "Flat Tax & Assurance-Vie", "q": "Qu'est-ce que la Flat Tax / PFU et quels sont ses taux ?", "a": "Prélèvement Forfaitaire Unique.<br><b>30%</b> = 12,8% IR + 17,2% PS → AV, CEL, PEL<br><b>31,4%</b> = 12,8% IR + 18,6% PS → CAT, CSL, PEA, PER<br>Option barème IR toujours possible."}, {"id": 2, "ch": "Flat Tax & Assurance-Vie", "q": "Quels produits ont un PS de 17,2% (Flat Tax 30%) ?", "a": "<b>AV</b> (Assurance-Vie), <b>CEL</b>, <b>PEL</b><br>→ Flat Tax = 12,8% IR + 17,2% PS = <b>30%</b>"}, {"id": 3, "ch": "Flat Tax & Assurance-Vie", "q": "Quels produits ont un PS de 18,6% (Flat Tax 31,4%) ?", "a": "<b>CAT, CSL, PEA, PER</b><br>→ Flat Tax = 12,8% IR + 18,6% PS = <b>31,4%</b>"}, {"id": 4, "ch": "Flat Tax & Assurance-Vie", "q": "Base imposable d'un rachat TOTAL sur AV ?", "a": "<b>Valeur totale − Total versements</b><br>= intégralité des intérêts générés."}, {"id": 5, "ch": "Flat Tax & Assurance-Vie", "q": "Formule base imposable rachat PARTIEL sur AV ?", "a": "<b>(Intérêts / Valeur totale AV) × Montant du rachat</b><br>Intérêts = Valeur AV − Total versements<br>⚠️ La proportion est tronquée (pas arrondie) à 2 décimales."}, {"id": 6, "ch": "Flat Tax & Assurance-Vie", "q": "AV avant 27/09/2017 — fiscalité des intérêts selon durée ?", "a": "< 4 ans : PFL <b>35%</b> + PS 17,2%<br>4–8 ans : PFL <b>15%</b> + PS 17,2%<br>> 8 ans : PFL <b>7,5%</b> + PS 17,2% + abattement 4 600/9 200€"}, {"id": 7, "ch": "Flat Tax & Assurance-Vie", "q": "AV après 27/09/2017, primes ≤150 000€ — fiscalité ?", "a": "< 8 ans : <b>PFU 30%</b> (12,8% IR + 17,2% PS)<br>> 8 ans : <b>24,7%</b> (7,5% IR + 17,2% PS)<br>+ abattement 4 600€ (célibataire) / 9 200€ (couple)"}, {"id": 8, "ch": "Flat Tax & Assurance-Vie", "q": "AV après 27/09/2017, primes >150 000€ — fiscalité après 8 ans ?", "a": "Fraction ≤ 150k€ : 7,5% IR + 17,2% PS = <b>24,7%</b><br>Fraction > 150k€ : 12,8% IR + 17,2% PS = <b>30%</b><br>⚠️ L'abattement 4 600/9 200€ s'applique en premier."}, {"id": 9, "ch": "Flat Tax & Assurance-Vie", "q": "Quand les PS sur fonds euros AV sont-ils prélevés ?", "a": "<b>Annuellement</b> sur les intérêts des fonds euros (chaque année).<br>Pour les UC : uniquement <b>au rachat</b>."}, {"id": 10, "ch": "Flat Tax & Assurance-Vie", "q": "Abattement annuel sur intérêts AV après 8 ans ?", "a": "<b>4 600€/an</b> → célibataire<br><b>9 200€/an</b> → couple marié ou pacsé"}, {"id": 11, "ch": "Livrets & CAT", "q": "Livret A — plafond et taux 2026 ?", "a": "Plafond : <b>22 950€</b> — Taux : <b>2,4%</b><br>Totalement <b>exonéré</b> d'IR et de PS."}, {"id": 12, "ch": "Livrets & CAT", "q": "LDDS — plafond et conditions ?", "a": "Plafond : <b>12 000€</b> — Taux = Livret A (2,4%)<br>Réservé aux résidents fiscaux français. Exonéré IR+PS."}, {"id": 13, "ch": "Livrets & CAT", "q": "Livret Jeune — âge, taux, plafond, fiscalité ?", "a": "Âge : <b>12 à 25 ans</b> — Taux libre ≥ Livret A<br>Plafond : <b>1 600€</b> — Totalement exonéré IR+PS."}, {"id": 14, "ch": "Livrets & CAT", "q": "LEP — taux 2026, plafond, condition d'accès ?", "a": "Taux : <b>3,5%</b> — Plafond : <b>10 000€</b><br>Sous condition de revenus (RFR). Exonéré IR+PS."}, {"id": 15, "ch": "Livrets & CAT", "q": "Livret Bleu — quelle banque et fonctionnement ?", "a": "Produit du <b>Crédit Mutuel</b>.<br>Fonctionnement identique au Livret A (même taux, plafond, exonération)."}, {"id": 16, "ch": "Livrets & CAT", "q": "CSL (Compte sur Livret / Livret B) — fiscalité ?", "a": "Taux libre. Pas de plafond légal.<br>→ <b>PFU 31,4%</b> (12,8% IR + 18,6% PS)"}, {"id": 17, "ch": "Livrets & CAT", "q": "CAT (Compte à Terme) — caractéristiques clés ?", "a": "Durée min. : <b>1 mois</b> — Taux libre, négocié à l'ouverture<br>Capital bloqué jusqu'à l'échéance<br>→ <b>PFU 31,4%</b> | Ex : BNP, Boursorama, CM, CIC"}, {"id": 18, "ch": "Livrets & CAT", "q": "Tableau récap PS : AV/CEL/PEL vs CAT/CSL/PEA/PER ?", "a": "AV, CEL, PEL → PS <b>17,2%</b> → FT <b>30%</b><br>CAT, CSL, PEA, PER → PS <b>18,6%</b> → FT <b>31,4%</b>"}, {"id": 19, "ch": "Livrets & CAT", "q": "Quels livrets sont totalement exonérés d'IR et PS ?", "a": "<b>Livret A</b> (et Bleu), <b>LDDS</b>, <b>Livret Jeune</b>, <b>LEP</b><br>⚠️ CEL et PEL : non exonérés (PFU 30%)"}, {"id": 20, "ch": "Livrets & CAT", "q": "CAT ou CSL : avantage fiscal à l'entrée ?", "a": "<b>Non</b> — Aucune déductibilité des versements.<br>Avantage uniquement sur la rémunération (taux libre/négociable)."}, {"id": 21, "ch": "PEL & CEL", "q": "PEL — versements minimum et plafond ?", "a": "Ouverture : min. <b>225€</b><br>Versements : min. <b>540€/an</b> (45€/mois)<br>Plafond : <b>61 200€</b> (hors intérêts)"}, {"id": 22, "ch": "PEL & CEL", "q": "Que se passe-t-il si on retire de l'argent d'un PEL ?", "a": "Tout retrait entraîne la <b>CLÔTURE</b> du PEL.<br>⚠️ Capital indisponible = épargne bloquée."}, {"id": 23, "ch": "PEL & CEL", "q": "Quel avantage complémentaire offre le PEL ?", "a": "Droit à un <b>prêt immobilier jusqu'à 92 000€</b><br>à taux lié au PEL (acquisition résidence principale)."}, {"id": 24, "ch": "PEL & CEL", "q": "Taux PEL en 2026 ?", "a": "Taux d'épargne : <b>2%</b><br>Taux de prêt : <b>3,20%</b>"}, {"id": 25, "ch": "PEL & CEL", "q": "Fiscalité PEL ouvert AVANT 2011 ?", "a": "IR : exonéré <b>12 ans</b> → puis barème IR<br>PS : exonéré <b>10 ans</b> → puis 17,2%<br>(2 seuils différents !)"}, {"id": 26, "ch": "PEL & CEL", "q": "Fiscalité PEL ouvert entre 2011 et 2017 ?", "a": "Exonéré IR ET PS pendant les <b>12 premières années</b>.<br>→ À partir de l'an 12 : IR barème + PS 17,2%"}, {"id": 27, "ch": "PEL & CEL", "q": "Fiscalité PEL ouvert DEPUIS 2018 ?", "a": "<b>PFU 30%</b> (12,8% IR + 17,2% PS)<br><b>DÈS LA 1ÈRE ANNÉE</b> — plus aucune exonération."}, {"id": 28, "ch": "PEL & CEL", "q": "CEL — disponibilité, taux 2026 et plafond ?", "a": "Capital <b>DISPONIBLE</b> à tout moment<br>Taux : <b>1%</b> depuis fév. 2026 — Plafond : <b>15 300€</b>"}, {"id": 29, "ch": "PEL & CEL", "q": "CEL — fiscalité et droit associé ?", "a": "<b>PFU 30%</b> (12,8% IR + 17,2% PS)<br>Ouvre droit à prêt immobilier (complément du PEL)."}, {"id": 30, "ch": "PEL & CEL", "q": "Différence fondamentale PEL vs CEL ?", "a": "<b>PEL</b> : bloqué (retrait = clôture), taux 2%, plafond 61 200€<br><b>CEL</b> : disponible, taux 1%, plafond 15 300€<br>Même famille : épargne logement."}, {"id": 31, "ch": "PEA", "q": "Quels sont les 3 types de PEA ?", "a": "<b>PEA Bancaire</b> : 150 000€<br><b>PEA Assurance</b> : 150 000€<br><b>PEA-PME</b> : 225 000€"}, {"id": 32, "ch": "PEA", "q": "Quels titres peut-on loger dans un PEA ?", "a": "Actions de sociétés <b>européennes (UE/EEE)</b><br>OPCVM investis à ≥ 75% en actions européennes<br>⚠️ Pas d'actions US/Asie directement."}, {"id": 33, "ch": "PEA", "q": "PEA — fiscalité AVANT 5 ans ?", "a": "Retrait → <b>clôture</b> (sauf exceptions Loi PACTE)<br>→ <b>PFU 31,4%</b> (12,8% IR + 18,6% PS)"}, {"id": 34, "ch": "PEA", "q": "PEA — fiscalité APRÈS 5 ans ?", "a": "Gains <b>exonérés d'IR</b> (0%)<br>PS 18,6% restent dus<br>Retraits partiels possibles <b>SANS clôture</b> (Loi PACTE)"}, {"id": 35, "ch": "PEA", "q": "Qu'a changé la Loi PACTE pour le PEA ?", "a": "Depuis 2019 : retraits partiels possibles après <b>5 ans</b> sans clôture.<br>(Avant : tout retrait avant 8 ans = clôture automatique)"}, {"id": 36, "ch": "PEA", "q": "PEA Assurance — particularité ?", "a": "Contrat de capitalisation.<br>Permet sortie en <b>rente viagère défiscalisée</b>.<br>Même plafond 150 000€ que PEA bancaire."}, {"id": 37, "ch": "PEA", "q": "Peut-on cumuler PEA Bancaire et PEA Assurance ?", "a": "<b>Non</b> — 1 seul PEA classique par personne (bancaire OU assurance).<br>On peut y ajouter 1 PEA-PME."}, {"id": 38, "ch": "PEA", "q": "Rappel J10 : différence PEA vs PER à l'entrée ?", "a": "<b>PER</b> : versements déductibles → avantage fiscal à l'entrée.<br><b>PEA</b> : pas d'avantage à l'entrée → exonération IR à la sortie (>5 ans)."}, {"id": 39, "ch": "PEA", "q": "PEA-PME — type de titres et avantage ?", "a": "Actions/obligations de <b>PME/ETI européennes</b><br>Plafond : <b>225 000€</b><br>Mêmes avantages fiscaux après 5 ans (exonération IR)."}, {"id": 40, "ch": "PEA", "q": "Avantage majeur du PEA pour investisseur long terme ?", "a": "<b>Exonération totale d'IR</b> sur plus-values et dividendes après 5 ans.<br>Seuls les PS (18,6%) restent dus.<br>→ Idéal pour actions sur le long terme."}];
+var CARDS = [{"id": 1, "ch": "Flat Tax & Assurance-Vie", "q": "Qu'est-ce que la Flat Tax / PFU et quels sont ses taux ?", "a": "Prélèvement Forfaitaire Unique.\n30% = 12,8% IR + 17,2% PS → AV, CEL, PEL\n31,4% = 12,8% IR + 18,6% PS → CAT, CSL, PEA, PER\nOption barème IR toujours possible."}, {"id": 2, "ch": "Flat Tax & Assurance-Vie", "q": "Quels produits ont un PS de 17,2% (Flat Tax 30%) ?", "a": "AV (Assurance-Vie), CEL, PEL\n→ Flat Tax = 12,8% IR + 17,2% PS = 30%"}, {"id": 3, "ch": "Flat Tax & Assurance-Vie", "q": "Quels produits ont un PS de 18,6% (Flat Tax 31,4%) ?", "a": "CAT, CSL, PEA, PER\n→ Flat Tax = 12,8% IR + 18,6% PS = 31,4%"}, {"id": 4, "ch": "Flat Tax & Assurance-Vie", "q": "Base imposable d'un rachat TOTAL sur AV ?", "a": "Valeur totale − Total versements\n= intégralité des intérêts générés."}, {"id": 5, "ch": "Flat Tax & Assurance-Vie", "q": "Formule base imposable rachat PARTIEL sur AV ?", "a": "(Intérêts / Valeur totale AV) × Montant du rachat\nIntérêts = Valeur AV − Total versements\n⚠ Proportion tronquée (pas arrondie) à 2 décimales."}, {"id": 6, "ch": "Flat Tax & Assurance-Vie", "q": "AV avant 27/09/2017 — fiscalité des intérêts selon durée ?", "a": "< 4 ans : PFL 35% + PS 17,2%\n4–8 ans : PFL 15% + PS 17,2%\n> 8 ans : PFL 7,5% + PS 17,2% + abattement 4 600/9 200€"}, {"id": 7, "ch": "Flat Tax & Assurance-Vie", "q": "AV après 27/09/2017, primes ≤150 000€ — fiscalité ?", "a": "< 8 ans : PFU 30% (12,8% IR + 17,2% PS)\n> 8 ans : 24,7% (7,5% IR + 17,2% PS)\n+ abattement 4 600€ (célibataire) / 9 200€ (couple)"}, {"id": 8, "ch": "Flat Tax & Assurance-Vie", "q": "AV après 27/09/2017, primes >150 000€ — fiscalité après 8 ans ?", "a": "Fraction ≤ 150k€ : 7,5% IR + 17,2% PS = 24,7%\nFraction > 150k€ : 12,8% IR + 17,2% PS = 30%\n⚠ L'abattement 4 600/9 200€ s'applique en premier."}, {"id": 9, "ch": "Flat Tax & Assurance-Vie", "q": "Quand les PS sur fonds euros AV sont-ils prélevés ?", "a": "Annuellement sur les intérêts des fonds euros (chaque année).\nPour les UC : uniquement au rachat."}, {"id": 10, "ch": "Flat Tax & Assurance-Vie", "q": "Abattement annuel sur intérêts AV après 8 ans ?", "a": "4 600€/an → célibataire\n9 200€/an → couple marié ou pacsé"}, {"id": 11, "ch": "Livrets & CAT", "q": "Livret A — plafond et taux 2026 ?", "a": "Plafond : 22 950€ — Taux : 2,4%\nTotalement exonéré d'IR et de PS."}, {"id": 12, "ch": "Livrets & CAT", "q": "LDDS — plafond et conditions ?", "a": "Plafond : 12 000€ — Taux = Livret A (2,4%)\nRéservé aux résidents fiscaux français. Exonéré IR+PS."}, {"id": 13, "ch": "Livrets & CAT", "q": "Livret Jeune — âge, taux, plafond, fiscalité ?", "a": "Âge : 12 à 25 ans — Taux libre ≥ Livret A\nPlafond : 1 600€ — Totalement exonéré IR+PS."}, {"id": 14, "ch": "Livrets & CAT", "q": "LEP — taux 2026, plafond, condition d'accès ?", "a": "Taux : 3,5% — Plafond : 10 000€\nSous condition de revenus (RFR). Exonéré IR+PS."}, {"id": 15, "ch": "Livrets & CAT", "q": "Livret Bleu — quelle banque et fonctionnement ?", "a": "Produit du Crédit Mutuel.\nFonctionnement identique au Livret A (même taux, plafond, exonération)."}, {"id": 16, "ch": "Livrets & CAT", "q": "CSL (Compte sur Livret / Livret B) — fiscalité ?", "a": "Taux libre. Pas de plafond légal.\n→ PFU 31,4% (12,8% IR + 18,6% PS)"}, {"id": 17, "ch": "Livrets & CAT", "q": "CAT (Compte à Terme) — caractéristiques clés ?", "a": "Durée min. : 1 mois — Taux libre, négocié à l'ouverture\nCapital bloqué jusqu'à l'échéance\n→ PFU 31,4% | Ex : BNP, Boursorama, CM, CIC"}, {"id": 18, "ch": "Livrets & CAT", "q": "Tableau récap PS : AV/CEL/PEL vs CAT/CSL/PEA/PER ?", "a": "AV, CEL, PEL → PS 17,2% → FT 30%\nCAT, CSL, PEA, PER → PS 18,6% → FT 31,4%"}, {"id": 19, "ch": "Livrets & CAT", "q": "Quels livrets sont totalement exonérés d'IR et PS ?", "a": "Livret A (et Bleu), LDDS, Livret Jeune, LEP\n⚠ CEL et PEL : non exonérés (PFU 30%)"}, {"id": 20, "ch": "Livrets & CAT", "q": "CAT ou CSL : avantage fiscal à l'entrée ?", "a": "Non — Aucune déductibilité des versements.\nAvantage uniquement sur la rémunération (taux libre/négociable)."}, {"id": 21, "ch": "PEL & CEL", "q": "PEL — versements minimum et plafond ?", "a": "Ouverture : min. 225€\nVersements : min. 540€/an (45€/mois)\nPlafond : 61 200€ (hors intérêts)"}, {"id": 22, "ch": "PEL & CEL", "q": "Que se passe-t-il si on retire de l'argent d'un PEL ?", "a": "Tout retrait entraîne la CLÔTURE du PEL.\n⚠ Capital indisponible = épargne bloquée."}, {"id": 23, "ch": "PEL & CEL", "q": "Quel avantage complémentaire offre le PEL ?", "a": "Droit à un prêt immobilier jusqu'à 92 000€\nà taux lié au PEL (acquisition résidence principale)."}, {"id": 24, "ch": "PEL & CEL", "q": "Taux PEL en 2026 ?", "a": "Taux d'épargne : 2%\nTaux de prêt : 3,20%"}, {"id": 25, "ch": "PEL & CEL", "q": "Fiscalité PEL ouvert AVANT 2011 ?", "a": "IR : exonéré 12 ans → puis barème IR\nPS : exonéré 10 ans → puis 17,2%\n(2 seuils différents !)"}, {"id": 26, "ch": "PEL & CEL", "q": "Fiscalité PEL ouvert entre 2011 et 2017 ?", "a": "Exonéré IR ET PS pendant les 12 premières années.\n→ À partir de l'an 12 : IR barème + PS 17,2%"}, {"id": 27, "ch": "PEL & CEL", "q": "Fiscalité PEL ouvert DEPUIS 2018 ?", "a": "PFU 30% (12,8% IR + 17,2% PS)\nDÈS LA 1ÈRE ANNÉE — plus aucune exonération."}, {"id": 28, "ch": "PEL & CEL", "q": "CEL — disponibilité, taux 2026 et plafond ?", "a": "Capital DISPONIBLE à tout moment\nTaux : 1% depuis fév. 2026 — Plafond : 15 300€"}, {"id": 29, "ch": "PEL & CEL", "q": "CEL — fiscalité et droit associé ?", "a": "PFU 30% (12,8% IR + 17,2% PS)\nOuvre droit à prêt immobilier (complément du PEL)."}, {"id": 30, "ch": "PEL & CEL", "q": "Différence fondamentale PEL vs CEL ?", "a": "PEL : bloqué (retrait = clôture), taux 2%, plafond 61 200€\nCEL : disponible, taux 1%, plafond 15 300€\nMême famille : épargne logement."}, {"id": 31, "ch": "PEA", "q": "Quels sont les 3 types de PEA ?", "a": "PEA Bancaire : 150 000€\nPEA Assurance : 150 000€\nPEA-PME : 225 000€"}, {"id": 32, "ch": "PEA", "q": "Quels titres peut-on loger dans un PEA ?", "a": "Actions de sociétés européennes (UE/EEE)\nOPCVM investis à ≥ 75% en actions européennes\n⚠ Pas d'actions US/Asie directement."}, {"id": 33, "ch": "PEA", "q": "PEA — fiscalité AVANT 5 ans ?", "a": "Retrait → clôture (sauf exceptions Loi PACTE)\n→ PFU 31,4% (12,8% IR + 18,6% PS)"}, {"id": 34, "ch": "PEA", "q": "PEA — fiscalité APRÈS 5 ans ?", "a": "Gains exonérés d'IR (0%)\nPS 18,6% restent dus\nRetraits partiels possibles SANS clôture (Loi PACTE)"}, {"id": 35, "ch": "PEA", "q": "Qu'a changé la Loi PACTE pour le PEA ?", "a": "Depuis 2019 : retraits partiels possibles après 5 ans sans clôture.\n(Avant : tout retrait avant 8 ans = clôture automatique)"}, {"id": 36, "ch": "PEA", "q": "PEA Assurance — particularité ?", "a": "Contrat de capitalisation.\nPermet sortie en rente viagère défiscalisée.\nMême plafond 150 000€ que PEA bancaire."}, {"id": 37, "ch": "PEA", "q": "Peut-on cumuler PEA Bancaire et PEA Assurance ?", "a": "Non — 1 seul PEA classique par personne (bancaire OU assurance).\nOn peut y ajouter 1 PEA-PME."}, {"id": 38, "ch": "PEA", "q": "Rappel J10 : différence PEA vs PER à l'entrée ?", "a": "PER : versements déductibles → avantage fiscal à l'entrée.\nPEA : pas d'avantage à l'entrée → exonération IR à la sortie (>5 ans)."}, {"id": 39, "ch": "PEA", "q": "PEA-PME — type de titres et avantage ?", "a": "Actions/obligations de PME/ETI européennes\nPlafond : 225 000€\nMêmes avantages fiscaux après 5 ans (exonération IR)."}, {"id": 40, "ch": "PEA", "q": "Avantage majeur du PEA pour investisseur long terme ?", "a": "Exonération totale d'IR sur plus-values et dividendes après 5 ans.\nSeuls les PS (18,6%) restent dus.\n→ Idéal pour actions sur le long terme."}];
 var QUIZ  = [{"id": 1, "q": "La Flat Tax standard (AV, PEL, CEL) est de :", "opts": ["30% (12,8% + 17,2%)", "31,4% (12,8% + 18,6%)", "28%", "17,2%"], "ans": 0}, {"id": 2, "q": "Pour les produits CAT, CSL, PEA et PER, le taux de PS est :", "opts": ["17,2%", "15,5%", "18,6%", "12,8%"], "ans": 2}, {"id": 3, "q": "Base imposable d'un rachat PARTIEL sur AV :", "opts": ["Montant total des versements", "(Intérêts / Valeur totale) × Montant du rachat", "Valeur totale − Rachat", "Rachat × taux PS"], "ans": 1}, {"id": 4, "q": "Abattement annuel sur intérêts AV après 8 ans (célibataire) :", "opts": ["1 500€", "3 000€", "4 600€", "9 200€"], "ans": 2}, {"id": 5, "q": "AV après 27/09/2017, primes ≤ 150k€, après 8 ans — taux IR :", "opts": ["12,8%", "7,5%", "15%", "0%"], "ans": 1}, {"id": 6, "q": "Les PS sur fonds euros AV sont prélevés :", "opts": ["Uniquement au rachat", "Annuellement", "À la clôture du contrat", "Jamais"], "ans": 1}, {"id": 7, "q": "AV souscrite le 01/01/2015 (avant 27/09/2017), rachat avant 4 ans. PFL applicable :", "opts": ["7,5%", "15%", "35%", "0%"], "ans": 2}, {"id": 8, "q": "La Flat Tax pour CAT et PEA est de :", "opts": ["30%", "28%", "31,4%", "17,2%"], "ans": 2}, {"id": 9, "q": "Plafond du Livret A en 2026 :", "opts": ["15 300€", "12 000€", "10 000€", "22 950€"], "ans": 3}, {"id": 10, "q": "Taux du LEP en 2026 :", "opts": ["2,4%", "1%", "3,5%", "4%"], "ans": 2}, {"id": 11, "q": "Livret Jeune — tranche d'âge :", "opts": ["16-30 ans", "12-25 ans", "18-28 ans", "15-26 ans"], "ans": 1}, {"id": 12, "q": "Plafond du LDDS :", "opts": ["22 950€", "10 000€", "15 300€", "12 000€"], "ans": 3}, {"id": 13, "q": "Fiscalité du Livret A :", "opts": ["PFU 30%", "PFU 31,4%", "Exonéré IR + PS", "IR barème uniquement"], "ans": 2}, {"id": 14, "q": "Le CSL (Compte sur Livret) est soumis à :", "opts": ["PFU 30%", "PFU 31,4%", "Exonération totale", "IR barème seul"], "ans": 1}, {"id": 15, "q": "Durée minimum d'un CAT :", "opts": ["3 mois", "6 mois", "1 mois", "1 an"], "ans": 2}, {"id": 16, "q": "Le Livret Bleu est un produit du :", "opts": ["BNP Paribas", "Crédit Agricole", "Crédit Mutuel", "Société Générale"], "ans": 2}, {"id": 17, "q": "Versement minimum à l'ouverture d'un PEL :", "opts": ["150€", "300€", "225€", "500€"], "ans": 2}, {"id": 18, "q": "Plafond des versements PEL :", "opts": ["92 000€", "22 950€", "61 200€", "150 000€"], "ans": 2}, {"id": 19, "q": "Un retrait sur PEL entraîne :", "opts": ["Une pénalité de 3%", "La clôture du PEL", "La suspension des intérêts", "Aucune conséquence"], "ans": 1}, {"id": 20, "q": "Taux d'épargne du PEL en 2026 :", "opts": ["1%", "1,75%", "2,5%", "2%"], "ans": 3}, {"id": 21, "q": "Fiscalité d'un PEL ouvert depuis 2018 :", "opts": ["Exonéré 12 ans puis IR", "PFU 31,4%", "PFU 30% dès la 1ère année", "IR barème uniquement"], "ans": 2}, {"id": 22, "q": "Taux du CEL depuis février 2026 :", "opts": ["0,75%", "1,5%", "1%", "2%"], "ans": 2}, {"id": 23, "q": "Plafond du CEL :", "opts": ["22 950€", "61 200€", "15 300€", "10 000€"], "ans": 2}, {"id": 24, "q": "Plafond du PEA Bancaire :", "opts": ["225 000€", "75 000€", "92 000€", "150 000€"], "ans": 3}, {"id": 25, "q": "Plafond du PEA-PME :", "opts": ["75 000€", "150 000€", "225 000€", "300 000€"], "ans": 2}, {"id": 26, "q": "Fiscalité PEA après 5 ans — IR sur les gains :", "opts": ["12,8%", "7,5%", "18,6%", "0% (exonéré)"], "ans": 3}, {"id": 27, "q": "PS applicable au PEA après 5 ans :", "opts": ["17,2%", "0%", "18,6%", "15,5%"], "ans": 2}, {"id": 28, "q": "Avant 5 ans, un retrait PEA entraîne :", "opts": ["Impossible", "Clôture (sauf Loi PACTE)", "Pas de clôture", "PFU 30% seulement"], "ans": 1}, {"id": 29, "q": "Le PEA peut accueillir :", "opts": ["Actions mondiales", "Obligations d'État", "Actions sociétés européennes (UE/EEE)", "SCPI uniquement"], "ans": 2}, {"id": 30, "q": "Depuis la Loi PACTE, après 5 ans, retraits partiels PEA sans clôture :", "opts": ["Non", "Seulement avant 8 ans", "Oui", "Uniquement en rente"], "ans": 2}];
 
-// ── SCORE ────────────────────────────────────────────────────────────────
+// ── SCORE ───────────────────────────────────────────────────────────────────
 var scores = JSON.parse(localStorage.getItem('cgp_scores')||'{}');
 if(!scores['jour12']) scores['jour12']={fc:{ok:0,ko:0},quiz:{done:0,correct:0}};
 var S = scores['jour12'];
+function saveS(){ localStorage.setItem('cgp_scores', JSON.stringify(scores)); }
 
-function saveScores(){ localStorage.setItem('cgp_scores', JSON.stringify(scores)); }
-
-// ── TABS ─────────────────────────────────────────────────────────────────
+// ── TABS ────────────────────────────────────────────────────────────────────
 function showTab(id, btn){
-  document.querySelectorAll('.tab-content').forEach(function(el){el.classList.remove('active');});
+  document.querySelectorAll('.tab-pane').forEach(function(el){el.classList.remove('active');});
   document.querySelectorAll('.tab-btn').forEach(function(el){el.classList.remove('active');});
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
 }
 
-// ── FLASHCARDS ───────────────────────────────────────────────────────────
-var filteredCards = CARDS.slice();
-var fcIdx = 0;
-var fcOk  = 0;
-var fcTotal = 0;
+// ── FLASHCARDS ──────────────────────────────────────────────────────────────
+var filtered = CARDS.slice();
+var idx = 0;
+var fcOk = 0;
 
 function filterCh(btn){
-  document.querySelectorAll('.ch-btn').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
   btn.classList.add('active');
   var ch = btn.getAttribute('data-ch');
-  filteredCards = ch==='all' ? CARDS.slice() : CARDS.filter(function(c){return c.ch===ch;});
-  fcIdx=0; fcOk=0; fcTotal=0;
-  renderCard();
+  filtered = ch==='all' ? CARDS.slice() : CARDS.filter(function(c){return c.ch===ch;});
+  idx=0; fcOk=0; renderCard();
 }
 
 function renderCard(){
-  var c = filteredCards[fcIdx];
-  document.getElementById('fc-q').textContent = c.q;
-  document.getElementById('fc-a').innerHTML  = c.a;
-  document.getElementById('fc-counter').textContent = 'Carte '+(fcIdx+1)+' / '+filteredCards.length;
-  document.getElementById('fc-card').classList.remove('flipped');
+  var c = filtered[idx];
+  document.getElementById('card-ch').textContent = c.ch;
+  document.getElementById('card-q').textContent  = c.q;
+  document.getElementById('card-a').textContent  = c.a;
+  document.getElementById('card-counter').textContent = 'Carte '+(idx+1)+' / '+filtered.length;
+  document.getElementById('card-inner').classList.remove('flipped');
 }
 
-function flipCard(){ document.getElementById('fc-card').classList.toggle('flipped'); }
-
-function nextCard(){
-  fcIdx = (fcIdx+1)%filteredCards.length;
-  renderCard();
+function flipCard(){ document.getElementById('card-inner').classList.toggle('flipped'); }
+function nextCard(){ idx=(idx+1)%filtered.length; renderCard(); }
+function prevCard(){ idx=(idx-1+filtered.length)%filtered.length; renderCard(); }
+function shuffleCards(){
+  for(var i=filtered.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=filtered[i];filtered[i]=filtered[j];filtered[j]=t;}
+  idx=0; renderCard();
 }
-
-function prevCard(){
-  fcIdx = (fcIdx-1+filteredCards.length)%filteredCards.length;
-  renderCard();
-}
-
 function markOk(){
-  fcOk++; fcTotal++;
-  document.getElementById('fc-score').textContent = fcOk+' / '+filteredCards.length;
-  S.fc.ok++; saveScores();
-  nextCard();
+  fcOk++;
+  document.getElementById('fc-score').textContent=fcOk+' / '+filtered.length;
+  S.fc.ok++; saveS(); nextCard();
 }
-
-function markKo(){
-  fcTotal++;
-  S.fc.ko++; saveScores();
-  nextCard();
-}
+function markKo(){ S.fc.ko++; saveS(); nextCard(); }
 
 // Focus cards
 var focusMap = {
@@ -711,85 +661,83 @@ var focusMap = {
   'focus-pelcel':  CARDS.filter(function(c){return c.id>=21 && c.id<=30;}),
   'focus-pea':     CARDS.filter(function(c){return c.id>=31;}),
 };
-Object.keys(focusMap).forEach(function(id){
-  var el=document.getElementById(id);
+Object.keys(focusMap).forEach(function(fid){
+  var el=document.getElementById(fid);
   if(!el) return;
-  focusMap[id].forEach(function(c){
-    var div=document.createElement('div'); div.className='focus-card';
-    div.innerHTML='<div class="fq">'+c.q+'</div><div class="fa">'+c.a+'</div>';
-    el.appendChild(div);
+  focusMap[fid].forEach(function(c){
+    var d=document.createElement('div'); d.className='focus-card';
+    d.innerHTML='<div class="fq">'+c.q+'</div><div class="fa">'+c.a+'</div>';
+    el.appendChild(d);
   });
 });
 
 renderCard();
 
-// ── FOCUS ACCORDION ──────────────────────────────────────────────────────
+// ── FOCUS ACCORDION ─────────────────────────────────────────────────────────
 function toggleFocus(header){
   var body=header.nextElementSibling;
-  var arrow=header.querySelector('.arrow');
+  var arrow=header.querySelector('.focus-arrow');
   body.classList.toggle('open');
-  arrow.textContent = body.classList.contains('open') ? '▲' : '▼';
+  arrow.innerHTML=body.classList.contains('open')?'&#9650;':'&#9660;';
 }
 
-// ── FICHE ────────────────────────────────────────────────────────────────
-function showFiche(key, btn){
+// ── FICHE ───────────────────────────────────────────────────────────────────
+function j12go(key, btn){
   document.querySelectorAll('.fiche-section').forEach(function(el){el.classList.remove('active');});
   document.querySelectorAll('.fiche-btn').forEach(function(b){b.classList.remove('active');});
   document.getElementById('fiche-'+key).classList.add('active');
-  btn.classList.add('active');
+  if(btn) btn.classList.add('active');
 }
 
-// ── QUIZ ─────────────────────────────────────────────────────────────────
-var quizAnswered = 0;
-var quizCorrect  = 0;
+// ── QUIZ ────────────────────────────────────────────────────────────────────
+var qAnswered=0; var qCorrect=0;
 
 function buildQuiz(){
-  var cont = document.getElementById('quiz-container');
+  var cont=document.getElementById('quiz-container');
   cont.innerHTML='';
   QUIZ.forEach(function(q,i){
-    var div=document.createElement('div'); div.className='q-block'; div.id='qb-'+i;
+    var div=document.createElement('div'); div.className='quiz-q'; div.id='qb-'+i;
     var opts='';
     q.opts.forEach(function(o,j){
-      opts+='<button class="opt" data-q="'+i+'" data-opt="'+j+'" data-ans="'+q.ans+'" onclick="answerQ(this)">'+o+'</button>';
+      opts+='<button class="quiz-opt" data-q="'+i+'" data-opt="'+j+'" data-ans="'+q.ans+'" onclick="ansQ(this)">'+o+'</button>';
     });
-    div.innerHTML='<div class="q-num">Question '+(i+1)+' / '+QUIZ.length+'</div><div class="q-text">'+q.q+'</div><div class="opts">'+opts+'</div><div class="q-result" id="qr-'+i+'"></div>';
+    div.innerHTML='<div class="quiz-qnum">Question '+(i+1)+' / '+QUIZ.length+'</div><p>'+q.q+'</p><div class="quiz-opts">'+opts+'</div><div class="quiz-result" id="qr-'+i+'"></div>';
     cont.appendChild(div);
   });
 }
 
-function answerQ(btn){
+function ansQ(btn){
   var qi=parseInt(btn.getAttribute('data-q'));
   var oi=parseInt(btn.getAttribute('data-opt'));
   var ai=parseInt(btn.getAttribute('data-ans'));
   var block=document.getElementById('qb-'+qi);
   if(block.classList.contains('done')) return;
   block.classList.add('done');
-  block.querySelectorAll('.opt').forEach(function(b){b.style.pointerEvents='none';});
+  block.querySelectorAll('.quiz-opt').forEach(function(b){b.style.pointerEvents='none';});
   var res=document.getElementById('qr-'+qi);
   if(oi===ai){
     btn.classList.add('correct');
-    res.textContent='✓ Correct !'; res.style.color='#4ade80';
-    quizCorrect++;
+    res.textContent='&#10003; Correct !'; res.style.color='#2d8a4e';
+    qCorrect++;
   } else {
     btn.classList.add('wrong');
-    block.querySelectorAll('.opt')[ai].classList.add('correct');
-    res.textContent='✗ Incorrect'; res.style.color='#f87171';
+    block.querySelectorAll('.quiz-opt')[ai].classList.add('correct');
+    res.textContent='&#10007; Incorrect'; res.style.color='#c0392b';
   }
-  quizAnswered++;
-  document.getElementById('quiz-live').textContent=quizCorrect+' / '+quizAnswered;
-  if(quizAnswered===QUIZ.length){
-    var pct=Math.round(quizCorrect/QUIZ.length*100);
-    var box=document.getElementById('quiz-final');
-    box.style.display='block';
-    document.getElementById('qf-title').textContent=quizCorrect+' / '+QUIZ.length+' — '+pct+'%';
+  qAnswered++;
+  document.getElementById('quiz-live').textContent=qCorrect+' / '+qAnswered;
+  if(qAnswered===QUIZ.length){
+    var pct=Math.round(qCorrect/QUIZ.length*100);
+    var fin=document.getElementById('quiz-final'); fin.style.display='block';
+    document.getElementById('qf-title').textContent=qCorrect+' / '+QUIZ.length+' — '+pct+'%';
     var msg=pct>=80?'Excellent ! Maîtrise solide.':pct>=60?'Bien, quelques points à revoir.':'À consolider — refais les flashcards.';
     document.getElementById('qf-msg').textContent=msg;
-    S.quiz.done=QUIZ.length; S.quiz.correct=quizCorrect; saveScores();
+    S.quiz.done=QUIZ.length; S.quiz.correct=qCorrect; saveS();
   }
 }
 
 function resetQuiz(){
-  quizAnswered=0; quizCorrect=0;
+  qAnswered=0; qCorrect=0;
   document.getElementById('quiz-live').textContent='0 / 0';
   document.getElementById('quiz-final').style.display='none';
   buildQuiz();
@@ -797,18 +745,12 @@ function resetQuiz(){
 
 buildQuiz();
 
-// ── EXERCICES ────────────────────────────────────────────────────────────
-function toggleAns(btn){
-  var ans=btn.nextElementSibling;
-  ans.classList.toggle('visible');
-  btn.textContent=ans.classList.contains('visible')?'Masquer la correction':'Voir la correction';
-}
-
-// ── CAS PRATIQUES ────────────────────────────────────────────────────────
+// ── EXERCICES & CAS ──────────────────────────────────────────────────────────
 function toggleSol(btn){
   var sol=btn.nextElementSibling;
-  sol.classList.toggle('visible');
-  btn.textContent=sol.classList.contains('visible')?'Masquer la proposition':'Voir la proposition CGP';
+  var vis=sol.style.display==='block';
+  sol.style.display=vis?'none':'block';
+  btn.textContent=vis?'Voir la correction':'Masquer la correction';
 }
 </script>
 </body>
