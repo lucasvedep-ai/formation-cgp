@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jour 02 — Régimes matrimoniaux & Succession | Formation CGP</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Jour 02 — Régimes matrimoniaux &amp; Succession | Formation CGP</title>
 <style>
 :root {
   --navy:#1a2744; --navy2:#253460; --gold:#c9a227; --gold2:#e8c84a;
@@ -159,289 +160,280 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
 @media print{body{background:#fff}header,.tabs,main>.tab-panel:not(#tab-fiche),.fiche-actions,.no-print{display:none!important}#tab-fiche{display:block!important;padding:0!important}.fiche-body{box-shadow:none;padding:0;border-radius:0}}
 @media(max-width:600px){main{padding:20px 12px}.qcard,.fiche-body{padding:20px 16px}.scene{height:240px}header{padding:14px 16px 0}}
 
+
 /* ── Marqueurs ❤️ À Retenir ── */
 .heart-line {
-  position: relative;
   border-left: 3px solid #e84393 !important;
   padding-left: 10px !important;
-  background: linear-gradient(to right, #fff0f7, transparent) !important;
-  border-radius: 0 6px 6px 0;
+  background: linear-gradient(to right, #fff0f7 0%, transparent 100%) !important;
+  border-radius: 0 6px 6px 0 !important;
   margin-left: 0 !important;
 }
 .heart-badge {
   display: inline-block;
-  font-size: 0.82em;
-  margin-right: 5px;
+  margin-right: 4px;
+  font-size: .88em;
   vertical-align: middle;
-  line-height: 1;
 }
-li.heart-line { list-style: none; margin-left: 0; padding-left: 14px !important; }
+li.heart-line { list-style: none; }
 table.heart-line { border-top: 3px solid #e84393; }
-h2.heart-line, h3.heart-line { padding-left: 6px !important; }
 
 </style>
 </head>
 <body>
 <header>
-  <div class="header-top">
-    <a href="../index.html" class="back-btn">← Hub Formation CGP</a>
-    <span style="font-size:.75rem;color:rgba(255,255,255,.4)">23 juin 2026</span>
-  </div>
-  <h1>📘 Jour 02 — Régimes matrimoniaux & Succession</h1>
-  <p>Cap Finances · 71 slides · 2 modules</p>
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('flashcards')">🃏 Flashcards</button>
-    <button class="tab-btn" onclick="switchTab('quiz')">📝 Quiz</button>
-    <button class="tab-btn tab-focus-btn" onclick="switchTab('focus')">🎯 Focus</button>
-    <button class="tab-btn" onclick="switchTab('fiche')">📄 Fiche</button>
-    <button class="tab-btn" onclick="switchTab('exercices')">🏋️ Exercices</button>
-  </div>
+<div class="header-top">
+<a class="back-btn" href="../index.html">← Hub Formation CGP</a>
+<span style="font-size:.75rem;color:rgba(255,255,255,.4)">23 juin 2026</span>
+</div>
+<h1>📘 Jour 02 — Régimes matrimoniaux &amp; Succession</h1>
+<p>Cap Finances · 71 slides · 2 modules</p>
+<div class="tabs">
+<button class="tab-btn active" onclick="switchTab('flashcards')">🃏 Flashcards</button>
+<button class="tab-btn" onclick="switchTab('quiz')">📝 Quiz</button>
+<button class="tab-btn tab-focus-btn" onclick="switchTab('focus')">🎯 Focus</button>
+<button class="tab-btn" onclick="switchTab('fiche')">📄 Fiche</button>
+<button class="tab-btn" onclick="switchTab('exercices')">🏋️ Exercices</button>
+</div>
 </header>
 <main>
-
-<div id="tab-flashcards" class="tab-panel active">
-  <div class="fc-meta">
-    <span class="fc-count" id="fc-cnt">Carte 1 / 41</span>
-    <span class="fc-ch" id="fc-ch"></span>
-  </div>
-  <div class="pg-wrap"><div class="pg-fill" id="fc-bar" style="width:2%"></div></div>
-  <div class="scene" id="fc-scene" onclick="fcFlip()">
-    <div class="card-inner" id="fc-inner">
-      <div class="card-face cf-front">
-        <div class="card-lbl">❓ Question</div>
-        <div class="card-txt" id="fc-q"></div>
-        <div class="tap-hint">Cliquer pour retourner</div>
-      </div>
-      <div class="card-face cf-back">
-        <div class="card-lbl">✅ Réponse</div>
-        <div class="card-txt" id="fc-a"></div>
-      </div>
-    </div>
-  </div>
-  <div class="fc-ctrl">
-    <button class="btn btn-light" onclick="fcPrev()">←</button>
-    <button class="btn btn-gold" onclick="fcFlip()">Retourner</button>
-    <button class="btn btn-navy" onclick="fcNext()">→</button>
-  </div>
-  <div class="row-right"><button class="btn-sm" onclick="fcShuffle()">🔀 Mélanger</button></div>
+<div class="tab-panel active" id="tab-flashcards">
+<div class="fc-meta">
+<span class="fc-count" id="fc-cnt">Carte 1 / 41</span>
+<span class="fc-ch" id="fc-ch"></span>
 </div>
-
-<div id="tab-quiz" class="tab-panel">
-  <div id="quiz-active">
-    <div class="quiz-hdr">
-      <span class="quiz-cnt" id="q-cnt">Question 1 / 15</span>
-      <span class="quiz-badge" id="q-badge">0 / 0</span>
-    </div>
-    <div class="pg-wrap"><div class="pg-fill" id="q-bar" style="width:0%"></div></div>
-    <div class="qcard">
-      <div class="q-tag" id="q-tag"></div>
-      <div class="q-text" id="q-text"></div>
-      <div class="opts" id="q-opts"></div>
-      <div class="fb" id="q-fb"></div>
-    </div>
-    <div class="next-row"><button class="btn btn-navy" id="qnext" onclick="qNext()">Question suivante →</button></div>
-  </div>
-  <div class="score-scr" id="score-scr">
-    <div class="score-emoji" id="s-emoji"></div>
-    <div class="score-title" id="s-title"></div>
-    <div class="score-sub" id="s-sub"></div>
-    <div class="score-num" id="s-num"></div>
-    <div class="score-det" id="s-det"></div>
-    <div class="s-bar-wrap"><div class="s-bar-fill" id="s-bar"></div></div>
-    <div class="score-btns">
-      <button class="btn btn-navy" onclick="qRestart()">🔁 Recommencer</button>
-      <button class="btn btn-light" onclick="switchTab('flashcards')">🃏 Flashcards</button>
-      <button class="btn btn-light" onclick="switchTab('focus')">🎯 Focus</button>
-    </div>
-    <div class="rev-section">
-      <div class="rev-title">📋 Erreurs à revoir</div>
-      <div id="rev-list"></div>
-    </div>
-  </div>
+<div class="pg-wrap"><div class="pg-fill" id="fc-bar" style="width:2%"></div></div>
+<div class="scene" id="fc-scene" onclick="fcFlip()">
+<div class="card-inner" id="fc-inner">
+<div class="card-face cf-front">
+<div class="card-lbl">❓ Question</div>
+<div class="card-txt" id="fc-q"></div>
+<div class="tap-hint">Cliquer pour retourner</div>
 </div>
-
-<div id="tab-focus" class="tab-panel">
-  <p class="focus-intro">6 thèmes clés du jour — cartes ciblées + mini-quiz + exercices par thème.</p>
-  <div class="theme-grid" id="theme-grid">
-    <div class="theme-card" onclick="selectTheme(0)">
-      <div class="theme-num">Thème 1</div>
-      <div class="theme-name">💒 Régimes légaux</div>
-      <div class="theme-desc">Mariage, PACS, concubinage — structures et régime primaire</div>
-    </div>
-    <div class="theme-card" onclick="selectTheme(1)">
-      <div class="theme-num">Thème 2</div>
-      <div class="theme-name">🏘️ Régimes communautaires</div>
-      <div class="theme-desc">CMA, CRA, communauté universelle — biens propres vs communs</div>
-    </div>
-    <div class="theme-card" onclick="selectTheme(2)">
-      <div class="theme-num">Thème 3</div>
-      <div class="theme-name">🔀 Régimes séparatistes</div>
-      <div class="theme-desc">Séparation des biens, participation aux acquêts, PACS</div>
-    </div>
-    <div class="theme-card" onclick="selectTheme(3)">
-      <div class="theme-num">Thème 4</div>
-      <div class="theme-name">⚖️ Masse successorale</div>
-      <div class="theme-desc">Formule de calcul et liens avec le régime matrimonial</div>
-    </div>
-    <div class="theme-card" onclick="selectTheme(4)">
-      <div class="theme-num">Thème 5</div>
-      <div class="theme-name">👨‍👩‍👧 Les 4 ordres</div>
-      <div class="theme-desc">Qui hérite, dans quel ordre et de combien</div>
-    </div>
-    <div class="theme-card" onclick="selectTheme(5)">
-      <div class="theme-num">Thème 6</div>
-      <div class="theme-name">🔄 La représentation</div>
-      <div class="theme-desc">Mécanisme de représentation dans la dévolution légale</div>
-    </div>
-  </div>
-  <div class="focus-content" id="focus-content">
-    <button class="focus-back" onclick="backToThemes()">← Retour aux thèmes</button>
-    <div class="focus-heading" id="focus-heading"></div>
-    <div class="focus-mode-btns">
-      <button class="fmode-btn active" id="fmode-cards" onclick="setFMode('cards')">🃏 Cartes</button>
-      <button class="fmode-btn" id="fmode-quiz" onclick="setFMode('quiz')">📝 Mini-quiz</button>
-      <button class="fmode-btn" id="fmode-exercices" onclick="setFMode('exercices')">🏋️ Exercices</button>
-    </div>
-    <div id="focus-cards-section">
-      <div class="fc-meta">
-        <span class="fc-count" id="fc2-cnt">Carte 1 / 8</span>
-      </div>
-      <div class="pg-wrap"><div class="pg-fill" id="fc2-bar" style="width:12%"></div></div>
-      <div class="scene scene-sm" id="fc2-scene" onclick="fc2Flip()">
-        <div class="card-inner" id="fc2-inner">
-          <div class="card-face cf-front">
-            <div class="card-lbl">❓ Question</div>
-            <div class="card-txt card-txt-sm" id="fc2-q"></div>
-            <div class="tap-hint">Cliquer pour retourner</div>
-          </div>
-          <div class="card-face cf-back">
-            <div class="card-lbl">✅ Réponse</div>
-            <div class="card-txt card-txt-sm" id="fc2-a"></div>
-          </div>
-        </div>
-      </div>
-      <div class="fc-ctrl">
-        <button class="btn btn-light" onclick="fc2Prev()">←</button>
-        <button class="btn btn-gold" onclick="fc2Flip()">Retourner</button>
-        <button class="btn btn-navy" onclick="fc2Next()">→</button>
-      </div>
-    </div>
-    <div id="focus-quiz-section" style="display:none">
-      <div id="fmq-active">
-        <div class="quiz-hdr">
-          <span class="quiz-cnt" id="fq-cnt">Question 1 / 10</span>
-          <span class="quiz-badge" id="fq-badge">0 / 0</span>
-        </div>
-        <div class="pg-wrap"><div class="pg-fill" id="fq-bar" style="width:0%"></div></div>
-        <div class="qcard">
-          <div class="q-text" id="fq-text"></div>
-          <div class="opts" id="fq-opts"></div>
-          <div class="fb" id="fq-fb"></div>
-        </div>
-        <div class="next-row"><button class="btn btn-navy" id="fqnext" style="display:none" onclick="fqNext()">Suivante →</button></div>
-      </div>
-      <div class="score-scr" id="fq-score">
-        <div class="score-emoji" id="fs-emoji"></div>
-        <div class="score-title" id="fs-title"></div>
-        <div class="score-num" id="fs-num"></div>
-        <div class="score-det" id="fs-det"></div>
-        <div class="s-bar-wrap"><div class="s-bar-fill" id="fs-bar"></div></div>
-        <div class="score-btns">
-          <button class="btn btn-navy" onclick="fqRestart()">🔁 Recommencer</button>
-          <button class="btn btn-light" onclick="setFMode('cards')">🃏 Cartes</button>
-          <button class="btn btn-light" onclick="setFMode('exercices')">🏋️ Exercices</button>
-        </div>
-      </div>
-    </div>
-    <div id="focus-ex-section" style="display:none"></div>
-  </div>
+<div class="card-face cf-back">
+<div class="card-lbl">✅ Réponse</div>
+<div class="card-txt" id="fc-a"></div>
 </div>
-
-<div id="tab-fiche" class="tab-panel">
-  <div class="fiche-actions no-print">
-    <button class="btn btn-navy" onclick="window.print()">🖨️ Imprimer</button>
-    <span style="font-size:.8rem;color:var(--muted)">Fiche de révision — Jour 02</span>
-  </div>
-  <div class="fiche-body">
-    <h2>Module 1 — Les Régimes Matrimoniaux</h2>
-    <h3>1.1 Les 3 modes de vie de couple</h3>
-    <table><tr><th>Statut</th><th>Lien juridique</th><th>Régime des biens (défaut)</th></tr>
-    <tr><td>Mariage</td><td>Conjoints mariés</td><td>Communauté Réduite aux Acquêts (CRA)</td></tr>
-    <tr><td>PACS</td><td>Partenaires pacsés</td><td>Séparation des biens</td></tr>
-    <tr><td>Concubinage</td><td>Aucun lien juridique</td><td>Biens propres + Biens indivis</td></tr>
-    </table>
-    <p><strong>Le régime matrimonial</strong> a un impact sur l'organisation et la transmission du patrimoine.</p>
-    <h3>1.2 Le régime primaire</h3>
-    <p>Socle commun à <strong>tous les régimes matrimoniaux</strong>. Composé de :</p>
-    <ul>
-      <li><strong>Charges du mariage</strong> : respect, fidélité, secours et assistance ; dettes ménagères (engagent les 2 époux sauf dépenses excessives) ; logement familial (ni l'un ni l'autre ne peut le vendre seul, même si bien propre)</li>
-      <li><strong>Droits du conjoint</strong> : gérer ses biens personnels et les biens meubles communs ; passer des contrats d'entretien du ménage ; ouvrir un compte de dépôt ou de titres ; exercer librement sa profession et disposer de ses revenus</li>
-    </ul>
-    <h3>1.3 Les régimes communautaires</h3>
-    <table><tr><th>Régime</th><th>Biens propres</th><th>Biens communs</th></tr>
-    <tr><td>CMA (avant 01/02/1966)</td><td>Immeubles donation/succession ; immeubles avant mariage ; remploi</td><td>Tous les meubles (y compris reçus par don/succession) + immeubles acquis pendant mariage</td></tr>
-    <tr><td>CRA (depuis 01/02/1966) — régime légal</td><td>Tout ce reçu par donation/succession (meubles ET immeubles) ; biens avant mariage ; remploi</td><td>Biens acquis pendant le mariage + revenus des biens propres et communs</td></tr>
-    <tr><td>Communauté universelle</td><td>—</td><td>Tous les biens (présents et futurs)</td></tr>
-    </table>
-    <div class="warn">⚠️ Communauté universelle avec clause d'attribution intégrale : pas de succession au 1er décès → conjoint survivant garde tout → une seule succession au 2ème décès → les enfants n'ont leur abattement (100 000 €) qu'une seule fois.</div>
-    <h3>1.4 Les régimes séparatistes</h3>
-    <table><tr><th>Régime</th><th>Pendant le mariage</th><th>À la dissolution</th></tr>
-    <tr><td>Séparation des biens</td><td>Propres M + Indivis + Propres Mme (chacun gère ses biens)</td><td>Chacun reprend ses propres ; partage de l'indivis selon répartition</td></tr>
-    <tr><td>Participation aux acquêts</td><td>Comme une séparation (chacun gère librement)</td><td>Partage enrichissement : Patrimoine final − Patrimoine initial = Acquêts</td></tr>
-    </table>
-    <h3>1.5 Le PACS et le concubinage</h3>
-    <table><tr><th></th><th>PACS légal</th><th>PACS sur option</th><th>Concubinage</th></tr>
-    <tr><td>Structure</td><td>Propres + Indivis</td><td>Propres + Communs</td><td>Propres + Indivis</td></tr>
-    <tr><td>Convention</td><td colspan="2">Obligatoirement écrite (sous seing privé ou notariée)</td><td>—</td></tr>
-    <tr><td>Publicité</td><td colspan="2">Inscription en marge de l'acte de naissance en mairie</td><td>—</td></tr>
-    </table>
-    <h3>1.6 Liquidation en cas de divorce/rupture</h3>
-    <table><tr><th>Régime</th><th>Ce qui est partagé</th></tr>
-    <tr><td>CRA</td><td>Propres M / Biens Communs (partagés ½ ½) / Propres Mme</td></tr>
-    <tr><td>Communauté universelle</td><td>Tous les biens communs partagés</td></tr>
-    <tr><td>Séparation des biens</td><td>Propres M / Indivis (partagé) / Propres Mme</td></tr>
-    <tr><td>Participation aux acquêts</td><td>Propres M / Enrichissement partagé / Propres Mme</td></tr>
-    </table>
-
-    <h2>Module 2 — La Succession</h2>
-    <h3>2.1 La masse successorale</h3>
-    <p style="font-size:1.1rem;font-weight:800;text-align:center;padding:14px;background:var(--bg);border-radius:10px;border:2px solid var(--gold);margin:12px 0">MASSE SUCCESSORALE = (ACTIF − PASSIF) + DONATIONS ANTÉRIEURES (&lt; 15 ans)</p>
-    <p>Le passif est souvent faible grâce aux <strong>assurances de prêts</strong>. Les donations antérieures sont réintégrées fictivement (civilement et/ou fiscalement).</p>
-    <h3>2.2 Masse successorale et régime matrimonial</h3>
-    <table><tr><th>Régime</th><th>Succession du défunt</th></tr>
-    <tr><td>CRA</td><td>Biens propres M + ½ des biens communs</td></tr>
-    <tr><td>Communauté universelle + clause</td><td>Pas de succession au 1er décès (conjoint prend tout)</td></tr>
-    <tr><td>Séparation des biens</td><td>Biens propres M + ½ des biens indivis</td></tr>
-    </table>
-    <h3>2.3 Les 4 ordres d'héritiers (dévolution légale)</h3>
-    <table><tr><th>Ordre</th><th>Héritiers (personne seule/PACS/concubinage)</th><th>Part</th></tr>
-    <tr><td>1er ordre</td><td>Descendants : enfants (1°), petits-enfants (2°), arrière-petits-enfants (3°)...</td><td>100% par parts égales</td></tr>
-    <tr><td>2ème ordre</td><td>Parents (1°) + frères/sœurs (2°), neveux/nièces (3°), petits-neveux (4°)</td><td>¼ père + ¼ mère + ½ aux frères/sœurs</td></tr>
-    <tr><td>3ème ordre</td><td>Ascendants ordinaires : grands-parents (2°), arrière-grands-parents (3°)</td><td>Fente : 50% côté paternel + 50% côté maternel</td></tr>
-    <tr><td>4ème ordre</td><td>Collatéraux ordinaires : oncles/tantes (3°), cousins germains (4°)...</td><td>Fente : 50% paternel + 50% maternel</td></tr>
-    </table>
-    <p>Au-delà du <strong>4ème ordre / 6ème degré</strong> : c'est <strong>l'État</strong> qui hérite.</p>
-    <p>Entre héritiers d'un même ordre : l'héritier <strong>le plus proche en degré exclut le plus éloigné</strong>. À égalité de degré : succession par <strong>parts égales par tête</strong>.</p>
-    <h3>2.4 La notion de représentation</h3>
-    <p>Mécanisme permettant aux descendants d'un héritier <strong>prédécédé ou renonçant</strong> de prendre sa place et de recueillir sa part.</p>
-    <table><tr><th>Ligne</th><th>Représentation</th></tr>
-    <tr><td>Ligne directe descendante</td><td>✅ À l'infini</td></tr>
-    <tr><td>Descendants de frères/sœurs</td><td>✅ À l'infini</td></tr>
-    <tr><td>Ascendants</td><td>❌ Ne joue pas</td></tr>
-    <tr><td>Collatéraux ordinaires</td><td>❌ Ne joue pas</td></tr>
-    </table>
-    <blockquote>Exemple : Masse 200 — 2 enfants. Enfant n°2 prédécédé, laisse 2 petits-enfants. → Enfant n°1 : 100. Les 2 petits-enfants REPRÉSENTENT l'enfant n°2 → 50 chacun.</blockquote>
-  </div>
 </div>
-
-<div id="tab-exercices" class="tab-panel">
-  <div class="ex-header">
-    <h2>🏋️ Exercices interactifs</h2>
-    <p class="ex-sub">Exercices issus des diapos de cours — glisser-déposer avec correction automatique</p>
-  </div>
-  <div id="ex-container"></div>
 </div>
-
+<div class="fc-ctrl">
+<button class="btn btn-light" onclick="fcPrev()">←</button>
+<button class="btn btn-gold" onclick="fcFlip()">Retourner</button>
+<button class="btn btn-navy" onclick="fcNext()">→</button>
+</div>
+<div class="row-right"><button class="btn-sm" onclick="fcShuffle()">🔀 Mélanger</button></div>
+</div>
+<div class="tab-panel" id="tab-quiz">
+<div id="quiz-active">
+<div class="quiz-hdr">
+<span class="quiz-cnt" id="q-cnt">Question 1 / 15</span>
+<span class="quiz-badge" id="q-badge">0 / 0</span>
+</div>
+<div class="pg-wrap"><div class="pg-fill" id="q-bar" style="width:0%"></div></div>
+<div class="qcard">
+<div class="q-tag" id="q-tag"></div>
+<div class="q-text" id="q-text"></div>
+<div class="opts" id="q-opts"></div>
+<div class="fb" id="q-fb"></div>
+</div>
+<div class="next-row"><button class="btn btn-navy" id="qnext" onclick="qNext()">Question suivante →</button></div>
+</div>
+<div class="score-scr" id="score-scr">
+<div class="score-emoji" id="s-emoji"></div>
+<div class="score-title" id="s-title"></div>
+<div class="score-sub" id="s-sub"></div>
+<div class="score-num" id="s-num"></div>
+<div class="score-det" id="s-det"></div>
+<div class="s-bar-wrap"><div class="s-bar-fill" id="s-bar"></div></div>
+<div class="score-btns">
+<button class="btn btn-navy" onclick="qRestart()">🔁 Recommencer</button>
+<button class="btn btn-light" onclick="switchTab('flashcards')">🃏 Flashcards</button>
+<button class="btn btn-light" onclick="switchTab('focus')">🎯 Focus</button>
+</div>
+<div class="rev-section">
+<div class="rev-title">📋 Erreurs à revoir</div>
+<div id="rev-list"></div>
+</div>
+</div>
+</div>
+<div class="tab-panel" id="tab-focus">
+<p class="focus-intro">6 thèmes clés du jour — cartes ciblées + mini-quiz + exercices par thème.</p>
+<div class="theme-grid" id="theme-grid">
+<div class="theme-card" onclick="selectTheme(0)">
+<div class="theme-num">Thème 1</div>
+<div class="theme-name">💒 Régimes légaux</div>
+<div class="theme-desc">Mariage, PACS, concubinage — structures et régime primaire</div>
+</div>
+<div class="theme-card" onclick="selectTheme(1)">
+<div class="theme-num">Thème 2</div>
+<div class="theme-name">🏘️ Régimes communautaires</div>
+<div class="theme-desc">CMA, CRA, communauté universelle — biens propres vs communs</div>
+</div>
+<div class="theme-card" onclick="selectTheme(2)">
+<div class="theme-num">Thème 3</div>
+<div class="theme-name">🔀 Régimes séparatistes</div>
+<div class="theme-desc">Séparation des biens, participation aux acquêts, PACS</div>
+</div>
+<div class="theme-card" onclick="selectTheme(3)">
+<div class="theme-num">Thème 4</div>
+<div class="theme-name">⚖️ Masse successorale</div>
+<div class="theme-desc">Formule de calcul et liens avec le régime matrimonial</div>
+</div>
+<div class="theme-card" onclick="selectTheme(4)">
+<div class="theme-num">Thème 5</div>
+<div class="theme-name">👨‍👩‍👧 Les 4 ordres</div>
+<div class="theme-desc">Qui hérite, dans quel ordre et de combien</div>
+</div>
+<div class="theme-card" onclick="selectTheme(5)">
+<div class="theme-num">Thème 6</div>
+<div class="theme-name">🔄 La représentation</div>
+<div class="theme-desc">Mécanisme de représentation dans la dévolution légale</div>
+</div>
+</div>
+<div class="focus-content" id="focus-content">
+<button class="focus-back" onclick="backToThemes()">← Retour aux thèmes</button>
+<div class="focus-heading" id="focus-heading"></div>
+<div class="focus-mode-btns">
+<button class="fmode-btn active" id="fmode-cards" onclick="setFMode('cards')">🃏 Cartes</button>
+<button class="fmode-btn" id="fmode-quiz" onclick="setFMode('quiz')">📝 Mini-quiz</button>
+<button class="fmode-btn" id="fmode-exercices" onclick="setFMode('exercices')">🏋️ Exercices</button>
+</div>
+<div id="focus-cards-section">
+<div class="fc-meta">
+<span class="fc-count" id="fc2-cnt">Carte 1 / 8</span>
+</div>
+<div class="pg-wrap"><div class="pg-fill" id="fc2-bar" style="width:12%"></div></div>
+<div class="scene scene-sm" id="fc2-scene" onclick="fc2Flip()">
+<div class="card-inner" id="fc2-inner">
+<div class="card-face cf-front">
+<div class="card-lbl">❓ Question</div>
+<div class="card-txt card-txt-sm" id="fc2-q"></div>
+<div class="tap-hint">Cliquer pour retourner</div>
+</div>
+<div class="card-face cf-back">
+<div class="card-lbl">✅ Réponse</div>
+<div class="card-txt card-txt-sm" id="fc2-a"></div>
+</div>
+</div>
+</div>
+<div class="fc-ctrl">
+<button class="btn btn-light" onclick="fc2Prev()">←</button>
+<button class="btn btn-gold" onclick="fc2Flip()">Retourner</button>
+<button class="btn btn-navy" onclick="fc2Next()">→</button>
+</div>
+</div>
+<div id="focus-quiz-section" style="display:none">
+<div id="fmq-active">
+<div class="quiz-hdr">
+<span class="quiz-cnt" id="fq-cnt">Question 1 / 10</span>
+<span class="quiz-badge" id="fq-badge">0 / 0</span>
+</div>
+<div class="pg-wrap"><div class="pg-fill" id="fq-bar" style="width:0%"></div></div>
+<div class="qcard">
+<div class="q-text" id="fq-text"></div>
+<div class="opts" id="fq-opts"></div>
+<div class="fb" id="fq-fb"></div>
+</div>
+<div class="next-row"><button class="btn btn-navy" id="fqnext" onclick="fqNext()" style="display:none">Suivante →</button></div>
+</div>
+<div class="score-scr" id="fq-score">
+<div class="score-emoji" id="fs-emoji"></div>
+<div class="score-title" id="fs-title"></div>
+<div class="score-num" id="fs-num"></div>
+<div class="score-det" id="fs-det"></div>
+<div class="s-bar-wrap"><div class="s-bar-fill" id="fs-bar"></div></div>
+<div class="score-btns">
+<button class="btn btn-navy" onclick="fqRestart()">🔁 Recommencer</button>
+<button class="btn btn-light" onclick="setFMode('cards')">🃏 Cartes</button>
+<button class="btn btn-light" onclick="setFMode('exercices')">🏋️ Exercices</button>
+</div>
+</div>
+</div>
+<div id="focus-ex-section" style="display:none"></div>
+</div>
+</div>
+<div class="tab-panel" id="tab-fiche">
+<div class="fiche-actions no-print">
+<button class="btn btn-navy" onclick="window.print()">🖨️ Imprimer</button>
+<span style="font-size:.8rem;color:var(--muted)">Fiche de révision — Jour 02</span>
+</div>
+<div class="fiche-body">
+<h2>Module 1 — Les Régimes Matrimoniaux</h2>
+<h3>1.1 Les 3 modes de vie de couple</h3>
+<table class="heart-line"><span class="heart-badge">❤️</span><tr><th>Statut</th><th>Lien juridique</th><th>Régime des biens (défaut)</th></tr>
+<tr><td>Mariage</td><td>Conjoints mariés</td><td>Communauté Réduite aux Acquêts (CRA)</td></tr>
+<tr><td>PACS</td><td>Partenaires pacsés</td><td>Séparation des biens</td></tr>
+<tr><td>Concubinage</td><td>Aucun lien juridique</td><td>Biens propres + Biens indivis</td></tr>
+</table>
+<p><strong>Le régime matrimonial</strong> a un impact sur l'organisation et la transmission du patrimoine.</p>
+<h3>1.2 Le régime primaire</h3>
+<p>Socle commun à <strong>tous les régimes matrimoniaux</strong>. Composé de :</p>
+<ul>
+<li><strong>Charges du mariage</strong> : respect, fidélité, secours et assistance ; dettes ménagères (engagent les 2 époux sauf dépenses excessives) ; logement familial (ni l'un ni l'autre ne peut le vendre seul, même si bien propre)</li>
+<li><strong>Droits du conjoint</strong> : gérer ses biens personnels et les biens meubles communs ; passer des contrats d'entretien du ménage ; ouvrir un compte de dépôt ou de titres ; exercer librement sa profession et disposer de ses revenus</li>
+</ul>
+<h3>1.3 Les régimes communautaires</h3>
+<table class="heart-line"><span class="heart-badge">❤️</span><tr><th>Régime</th><th>Biens propres</th><th>Biens communs</th></tr>
+<tr><td>CMA (avant 01/02/1966)</td><td>Immeubles donation/succession ; immeubles avant mariage ; remploi</td><td>Tous les meubles (y compris reçus par don/succession) + immeubles acquis pendant mariage</td></tr>
+<tr><td>CRA (depuis 01/02/1966) — régime légal</td><td>Tout ce reçu par donation/succession (meubles ET immeubles) ; biens avant mariage ; remploi</td><td>Biens acquis pendant le mariage + revenus des biens propres et communs</td></tr>
+<tr><td>Communauté universelle</td><td>—</td><td>Tous les biens (présents et futurs)</td></tr>
+</table>
+<div class="warn">⚠️ Communauté universelle avec clause d'attribution intégrale : pas de succession au 1er décès → conjoint survivant garde tout → une seule succession au 2ème décès → les enfants n'ont leur abattement (100 000 €) qu'une seule fois.</div>
+<h3>1.4 Les régimes séparatistes</h3>
+<table><tr><th>Régime</th><th>Pendant le mariage</th><th>À la dissolution</th></tr>
+<tr><td>Séparation des biens</td><td>Propres M + Indivis + Propres Mme (chacun gère ses biens)</td><td>Chacun reprend ses propres ; partage de l'indivis selon répartition</td></tr>
+<tr><td>Participation aux acquêts</td><td>Comme une séparation (chacun gère librement)</td><td>Partage enrichissement : Patrimoine final − Patrimoine initial = Acquêts</td></tr>
+</table>
+<h3>1.5 Le PACS et le concubinage</h3>
+<table><tr><th></th><th>PACS légal</th><th>PACS sur option</th><th>Concubinage</th></tr>
+<tr><td>Structure</td><td>Propres + Indivis</td><td>Propres + Communs</td><td>Propres + Indivis</td></tr>
+<tr><td>Convention</td><td colspan="2">Obligatoirement écrite (sous seing privé ou notariée)</td><td>—</td></tr>
+<tr><td>Publicité</td><td colspan="2">Inscription en marge de l'acte de naissance en mairie</td><td>—</td></tr>
+</table>
+<h3>1.6 Liquidation en cas de divorce/rupture</h3>
+<table><tr><th>Régime</th><th>Ce qui est partagé</th></tr>
+<tr><td>CRA</td><td>Propres M / Biens Communs (partagés ½ ½) / Propres Mme</td></tr>
+<tr><td>Communauté universelle</td><td>Tous les biens communs partagés</td></tr>
+<tr><td>Séparation des biens</td><td>Propres M / Indivis (partagé) / Propres Mme</td></tr>
+<tr><td>Participation aux acquêts</td><td>Propres M / Enrichissement partagé / Propres Mme</td></tr>
+</table>
+<h2>Module 2 — La Succession</h2>
+<h3 class="heart-line"><span class="heart-badge">❤️</span>2.1 La masse successorale</h3>
+<p class="heart-line" style="font-size:1.1rem;font-weight:800;text-align:center;padding:14px;background:var(--bg);border-radius:10px;border:2px solid var(--gold);margin:12px 0"><span class="heart-badge">❤️</span>MASSE SUCCESSORALE = (ACTIF − PASSIF) + DONATIONS ANTÉRIEURES (&lt; 15 ans)</p>
+<p>Le passif est souvent faible grâce aux <strong>assurances de prêts</strong>. Les donations antérieures sont réintégrées fictivement (civilement et/ou fiscalement).</p>
+<h3 class="heart-line"><span class="heart-badge">❤️</span>2.2 Masse successorale et régime matrimonial</h3>
+<table><tr><th>Régime</th><th>Succession du défunt</th></tr>
+<tr><td>CRA</td><td>Biens propres M + ½ des biens communs</td></tr>
+<tr><td>Communauté universelle + clause</td><td>Pas de succession au 1er décès (conjoint prend tout)</td></tr>
+<tr><td>Séparation des biens</td><td>Biens propres M + ½ des biens indivis</td></tr>
+</table>
+<h3>2.3 Les 4 ordres d'héritiers (dévolution légale)</h3>
+<table class="heart-line"><span class="heart-badge">❤️</span><tr><th>Ordre</th><th>Héritiers (personne seule/PACS/concubinage)</th><th>Part</th></tr>
+<tr><td>1er ordre</td><td>Descendants : enfants (1°), petits-enfants (2°), arrière-petits-enfants (3°)...</td><td>100% par parts égales</td></tr>
+<tr><td>2ème ordre</td><td>Parents (1°) + frères/sœurs (2°), neveux/nièces (3°), petits-neveux (4°)</td><td>¼ père + ¼ mère + ½ aux frères/sœurs</td></tr>
+<tr><td>3ème ordre</td><td>Ascendants ordinaires : grands-parents (2°), arrière-grands-parents (3°)</td><td>Fente : 50% côté paternel + 50% côté maternel</td></tr>
+<tr><td>4ème ordre</td><td>Collatéraux ordinaires : oncles/tantes (3°), cousins germains (4°)...</td><td>Fente : 50% paternel + 50% maternel</td></tr>
+</table>
+<p>Au-delà du <strong>4ème ordre / 6ème degré</strong> : c'est <strong>l'État</strong> qui hérite.</p>
+<p>Entre héritiers d'un même ordre : l'héritier <strong>le plus proche en degré exclut le plus éloigné</strong>. À égalité de degré : succession par <strong>parts égales par tête</strong>.</p>
+<h3 class="heart-line"><span class="heart-badge">❤️</span>2.4 La notion de représentation</h3>
+<p>Mécanisme permettant aux descendants d'un héritier <strong>prédécédé ou renonçant</strong> de prendre sa place et de recueillir sa part.</p>
+<table class="heart-line"><span class="heart-badge">❤️</span><tr><th>Ligne</th><th>Représentation</th></tr>
+<tr><td>Ligne directe descendante</td><td>✅ À l'infini</td></tr>
+<tr><td>Descendants de frères/sœurs</td><td>✅ À l'infini</td></tr>
+<tr><td>Ascendants</td><td>❌ Ne joue pas</td></tr>
+<tr><td>Collatéraux ordinaires</td><td>❌ Ne joue pas</td></tr>
+</table>
+<blockquote>Exemple : Masse 200 — 2 enfants. Enfant n°2 prédécédé, laisse 2 petits-enfants. → Enfant n°1 : 100. Les 2 petits-enfants REPRÉSENTENT l'enfant n°2 → 50 chacun.</blockquote>
+</div>
+</div>
+<div class="tab-panel" id="tab-exercices">
+<div class="ex-header">
+<h2>🏋️ Exercices interactifs</h2>
+<p class="ex-sub">Exercices issus des diapos de cours — glisser-déposer avec correction automatique</p>
+</div>
+<div id="ex-container"></div>
+</div>
 </main>
 <script>
 const CARDS = [
@@ -1256,57 +1248,5 @@ window.onload = function() {
 };
 
 </script>
-
-<script>
-(function() {
-  var DAY_KEYWORDS = ["régime légal", "communauté légale", "communauté réduite", "régime communautaire", "régime séparatiste", "séparation de biens", "masse successorale", "actif brut", "dettes", "premier ordre", "deuxième ordre", "troisième ordre", "quatrième ordre", "représentation"];
-  var seen = new WeakSet();
-
-  function markEl(el) {
-    if (!el || seen.has(el)) return;
-    var tag = el.tagName;
-    if (!tag) return;
-    seen.add(el);
-    el.classList.add('heart-line');
-    var badge = document.createElement('span');
-    badge.className = 'heart-badge';
-    badge.textContent = '❤️';
-    el.insertBefore(badge, el.firstChild);
-  }
-
-  function markKeywords(fb, keywords) {
-    var walker = document.createTreeWalker(fb, NodeFilter.SHOW_TEXT, null, false);
-    var node;
-    while ((node = walker.nextNode())) {
-      var txt = node.textContent.toLowerCase();
-      for (var i = 0; i < keywords.length; i++) {
-        if (txt.indexOf(keywords[i].toLowerCase()) !== -1) {
-          // Trouve l'ancêtre immédiat marquable
-          var el = node.parentElement;
-          var depth = 0;
-          while (el && el !== fb && depth < 6) {
-            var t = el.tagName;
-            if (t === 'LI' || t === 'P' || t === 'H2' || t === 'H3' ||
-                t === 'BLOCKQUOTE' || t === 'TABLE') {
-              markEl(el);
-              break;
-            }
-            el = el.parentElement;
-            depth++;
-          }
-          break;
-        }
-      }
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.fiche-body').forEach(function(fb) {
-      markKeywords(fb, DAY_KEYWORDS);
-    });
-  });
-})();
-</script>
-
 </body>
 </html>
