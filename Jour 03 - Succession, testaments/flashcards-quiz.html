@@ -176,6 +176,24 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
 .rappel-jour strong{color:#a37d10;display:block;margin-bottom:5px;font-size:.88rem}
 .rappel-item{display:flex;gap:8px;align-items:flex-start;margin-top:7px}
 .rappel-lbl{background:var(--navy);color:#fff;border-radius:4px;padding:1px 8px;font-size:.72rem;font-weight:700;white-space:nowrap;margin-top:2px;flex-shrink:0}
+
+/* ── Marqueurs ❤️ À Retenir ── */
+.heart-line {
+  border-left: 3px solid #e84393 !important;
+  padding-left: 10px !important;
+  background: linear-gradient(to right,#fff0f7 0%,transparent 100%) !important;
+  border-radius: 0 6px 6px 0 !important;
+  margin-left: 0 !important;
+}
+.heart-badge {
+  display: inline-block;
+  margin-right: 4px;
+  font-size: .85em;
+  vertical-align: middle;
+}
+li.heart-line { list-style: none; }
+table.heart-line { border-top: 3px solid #e84393 !important; }
+
 </style>
 </head>
 <body>
@@ -996,5 +1014,65 @@ function switchFiche(id){
   document.querySelector('[data-fiche="'+id+'"]').classList.add('active');
 }
 </script>
+
+<script>
+(function() {
+  var KW = ["droits du conjoint", "usufruit", "nue-propriété", "pleine propriété", "testament olographe", "testament authentique", "testament mystique", "legs universel", "legs à titre universel", "legs particulier"];
+  var seen = new WeakSet();
+
+  function markEl(el) {
+    if (!el || seen.has(el)) return;
+    seen.add(el);
+    el.classList.add('heart-line');
+    var b = document.createElement('span');
+    b.className = 'heart-badge';
+    b.textContent = '❤️';
+    el.insertBefore(b, el.firstChild);
+  }
+
+  function scan(root) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+    while ((node = walker.nextNode())) {
+      var txt = node.textContent.toLowerCase();
+      for (var i = 0; i < KW.length; i++) {
+        if (txt.indexOf(KW[i]) !== -1) {
+          var el = node.parentElement;
+          var d = 0;
+          while (el && d < 8) {
+            var t = el.tagName;
+            if (t==='LI'||t==='P'||t==='H2'||t==='H3'||t==='BLOCKQUOTE'||t==='TABLE') {
+              markEl(el); break;
+            }
+            var cl = el.className || '';
+            if (cl.indexOf('fiche-block')!==-1 || cl.indexOf('fiche-section')!==-1 ||
+                cl.indexOf('fiche-body')!==-1 || cl.indexOf('fiche-hl')!==-1 ||
+                cl.indexOf('fiche-warn')!==-1 || cl.indexOf('fiche-dl')!==-1) {
+              markEl(el); break;
+            }
+            el = el.parentElement; d++;
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  function run() {
+    // Cible tous les conteneurs de fiches connus
+    var containers = document.querySelectorAll(
+      '.fiche-body, .fiche-section, .fiche-panel, #tab-fiche'
+    );
+    if (containers.length === 0) containers = document.querySelectorAll('main');
+    containers.forEach(scan);
+  }
+
+  // Exécution immédiate (DOM déjà présent au bas du body)
+  run();
+  // Re-application après clic (changement d'onglet)
+  document.addEventListener('click', function(){ setTimeout(run, 150); });
+})();
+</script>
+
 </body>
 </html>
