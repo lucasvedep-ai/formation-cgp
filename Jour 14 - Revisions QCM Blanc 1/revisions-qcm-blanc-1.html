@@ -303,10 +303,10 @@ function showEnd(){
   document.getElementById('end-total').textContent='/'+tot;
   document.getElementById('end-pct').textContent=pct+'%';
   let mention='';
-  if(pct>=90)mention='Excellent ! Prêt pour l'examen 🎉';
-  else if(pct>=75)mention='Très bien ! Continue ainsi 💪';
-  else if(pct>=60)mention='Bien, encore quelques révisions 📚';
-  else mention='À retravailler — courage ! 🔄';
+  if(pct>=90)mention="Excellent ! Prêt pour l'examen 🎉";
+  else if(pct>=75)mention="Très bien ! Continue ainsi 💪";
+  else if(pct>=60)mention="Bien, encore quelques révisions 📚";
+  else mention="À retravailler — courage ! 🔄";
   document.getElementById('end-mention').textContent=mention;
 
   // Save to localStorage
