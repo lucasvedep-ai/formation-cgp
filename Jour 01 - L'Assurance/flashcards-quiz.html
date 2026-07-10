@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Jour 01 — L'Assurance | Formation CGP</title>
 <style>
 :root {
@@ -194,196 +195,193 @@ main{max-width:840px;margin:0 auto;padding:32px 18px}
 .rappel-item{display:flex;gap:8px;align-items:flex-start;margin-top:7px}
 .rappel-lbl{background:var(--navy);color:#fff;border-radius:4px;padding:1px 8px;font-size:.72rem;font-weight:700;white-space:nowrap;margin-top:2px;flex-shrink:0}
 
+
 /* ── Marqueurs ❤️ À Retenir ── */
 .heart-line {
-  position: relative;
   border-left: 3px solid #e84393 !important;
   padding-left: 10px !important;
-  background: linear-gradient(to right, #fff0f7, transparent) !important;
-  border-radius: 0 6px 6px 0;
+  background: linear-gradient(to right, #fff0f7 0%, transparent 100%) !important;
+  border-radius: 0 6px 6px 0 !important;
   margin-left: 0 !important;
 }
 .heart-badge {
   display: inline-block;
-  font-size: 0.82em;
-  margin-right: 5px;
+  margin-right: 4px;
+  font-size: .88em;
   vertical-align: middle;
-  line-height: 1;
 }
-li.heart-line { list-style: none; margin-left: 0; padding-left: 14px !important; }
+li.heart-line { list-style: none; }
 table.heart-line { border-top: 3px solid #e84393; }
-h2.heart-line, h3.heart-line { padding-left: 6px !important; }
 
 </style>
 </head>
 <body>
 <header>
-  <div class="header-top">
-    <a href="../index.html" class="back-btn">← Hub Formation CGP</a>
-    <span style="font-size:.75rem;color:rgba(255,255,255,.4)">23 juin 2026</span>
-  </div>
-  <h1>📘 Jour 01 — L'Assurance</h1>
-  <p>Cap Finances · 52 slides · 3 chapitres</p>
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('flashcards')">🃏 Flashcards</button>
-    <button class="tab-btn" onclick="switchTab('quiz')">📝 Quiz</button>
-    <button class="tab-btn tab-focus-btn" onclick="switchTab('focus')">🎯 Focus</button>
-    <button class="tab-btn" onclick="switchTab('fiche')">📄 Fiche</button>
-    <button class="tab-btn" onclick="switchTab('exercices')">🏋️ Exercices</button>
-  </div>
+<div class="header-top">
+<a class="back-btn" href="../index.html">← Hub Formation CGP</a>
+<span style="font-size:.75rem;color:rgba(255,255,255,.4)">23 juin 2026</span>
+</div>
+<h1>📘 Jour 01 — L'Assurance</h1>
+<p>Cap Finances · 52 slides · 3 chapitres</p>
+<div class="tabs">
+<button class="tab-btn active" onclick="switchTab('flashcards')">🃏 Flashcards</button>
+<button class="tab-btn" onclick="switchTab('quiz')">📝 Quiz</button>
+<button class="tab-btn tab-focus-btn" onclick="switchTab('focus')">🎯 Focus</button>
+<button class="tab-btn" onclick="switchTab('fiche')">📄 Fiche</button>
+<button class="tab-btn" onclick="switchTab('exercices')">🏋️ Exercices</button>
+</div>
 </header>
 <main>
-<div id="tab-flashcards" class="tab-panel active">
-  <div class="fc-meta">
-    <span class="fc-count" id="fc-cnt">Carte 1 / 42</span>
-    <span class="fc-ch" id="fc-ch">Chapitre 1</span>
-  </div>
-  <div class="pg-wrap"><div class="pg-fill" id="fc-bar" style="width:2.4%"></div></div>
-  <div class="scene" id="fc-scene" onclick="fcFlip()">
-    <div class="card-inner" id="fc-inner">
-      <div class="card-face cf-front">
-        <div class="card-lbl">❓ Question</div>
-        <div class="card-txt" id="fc-q"></div>
-        <div class="tap-hint">Cliquer pour retourner</div>
-      </div>
-      <div class="card-face cf-back">
-        <div class="card-lbl">✅ Réponse</div>
-        <div class="card-txt" id="fc-a"></div>
-      </div>
-    </div>
-  </div>
-  <div class="fc-ctrl">
-    <button class="btn btn-light" onclick="fcPrev()">←</button>
-    <button class="btn btn-gold" onclick="fcFlip()">Retourner</button>
-    <button class="btn btn-navy" onclick="fcNext()">→</button>
-  </div>
-  <div class="row-right"><button class="btn-sm" onclick="fcShuffle()">🔀 Mélanger</button></div>
+<div class="tab-panel active" id="tab-flashcards">
+<div class="fc-meta">
+<span class="fc-count" id="fc-cnt">Carte 1 / 42</span>
+<span class="fc-ch" id="fc-ch">Chapitre 1</span>
 </div>
-<div id="tab-quiz" class="tab-panel">
-  <div id="quiz-active">
-    <div class="quiz-hdr">
-      <span class="quiz-cnt" id="q-cnt">Question 1 / 15</span>
-      <span class="quiz-badge" id="q-badge">0 / 0</span>
-    </div>
-    <div class="pg-wrap"><div class="pg-fill" id="q-bar" style="width:0%"></div></div>
-    <div class="qcard">
-      <div class="q-tag" id="q-tag"></div>
-      <div class="q-text" id="q-text"></div>
-      <div class="opts" id="q-opts"></div>
-      <div class="fb" id="q-fb"></div>
-    </div>
-    <div class="next-row"><button class="btn btn-navy" id="qnext" onclick="qNext()">Question suivante →</button></div>
-  </div>
-  <div class="score-scr" id="score-scr">
-    <div class="score-emoji" id="s-emoji"></div>
-    <div class="score-title" id="s-title"></div>
-    <div class="score-sub" id="s-sub"></div>
-    <div class="score-num" id="s-num"></div>
-    <div class="score-det" id="s-det"></div>
-    <div class="s-bar-wrap"><div class="s-bar-fill" id="s-bar"></div></div>
-    <div class="score-btns">
-      <button class="btn btn-navy" onclick="qRestart()">🔁 Recommencer</button>
-      <button class="btn btn-light" onclick="switchTab('flashcards')">🃏 Flashcards</button>
-      <button class="btn btn-light" onclick="switchTab('focus')">🎯 Focus</button>
-    </div>
-    <div class="rev-section">
-      <div class="rev-title">📋 Erreurs à revoir</div>
-      <div id="rev-list"></div>
-    </div>
-  </div>
+<div class="pg-wrap"><div class="pg-fill" id="fc-bar" style="width:2.4%"></div></div>
+<div class="scene" id="fc-scene" onclick="fcFlip()">
+<div class="card-inner" id="fc-inner">
+<div class="card-face cf-front">
+<div class="card-lbl">❓ Question</div>
+<div class="card-txt" id="fc-q"></div>
+<div class="tap-hint">Cliquer pour retourner</div>
 </div>
-<div id="tab-focus" class="tab-panel">
-  <p class="focus-intro">Thèmes clés du jour — cartes ciblées + mini-quiz par thème.</p>
-  <div class="theme-grid" id="theme-grid">
-    <div class="theme-card" onclick="selectTheme(0)">
-      <div class="theme-num">Thème 1</div>
-      <div class="theme-name">🏢 Les intervenants</div>
-      <div class="theme-desc">Courtier, agent général, mandataire, MIA, ORIAS, familles d'organismes</div>
-    </div>
-    <div class="theme-card" onclick="selectTheme(1)">
-      <div class="theme-num">Thème 2</div>
-      <div class="theme-name">⚖️ 3 conditions d'exercice</div>
-      <div class="theme-desc">Honorabilité, capacité professionnelle, RCP et garantie financière</div>
-    </div>
-    <div class="theme-card" onclick="selectTheme(2)">
-      <div class="theme-num">Thème 3</div>
-      <div class="theme-name">🔀 Types d'assurances</div>
-      <div class="theme-desc">Indemnitaire/forfaitaire, répartition/capitalisation, individuelle/collective</div>
-    </div>
-  </div>
-  <div class="focus-content" id="focus-content">
-    <button class="focus-back" onclick="backToThemes()">← Retour aux thèmes</button>
-    <div class="focus-heading" id="focus-heading"></div>
-    <div class="focus-mode-btns">
-      <button class="fmode-btn active" id="fmode-cards" onclick="setFMode('cards')">🃏 Cartes</button>
-      <button class="fmode-btn" id="fmode-quiz" onclick="setFMode('quiz')">📝 Mini-quiz</button>
-      <button class="fmode-btn" id="fmode-exercices" onclick="setFMode('exercices')">🏋️ Exercices</button>
-    </div>
-    <div id="focus-cards-section">
-      <div class="fc-meta">
-        <span class="fc-count" id="fc2-cnt">Carte 1 / 12</span>
-      </div>
-      <div class="pg-wrap"><div class="pg-fill" id="fc2-bar" style="width:8%"></div></div>
-      <div class="scene scene-sm" id="fc2-scene" onclick="fc2Flip()">
-        <div class="card-inner" id="fc2-inner">
-          <div class="card-face cf-front">
-            <div class="card-lbl">❓ Question</div>
-            <div class="card-txt card-txt-sm" id="fc2-q"></div>
-            <div class="tap-hint">Cliquer pour retourner</div>
-          </div>
-          <div class="card-face cf-back">
-            <div class="card-lbl">✅ Réponse</div>
-            <div class="card-txt card-txt-sm" id="fc2-a"></div>
-          </div>
-        </div>
-      </div>
-      <div class="fc-ctrl">
-        <button class="btn btn-light" onclick="fc2Prev()">←</button>
-        <button class="btn btn-gold" onclick="fc2Flip()">Retourner</button>
-        <button class="btn btn-navy" onclick="fc2Next()">→</button>
-      </div>
-    </div>
-    <div id="focus-quiz-section" style="display:none">
-      <div id="fmq-active">
-        <div class="quiz-hdr">
-          <span class="quiz-cnt" id="fq-cnt">Question 1 / 10</span>
-          <span class="quiz-badge" id="fq-badge">0 / 0</span>
-        </div>
-        <div class="pg-wrap"><div class="pg-fill" id="fq-bar" style="width:0%"></div></div>
-        <div class="qcard">
-          <div class="q-text" id="fq-text"></div>
-          <div class="opts" id="fq-opts"></div>
-          <div class="fb" id="fq-fb"></div>
-        </div>
-        <div class="next-row"><button class="btn btn-navy" id="fqnext" onclick="fqNext()" style="display:none">Suivant →</button></div>
-      </div>
-      <div class="score-scr" id="fq-score" style="padding:28px 20px">
-        <div class="score-emoji" id="fqs-emoji"></div>
-        <div class="score-title" id="fqs-title"></div>
-        <div class="score-num" id="fqs-num" style="font-size:2.8rem"></div>
-        <div class="score-det" id="fqs-det" style="margin-bottom:18px"></div>
-        <div class="score-btns">
-          <button class="btn btn-navy" onclick="fqRestart()">🔁 Réessayer</button>
-          <button class="btn btn-light" onclick="setFMode('cards')">🃏 Revoir les cartes</button>
-        </div>
-        <div class="rev-section"><div class="rev-title">Erreurs</div><div id="fq-rev-list"></div></div>
-      </div>
-    </div>
-    <div id="focus-ex-section" style="display:none">
-      <div id="focus-ex-container"></div>
-    </div>
-  </div>
+<div class="card-face cf-back">
+<div class="card-lbl">✅ Réponse</div>
+<div class="card-txt" id="fc-a"></div>
 </div>
-<div id="tab-fiche" class="tab-panel">
-  <div class="fiche-actions no-print">
-    <button class="btn btn-navy" onclick="window.print()">🖨️ Enregistrer en PDF</button>
-    <span style="font-size:.8rem;color:var(--muted)">Dans la boîte de dialogue d'impression → choisir "Enregistrer en PDF"</span>
-  </div>
-  <div class="fiche-subnav no-print"><button class="fiche-subbtn active" data-fiche="recap" onclick="switchFiche('recap')">📋 Récap</button><button class="fiche-subbtn" data-fiche="ch1" onclick="switchFiche('ch1')">🏢 Secteur</button><button class="fiche-subbtn" data-fiche="ch2" onclick="switchFiche('ch2')">🛡️ Catégories</button><button class="fiche-subbtn" data-fiche="ch3" onclick="switchFiche('ch3')">🤝 Intermédiation</button></div>
+</div>
+</div>
+<div class="fc-ctrl">
+<button class="btn btn-light" onclick="fcPrev()">←</button>
+<button class="btn btn-gold" onclick="fcFlip()">Retourner</button>
+<button class="btn btn-navy" onclick="fcNext()">→</button>
+</div>
+<div class="row-right"><button class="btn-sm" onclick="fcShuffle()">🔀 Mélanger</button></div>
+</div>
+<div class="tab-panel" id="tab-quiz">
+<div id="quiz-active">
+<div class="quiz-hdr">
+<span class="quiz-cnt" id="q-cnt">Question 1 / 15</span>
+<span class="quiz-badge" id="q-badge">0 / 0</span>
+</div>
+<div class="pg-wrap"><div class="pg-fill" id="q-bar" style="width:0%"></div></div>
+<div class="qcard">
+<div class="q-tag" id="q-tag"></div>
+<div class="q-text" id="q-text"></div>
+<div class="opts" id="q-opts"></div>
+<div class="fb" id="q-fb"></div>
+</div>
+<div class="next-row"><button class="btn btn-navy" id="qnext" onclick="qNext()">Question suivante →</button></div>
+</div>
+<div class="score-scr" id="score-scr">
+<div class="score-emoji" id="s-emoji"></div>
+<div class="score-title" id="s-title"></div>
+<div class="score-sub" id="s-sub"></div>
+<div class="score-num" id="s-num"></div>
+<div class="score-det" id="s-det"></div>
+<div class="s-bar-wrap"><div class="s-bar-fill" id="s-bar"></div></div>
+<div class="score-btns">
+<button class="btn btn-navy" onclick="qRestart()">🔁 Recommencer</button>
+<button class="btn btn-light" onclick="switchTab('flashcards')">🃏 Flashcards</button>
+<button class="btn btn-light" onclick="switchTab('focus')">🎯 Focus</button>
+</div>
+<div class="rev-section">
+<div class="rev-title">📋 Erreurs à revoir</div>
+<div id="rev-list"></div>
+</div>
+</div>
+</div>
+<div class="tab-panel" id="tab-focus">
+<p class="focus-intro">Thèmes clés du jour — cartes ciblées + mini-quiz par thème.</p>
+<div class="theme-grid" id="theme-grid">
+<div class="theme-card" onclick="selectTheme(0)">
+<div class="theme-num">Thème 1</div>
+<div class="theme-name">🏢 Les intervenants</div>
+<div class="theme-desc">Courtier, agent général, mandataire, MIA, ORIAS, familles d'organismes</div>
+</div>
+<div class="theme-card" onclick="selectTheme(1)">
+<div class="theme-num">Thème 2</div>
+<div class="theme-name">⚖️ 3 conditions d'exercice</div>
+<div class="theme-desc">Honorabilité, capacité professionnelle, RCP et garantie financière</div>
+</div>
+<div class="theme-card" onclick="selectTheme(2)">
+<div class="theme-num">Thème 3</div>
+<div class="theme-name">🔀 Types d'assurances</div>
+<div class="theme-desc">Indemnitaire/forfaitaire, répartition/capitalisation, individuelle/collective</div>
+</div>
+</div>
+<div class="focus-content" id="focus-content">
+<button class="focus-back" onclick="backToThemes()">← Retour aux thèmes</button>
+<div class="focus-heading" id="focus-heading"></div>
+<div class="focus-mode-btns">
+<button class="fmode-btn active" id="fmode-cards" onclick="setFMode('cards')">🃏 Cartes</button>
+<button class="fmode-btn" id="fmode-quiz" onclick="setFMode('quiz')">📝 Mini-quiz</button>
+<button class="fmode-btn" id="fmode-exercices" onclick="setFMode('exercices')">🏋️ Exercices</button>
+</div>
+<div id="focus-cards-section">
+<div class="fc-meta">
+<span class="fc-count" id="fc2-cnt">Carte 1 / 12</span>
+</div>
+<div class="pg-wrap"><div class="pg-fill" id="fc2-bar" style="width:8%"></div></div>
+<div class="scene scene-sm" id="fc2-scene" onclick="fc2Flip()">
+<div class="card-inner" id="fc2-inner">
+<div class="card-face cf-front">
+<div class="card-lbl">❓ Question</div>
+<div class="card-txt card-txt-sm" id="fc2-q"></div>
+<div class="tap-hint">Cliquer pour retourner</div>
+</div>
+<div class="card-face cf-back">
+<div class="card-lbl">✅ Réponse</div>
+<div class="card-txt card-txt-sm" id="fc2-a"></div>
+</div>
+</div>
+</div>
+<div class="fc-ctrl">
+<button class="btn btn-light" onclick="fc2Prev()">←</button>
+<button class="btn btn-gold" onclick="fc2Flip()">Retourner</button>
+<button class="btn btn-navy" onclick="fc2Next()">→</button>
+</div>
+</div>
+<div id="focus-quiz-section" style="display:none">
+<div id="fmq-active">
+<div class="quiz-hdr">
+<span class="quiz-cnt" id="fq-cnt">Question 1 / 10</span>
+<span class="quiz-badge" id="fq-badge">0 / 0</span>
+</div>
+<div class="pg-wrap"><div class="pg-fill" id="fq-bar" style="width:0%"></div></div>
+<div class="qcard">
+<div class="q-text" id="fq-text"></div>
+<div class="opts" id="fq-opts"></div>
+<div class="fb" id="fq-fb"></div>
+</div>
+<div class="next-row"><button class="btn btn-navy" id="fqnext" onclick="fqNext()" style="display:none">Suivant →</button></div>
+</div>
+<div class="score-scr" id="fq-score" style="padding:28px 20px">
+<div class="score-emoji" id="fqs-emoji"></div>
+<div class="score-title" id="fqs-title"></div>
+<div class="score-num" id="fqs-num" style="font-size:2.8rem"></div>
+<div class="score-det" id="fqs-det" style="margin-bottom:18px"></div>
+<div class="score-btns">
+<button class="btn btn-navy" onclick="fqRestart()">🔁 Réessayer</button>
+<button class="btn btn-light" onclick="setFMode('cards')">🃏 Revoir les cartes</button>
+</div>
+<div class="rev-section"><div class="rev-title">Erreurs</div><div id="fq-rev-list"></div></div>
+</div>
+</div>
+<div id="focus-ex-section" style="display:none">
+<div id="focus-ex-container"></div>
+</div>
+</div>
+</div>
+<div class="tab-panel" id="tab-fiche">
+<div class="fiche-actions no-print">
+<button class="btn btn-navy" onclick="window.print()">🖨️ Enregistrer en PDF</button>
+<span style="font-size:.8rem;color:var(--muted)">Dans la boîte de dialogue d'impression → choisir "Enregistrer en PDF"</span>
+</div>
+<div class="fiche-subnav no-print"><button class="fiche-subbtn active" data-fiche="recap" onclick="switchFiche('recap')">📋 Récap</button><button class="fiche-subbtn" data-fiche="ch1" onclick="switchFiche('ch1')">🏢 Secteur</button><button class="fiche-subbtn" data-fiche="ch2" onclick="switchFiche('ch2')">🛡️ Catégories</button><button class="fiche-subbtn" data-fiche="ch3" onclick="switchFiche('ch3')">🤝 Intermédiation</button></div>
 <div class="fiche-panel active" id="fiche-recap">
 <div class="fiche-body">
 <h2>📋 Récapitulatif — Jour 01 : L'Assurance</h2>
-
 <h3>🏢 Secteur</h3>
 <table><tr><th>Opérateur</th><th>Code</th></tr>
 <tr><td>Entreprises d'assurances</td><td>Code des assurances</td></tr>
@@ -391,88 +389,82 @@ h2.heart-line, h3.heart-line { padding-left: 6px !important; }
 <tr><td>Institutions de prévoyance</td><td>Code de la Sécurité Sociale</td></tr>
 </table>
 <p><strong>ACPR</strong> : agrément en 6 mois · 18 branches non-vie + 7 branches vie · principe de spécialité (vie ≠ non-vie séparés).</p>
-<p><strong>Répartition</strong> (IARD) → provisions techniques. <strong>Capitalisation</strong> (Vie) → provisions mathématiques.</p>
-
+<p class="heart-line"><span class="heart-badge">❤️</span><strong>Répartition</strong> (IARD) → provisions techniques. <strong>Capitalisation</strong> (Vie) → provisions mathématiques.</p>
 <h3>🛡️ Catégories</h3>
 <ul>
-  <li><strong>RC civile + RC décennale</strong> : assurances obligatoires</li>
-  <li>Déclenchement <strong>fait dommageable</strong> : sinistre pendant le contrat</li>
-  <li>Déclenchement <strong>réclamation</strong> : sinistre + réclamation · délai min. 5 ans après fin contrat</li>
-  <li><strong>Participation</strong> aux résultats : obligatoire au-delà de 50 salariés</li>
-  <li><strong>Assurance-vie</strong> : hors masse successorale (Art. L132-12) — levier clé de transmission patrimoniale</li>
+<li><strong>RC civile + RC décennale</strong> : assurances obligatoires</li>
+<li>Déclenchement <strong>fait dommageable</strong> : sinistre pendant le contrat</li>
+<li>Déclenchement <strong>réclamation</strong> : sinistre + réclamation · délai min. 5 ans après fin contrat</li>
+<li><strong>Participation</strong> aux résultats : obligatoire au-delà de 50 salariés</li>
+<li><strong>Assurance-vie</strong> : hors masse successorale (Art. L132-12) — levier clé de transmission patrimoniale</li>
 </ul>
-
 <h3>🤝 Intermédiation</h3>
-<table><tr><th>Statut</th><th>Nature</th><th>Exclusivité</th><th>Portefeuille</th></tr>
+<table class="heart-line"><span class="heart-badge">❤️</span><tr><th>Statut</th><th>Nature</th><th>Exclusivité</th><th>Portefeuille</th></tr>
 <tr><td>Agent général</td><td>Profession libérale</td><td>Oui</td><td>Propriété compagnie</td></tr>
 <tr><td>Courtier</td><td>Commerçant</td><td>Non</td><td>Lui appartient</td></tr>
 <tr><td>Mandataire</td><td>PP / PM</td><td>Avec ou sans</td><td>Variable</td></tr>
 <tr><td>MIA</td><td>PP ou PM</td><td>Via un intermédiaire</td><td>—</td></tr>
 </table>
-<p><strong>4 conditions d'exercice</strong> : Honorabilité · Capacité professionnelle · RCP · Garantie financière (si encaissement). Immatriculation <strong>ORIAS</strong> obligatoire.</p>
+<p class="heart-line"><span class="heart-badge">❤️</span><strong>4 conditions d'exercice</strong> : Honorabilité · Capacité professionnelle · RCP · Garantie financière (si encaissement). Immatriculation <strong>ORIAS</strong> obligatoire.</p>
 </div>
 </div>
 <div class="fiche-panel" id="fiche-ch1">
 <div class="fiche-body">
 <h2>Chapitre 1 — Présentation du secteur</h2>
-    <h3>1.1 L'opération d'assurance</h3>
-    <p>L'assurance est un contrat par lequel l'<strong>assureur</strong> s'engage, en contrepartie d'une <strong>prime</strong>, à indemniser en cas de réalisation du <strong>risque</strong> (événement aléatoire).</p>
-    <table><tr><th>Intervenant</th><th>Rôle</th></tr><tr><td>Assuré</td><td>Personne exposée au risque</td></tr><tr><td>Bénéficiaire</td><td>Personne qui reçoit la prestation</td></tr><tr><td>Adhérent</td><td>Signe la police (employeur en collectif)</td></tr><tr><td>Assureur</td><td>PM — accepte risques, perçoit primes, règle sinistres</td></tr></table>
-    <h3>1.2 Rôle économique et social</h3>
-    <p>Fonctionne par <strong>mutualisation</strong>. <strong>IARD</strong> = Incendie, Accidents, Risques Divers (+ Transport = IARDT). <strong>Réassurance</strong> : transfert de risque vers réassureur — fortement non-vie, très international.</p>
-    <table><tr><th>Mode</th><th>Assurances</th><th>Provisions</th></tr><tr><td>Répartition</td><td>IARD, non-vie</td><td>Techniques</td></tr><tr><td>Capitalisation</td><td>Assurance-vie</td><td>Mathématiques</td></tr></table>
-    <p><strong>Rôle social</strong> : maintenir revenus · reconstituer patrimoine · ne pas être à charge de la collectivité · sauvegarder emplois · préserver tissu économique.</p>
-    <h3>1.3 Les intervenants du secteur</h3>
-    <table><tr><th>Organisme</th><th>Code</th></tr><tr><td>Entreprises d'assurances</td><td>Code des assurances</td></tr><tr><td>Sociétés mutuelles</td><td>Code de la mutualité</td></tr><tr><td>Institutions de prévoyance</td><td>Code de la Sécurité Sociale</td></tr></table>
-    <p><strong>LPS</strong> : services sans être établi. <strong>LE</strong> : via établissement permanent. <strong>Passeport européen</strong> : exercer dans toute l'UE via dossier auprès de l'autorité nationale.</p>
-    <p><strong>Agrément ACPR — 3 principes</strong> : Spécialité · Spécialisation (séparation vie/non-vie) · Branche (18 non-vie + 7 vie). Délai : <strong>6 mois</strong>. Perte : retrait · caducité · transfert total.</p>
-    <table><tr><th>Statut</th><th>Nature</th><th>Exclusivité</th><th>Portefeuille</th></tr><tr><td>Agent général</td><td>Profession libérale</td><td>Oui</td><td>Propriété de la compagnie</td></tr><tr><td>Courtier</td><td>Commerçant</td><td>Non</td><td>Lui appartient</td></tr><tr><td>Mandataire</td><td>PP non salariée / PM</td><td>Avec ou sans</td><td>Variable</td></tr><tr><td>MIA</td><td>PP ou PM</td><td>Par un intermédiaire</td><td>—</td></tr></table>
-    <p><strong>Conditions d'exercice</strong> : Honorabilité · Capacité professionnelle · RCP · Garantie financière (si encaissement). Immatriculation : <strong>ORIAS</strong>.</p>
-    
+<h3>1.1 L'opération d'assurance</h3>
+<p>L'assurance est un contrat par lequel l'<strong>assureur</strong> s'engage, en contrepartie d'une <strong>prime</strong>, à indemniser en cas de réalisation du <strong>risque</strong> (événement aléatoire).</p>
+<table class="heart-line"><span class="heart-badge">❤️</span><tr><th>Intervenant</th><th>Rôle</th></tr><tr><td>Assuré</td><td>Personne exposée au risque</td></tr><tr><td>Bénéficiaire</td><td>Personne qui reçoit la prestation</td></tr><tr><td>Adhérent</td><td>Signe la police (employeur en collectif)</td></tr><tr><td>Assureur</td><td>PM — accepte risques, perçoit primes, règle sinistres</td></tr></table>
+<h3>1.2 Rôle économique et social</h3>
+<p>Fonctionne par <strong>mutualisation</strong>. <strong>IARD</strong> = Incendie, Accidents, Risques Divers (+ Transport = IARDT). <strong>Réassurance</strong> : transfert de risque vers réassureur — fortement non-vie, très international.</p>
+<table class="heart-line"><span class="heart-badge">❤️</span><tr><th>Mode</th><th>Assurances</th><th>Provisions</th></tr><tr><td>Répartition</td><td>IARD, non-vie</td><td>Techniques</td></tr><tr><td>Capitalisation</td><td>Assurance-vie</td><td>Mathématiques</td></tr></table>
+<p><strong>Rôle social</strong> : maintenir revenus · reconstituer patrimoine · ne pas être à charge de la collectivité · sauvegarder emplois · préserver tissu économique.</p>
+<h3 class="heart-line"><span class="heart-badge">❤️</span>1.3 Les intervenants du secteur</h3>
+<table><tr><th>Organisme</th><th>Code</th></tr><tr><td>Entreprises d'assurances</td><td>Code des assurances</td></tr><tr><td>Sociétés mutuelles</td><td>Code de la mutualité</td></tr><tr><td>Institutions de prévoyance</td><td>Code de la Sécurité Sociale</td></tr></table>
+<p><strong>LPS</strong> : services sans être établi. <strong>LE</strong> : via établissement permanent. <strong>Passeport européen</strong> : exercer dans toute l'UE via dossier auprès de l'autorité nationale.</p>
+<p><strong>Agrément ACPR — 3 principes</strong> : Spécialité · Spécialisation (séparation vie/non-vie) · Branche (18 non-vie + 7 vie). Délai : <strong>6 mois</strong>. Perte : retrait · caducité · transfert total.</p>
+<table class="heart-line"><span class="heart-badge">❤️</span><tr><th>Statut</th><th>Nature</th><th>Exclusivité</th><th>Portefeuille</th></tr><tr><td>Agent général</td><td>Profession libérale</td><td>Oui</td><td>Propriété de la compagnie</td></tr><tr><td>Courtier</td><td>Commerçant</td><td>Non</td><td>Lui appartient</td></tr><tr><td>Mandataire</td><td>PP non salariée / PM</td><td>Avec ou sans</td><td>Variable</td></tr><tr><td>MIA</td><td>PP ou PM</td><td>Par un intermédiaire</td><td>—</td></tr></table>
+<p class="heart-line"><span class="heart-badge">❤️</span><strong>Conditions d'exercice</strong> : Honorabilité · Capacité professionnelle · RCP · Garantie financière (si encaissement). Immatriculation : <strong>ORIAS</strong>.</p>
 </div>
 </div>
 <div class="fiche-panel" id="fiche-ch2">
 <div class="fiche-body">
 <h2>Chapitre 2 — Les catégories d'assurance</h2>
-    <h3>2.1 Personnes / Biens</h3>
-    <ul><li><strong>Vie entière/décès</strong> : capital quelle que soit la date du décès</li><li><strong>Vie proprement dite</strong> : capital uniquement si vivant à la date fixée</li><li><strong>Mixte</strong> : capital si décès dans le délai OU si vivant à l'échéance</li></ul>
-    <p>RC civile et RC décennale = <strong>obligatoires</strong>. <strong>Action directe victime</strong> : droit de créance exclusif sur l'indemnité. <strong>BCT</strong> : saisi si garantie refusée.</p>
-    <h3>2.2 Individuelle / Collective</h3>
-    <p><strong>Homme-clé</strong> : indemnité si décès/incapacité de la personne-clé. <strong>Collective</strong> (Art. L141-1) : souscrite par une PM pour un groupe — risques vie, intégrité physique, maternité, incapacité, invalidité, chômage.</p>
-    <table><tr><th>Épargne salariale</th><th>Caractéristiques</th></tr><tr><td>PEE</td><td>Une seule entreprise (OPCVM, titres)</td></tr><tr><td>PEI</td><td>Plusieurs entreprises du même secteur</td></tr><tr><td>PERCO</td><td>Retraite collective — capital ou rente</td></tr></table>
-    <p><strong>Participation</strong> : obligatoire &gt; <strong>50 salariés</strong>.</p>
-    <h3>2.3 Obligatoire / Facultative</h3>
-    <p><strong>Modes de déclenchement</strong> : Fait dommageable (sinistre pendant contrat) · Réclamation de la victime (sinistre + réclamation + min. <strong>5 ans</strong> après fin).</p>
-    <table><tr><th>Statut</th><th>MRH obligatoire ?</th></tr><tr><td>Locataire</td><td>✅ Oui (RC locative)</td></tr><tr><td>Copropriétaire (occupant ou non)</td><td>✅ Oui</td></tr><tr><td>Propriétaire occupant hors copropriété</td><td>❌ Non</td></tr></table>
-    <p><strong>Auto facultatif</strong> : dommages tous accidents · collision · vol · bris de glace. Attachées : catastrophe naturelle, tempête, attentats, catastrophe technologique.</p>
-    <h3>2.4 Indemnitaire / Forfaitaire</h3>
-    <table><tr><th></th><th>Indemnitaire</th><th>Forfaitaire</th></tr><tr><td>Principe</td><td>Répare le préjudice réel</td><td>Montant fixé à la souscription</td></tr><tr><td>Exemples</td><td>MRH, auto, santé (frais médicaux)</td><td>Vie, décès, prévoyance, retraite</td></tr></table>
-    <p><strong>Valeur d'usage</strong> : prix au sinistre moins vétusté. <strong>Valeur à neuf</strong> : sans déduction vétusté.</p>
-    <h3>2.5 Répartition / Capitalisation</h3>
-    <p>Séparation juridique obligatoire. Répartition → <strong>provisions techniques</strong>. Capitalisation → <strong>provisions mathématiques</strong>.</p>
-    
+<h3>2.1 Personnes / Biens</h3>
+<ul><li><strong>Vie entière/décès</strong> : capital quelle que soit la date du décès</li><li><strong>Vie proprement dite</strong> : capital uniquement si vivant à la date fixée</li><li><strong>Mixte</strong> : capital si décès dans le délai OU si vivant à l'échéance</li></ul>
+<p>RC civile et RC décennale = <strong>obligatoires</strong>. <strong>Action directe victime</strong> : droit de créance exclusif sur l'indemnité. <strong>BCT</strong> : saisi si garantie refusée.</p>
+<h3>2.2 Individuelle / Collective</h3>
+<p><strong>Homme-clé</strong> : indemnité si décès/incapacité de la personne-clé. <strong>Collective</strong> (Art. L141-1) : souscrite par une PM pour un groupe — risques vie, intégrité physique, maternité, incapacité, invalidité, chômage.</p>
+<table><tr><th>Épargne salariale</th><th>Caractéristiques</th></tr><tr><td>PEE</td><td>Une seule entreprise (OPCVM, titres)</td></tr><tr><td>PEI</td><td>Plusieurs entreprises du même secteur</td></tr><tr><td>PERCO</td><td>Retraite collective — capital ou rente</td></tr></table>
+<p><strong>Participation</strong> : obligatoire &gt; <strong>50 salariés</strong>.</p>
+<h3>2.3 Obligatoire / Facultative</h3>
+<p><strong>Modes de déclenchement</strong> : Fait dommageable (sinistre pendant contrat) · Réclamation de la victime (sinistre + réclamation + min. <strong>5 ans</strong> après fin).</p>
+<table><tr><th>Statut</th><th>MRH obligatoire ?</th></tr><tr><td>Locataire</td><td>✅ Oui (RC locative)</td></tr><tr><td>Copropriétaire (occupant ou non)</td><td>✅ Oui</td></tr><tr><td>Propriétaire occupant hors copropriété</td><td>❌ Non</td></tr></table>
+<p><strong>Auto facultatif</strong> : dommages tous accidents · collision · vol · bris de glace. Attachées : catastrophe naturelle, tempête, attentats, catastrophe technologique.</p>
+<h3 class="heart-line"><span class="heart-badge">❤️</span>2.4 Indemnitaire / Forfaitaire</h3>
+<table class="heart-line"><span class="heart-badge">❤️</span><tr><th></th><th>Indemnitaire</th><th>Forfaitaire</th></tr><tr><td>Principe</td><td>Répare le préjudice réel</td><td>Montant fixé à la souscription</td></tr><tr><td>Exemples</td><td>MRH, auto, santé (frais médicaux)</td><td>Vie, décès, prévoyance, retraite</td></tr></table>
+<p><strong>Valeur d'usage</strong> : prix au sinistre moins vétusté. <strong>Valeur à neuf</strong> : sans déduction vétusté.</p>
+<h3 class="heart-line"><span class="heart-badge">❤️</span>2.5 Répartition / Capitalisation</h3>
+<p class="heart-line"><span class="heart-badge">❤️</span>Séparation juridique obligatoire. Répartition → <strong>provisions techniques</strong>. Capitalisation → <strong>provisions mathématiques</strong>.</p>
 </div>
 </div>
 <div class="fiche-panel" id="fiche-ch3">
 <div class="fiche-body">
 <h2>Chapitre 3 — L'intermédiation en assurance</h2>
-    <h3>3.1 Champ d'application</h3>
-    <p><strong>Distribution</strong> : recommandations, présentation, proposition, aide à la conclusion, comparaison de produits (Art. L511-1 III). <strong>Rémunération</strong> (Art. R511-3) : commission, honoraire, ou tout avantage en lien avec la distribution.</p>
-    <h3>3.2 Les 4 catégories</h3>
-    <table><tr><th>Statut</th><th>Nature</th><th>Spécificités</th></tr><tr><td>Courtier</td><td>Commerçant</td><td>RCP + GF obligatoires. Portefeuille lui appartient.</td></tr><tr><td>Agent général</td><td>Profession libérale</td><td>Mandat exclusif. Portefeuille = compagnie.</td></tr><tr><td>Mandataire</td><td>PP non salariée / PM</td><td>Mandaté par une compagnie d'assurance.</td></tr><tr><td>MIA</td><td>PP ou PM</td><td>Mandaté par un intermédiaire. Apport + encaissement seulement.</td></tr></table>
-    <h3>3.3 Conditions d'accès et d'exercice</h3>
-    <p><strong>Honorabilité</strong> (Art. L512-3) : pas de condamnations (Art. L322-2). Justificatif : déclaration sur l'honneur. L'ORIAS apprécie.</p>
-    <table><tr><th>Niveau</th><th>Personnes concernées</th><th>Article</th></tr><tr><td>I</td><td>Courtiers, agents généraux, salariés responsables</td><td>R512-9</td></tr><tr><td>II</td><td>Mandataires, MIA sans fonction de responsable</td><td>R512-10</td></tr><tr><td>III</td><td>Intermédiation à titre accessoire</td><td>R512-12</td></tr></table>
-    <p>Justificatifs capacité : stage agréé · expérience en production/gestion · diplôme reconnu. <strong>Loi PACTE (1er avril 2023)</strong> : adhésion obligatoire à une chambre professionnelle.</p>
-    <h3>3.4 RCP et Garantie financière</h3>
-    <p><strong>RCP</strong> (Art. L512-6) : min. <strong>1,5 M€/sinistre</strong> et <strong>2 M€/an</strong> (Art. A512-4). Franchise max 20 %, inopposable aux victimes. Couvre l'EEE. Résiliation → notification immédiate ORIAS. Exception : mandataire si mandant fournit garantie équivalente.</p>
-    <p><strong>GF</strong> (Art. L512-7) : min. <strong>115 000 €</strong> (Art. A512-5). Ne peut cesser avant <strong>3 jours francs</strong>. Exception : mandant encaisse lui-même. Aucun capital social minimum requis.</p>
-    <h3>3.5 Contrôle et sanctions ACPR</h3>
-    <p>Contrôles à distance et sur place. Sanctions (du + léger au + grave) : Avertissement · Blâme · Interdiction d'opérations (max 10 ans) · Suspension dirigeants (max 10 ans) · Démission d'office · Radiation · Interdiction d'activité · <strong>Sanction pécuniaire max 100 M€</strong>.</p>
-  
+<h3>3.1 Champ d'application</h3>
+<p><strong>Distribution</strong> : recommandations, présentation, proposition, aide à la conclusion, comparaison de produits (Art. L511-1 III). <strong>Rémunération</strong> (Art. R511-3) : commission, honoraire, ou tout avantage en lien avec la distribution.</p>
+<h3>3.2 Les 4 catégories</h3>
+<table class="heart-line"><span class="heart-badge">❤️</span><tr><th>Statut</th><th>Nature</th><th>Spécificités</th></tr><tr><td>Courtier</td><td>Commerçant</td><td>RCP + GF obligatoires. Portefeuille lui appartient.</td></tr><tr><td>Agent général</td><td>Profession libérale</td><td>Mandat exclusif. Portefeuille = compagnie.</td></tr><tr><td>Mandataire</td><td>PP non salariée / PM</td><td>Mandaté par une compagnie d'assurance.</td></tr><tr><td>MIA</td><td>PP ou PM</td><td>Mandaté par un intermédiaire. Apport + encaissement seulement.</td></tr></table>
+<h3>3.3 Conditions d'accès et d'exercice</h3>
+<p class="heart-line"><span class="heart-badge">❤️</span><strong>Honorabilité</strong> (Art. L512-3) : pas de condamnations (Art. L322-2). Justificatif : déclaration sur l'honneur. L'ORIAS apprécie.</p>
+<table class="heart-line"><span class="heart-badge">❤️</span><tr><th>Niveau</th><th>Personnes concernées</th><th>Article</th></tr><tr><td>I</td><td>Courtiers, agents généraux, salariés responsables</td><td>R512-9</td></tr><tr><td>II</td><td>Mandataires, MIA sans fonction de responsable</td><td>R512-10</td></tr><tr><td>III</td><td>Intermédiation à titre accessoire</td><td>R512-12</td></tr></table>
+<p>Justificatifs capacité : stage agréé · expérience en production/gestion · diplôme reconnu. <strong>Loi PACTE (1er avril 2023)</strong> : adhésion obligatoire à une chambre professionnelle.</p>
+<h3 class="heart-line"><span class="heart-badge">❤️</span>3.4 RCP et Garantie financière</h3>
+<p class="heart-line"><span class="heart-badge">❤️</span><strong>RCP</strong> (Art. L512-6) : min. <strong>1,5 M€/sinistre</strong> et <strong>2 M€/an</strong> (Art. A512-4). Franchise max 20 %, inopposable aux victimes. Couvre l'EEE. Résiliation → notification immédiate ORIAS. Exception : mandataire si mandant fournit garantie équivalente.</p>
+<p><strong>GF</strong> (Art. L512-7) : min. <strong>115 000 €</strong> (Art. A512-5). Ne peut cesser avant <strong>3 jours francs</strong>. Exception : mandant encaisse lui-même. Aucun capital social minimum requis.</p>
+<h3>3.5 Contrôle et sanctions ACPR</h3>
+<p>Contrôles à distance et sur place. Sanctions (du + léger au + grave) : Avertissement · Blâme · Interdiction d'opérations (max 10 ans) · Suspension dirigeants (max 10 ans) · Démission d'office · Radiation · Interdiction d'activité · <strong>Sanction pécuniaire max 100 M€</strong>.</p>
 </div>
 </div>
-
 </div>
 </main>
 <script>
@@ -1240,182 +1232,122 @@ initExercises();
 fcRender();
 qRender();
 </script>
-
-  <!-- ═══════════════ ONGLET EXERCICES ═══════════════ -->
-  <div class="tab-panel" id="tab-exercices">
-    <div class="ex-header">
-      <h2>🏋️ Exercices interactifs — Jour 01</h2>
-      <p class="ex-sub">Tape sur un élément pour le sélectionner, puis tape sur la zone de dépôt pour le placer. Sur desktop, le glisser-déposer fonctionne aussi.</p>
-    </div>
-
-    <!-- EX 1 : Statuts des intermédiaires -->
-    <div class="ex-card" id="ex1">
-      <div class="ex-title">① Associer chaque intermédiaire à son statut juridique</div>
-      <div class="ex-source" id="ex1-src"></div>
-      <div class="ex-grid4">
-        <div>
-          <div class="ex-col-header">🤝 Courtier</div>
-          <div class="drop-zone" data-ex="1" data-key="courtier"></div>
-        </div>
-        <div>
-          <div class="ex-col-header">🏛️ Agent général</div>
-          <div class="drop-zone" data-ex="1" data-key="agent"></div>
-        </div>
-        <div>
-          <div class="ex-col-header">📋 Mandataire</div>
-          <div class="drop-zone" data-ex="1" data-key="mandataire"></div>
-        </div>
-        <div>
-          <div class="ex-col-header">🔗 MIA</div>
-          <div class="drop-zone" data-ex="1" data-key="mia"></div>
-        </div>
-      </div>
-      <div class="ex-btns">
-        <button class="btn-check" onclick="checkEx(1)">🔍 Corriger</button>
-        <button class="btn-reset" onclick="resetEx(1)">↺ Réinitialiser</button>
-      </div>
-      <div class="ex-feedback" id="ex1-fb"></div>
-    </div>
-
-    <!-- EX 2 : Indemnitaire vs Forfaitaire -->
-    <div class="ex-card" id="ex2">
-      <div class="ex-title">② Classer chaque assurance : Indemnitaire ou Forfaitaire ?</div>
-      <div class="ex-source" id="ex2-src"></div>
-      <div class="ex-grid2">
-        <div>
-          <div class="ex-col-header ind-h">⚖️ Indemnitaire</div>
-          <div class="drop-zone multi" data-ex="2" data-key="ind"></div>
-        </div>
-        <div>
-          <div class="ex-col-header for-h">💰 Forfaitaire</div>
-          <div class="drop-zone multi" data-ex="2" data-key="for"></div>
-        </div>
-      </div>
-      <div class="ex-btns">
-        <button class="btn-check" onclick="checkEx(2)">🔍 Corriger</button>
-        <button class="btn-reset" onclick="resetEx(2)">↺ Réinitialiser</button>
-      </div>
-      <div class="ex-feedback" id="ex2-fb"></div>
-    </div>
-
-    <!-- EX 3 : 3 familles et leurs codes -->
-    <div class="ex-card" id="ex3">
-      <div class="ex-title">③ Associer chaque famille d'organismes à son code juridique</div>
-      <div class="ex-source" id="ex3-src"></div>
-      <div class="ex-grid3">
-        <div>
-          <div class="ex-col-header">🏢 Entreprises d'assurances</div>
-          <div class="drop-zone" data-ex="3" data-key="ea"></div>
-        </div>
-        <div>
-          <div class="ex-col-header">🤲 Sociétés mutuelles</div>
-          <div class="drop-zone" data-ex="3" data-key="mut"></div>
-        </div>
-        <div>
-          <div class="ex-col-header">🛡️ Institutions de prévoyance</div>
-          <div class="drop-zone" data-ex="3" data-key="ip"></div>
-        </div>
-      </div>
-      <div class="ex-btns">
-        <button class="btn-check" onclick="checkEx(3)">🔍 Corriger</button>
-        <button class="btn-reset" onclick="resetEx(3)">↺ Réinitialiser</button>
-      </div>
-      <div class="ex-feedback" id="ex3-fb"></div>
-    </div>
-
-    <!-- EX 4 : Montants clés -->
-    <div class="ex-card" id="ex4">
-      <div class="ex-title">④ Compléter le tableau des montants clés</div>
-      <div class="ex-source" id="ex4-src"></div>
-      <table class="ex-table">
-        <tr><td>RCP — minimum par sinistre</td><td><div class="drop-zone inline" data-ex="4" data-key="rcp-sin"></div></td></tr>
-        <tr><td>RCP — minimum par an</td><td><div class="drop-zone inline" data-ex="4" data-key="rcp-an"></div></td></tr>
-        <tr><td>Franchise maximum de la RCP (inopposable aux victimes)</td><td><div class="drop-zone inline" data-ex="4" data-key="franchise"></div></td></tr>
-        <tr><td>Garantie financière — montant minimum</td><td><div class="drop-zone inline" data-ex="4" data-key="gf"></div></td></tr>
-        <tr><td>Délai minimum avant cessation de la GF</td><td><div class="drop-zone inline" data-ex="4" data-key="delai"></div></td></tr>
-        <tr><td>Délai de prescription RC après réclamation</td><td><div class="drop-zone inline" data-ex="4" data-key="presc"></div></td></tr>
-      </table>
-      <div class="ex-btns">
-        <button class="btn-check" onclick="checkEx(4)">🔍 Corriger</button>
-        <button class="btn-reset" onclick="resetEx(4)">↺ Réinitialiser</button>
-      </div>
-      <div class="ex-feedback" id="ex4-fb"></div>
-    </div>
-
-    <!-- EX 5 : MRH obligatoire ou non -->
-    <div class="ex-card" id="ex5">
-      <div class="ex-title">⑤ MRH — Qui est légalement obligé de s'assurer ?</div>
-      <div class="ex-source" id="ex5-src"></div>
-      <div class="ex-grid2">
-        <div>
-          <div class="ex-col-header obl-h">✅ Obligatoire</div>
-          <div class="drop-zone multi" data-ex="5" data-key="obl"></div>
-        </div>
-        <div>
-          <div class="ex-col-header noo-h">❌ Non obligatoire</div>
-          <div class="drop-zone multi" data-ex="5" data-key="non"></div>
-        </div>
-      </div>
-      <div class="ex-btns">
-        <button class="btn-check" onclick="checkEx(5)">🔍 Corriger</button>
-        <button class="btn-reset" onclick="resetEx(5)">↺ Réinitialiser</button>
-      </div>
-      <div class="ex-feedback" id="ex5-fb"></div>
-    </div>
-
-  </div><!-- /tab-exercices -->
-
-
-<script>
-(function() {
-  var DAY_KEYWORDS = ["les intervenants", "assuré", "bénéficiaire", "adhérent", "conditions d'exercice", "honorabilité", "capacité professionnelle", "RCP", "garantie financière", "ORIAS", "indemnitaire", "forfaitaire", "répartition", "capitalisation", "provisions mathématiques", "provisions techniques", "agent général", "courtier", "mandataire", "MIA"];
-  var seen = new WeakSet();
-
-  function markEl(el) {
-    if (!el || seen.has(el)) return;
-    var tag = el.tagName;
-    if (!tag) return;
-    seen.add(el);
-    el.classList.add('heart-line');
-    var badge = document.createElement('span');
-    badge.className = 'heart-badge';
-    badge.textContent = '❤️';
-    el.insertBefore(badge, el.firstChild);
-  }
-
-  function markKeywords(fb, keywords) {
-    var walker = document.createTreeWalker(fb, NodeFilter.SHOW_TEXT, null, false);
-    var node;
-    while ((node = walker.nextNode())) {
-      var txt = node.textContent.toLowerCase();
-      for (var i = 0; i < keywords.length; i++) {
-        if (txt.indexOf(keywords[i].toLowerCase()) !== -1) {
-          // Trouve l'ancêtre immédiat marquable
-          var el = node.parentElement;
-          var depth = 0;
-          while (el && el !== fb && depth < 6) {
-            var t = el.tagName;
-            if (t === 'LI' || t === 'P' || t === 'H2' || t === 'H3' ||
-                t === 'BLOCKQUOTE' || t === 'TABLE') {
-              markEl(el);
-              break;
-            }
-            el = el.parentElement;
-            depth++;
-          }
-          break;
-        }
-      }
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.fiche-body').forEach(function(fb) {
-      markKeywords(fb, DAY_KEYWORDS);
-    });
-  });
-})();
-</script>
-
+<!-- ═══════════════ ONGLET EXERCICES ═══════════════ -->
+<div class="tab-panel" id="tab-exercices">
+<div class="ex-header">
+<h2>🏋️ Exercices interactifs — Jour 01</h2>
+<p class="ex-sub">Tape sur un élément pour le sélectionner, puis tape sur la zone de dépôt pour le placer. Sur desktop, le glisser-déposer fonctionne aussi.</p>
+</div>
+<!-- EX 1 : Statuts des intermédiaires -->
+<div class="ex-card" id="ex1">
+<div class="ex-title">① Associer chaque intermédiaire à son statut juridique</div>
+<div class="ex-source" id="ex1-src"></div>
+<div class="ex-grid4">
+<div>
+<div class="ex-col-header">🤝 Courtier</div>
+<div class="drop-zone" data-ex="1" data-key="courtier"></div>
+</div>
+<div>
+<div class="ex-col-header">🏛️ Agent général</div>
+<div class="drop-zone" data-ex="1" data-key="agent"></div>
+</div>
+<div>
+<div class="ex-col-header">📋 Mandataire</div>
+<div class="drop-zone" data-ex="1" data-key="mandataire"></div>
+</div>
+<div>
+<div class="ex-col-header">🔗 MIA</div>
+<div class="drop-zone" data-ex="1" data-key="mia"></div>
+</div>
+</div>
+<div class="ex-btns">
+<button class="btn-check" onclick="checkEx(1)">🔍 Corriger</button>
+<button class="btn-reset" onclick="resetEx(1)">↺ Réinitialiser</button>
+</div>
+<div class="ex-feedback" id="ex1-fb"></div>
+</div>
+<!-- EX 2 : Indemnitaire vs Forfaitaire -->
+<div class="ex-card" id="ex2">
+<div class="ex-title">② Classer chaque assurance : Indemnitaire ou Forfaitaire ?</div>
+<div class="ex-source" id="ex2-src"></div>
+<div class="ex-grid2">
+<div>
+<div class="ex-col-header ind-h">⚖️ Indemnitaire</div>
+<div class="drop-zone multi" data-ex="2" data-key="ind"></div>
+</div>
+<div>
+<div class="ex-col-header for-h">💰 Forfaitaire</div>
+<div class="drop-zone multi" data-ex="2" data-key="for"></div>
+</div>
+</div>
+<div class="ex-btns">
+<button class="btn-check" onclick="checkEx(2)">🔍 Corriger</button>
+<button class="btn-reset" onclick="resetEx(2)">↺ Réinitialiser</button>
+</div>
+<div class="ex-feedback" id="ex2-fb"></div>
+</div>
+<!-- EX 3 : 3 familles et leurs codes -->
+<div class="ex-card" id="ex3">
+<div class="ex-title">③ Associer chaque famille d'organismes à son code juridique</div>
+<div class="ex-source" id="ex3-src"></div>
+<div class="ex-grid3">
+<div>
+<div class="ex-col-header">🏢 Entreprises d'assurances</div>
+<div class="drop-zone" data-ex="3" data-key="ea"></div>
+</div>
+<div>
+<div class="ex-col-header">🤲 Sociétés mutuelles</div>
+<div class="drop-zone" data-ex="3" data-key="mut"></div>
+</div>
+<div>
+<div class="ex-col-header">🛡️ Institutions de prévoyance</div>
+<div class="drop-zone" data-ex="3" data-key="ip"></div>
+</div>
+</div>
+<div class="ex-btns">
+<button class="btn-check" onclick="checkEx(3)">🔍 Corriger</button>
+<button class="btn-reset" onclick="resetEx(3)">↺ Réinitialiser</button>
+</div>
+<div class="ex-feedback" id="ex3-fb"></div>
+</div>
+<!-- EX 4 : Montants clés -->
+<div class="ex-card" id="ex4">
+<div class="ex-title">④ Compléter le tableau des montants clés</div>
+<div class="ex-source" id="ex4-src"></div>
+<table class="ex-table">
+<tr><td>RCP — minimum par sinistre</td><td><div class="drop-zone inline" data-ex="4" data-key="rcp-sin"></div></td></tr>
+<tr><td>RCP — minimum par an</td><td><div class="drop-zone inline" data-ex="4" data-key="rcp-an"></div></td></tr>
+<tr><td>Franchise maximum de la RCP (inopposable aux victimes)</td><td><div class="drop-zone inline" data-ex="4" data-key="franchise"></div></td></tr>
+<tr><td>Garantie financière — montant minimum</td><td><div class="drop-zone inline" data-ex="4" data-key="gf"></div></td></tr>
+<tr><td>Délai minimum avant cessation de la GF</td><td><div class="drop-zone inline" data-ex="4" data-key="delai"></div></td></tr>
+<tr><td>Délai de prescription RC après réclamation</td><td><div class="drop-zone inline" data-ex="4" data-key="presc"></div></td></tr>
+</table>
+<div class="ex-btns">
+<button class="btn-check" onclick="checkEx(4)">🔍 Corriger</button>
+<button class="btn-reset" onclick="resetEx(4)">↺ Réinitialiser</button>
+</div>
+<div class="ex-feedback" id="ex4-fb"></div>
+</div>
+<!-- EX 5 : MRH obligatoire ou non -->
+<div class="ex-card" id="ex5">
+<div class="ex-title">⑤ MRH — Qui est légalement obligé de s'assurer ?</div>
+<div class="ex-source" id="ex5-src"></div>
+<div class="ex-grid2">
+<div>
+<div class="ex-col-header obl-h">✅ Obligatoire</div>
+<div class="drop-zone multi" data-ex="5" data-key="obl"></div>
+</div>
+<div>
+<div class="ex-col-header noo-h">❌ Non obligatoire</div>
+<div class="drop-zone multi" data-ex="5" data-key="non"></div>
+</div>
+</div>
+<div class="ex-btns">
+<button class="btn-check" onclick="checkEx(5)">🔍 Corriger</button>
+<button class="btn-reset" onclick="resetEx(5)">↺ Réinitialiser</button>
+</div>
+<div class="ex-feedback" id="ex5-fb"></div>
+</div>
+</div><!-- /tab-exercices -->
 </body>
 </html>
