@@ -1057,7 +1057,7 @@ function showFocTheme(id, btn) {
 }
 try {
   var scores = JSON.parse(localStorage.getItem('cgp_scores') || '{}');
-  ['jour01','jour02','jour03','jour04','jour05','jour06','jour07','jour08','jour09','jour10','jour11','jour12'].forEach(function(k){
+  ['jour01','jour02','jour03','jour04','jour05','jour06','jour07','jour08','jour09','jour10','jour11','jour12','jour13'].forEach(function(k){
     if(scores[k]){
       var s=scores[k], el=document.getElementById('score-'+k);
       if(el){el.className='day-score has-score';el.textContent='Dernier quiz : '+s.score+'/'+s.total+' ('+s.pct+'%) — '+s.date;}
