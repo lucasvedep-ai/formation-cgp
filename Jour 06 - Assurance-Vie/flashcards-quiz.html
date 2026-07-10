@@ -83,6 +83,27 @@ dl.fiche-dl dd{color:var(--text);line-height:1.5}
 .cas-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.82rem;font-weight:700;cursor:pointer;margin-bottom:10px}
 .cas-solution{display:none;background:var(--ok-bg);border-radius:8px;padding:14px 16px;font-size:.84rem;line-height:1.6;border:1px solid var(--ok)}
 @media(max-width:600px){header{padding:20px 16px}.tab-pane{padding:18px 14px}dl.fiche-dl{grid-template-columns:1fr}}
+
+/* ── Marqueurs ❤️ À Retenir ── */
+.heart-line {
+  position: relative;
+  border-left: 3px solid #e84393 !important;
+  padding-left: 10px !important;
+  background: linear-gradient(to right, #fff0f7, transparent) !important;
+  border-radius: 0 6px 6px 0;
+  margin-left: 0 !important;
+}
+.heart-badge {
+  display: inline-block;
+  font-size: 0.82em;
+  margin-right: 5px;
+  vertical-align: middle;
+  line-height: 1;
+}
+li.heart-line { list-style: none; margin-left: 0; padding-left: 14px !important; }
+table.heart-line { border-top: 3px solid #e84393; }
+h2.heart-line, h3.heart-line { padding-left: 6px !important; }
+
 </style>
 </head>
 <body>
@@ -430,5 +451,57 @@ function showTab(id, btn) {
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 window.onload = function() { showCard(); buildQuiz(); buildFocus(); };
 </script>
+
+<script>
+(function() {
+  var DAY_KEYWORDS = ["990 I", "990I", "article 990", "757 B", "757B", "article 757", "30 jours", "rétractation", "renonciation"];
+  var seen = new WeakSet();
+
+  function markEl(el) {
+    if (!el || seen.has(el)) return;
+    var tag = el.tagName;
+    if (!tag) return;
+    seen.add(el);
+    el.classList.add('heart-line');
+    var badge = document.createElement('span');
+    badge.className = 'heart-badge';
+    badge.textContent = '❤️';
+    el.insertBefore(badge, el.firstChild);
+  }
+
+  function markKeywords(fb, keywords) {
+    var walker = document.createTreeWalker(fb, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+    while ((node = walker.nextNode())) {
+      var txt = node.textContent.toLowerCase();
+      for (var i = 0; i < keywords.length; i++) {
+        if (txt.indexOf(keywords[i].toLowerCase()) !== -1) {
+          // Trouve l'ancêtre immédiat marquable
+          var el = node.parentElement;
+          var depth = 0;
+          while (el && el !== fb && depth < 6) {
+            var t = el.tagName;
+            if (t === 'LI' || t === 'P' || t === 'H2' || t === 'H3' ||
+                t === 'BLOCKQUOTE' || t === 'TABLE') {
+              markEl(el);
+              break;
+            }
+            el = el.parentElement;
+            depth++;
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.fiche-body').forEach(function(fb) {
+      markKeywords(fb, DAY_KEYWORDS);
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
