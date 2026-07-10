@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jour 11 &mdash; La Pr&eacute;voyance | Formation CGP</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Jour 11 — La Prévoyance | Formation CGP</title>
 <style>
 :root{
   --navy:#1a2744;--navy2:#253460;--gold:#c9a227;--gold2:#e8c84a;
@@ -84,317 +85,295 @@ dl.fiche-dl dd{line-height:1.5}
 .cas-solution{display:none;background:var(--ok-bg);border-radius:8px;padding:14px 16px;font-size:.84rem;line-height:1.6;border:1px solid var(--ok)}
 @media(max-width:600px){header{padding:20px 16px}.tab-pane{padding:18px 14px}dl.fiche-dl{grid-template-columns:1fr}}
 
+
 /* ── Marqueurs ❤️ À Retenir ── */
 .heart-line {
-  position: relative;
   border-left: 3px solid #e84393 !important;
   padding-left: 10px !important;
-  background: linear-gradient(to right, #fff0f7, transparent) !important;
-  border-radius: 0 6px 6px 0;
+  background: linear-gradient(to right, #fff0f7 0%, transparent 100%) !important;
+  border-radius: 0 6px 6px 0 !important;
   margin-left: 0 !important;
 }
 .heart-badge {
   display: inline-block;
-  font-size: 0.82em;
-  margin-right: 5px;
+  margin-right: 4px;
+  font-size: .88em;
   vertical-align: middle;
-  line-height: 1;
 }
-li.heart-line { list-style: none; margin-left: 0; padding-left: 14px !important; }
+li.heart-line { list-style: none; }
 table.heart-line { border-top: 3px solid #e84393; }
-h2.heart-line, h3.heart-line { padding-left: 6px !important; }
 
 </style>
 </head>
 <body>
 <header>
-  <h1>&#128737; Jour 11 &mdash; La Pr&eacute;voyance</h1>
-  <p>R&eacute;gimes obligatoires &middot; Indemnitaire vs Forfaitaire &middot; Taux d&rsquo;invalidit&eacute; &middot; T/66 &middot; Seuil 16% &middot; Les 5 cl&eacute;s</p>
+<h1>🛡 Jour 11 — La Prévoyance</h1>
+<p>Régimes obligatoires · Indemnitaire vs Forfaitaire · Taux d’invalidité · T/66 · Seuil 16% · Les 5 clés</p>
 </header>
 <div class="tab-bar">
-  <button class="tab-btn active" onclick="showTab('flashcards',this)">&#127183; Flashcards</button>
-  <button class="tab-btn" onclick="showTab('quiz',this)">&#128221; Quiz</button>
-  <button class="tab-btn" onclick="showTab('focus',this)">&#127919; Focus</button>
-  <button class="tab-btn" onclick="showTab('fiche',this)">&#128196; Fiche</button>
-  <button class="tab-btn" onclick="showTab('exercices',this)">&#127947; Exercices</button>
-  <button class="tab-btn" onclick="showTab('cas',this)">&#128203; Cas pratiques</button>
+<button class="tab-btn active" onclick="showTab('flashcards',this)">🃏 Flashcards</button>
+<button class="tab-btn" onclick="showTab('quiz',this)">📝 Quiz</button>
+<button class="tab-btn" onclick="showTab('focus',this)">🎯 Focus</button>
+<button class="tab-btn" onclick="showTab('fiche',this)">📄 Fiche</button>
+<button class="tab-btn" onclick="showTab('exercices',this)">🏋 Exercices</button>
+<button class="tab-btn" onclick="showTab('cas',this)">📋 Cas pratiques</button>
 </div>
-
 <!-- FLASHCARDS -->
-<div id="tab-flashcards" class="tab-pane active">
-  <div class="filter-bar">
-    <button class="filter-btn active" onclick="filterCards(0,this)">Tous (40)</button>
-    <button class="filter-btn" onclick="filterCards(1,this)">R&eacute;gimes obligatoires</button>
-    <button class="filter-btn" onclick="filterCards(2,this)">Indemnitaire / Forfaitaire</button>
-    <button class="filter-btn" onclick="filterCards(3,this)">T/66 &amp; Seuil</button>
-    <button class="filter-btn" onclick="filterCards(4,this)">Les 5 cl&eacute;s &amp; D&eacute;lais</button>
-  </div>
-  <div class="card-counter" id="card-counter">Carte 1 / 40</div>
-  <div class="card-wrap" onclick="flipCard()">
-    <div class="card-inner" id="card-inner">
-      <div class="card-face card-front">
-        <div class="ch-badge" id="card-ch">Ch. 1</div>
-        <div class="card-q" id="card-q">...</div>
-      </div>
-      <div class="card-face card-back">
-        <div class="card-a" id="card-a">...</div>
-      </div>
-    </div>
-  </div>
-  <div class="card-nav">
-    <button onclick="prevCard()">&#8592; Pr&eacute;c.</button>
-    <button onclick="shuffleCards()">&#128256; M&eacute;langer</button>
-    <button onclick="nextCard()">Suiv. &#8594;</button>
-  </div>
+<div class="tab-pane active" id="tab-flashcards">
+<div class="filter-bar">
+<button class="filter-btn active" onclick="filterCards(0,this)">Tous (40)</button>
+<button class="filter-btn" onclick="filterCards(1,this)">Régimes obligatoires</button>
+<button class="filter-btn" onclick="filterCards(2,this)">Indemnitaire / Forfaitaire</button>
+<button class="filter-btn" onclick="filterCards(3,this)">T/66 &amp; Seuil</button>
+<button class="filter-btn" onclick="filterCards(4,this)">Les 5 clés &amp; Délais</button>
 </div>
-
+<div class="card-counter" id="card-counter">Carte 1 / 40</div>
+<div class="card-wrap" onclick="flipCard()">
+<div class="card-inner" id="card-inner">
+<div class="card-face card-front">
+<div class="ch-badge" id="card-ch">Ch. 1</div>
+<div class="card-q" id="card-q">...</div>
+</div>
+<div class="card-face card-back">
+<div class="card-a" id="card-a">...</div>
+</div>
+</div>
+</div>
+<div class="card-nav">
+<button onclick="prevCard()">← Préc.</button>
+<button onclick="shuffleCards()">🔀 Mélanger</button>
+<button onclick="nextCard()">Suiv. →</button>
+</div>
+</div>
 <!-- QUIZ -->
-<div id="tab-quiz" class="tab-pane">
-  <div id="quiz-container"></div>
-  <div id="quiz-summary" class="quiz-summary" style="display:none"></div>
-  <button id="quiz-submit" onclick="submitQuiz()" style="display:block;margin:0 auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Valider le quiz</button>
-  <button id="quiz-reset" onclick="resetQuiz()" style="display:none;margin:16px auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Recommencer</button>
+<div class="tab-pane" id="tab-quiz">
+<div id="quiz-container"></div>
+<div class="quiz-summary" id="quiz-summary" style="display:none"></div>
+<button id="quiz-submit" onclick="submitQuiz()" style="display:block;margin:0 auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Valider le quiz</button>
+<button id="quiz-reset" onclick="resetQuiz()" style="display:none;margin:16px auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Recommencer</button>
 </div>
-
 <!-- FOCUS -->
-<div id="tab-focus" class="tab-pane">
-  <div class="focus-nav" id="focus-nav"></div>
-  <div id="focus-content"></div>
+<div class="tab-pane" id="tab-focus">
+<div class="focus-nav" id="focus-nav"></div>
+<div id="focus-content"></div>
 </div>
-
 <!-- FICHE -->
-<div id="tab-fiche" class="tab-pane">
-  <div class="fiche-nav">
-    <button class="fiche-btn active" onclick="j11go('r')">Vue d&rsquo;ensemble</button>
-    <button class="fiche-btn" onclick="j11go('1')">R&eacute;gimes obligatoires</button>
-    <button class="fiche-btn" onclick="j11go('2')">Indemnitaire vs Forfaitaire</button>
-    <button class="fiche-btn" onclick="j11go('3')">T/66 &amp; Seuil</button>
-    <button class="fiche-btn" onclick="j11go('4')">Les 5 cl&eacute;s</button>
-  </div>
-
-  <div id="fiche-r" class="fiche-section active">
-    <div class="fiche-block">
-      <h3>&#128200; J11 en un coup d&rsquo;&oelig;il &mdash; Pr&eacute;voyance</h3>
-      <table class="fiche-table">
-        <tr><th>Th&egrave;me</th><th>Point cl&eacute;</th><th>Valeur / R&egrave;gle</th></tr>
-        <tr><td><strong>Protection sociale</strong></td><td>Ne suffit pas pour les ind&eacute;pendants</td><td>SSI : 12 340€/an d&rsquo;invalidit&eacute; pour 80k€ revenus</td></tr>
-        <tr><td><strong>Type de contrat</strong></td><td>Forfaitaire &#10003; | Indemnitaire &#10007;</td><td>Forfaitaire = montant garanti, ind&eacute;pendant de la perte r&eacute;elle</td></tr>
-        <tr><td><strong>Bar&egrave;me taux</strong></td><td>Professionnel &#10003; | Fonctionnel &#10007;</td><td>&Eacute;value l&rsquo;incapacit&eacute; &agrave; exercer SA profession</td></tr>
-        <tr><td><strong>Calcul rente</strong></td><td>T/66 &#10003; | T/100 &#10007;</td><td>50% invalide, 50k€ : T/66=37 900€ vs T/100=25 000€</td></tr>
-        <tr><td><strong>Seuil d&eacute;clenchement</strong></td><td>16% &#10003; | 33% &#10007;</td><td>33% trop &eacute;lev&eacute; : 24% invalide = 35% revenu net perdu</td></tr>
-        <tr><td><strong>Reclassement pro</strong></td><td>Pas de clause &#10003;</td><td>Sinon les prestations s&rsquo;arr&ecirc;tent si reclassement possible</td></tr>
-        <tr><td><strong>D&eacute;lai carence</strong></td><td>Maladie : 3&ndash;6 mois</td><td>Accident : 0 | D&eacute;pression/fibro/VIH : jusqu&rsquo;&agrave; 365j</td></tr>
-        <tr><td><strong>D&eacute;lai franchise</strong></td><td>3 types : maladie / accident / hosp.</td><td>P&eacute;riode post-sinistre sans indemnisation</td></tr>
-      </table>
-    </div>
-    <div class="fiche-block">
-      <h3>&#128200; Les 5 cl&eacute;s + bonus</h3>
-      <div class="fiche-ok">&#9312; Contrat FORFAITAIRE &bull; &#9313; Bar&egrave;me PROFESSIONNEL &bull; &#9314; Calcul T/66 &bull; &#9315; Seuil 16% &bull; &#9316; PAS de reclassement professionnel<br><strong>Bonus :</strong> 2 lignes dans le contrat (pro + perso) pour dissocier la fiscalit&eacute;</div>
-    </div>
-  </div>
-
-  <div id="fiche-1" class="fiche-section">
-    <div class="fiche-block">
-      <h3>&#128200; Les r&eacute;gimes obligatoires des ind&eacute;pendants</h3>
-      <table class="fiche-table">
-        <tr><th>R&eacute;gime</th><th>Profession</th><th>Arr&ecirc;t travail</th><th>Invalidit&eacute; (80k€ revenus)</th></tr>
-        <tr><td><strong>SSI</strong></td><td>Artisans, commer&ccedil;ants, auto-entr.</td><td>J3 &rarr; J360 (~25%)</td><td>33,81€/j = <strong>12 340€/an</strong></td></tr>
-        <tr><td><strong>CARMF</strong></td><td>M&eacute;decins lib&eacute;raux</td><td>J4&rarr;J90 (50%), J90&rarr;3ans (45%)</td><td>55,23€/j = <strong>20 160€/an</strong></td></tr>
-        <tr><td><strong>CARCDSF</strong></td><td>CGP, CIF, CGPI, experts-comptables</td><td>J4&rarr;J90 (50%), J90&rarr;3ans (45%)</td><td>76,83€/j = <strong>28 044€/an</strong></td></tr>
-        <tr><td><strong>CARPIMKO</strong></td><td>Kin&eacute;s, infirmiers, orthophonistes</td><td>J4&rarr;J90 (50%), J90&rarr;3ans (25%)</td><td>27,62€/j = <strong>10 080€/an</strong></td></tr>
-      </table>
-      <div class="fiche-warn" style="margin-top:10px">Aucun r&eacute;gime ne couvre convenablement ! Rentes &agrave; 12&ndash;35% du revenu. Il est <strong>imp&eacute;ratif</strong> de compl&eacute;ter par une pr&eacute;voyance priv&eacute;e.</div>
-    </div>
-    <div class="fiche-block">
-      <h3>&#128200; Pour l&rsquo;ind&eacute;pendant : risques et cons&eacute;quences</h3>
-      <dl class="fiche-dl">
-        <dt>2 risques majeurs</dt><dd>Accidents &bull; Maladies</dd>
-        <dt>3 cons&eacute;quences</dt><dd>Arr&ecirc;t de travail &bull; Invalidit&eacute; &bull; D&eacute;c&egrave;s</dd>
-        <dt>R&eacute;sultat</dt><dd>De lourdes difficult&eacute;s financi&egrave;res (charges fixes continuent)</dd>
-        <dt>Financement prot. sociale</dt><dd>CSG (salaires, retraites, alloc, RSA, placements) + Cotisations soc. + Contributions &Eacute;tat</dd>
-      </dl>
-    </div>
-  </div>
-
-  <div id="fiche-2" class="fiche-section">
-    <div class="fiche-block">
-      <h3>&#128200; Contrat indemnitaire vs forfaitaire</h3>
-      <table class="fiche-table">
-        <tr><th>Crit&egrave;re</th><th>Indemnitaire &#10007;</th><th>Forfaitaire &#10003;</th></tr>
-        <tr><td>Montant vers&eacute;</td><td>Limit&eacute; &agrave; la perte r&eacute;elle prouv&eacute;e</td><td>Montant souscrit, quoi qu&rsquo;il arrive</td></tr>
-        <tr><td>Risque de sous-indemnisation</td><td>OUI (charges fixes absorbent les revenus)</td><td>NON</td></tr>
-        <tr><td>Pr&eacute;visibilit&eacute;</td><td>Variable selon la perte r&eacute;elle</td><td>Garantie fixe</td></tr>
-        <tr><td>Part du march&eacute;</td><td>Majorit&eacute; des contrats</td><td>Moins courant &rarr; &agrave; rechercher</td></tr>
-      </table>
-    </div>
-    <div class="fiche-block">
-      <h3>&#128200; Les exclusions &amp; l&rsquo;invalidit&eacute;</h3>
-      <dl class="fiche-dl">
-        <dt>Exclusions psychiques</dt><dd>V&eacute;rifier : couvertes en ITT ET en invalidit&eacute; permanente ? (d&eacute;pression, burn-out)</dd>
-        <dt>Invalidit&eacute;</dt><dd>Indemnise les arr&ecirc;ts PERMANENTS. Point de vigilance prioritaire.</dd>
-        <dt>3 sous-vigilances</dt><dd>Calcul taux d&rsquo;invalidit&eacute; &bull; Mode calcul montant rente &bull; Seuil de d&eacute;clenchement</dd>
-      </dl>
-    </div>
-    <div class="fiche-block">
-      <h3>&#128200; Les 3 modes de calcul du taux d&rsquo;invalidit&eacute;</h3>
-      <img src="img/IMG_0699.PNG" style="width:100%;border-radius:8px;margin-bottom:12px" alt="Tableau barème croisé taux d'invalidité">
-      <table class="fiche-table">
-        <tr><th>Bar&egrave;me</th><th>Principe</th><th>Favorable ?</th></tr>
-        <tr><td><strong>Fonctionnel</strong></td><td>Capacit&eacute;s physiques uniquement, sans tenir compte de la profession</td><td>Peu favorable</td></tr>
-        <tr><td><strong>Crois&eacute; (IF &times; IP)</strong></td><td>Tableau crois&eacute; taux fonctionnel &times; taux professionnel</td><td>Moyen</td></tr>
-        <tr><td><strong>Professionnel &#10003;</strong></td><td>&Eacute;value l&rsquo;incapacit&eacute; &agrave; exercer SA profession initiale</td><td>Le plus favorable</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <div id="fiche-3" class="fiche-section">
-    <div class="fiche-block">
-      <h3>&#128200; Calcul du montant de la rente</h3>
-      <table class="fiche-table">
-        <tr><th>Cas</th><th>R&egrave;gle</th><th>Exemple (50% invalide, 50k€)</th></tr>
-        <tr><td>Taux &ge; 66%</td><td>Rente pleine (100% du montant souscrit)</td><td>50 000€/an</td></tr>
-        <tr><td>Taux &lt; 66% &mdash; T/100</td><td>(taux/100) &times; montant souscrit</td><td>50/100 &times; 50 000 = <strong>25 000€/an</strong></td></tr>
-        <tr><td>Taux &lt; 66% &mdash; T/66 &#10003;</td><td>(taux/66) &times; montant souscrit</td><td>50/66 &times; 50 000 = <strong>37 900€/an</strong></td></tr>
-      </table>
-      <div class="fiche-hl" style="margin-top:10px">Gain T/66 vs T/100 : +12 900€/an pour la m&ecirc;me cotisation. Le T/66 est le calcul &agrave; exiger.</div>
-    </div>
-    <div class="fiche-block">
-      <h3>&#128200; Le seuil de d&eacute;clenchement de la rente</h3>
-      <dl class="fiche-dl">
-        <dt>Seuil standard</dt><dd>33% : en dessous, aucune rente. Tr&egrave;s insuffisant.</dd>
-        <dt>Impact &agrave; 33%</dt><dd>Perte d&rsquo;1/3 du CA + charges fixes non r&eacute;duites &rarr; ~50% du revenu net perdu</dd>
-        <dt>Impact &agrave; 24%</dt><dd>Pas de rente (< 33%) mais ~35% du revenu net perdu</dd>
-        <dt>Seuil optimal</dt><dd><strong>16%</strong> ou moins. D&eacute;clencher la rente d&egrave;s une faible invalidit&eacute;.</dd>
-      </dl>
-      <div class="fiche-warn" style="margin-top:10px">Un assuré invalide &agrave; 24% sans rente perd quand m&ecirc;me 35% de son revenu net. Le seuil de 33% est un pi&egrave;ge.</div>
-    </div>
-  </div>
-
-  <div id="fiche-4" class="fiche-section">
-    <div class="fiche-block">
-      <h3>&#128200; Les 5 cl&eacute;s pour une pr&eacute;voyance optimale</h3>
-      <img src="img/IMG_0708.PNG" style="width:100%;border-radius:8px;margin-bottom:12px" alt="Résumé optimal : forfaitaire, professionnel, T/66">
-      <table class="fiche-table">
-        <tr><th>#</th><th>Crit&egrave;re</th><th>&Agrave; choisir</th><th>&Agrave; &eacute;viter</th></tr>
-        <tr><td>1</td><td>Type de contrat</td><td><strong>Forfaitaire &#10003;</strong></td><td>Indemnitaire</td></tr>
-        <tr><td>2</td><td>Bar&egrave;me invalidity</td><td><strong>Professionnel &#10003;</strong></td><td>Fonctionnel / Crois&eacute;</td></tr>
-        <tr><td>3</td><td>Calcul de la rente</td><td><strong>T/66 &#10003;</strong></td><td>T/100</td></tr>
-        <tr><td>4</td><td>Seuil d&eacute;clenchement</td><td><strong>16% &#10003;</strong></td><td>33%</td></tr>
-        <tr><td>5</td><td>Clause reclassement</td><td><strong>PAS de clause &#10003;</strong></td><td>Avec clause reclassement</td></tr>
-      </table>
-      <div class="fiche-ok" style="margin-top:10px"><strong>Bonus : 2 lignes dans le contrat</strong> &mdash; Ligne 1 : garantie professionnelle (d&eacute;ductible revenus pros) &bull; Ligne 2 : garantie personnelle (traitement fiscal distinct). Permet d&rsquo;optimiser la fiscalit&eacute; &agrave; l&rsquo;IR.</div>
-    </div>
-    <div class="fiche-block">
-      <h3>&#128200; Les d&eacute;lais</h3>
-      <table class="fiche-table">
-        <tr><th>D&eacute;lai</th><th>D&eacute;finition</th><th>Dur&eacute;e type</th></tr>
-        <tr><td><strong>D&rsquo;attente (carence)</strong></td><td>Apr&egrave;s souscription, avant prise d&rsquo;effet des garanties</td><td>Maladie : 3&ndash;6 mois | Accident : 0 | D&eacute;press./fibro./VIH : jusqu&rsquo;&agrave; 365j</td></tr>
-        <tr><td><strong>De franchise</strong></td><td>Apr&egrave;s sinistre, sans indemnisation</td><td>3 d&eacute;lais : maladie / accident / hospitalisation (variables selon contrat)</td></tr>
-      </table>
-    </div>
-  </div>
+<div class="tab-pane" id="tab-fiche">
+<div class="fiche-nav">
+<button class="fiche-btn active" onclick="j11go('r')">Vue d’ensemble</button>
+<button class="fiche-btn" onclick="j11go('1')">Régimes obligatoires</button>
+<button class="fiche-btn" onclick="j11go('2')">Indemnitaire vs Forfaitaire</button>
+<button class="fiche-btn" onclick="j11go('3')">T/66 &amp; Seuil</button>
+<button class="fiche-btn" onclick="j11go('4')">Les 5 clés</button>
 </div>
-
+<div class="fiche-section active" id="fiche-r">
+<div class="fiche-block">
+<h3>📈 J11 en un coup d’œil — Prévoyance</h3>
+<table class="fiche-table">
+<tr><th>Thème</th><th>Point clé</th><th>Valeur / Règle</th></tr>
+<tr><td><strong>Protection sociale</strong></td><td>Ne suffit pas pour les indépendants</td><td>SSI : 12 340€/an d’invalidité pour 80k€ revenus</td></tr>
+<tr><td><strong>Type de contrat</strong></td><td>Forfaitaire ✓ | Indemnitaire ✗</td><td>Forfaitaire = montant garanti, indépendant de la perte réelle</td></tr>
+<tr><td><strong>Barème taux</strong></td><td>Professionnel ✓ | Fonctionnel ✗</td><td>Évalue l’incapacité à exercer SA profession</td></tr>
+<tr><td><strong>Calcul rente</strong></td><td>T/66 ✓ | T/100 ✗</td><td>50% invalide, 50k€ : T/66=37 900€ vs T/100=25 000€</td></tr>
+<tr><td><strong>Seuil déclenchement</strong></td><td>16% ✓ | 33% ✗</td><td>33% trop élevé : 24% invalide = 35% revenu net perdu</td></tr>
+<tr><td><strong>Reclassement pro</strong></td><td>Pas de clause ✓</td><td>Sinon les prestations s’arrêtent si reclassement possible</td></tr>
+<tr><td><strong>Délai carence</strong></td><td>Maladie : 3–6 mois</td><td>Accident : 0 | Dépression/fibro/VIH : jusqu’à 365j</td></tr>
+<tr><td><strong>Délai franchise</strong></td><td>3 types : maladie / accident / hosp.</td><td>Période post-sinistre sans indemnisation</td></tr>
+</table>
+</div>
+<div class="fiche-block">
+<h3>📈 Les 5 clés + bonus</h3>
+<div class="fiche-ok">① Contrat FORFAITAIRE • ② Barème PROFESSIONNEL • ③ Calcul T/66 • ④ Seuil 16% • ⑤ PAS de reclassement professionnel<br/><strong>Bonus :</strong> 2 lignes dans le contrat (pro + perso) pour dissocier la fiscalité</div>
+</div>
+</div>
+<div class="fiche-section" id="fiche-1">
+<div class="fiche-block">
+<h3>📈 Les régimes obligatoires des indépendants</h3>
+<table class="fiche-table">
+<tr><th>Régime</th><th>Profession</th><th>Arrêt travail</th><th>Invalidité (80k€ revenus)</th></tr>
+<tr><td><strong>SSI</strong></td><td>Artisans, commerçants, auto-entr.</td><td>J3 → J360 (~25%)</td><td>33,81€/j = <strong>12 340€/an</strong></td></tr>
+<tr><td><strong>CARMF</strong></td><td>Médecins libéraux</td><td>J4→J90 (50%), J90→3ans (45%)</td><td>55,23€/j = <strong>20 160€/an</strong></td></tr>
+<tr><td><strong>CARCDSF</strong></td><td>CGP, CIF, CGPI, experts-comptables</td><td>J4→J90 (50%), J90→3ans (45%)</td><td>76,83€/j = <strong>28 044€/an</strong></td></tr>
+<tr><td><strong>CARPIMKO</strong></td><td>Kinés, infirmiers, orthophonistes</td><td>J4→J90 (50%), J90→3ans (25%)</td><td>27,62€/j = <strong>10 080€/an</strong></td></tr>
+</table>
+<div class="fiche-warn" style="margin-top:10px">Aucun régime ne couvre convenablement ! Rentes à 12–35% du revenu. Il est <strong>impératif</strong> de compléter par une prévoyance privée.</div>
+</div>
+<div class="fiche-block">
+<h3>📈 Pour l’indépendant : risques et conséquences</h3>
+<dl class="fiche-dl">
+<dt>2 risques majeurs</dt><dd>Accidents • Maladies</dd>
+<dt>3 conséquences</dt><dd>Arrêt de travail • Invalidité • Décès</dd>
+<dt>Résultat</dt><dd>De lourdes difficultés financières (charges fixes continuent)</dd>
+<dt>Financement prot. sociale</dt><dd>CSG (salaires, retraites, alloc, RSA, placements) + Cotisations soc. + Contributions État</dd>
+</dl>
+</div>
+</div>
+<div class="fiche-section" id="fiche-2">
+<div class="fiche-block">
+<h3>📈 Contrat indemnitaire vs forfaitaire</h3>
+<table class="fiche-table">
+<tr><th>Critère</th><th>Indemnitaire ✗</th><th>Forfaitaire ✓</th></tr>
+<tr><td>Montant versé</td><td>Limité à la perte réelle prouvée</td><td>Montant souscrit, quoi qu’il arrive</td></tr>
+<tr><td>Risque de sous-indemnisation</td><td>OUI (charges fixes absorbent les revenus)</td><td>NON</td></tr>
+<tr><td>Prévisibilité</td><td>Variable selon la perte réelle</td><td>Garantie fixe</td></tr>
+<tr><td>Part du marché</td><td>Majorité des contrats</td><td>Moins courant → à rechercher</td></tr>
+</table>
+</div>
+<div class="fiche-block">
+<h3>📈 Les exclusions &amp; l’invalidité</h3>
+<dl class="fiche-dl">
+<dt>Exclusions psychiques</dt><dd>Vérifier : couvertes en ITT ET en invalidité permanente ? (dépression, burn-out)</dd>
+<dt>Invalidité</dt><dd>Indemnise les arrêts PERMANENTS. Point de vigilance prioritaire.</dd>
+<dt>3 sous-vigilances</dt><dd>Calcul taux d’invalidité • Mode calcul montant rente • Seuil de déclenchement</dd>
+</dl>
+</div>
+<div class="fiche-block">
+<h3>📈 Les 3 modes de calcul du taux d’invalidité</h3>
+<img alt="Tableau barème croisé taux d'invalidité" src="img/IMG_0699.PNG" style="width:100%;border-radius:8px;margin-bottom:12px"/>
+<table class="fiche-table">
+<tr><th>Barème</th><th>Principe</th><th>Favorable ?</th></tr>
+<tr><td><strong>Fonctionnel</strong></td><td>Capacités physiques uniquement, sans tenir compte de la profession</td><td>Peu favorable</td></tr>
+<tr><td><strong>Croisé (IF × IP)</strong></td><td>Tableau croisé taux fonctionnel × taux professionnel</td><td>Moyen</td></tr>
+<tr><td><strong>Professionnel ✓</strong></td><td>Évalue l’incapacité à exercer SA profession initiale</td><td>Le plus favorable</td></tr>
+</table>
+</div>
+</div>
+<div class="fiche-section" id="fiche-3">
+<div class="fiche-block">
+<h3>📈 Calcul du montant de la rente</h3>
+<table class="fiche-table">
+<tr><th>Cas</th><th>Règle</th><th>Exemple (50% invalide, 50k€)</th></tr>
+<tr><td>Taux ≥ 66%</td><td>Rente pleine (100% du montant souscrit)</td><td>50 000€/an</td></tr>
+<tr><td>Taux &lt; 66% — T/100</td><td>(taux/100) × montant souscrit</td><td>50/100 × 50 000 = <strong>25 000€/an</strong></td></tr>
+<tr><td>Taux &lt; 66% — T/66 ✓</td><td>(taux/66) × montant souscrit</td><td>50/66 × 50 000 = <strong>37 900€/an</strong></td></tr>
+</table>
+<div class="fiche-hl" style="margin-top:10px">Gain T/66 vs T/100 : +12 900€/an pour la même cotisation. Le T/66 est le calcul à exiger.</div>
+</div>
+<div class="fiche-block">
+<h3>📈 Le seuil de déclenchement de la rente</h3>
+<dl class="fiche-dl">
+<dt>Seuil standard</dt><dd>33% : en dessous, aucune rente. Très insuffisant.</dd>
+<dt>Impact à 33%</dt><dd>Perte d’1/3 du CA + charges fixes non réduites → ~50% du revenu net perdu</dd>
+<dt>Impact à 24%</dt><dd>Pas de rente (&lt; 33%) mais ~35% du revenu net perdu</dd>
+<dt>Seuil optimal</dt><dd><strong>16%</strong> ou moins. Déclencher la rente dès une faible invalidité.</dd>
+</dl>
+<div class="fiche-warn" style="margin-top:10px">Un assuré invalide à 24% sans rente perd quand même 35% de son revenu net. Le seuil de 33% est un piège.</div>
+</div>
+</div>
+<div class="fiche-section" id="fiche-4">
+<div class="fiche-block">
+<h3>📈 Les 5 clés pour une prévoyance optimale</h3>
+<img alt="Résumé optimal : forfaitaire, professionnel, T/66" src="img/IMG_0708.PNG" style="width:100%;border-radius:8px;margin-bottom:12px"/>
+<table class="fiche-table">
+<tr><th>#</th><th>Critère</th><th>À choisir</th><th>À éviter</th></tr>
+<tr><td>1</td><td>Type de contrat</td><td><strong>Forfaitaire ✓</strong></td><td>Indemnitaire</td></tr>
+<tr><td>2</td><td>Barème invalidity</td><td><strong>Professionnel ✓</strong></td><td>Fonctionnel / Croisé</td></tr>
+<tr><td>3</td><td>Calcul de la rente</td><td><strong>T/66 ✓</strong></td><td>T/100</td></tr>
+<tr><td>4</td><td>Seuil déclenchement</td><td><strong>16% ✓</strong></td><td>33%</td></tr>
+<tr><td>5</td><td>Clause reclassement</td><td><strong>PAS de clause ✓</strong></td><td>Avec clause reclassement</td></tr>
+</table>
+<div class="fiche-ok" style="margin-top:10px"><strong>Bonus : 2 lignes dans le contrat</strong> — Ligne 1 : garantie professionnelle (déductible revenus pros) • Ligne 2 : garantie personnelle (traitement fiscal distinct). Permet d’optimiser la fiscalité à l’IR.</div>
+</div>
+<div class="fiche-block">
+<h3>📈 Les délais</h3>
+<table class="fiche-table">
+<tr><th>Délai</th><th>Définition</th><th>Durée type</th></tr>
+<tr><td><strong>D’attente (carence)</strong></td><td>Après souscription, avant prise d’effet des garanties</td><td>Maladie : 3–6 mois | Accident : 0 | Dépress./fibro./VIH : jusqu’à 365j</td></tr>
+<tr><td><strong>De franchise</strong></td><td>Après sinistre, sans indemnisation</td><td>3 délais : maladie / accident / hospitalisation (variables selon contrat)</td></tr>
+</table>
+</div>
+</div>
+</div>
 <!-- EXERCICES -->
-<div id="tab-exercices" class="tab-pane">
-
-  <div class="exo">
-    <div class="exo-title">Exercice n&deg;1 <span class="exo-tag">T/66 vs T/100 &middot; Calcul de rente</span></div>
-    <div class="exo-enonce">M. LEFEBVRE, kinésithérapeute libéral (CARPIMKO), a souscrit une rente d&rsquo;invalidité de 60 000€/an. Suite à un accident, il est déclaré invalide à 45% (taux contractuel).</div>
-    <div class="exo-questions">&#9312; Calcul avec règle T/100 &#9313; Calcul avec règle T/66 &#9314; Différence en € &#9315; Quel calcul faut-il exiger ?</div>
-    <button class="exo-btn" onclick="toggleExo('exo1')">Voir la solution</button>
-    <div class="exo-solution" id="exo1">
-      <div class="exo-step"><strong>&#9312; Règle T/100 (proportionnelle) :</strong><br>Rente = (45/100) &times; 60 000 = <strong>27 000€/an</strong></div>
-      <div class="exo-step"><strong>&#9313; Règle T/66 :</strong><br>Rente = (45/66) &times; 60 000 = 68,18% &times; 60 000 = <strong>40 909€/an</strong></div>
-      <div class="exo-step"><strong>&#9314; Différence :</strong><br>40 909 &minus; 27 000 = <strong>+13 909€/an</strong> avec le T/66, pour la même cotisation.</div>
-      <div class="exo-step"><strong>&#9315; Conclusion :</strong> Exiger le calcul T/66. La différence est massive sur la durée de l&rsquo;invalidité. À 45%, la CARPIMKO ne verse que 27,62€/j = 10 080€/an → la prévoyance complémentaire est indispensable.</div>
-    </div>
-  </div>
-
-  <div class="exo">
-    <div class="exo-title">Exercice n&deg;2 <span class="exo-tag">Seuil de déclenchement &middot; Impact financier</span></div>
-    <div class="exo-enonce">Mme SIMON, médecin libérale (CARMF), revenus 100 000€/an. Elle subit une invalidité professionnelle de 28%. Son contrat prévoyance a un seuil de déclenchement à 33%.</div>
-    <div class="exo-questions">&#9312; Reçoit-elle une rente de son contrat ? &#9313; Quel est l'impact réel sur son revenu net ? &#9314; Quel seuil aurait-il fallu viser ?</div>
-    <button class="exo-btn" onclick="toggleExo('exo2')">Voir la solution</button>
-    <div class="exo-solution" id="exo2">
-      <div class="exo-step"><strong>&#9312; Rente du contrat :</strong><br>28% &lt; 33% (seuil de déclenchement) → <strong>AUCUNE rente</strong> versée par le contrat prévoyance.</div>
-      <div class="exo-step"><strong>&#9313; Impact réel sur le revenu net :</strong><br>28% d&rsquo;incapacité professionnelle &rarr; perte d&rsquo;environ 28% du CA.<br>Mais charges fixes (loyer cabinet, assurances, crédits) restent &rarr; impact sur revenu NET &asymp; <strong>40% de perte</strong>.<br>Sur 100 000€ &rarr; revenu net réduit de ~40 000€. Sans aucune rente.</div>
-      <div class="exo-step"><strong>&#9314; Seuil optimal :</strong><br>Un seuil à <strong>16%</strong> aurait déclenché la rente dès 16% d&rsquo;invalidité &rarr; Mme SIMON aurait été indemnisée dès le début. Toujours chercher le seuil le plus bas possible.</div>
-    </div>
-  </div>
-
-  <div class="exo">
-    <div class="exo-title">Exercice n&deg;3 <span class="exo-tag">Comparer 2 contrats &middot; Choisir le meilleur</span></div>
-    <div class="exo-enonce">M. DUBOIS, artisan maçon (SSI), revenus 70 000€/an. Il compare deux contrats prévoyance, même cotisation mensuelle :<br>• Contrat A : Indemnitaire + Barème fonctionnel + T/100 + Seuil 33%<br>• Contrat B : Forfaitaire + Barème professionnel + T/66 + Seuil 16%<br>Il souscrit une rente de 50 000€/an. Il tombe invalide à 40% (barème professionnel) ou 20% (barème fonctionnel).</div>
-    <div class="exo-questions">&#9312; Rente versée par le Contrat A &#9313; Rente versée par le Contrat B &#9314; Quel contrat recommander ?</div>
-    <button class="exo-btn" onclick="toggleExo('exo3')">Voir la solution</button>
-    <div class="exo-solution" id="exo3">
-      <div class="exo-step"><strong>&#9312; Contrat A (indemnitaire, fonctionnel, T/100, seuil 33%) :</strong><br>Barème fonctionnel &rarr; taux = 20% (corps évalué, pas la profession de maçon).<br>20% &lt; 33% (seuil) &rarr; <strong>AUCUNE rente versée</strong>.</div>
-      <div class="exo-step"><strong>&#9313; Contrat B (forfaitaire, professionnel, T/66, seuil 16%) :</strong><br>Barème professionnel &rarr; taux = 40% (maçon ne peut plus porter des charges).<br>40% &gt; 16% (seuil) &rarr; rente déclenchée.<br>T/66 : (40/66) &times; 50 000 = 60,6% &times; 50 000 = <strong>30 300€/an</strong>.<br>+ Forfaitaire : 30 300€ versés indépendamment de la perte prouvée.</div>
-      <div class="exo-step"><strong>&#9314; Conclusion :</strong><br>Contrat A : 0€. Contrat B : 30 300€/an. Même cotisation.<br>&rarr; Le Contrat B illustre parfaitement les 5 clés d&rsquo;une prévoyance optimale.</div>
-    </div>
-  </div>
-
+<div class="tab-pane" id="tab-exercices">
+<div class="exo">
+<div class="exo-title">Exercice n°1 <span class="exo-tag">T/66 vs T/100 · Calcul de rente</span></div>
+<div class="exo-enonce">M. LEFEBVRE, kinésithérapeute libéral (CARPIMKO), a souscrit une rente d’invalidité de 60 000€/an. Suite à un accident, il est déclaré invalide à 45% (taux contractuel).</div>
+<div class="exo-questions">① Calcul avec règle T/100 ② Calcul avec règle T/66 ③ Différence en € ④ Quel calcul faut-il exiger ?</div>
+<button class="exo-btn" onclick="toggleExo('exo1')">Voir la solution</button>
+<div class="exo-solution" id="exo1">
+<div class="exo-step"><strong>① Règle T/100 (proportionnelle) :</strong><br/>Rente = (45/100) × 60 000 = <strong>27 000€/an</strong></div>
+<div class="exo-step"><strong>② Règle T/66 :</strong><br/>Rente = (45/66) × 60 000 = 68,18% × 60 000 = <strong>40 909€/an</strong></div>
+<div class="exo-step"><strong>③ Différence :</strong><br/>40 909 − 27 000 = <strong>+13 909€/an</strong> avec le T/66, pour la même cotisation.</div>
+<div class="exo-step"><strong>④ Conclusion :</strong> Exiger le calcul T/66. La différence est massive sur la durée de l’invalidité. À 45%, la CARPIMKO ne verse que 27,62€/j = 10 080€/an → la prévoyance complémentaire est indispensable.</div>
 </div>
-
+</div>
+<div class="exo">
+<div class="exo-title">Exercice n°2 <span class="exo-tag">Seuil de déclenchement · Impact financier</span></div>
+<div class="exo-enonce">Mme SIMON, médecin libérale (CARMF), revenus 100 000€/an. Elle subit une invalidité professionnelle de 28%. Son contrat prévoyance a un seuil de déclenchement à 33%.</div>
+<div class="exo-questions">① Reçoit-elle une rente de son contrat ? ② Quel est l'impact réel sur son revenu net ? ③ Quel seuil aurait-il fallu viser ?</div>
+<button class="exo-btn" onclick="toggleExo('exo2')">Voir la solution</button>
+<div class="exo-solution" id="exo2">
+<div class="exo-step"><strong>① Rente du contrat :</strong><br/>28% &lt; 33% (seuil de déclenchement) → <strong>AUCUNE rente</strong> versée par le contrat prévoyance.</div>
+<div class="exo-step"><strong>② Impact réel sur le revenu net :</strong><br/>28% d’incapacité professionnelle → perte d’environ 28% du CA.<br/>Mais charges fixes (loyer cabinet, assurances, crédits) restent → impact sur revenu NET ≈ <strong>40% de perte</strong>.<br/>Sur 100 000€ → revenu net réduit de ~40 000€. Sans aucune rente.</div>
+<div class="exo-step"><strong>③ Seuil optimal :</strong><br/>Un seuil à <strong>16%</strong> aurait déclenché la rente dès 16% d’invalidité → Mme SIMON aurait été indemnisée dès le début. Toujours chercher le seuil le plus bas possible.</div>
+</div>
+</div>
+<div class="exo">
+<div class="exo-title">Exercice n°3 <span class="exo-tag">Comparer 2 contrats · Choisir le meilleur</span></div>
+<div class="exo-enonce">M. DUBOIS, artisan maçon (SSI), revenus 70 000€/an. Il compare deux contrats prévoyance, même cotisation mensuelle :<br/>• Contrat A : Indemnitaire + Barème fonctionnel + T/100 + Seuil 33%<br/>• Contrat B : Forfaitaire + Barème professionnel + T/66 + Seuil 16%<br/>Il souscrit une rente de 50 000€/an. Il tombe invalide à 40% (barème professionnel) ou 20% (barème fonctionnel).</div>
+<div class="exo-questions">① Rente versée par le Contrat A ② Rente versée par le Contrat B ③ Quel contrat recommander ?</div>
+<button class="exo-btn" onclick="toggleExo('exo3')">Voir la solution</button>
+<div class="exo-solution" id="exo3">
+<div class="exo-step"><strong>① Contrat A (indemnitaire, fonctionnel, T/100, seuil 33%) :</strong><br/>Barème fonctionnel → taux = 20% (corps évalué, pas la profession de maçon).<br/>20% &lt; 33% (seuil) → <strong>AUCUNE rente versée</strong>.</div>
+<div class="exo-step"><strong>② Contrat B (forfaitaire, professionnel, T/66, seuil 16%) :</strong><br/>Barème professionnel → taux = 40% (maçon ne peut plus porter des charges).<br/>40% &gt; 16% (seuil) → rente déclenchée.<br/>T/66 : (40/66) × 50 000 = 60,6% × 50 000 = <strong>30 300€/an</strong>.<br/>+ Forfaitaire : 30 300€ versés indépendamment de la perte prouvée.</div>
+<div class="exo-step"><strong>③ Conclusion :</strong><br/>Contrat A : 0€. Contrat B : 30 300€/an. Même cotisation.<br/>→ Le Contrat B illustre parfaitement les 5 clés d’une prévoyance optimale.</div>
+</div>
+</div>
+</div>
 <!-- CAS PRATIQUES -->
-<div id="tab-cas" class="tab-pane">
-
-  <div class="cas">
-    <div class="cas-title">Cas n&deg;1 <span class="cas-ref">Diagnostic pr&eacute;voyance &middot; CARPIMKO</span></div>
-    <div class="cas-enonce">Mme ROUX, infirmière libérale, 38 ans, revenus 65 000€/an. Elle souscrit un contrat prévoyance indemnitaire avec barème fonctionnel, T/100, seuil 33%, rente 40 000€/an. Vous êtes son CGP. Après analyse, elle est victime d'un burn-out professionnel sévère et déclarée invalide à 30% (barème fonctionnel).</div>
-    <div class="cas-piege">&#9888; Pièges : seuil 33%, exclusion psychique possible, barème fonctionnel défavorable pour une infirmière.</div>
-    <button class="cas-btn" onclick="toggleCas('c1')">Voir la réponse</button>
-    <div class="cas-solution" id="c1">
-      <strong>Analyse du contrat de Mme ROUX :</strong><br><br>
-      <strong>1. Exclusion psychique :</strong> Burn-out = affection psychique. Si le contrat l&rsquo;exclut &rarr; aucune indemnisation du tout. À vérifier en priorité.<br><br>
-      <strong>2. Seuil 33% :</strong> 30% &lt; 33% &rarr; même si le burn-out est couvert, aucune rente d&rsquo;invalidité versée.<br><br>
-      <strong>3. Barème fonctionnel :</strong> Le burn-out avec 30% fonctionnel n&rsquo;empêche peut-être pas de marcher, mais empêche d&rsquo;exercer comme infirmière. Un barème professionnel aurait peut-être donné 50%.<br><br>
-      <strong>4. Conclusion pour le conseiller :</strong> Ce contrat est inadapté. À la prochaine échéance, recommander :<br>
-      → Vérifier couverture psychique ITT et invalidité permanente<br>
-      → Seuil 16% &bull; Barème professionnel &bull; T/66 &bull; Forfaitaire
+<div class="tab-pane" id="tab-cas">
+<div class="cas">
+<div class="cas-title">Cas n°1 <span class="cas-ref">Diagnostic prévoyance · CARPIMKO</span></div>
+<div class="cas-enonce">Mme ROUX, infirmière libérale, 38 ans, revenus 65 000€/an. Elle souscrit un contrat prévoyance indemnitaire avec barème fonctionnel, T/100, seuil 33%, rente 40 000€/an. Vous êtes son CGP. Après analyse, elle est victime d'un burn-out professionnel sévère et déclarée invalide à 30% (barème fonctionnel).</div>
+<div class="cas-piege">⚠ Pièges : seuil 33%, exclusion psychique possible, barème fonctionnel défavorable pour une infirmière.</div>
+<button class="cas-btn" onclick="toggleCas('c1')">Voir la réponse</button>
+<div class="cas-solution" id="c1">
+<strong>Analyse du contrat de Mme ROUX :</strong><br/><br/>
+<strong>1. Exclusion psychique :</strong> Burn-out = affection psychique. Si le contrat l’exclut → aucune indemnisation du tout. À vérifier en priorité.<br/><br/>
+<strong>2. Seuil 33% :</strong> 30% &lt; 33% → même si le burn-out est couvert, aucune rente d’invalidité versée.<br/><br/>
+<strong>3. Barème fonctionnel :</strong> Le burn-out avec 30% fonctionnel n’empêche peut-être pas de marcher, mais empêche d’exercer comme infirmière. Un barème professionnel aurait peut-être donné 50%.<br/><br/>
+<strong>4. Conclusion pour le conseiller :</strong> Ce contrat est inadapté. À la prochaine échéance, recommander :<br/>
+      → Vérifier couverture psychique ITT et invalidité permanente<br/>
+      → Seuil 16% • Barème professionnel • T/66 • Forfaitaire
     </div>
-  </div>
-
-  <div class="cas">
-    <div class="cas-title">Cas n&deg;2 <span class="cas-ref">Reclassement professionnel &middot; Chirurgien</span></div>
-    <div class="cas-enonce">Dr LAMBERT, chirurgien orthopédique, revenus 250 000€/an. Il souscrit un contrat prévoyance avec une clause de reclassement professionnel. Suite à un tremblement essentiel, il ne peut plus opérer. Son assureur estime qu'il peut encore exercer comme médecin consultant et décide d'arrêter les prestations.</div>
-    <div class="cas-piege">&#9888; Piège : la clause de reclassement permet à l'assureur de stopper les versements si une activité alternative est possible, même très différente.</div>
-    <button class="cas-btn" onclick="toggleCas('c2')">Voir la réponse</button>
-    <div class="cas-solution" id="c2">
-      <strong>Analyse :</strong><br><br>
-      <strong>Avec clause de reclassement professionnel :</strong><br>
-      L&rsquo;assureur : "Vous pouvez être consultant médical" &rarr; les prestations s&rsquo;arrêtent.<br>
-      Or Dr Lambert gagnait 250k€/an en chirurgie. Consultant = revenu bien inférieur.<br><br>
-      <strong>Sans clause de reclassement (barème professionnel) :</strong><br>
-      L&rsquo;invalidité est évaluée par rapport à SA profession de chirurgien.<br>
-      Tremblements = 100% invalide pour la chirurgie &rarr; rente pleine maintenue jusqu&rsquo;à la retraite.<br><br>
-      <strong>Conseil :</strong><br>
-      Pour les professions qualifiées et spécialisées, la clause de reclassement est particulièrement dangereuse.<br>
+</div>
+<div class="cas">
+<div class="cas-title">Cas n°2 <span class="cas-ref">Reclassement professionnel · Chirurgien</span></div>
+<div class="cas-enonce">Dr LAMBERT, chirurgien orthopédique, revenus 250 000€/an. Il souscrit un contrat prévoyance avec une clause de reclassement professionnel. Suite à un tremblement essentiel, il ne peut plus opérer. Son assureur estime qu'il peut encore exercer comme médecin consultant et décide d'arrêter les prestations.</div>
+<div class="cas-piege">⚠ Piège : la clause de reclassement permet à l'assureur de stopper les versements si une activité alternative est possible, même très différente.</div>
+<button class="cas-btn" onclick="toggleCas('c2')">Voir la réponse</button>
+<div class="cas-solution" id="c2">
+<strong>Analyse :</strong><br/><br/>
+<strong>Avec clause de reclassement professionnel :</strong><br/>
+      L’assureur : "Vous pouvez être consultant médical" → les prestations s’arrêtent.<br/>
+      Or Dr Lambert gagnait 250k€/an en chirurgie. Consultant = revenu bien inférieur.<br/><br/>
+<strong>Sans clause de reclassement (barème professionnel) :</strong><br/>
+      L’invalidité est évaluée par rapport à SA profession de chirurgien.<br/>
+      Tremblements = 100% invalide pour la chirurgie → rente pleine maintenue jusqu’à la retraite.<br/><br/>
+<strong>Conseil :</strong><br/>
+      Pour les professions qualifiées et spécialisées, la clause de reclassement est particulièrement dangereuse.<br/>
       → Toujours exiger : PAS de clause de reclassement + barème professionnel + contrat spécifique à la chirurgie.
     </div>
-  </div>
-
-  <div class="cas">
-    <div class="cas-title">Cas n&deg;3 <span class="cas-ref">Optimisation fiscale &middot; 2 lignes</span></div>
-    <div class="cas-enonce">M. MERCIER, CGP indépendant (CARCDSF), TMI 30%, revenus 90 000€/an. Il veut souscrire une prévoyance avec une rente de 60 000€/an. Son assureur lui propose 2 options :<br>• Option 1 : 1 seul contrat (toute la cotisation déduite des revenus professionnels)<br>• Option 2 : 2 lignes dans le contrat (pro + perso)</div>
-    <div class="cas-piege">&#9888; Point clé : avec 1 seule ligne, toute la rente perçue sera imposable comme revenu professionnel. Avec 2 lignes, on peut optimiser.</div>
-    <button class="cas-btn" onclick="toggleCas('c3')">Voir la réponse</button>
-    <div class="cas-solution" id="c3">
-      <strong>Option 1 (1 ligne, tout professionnel) :</strong><br>
-      Cotisation déductible intégralement des revenus professionnels (économie IR 30%).<br>
-      Rente perçue : 100% imposable comme revenu professionnel (TMI applicable à la retraite).<br><br>
-      <strong>Option 2 (2 lignes) :</strong><br>
-      Ligne 1 (pro) : cotisation déduite des revenus pros → rente imposable en revenus professionnels.<br>
-      Ligne 2 (perso) : cotisation déduite du revenu global → rente bénéficiant d&rsquo;un traitement fiscal différent (potentiellement plus favorable selon la situation à la liquidation).<br><br>
-      <strong>Avantage :</strong><br>
-      La séparation permet d&rsquo;adapter la fiscalité selon l&rsquo;évolution des revenus et du TMI.<br>
-      → Recommander l&rsquo;Option 2 systématiquement pour optimiser la situation fiscale au moment du sinistre.
-    </div>
-  </div>
-
 </div>
-
+<div class="cas">
+<div class="cas-title">Cas n°3 <span class="cas-ref">Optimisation fiscale · 2 lignes</span></div>
+<div class="cas-enonce">M. MERCIER, CGP indépendant (CARCDSF), TMI 30%, revenus 90 000€/an. Il veut souscrire une prévoyance avec une rente de 60 000€/an. Son assureur lui propose 2 options :<br/>• Option 1 : 1 seul contrat (toute la cotisation déduite des revenus professionnels)<br/>• Option 2 : 2 lignes dans le contrat (pro + perso)</div>
+<div class="cas-piege">⚠ Point clé : avec 1 seule ligne, toute la rente perçue sera imposable comme revenu professionnel. Avec 2 lignes, on peut optimiser.</div>
+<button class="cas-btn" onclick="toggleCas('c3')">Voir la réponse</button>
+<div class="cas-solution" id="c3">
+<strong>Option 1 (1 ligne, tout professionnel) :</strong><br/>
+      Cotisation déductible intégralement des revenus professionnels (économie IR 30%).<br/>
+      Rente perçue : 100% imposable comme revenu professionnel (TMI applicable à la retraite).<br/><br/>
+<strong>Option 2 (2 lignes) :</strong><br/>
+      Ligne 1 (pro) : cotisation déduite des revenus pros → rente imposable en revenus professionnels.<br/>
+      Ligne 2 (perso) : cotisation déduite du revenu global → rente bénéficiant d’un traitement fiscal différent (potentiellement plus favorable selon la situation à la liquidation).<br/><br/>
+<strong>Avantage :</strong><br/>
+      La séparation permet d’adapter la fiscalité selon l’évolution des revenus et du TMI.<br/>
+      → Recommander l’Option 2 systématiquement pour optimiser la situation fiscale au moment du sinistre.
+    </div>
+</div>
+</div>
 <script>
 var CARDS = [{"ch": 1, "q": "Définition de la protection sociale", "a": "Ensemble de mécanismes qui permettent aux individus de faire face aux risques sociaux.\nFinancement : CSG (salaires, retraites, alloc, placements) + Cotisations sociales + Contributions de l'État."}, {"ch": 1, "q": "Quels sont les 6 risques sociaux couverts par la protection sociale ?", "a": "Décès · Maladie · Accident du travail · Maternité · Vieillesse · Chômage\n→ Pris en charge par Sécurité sociale, Mutuelle/retraite complémentaire, Unédic."}, {"ch": 1, "q": "Pour l'indépendant : quels sont les 2 risques majeurs et leurs 3 conséquences ?", "a": "2 risques : Accidents + Maladie\n3 conséquences : Arrêt de travail · Invalidité · Décès\n→ Résultat : de lourdes difficultés financières."}, {"ch": 1, "q": "SSI (indépendant, revenus 80 000€/an) — arrêt de travail", "a": "Couverture très faible (~25% du revenu).\nDe J3 à J360 : indemnités journalières.\nTotal possible : ~219€/j soit ~79 935€/an. MAIS couverture bien inférieure."}, {"ch": 1, "q": "SSI (indépendant, revenus 80 000€/an) — invalidité", "a": "Rente invalidité : 33,81€/j soit 12 340€/an\nSoit environ 15% du revenu annuel.\nTrès insuffisant pour maintenir le niveau de vie."}, {"ch": 1, "q": "CARMF (médecins, revenus 80 000€/an) — arrêt de travail et invalidité", "a": "Arrêt de travail : J4 → J90 (50%), J90 → 3ans (45%)\nInvalidité : 55,23€/j soit 20 160€/an\n≈ 25% du revenu. Insuffisant."}, {"ch": 1, "q": "CARCDSF (CGP/CIF, revenus 80 000€/an) — arrêt de travail et invalidité", "a": "Arrêt de travail : J4 → J90 (50%), J90 → 3ans (45%)\nInvalidité : 76,83€/j soit 28 044€/an\n≈ 35% du revenu. Insuffisant."}, {"ch": 1, "q": "CARPIMKO (paramédicaux, revenus 80 000€/an) — arrêt de travail et invalidité", "a": "Arrêt de travail : J4 → J90 (50%), J90 → 3ans (25%)\nInvalidité : 27,62€/j soit 10 080€/an\n≈ 12% du revenu. Très insuffisant."}, {"ch": 1, "q": "Conclusion : les régimes obligatoires suffisent-ils pour un indépendant ?", "a": "NON. Aucun régime ne couvre convenablement.\nRentes très faibles voire nulles. Seuil de 33% élevé.\n→ Il est impératif de compléter par un contrat de prévoyance privé."}, {"ch": 1, "q": "Quelle est la différence entre les prestations sociales et les prestations de services sociaux ?", "a": "Prestations sociales : sommes versées directement aux individus (ex: IJ maladie, allocation chômage).\nPrestations de services sociaux : accès à des services à prix réduits ou gratuitement (ex: 100% Santé)."}, {"ch": 2, "q": "Différence contrat indemnitaire vs contrat forfaitaire", "a": "Indemnitaire : compense le préjudice réel (perte de revenus). Ne peut pas dépasser la perte réelle.\nForfaitaire : verse un montant fixe souscrit, indépendamment de la perte réelle."}, {"ch": 2, "q": "Pourquoi un contrat indemnitaire peut-il être insuffisant ?", "a": "Il compense seulement le préjudice prouvé = perte de revenus réelle.\nSi les charges professionnelles continuent (loyer, crédit...) sans CA, la perte réelle est supérieure au revenu net perdu.\n→ Le forfaitaire est souvent plus protecteur."}, {"ch": 2, "q": "Quel est l'avantage clé d'un contrat forfaitaire ?", "a": "Verse le montant souscrit sans tenir compte du préjudice réel.\nEx : si souscrit 50 000€/an de rente et invalide → reçoit 50 000€ même si revenu avant = 30 000€.\n→ Protection certaine, indépendante des fluctuations de revenus."}, {"ch": 2, "q": "Les exclusions : quelle est la question clé à poser sur les affections psychiques ?", "a": "Les affections psychiques sont-elles garanties en cas d'incapacité temporaire totale ET en cas d'invalidité permanente partielle ou totale ?\n→ Certains contrats les excluent totalement ou partiellement."}, {"ch": 2, "q": "Pourquoi l'invalidité est-elle le point de vigilance PRIORITAIRE d'un contrat prévoyance ?", "a": "Car elle indemnise les arrêts de travail dont les séquelles sont définitives.\nParadoxalement, c'est sur ce point que les contrats sont les plus inégaux.\n3 sous-points : calcul taux + mode calcul rente + seuil de déclenchement."}, {"ch": 2, "q": "Quels sont les 3 modes de calcul du taux d'invalidité ?", "a": "1. Évaluation professionnelle (médecin expert)\n2. Barème fonctionnel (taux physique, indépendant de la profession)\n3. Barème croisé / contractuel (IF × IP dans un tableau)"}, {"ch": 2, "q": "Barème fonctionnel : principe", "a": "Taux d'invalidité déterminé uniquement par les capacités physiques résiduelles, indépendamment de la profession.\nEx : perte d'un doigt = X%, peu importe que ce soit un pianiste ou un maçon.\n→ Défavorable pour les professions manuelles/techniques."}, {"ch": 2, "q": "Barème croisé (contractuel) : principe et variables IF / IP", "a": "Taux d'invalidité = croisement entre :\n- IF = Taux d'Incapacité Fonctionnelle (physique)\n- IP = Taux d'Incapacité Professionnelle (perte de revenus)\nLe tableau donne un taux contractuel > à chaque composante seule."}, {"ch": 2, "q": "Évaluation professionnelle : principe", "a": "Le médecin expert évalue l'invalidité en tenant compte de la profession de l'assuré.\nEx : un chirurgien avec tremblements peut être déclaré invalide à 100% pour sa profession même si fonctionnellement il peut marcher.\n→ Le plus favorable pour les professions qualifiées."}, {"ch": 2, "q": "Quel barème faut-il privilégier pour le taux d'invalidité ?", "a": "Barème PROFESSIONNEL (évaluation professionnelle).\nÉvalue l'incapacité à exercer SA profession, pas n'importe quelle activité.\n→ C'est le plus favorable car il tient compte des exigences spécifiques du métier."}, {"ch": 3, "q": "Calcul montant rente : les 2 cas selon le taux d'invalidité", "a": "Si taux ≥ 66% : rente pleine (100% du montant souscrit).\nSi taux < 66% : rente partielle selon le mode de calcul du contrat\n  - Règle proportionnelle (T/100) → moins favorable\n  - Règle T/66 → plus favorable"}, {"ch": 3, "q": "Règle proportionnelle (T/100) : formule et exemple", "a": "Rente = (Taux d'invalidité / 100) × Montant souscrit\nEx : 50% invalide, rente souscrite 50 000€/an\n→ 50/100 × 50 000 = 25 000€/an"}, {"ch": 3, "q": "Règle T/66 : formule et exemple", "a": "Rente = (Taux d'invalidité / 66) × Montant souscrit\nEx : 50% invalide, rente souscrite 50 000€/an\n→ 50/66 × 50 000 = 75,76% × 50 000 = 37 900€/an"}, {"ch": 3, "q": "Comparaison T/66 vs T/100 : même situation, résultats différents ?", "a": "Maçon, 50% invalide, rente souscrite 50 000€/an :\n- Contrat X (T/100) : 25 000€/an\n- Contrat Y (T/66) : 37 900€/an\nDifférence : +12 900€/an avec T/66. Cotisation identique."}, {"ch": 3, "q": "Pourquoi le T/66 est-il plus juste que le T/100 ?", "a": "À 66% d'invalidité = perte totale de la capacité de travail (pleine rente).\nAvec T/66 : la rente partielle est calculée comme une fraction de ce seuil, pas du maximum théorique 100%.\n→ Représente mieux la perte réelle de revenus pour les invalides partiels."}, {"ch": 3, "q": "Seuil standard de déclenchement de la rente d'invalidité", "a": "33% dans la majorité des contrats.\nEn dessous de 33% d'invalidité : aucune rente versée.\n→ Il est crucial de viser un seuil plus bas (ex : 16%)."}, {"ch": 3, "q": "À 33% d'invalidité professionnelle : quel est l'impact réel sur les revenus ?", "a": "33% de perte d'activité → perte d'environ 1/3 du CA.\nMais les charges professionnelles fixes restent (loyer, crédits, honoraires).\n→ Impact réel sur le revenu NET ≈ 50% de perte. Le seuil de 33% est trop élevé."}, {"ch": 3, "q": "À 24% d'invalidité professionnelle : impact sur le revenu net ?", "a": "24% d'incapacité professionnelle → presque 35% du revenu NET en moins.\nPourtant, en dessous du seuil de 33% → aucune rente dans la plupart des contrats.\n→ Preuve que le seuil de 33% est insuffisant."}, {"ch": 3, "q": "Quel seuil de déclenchement faut-il viser dans un contrat prévoyance ?", "a": "Le plus bas possible : 16% idéalement.\nPour éviter de se retrouver invalide à 24% sans aucune indemnisation alors qu'on perd 35% du revenu net."}, {"ch": 3, "q": "Si le taux d'invalidité est ≥ 66% : quelle rente est versée ?", "a": "La rente pleine = 100% du montant souscrit.\nEx : rente souscrite 50 000€/an et invalide à 80% → reçoit 50 000€/an.\nLe taux de 66% est le seuil de la rente totale."}, {"ch": 3, "q": "Clause de reclassement professionnel : de quoi s'agit-il ?", "a": "Clause stipulant que si l'assuré invalide peut être reclassé dans une autre profession, les prestations s'arrêtent.\nEx : chirurgien avec tremblements → reclassé comme consultant → perd sa rente.\n→ Il faut exclure cette clause. Choisir un contrat basé sur SA profession initiale."}, {"ch": 4, "q": "Les 5 clés d'une prévoyance optimale pour un indépendant", "a": "1. Contrat FORFAITAIRE\n2. Barème PROFESSIONNEL\n3. Calcul de la rente T/66\n4. Seuil de déclenchement BAS (16%)\n5. PAS de clause de reclassement professionnel\n+ Bonus : 2 lignes dans le contrat (pro + perso)"}, {"ch": 4, "q": "Pourquoi un contrat forfaitaire est-il préférable à un indemnitaire ?", "a": "Indemnitaire : limité à la perte réelle prouvée → sous-indemnise si charges fixes absorbent les revenus.\nForfaitaire : verse le montant souscrit quoi qu'il arrive → protection garantie et prévisible.\n→ Couvre aussi les années de montée en charge (revenus bas au début)."}, {"ch": 4, "q": "Pourquoi le barème professionnel est-il supérieur aux autres ?", "a": "Fonctionnel : évalue le corps, pas la profession → défavorable aux métiers qualifiés.\nCroisé : calcul contractuel qui peut minorer le taux.\nProfessionnel : évalue l'incapacité à exercer SA profession → plus favorable."}, {"ch": 4, "q": "Pourquoi le calcul T/66 est-il à privilégier ?", "a": "T/100 : rente = taux × montant → 50% invalide = 50% de la rente (25 000€).\nT/66 : rente = (taux/66) × montant → 50% invalide = 75,8% de la rente (37 900€).\n→ T/66 donne une rente partielle nettement supérieure pour le même contrat."}, {"ch": 4, "q": "Pourquoi prévoir 2 lignes dans un contrat prévoyance ?", "a": "Ligne 1 : garantie liée au revenu professionnel (cotisation déductible professionnellement, rente imposable en revenus pros).\nLigne 2 : garantie personnelle (cotisation déductible sur le revenu global, traitement fiscal différent).\n→ Optimiser la fiscalité selon les revenus à la souscription et à la liquidation."}, {"ch": 4, "q": "Délai d'attente (délai de carence) : définition", "a": "Période après la souscription pendant laquelle l'assuré cotise mais n'est pas couvert.\n= Laps de temps entre la signature du contrat et la prise d'effet des garanties.\n≠ Délai de franchise (qui suit un sinistre)."}, {"ch": 4, "q": "Délai d'attente (carence) : durées selon les risques", "a": "Maladie : 3 à 6 mois (standard). Peut aller jusqu'à 365 jours pour certaines pathologies : dépression, fibromyalgie, VIH.\nAccident : AUCUN délai d'attente (sous réserve que l'accident soit survenu après la souscription)."}, {"ch": 4, "q": "Délai de franchise : définition", "a": "Période qui suit un SINISTRE (maladie ou accident) pendant laquelle l'assuré n'est PAS indemnisé.\n= Délai post-sinistre sans indemnités journalières.\nEx : franchise 7 jours, maladie le 01/01 → indemnités à partir du 08/01."}, {"ch": 4, "q": "Délai de franchise : les 3 types", "a": "1. Délai de franchise maladie\n2. Délai de franchise accident (généralement plus court)\n3. Délai de franchise hospitalisation (souvent le plus court)\nChaque risque peut avoir un délai différent dans le même contrat."}, {"ch": 4, "q": "Quelle est la différence entre délai d'attente et délai de franchise ?", "a": "Délai d'attente (carence) : court APRÈS la souscription. Avant tout sinistre. Ex : 3 mois de carence dès la signature.\nDélai de franchise : court APRÈS un sinistre déclaré. Ex : 7 jours avant les premières IJ.\nLes deux peuvent s'appliquer simultanément."}];
 var QUIZ  = [{"q": "Quelle est la conséquence principale d'une invalidité pour un indépendant non couvert ?", "opts": ["Une légère baisse du niveau de vie", "De lourdes difficultés financières", "Un reclassement automatique", "Une prise en charge à 100% par le SSI"], "a": 1, "e": "La protection sociale de l'indépendant couvre très peu l'invalidité. Sans prévoyance complémentaire → difficultés financières graves."}, {"q": "Quelle est la rente invalidité annuelle du SSI pour un indépendant gagnant 80 000€/an ?", "opts": ["33 000€/an", "28 000€/an", "12 340€/an", "55 000€/an"], "a": 2, "e": "SSI : 33,81€/j = 12 340€/an, soit environ 15% du revenu. Très insuffisant pour maintenir le niveau de vie."}, {"q": "Parmi ces régimes, lequel verse la rente invalidité la plus élevée pour 80 000€ de revenus ?", "opts": ["SSI", "CARMF", "CARCDSF", "CARPIMKO"], "a": 2, "e": "CARCDSF : 76,83€/j = 28 044€/an. CARMF : 20 160€. SSI : 12 340€. CARPIMKO : 10 080€. Mais tous restent insuffisants."}, {"q": "Un contrat INDEMNITAIRE verse :", "opts": ["Un montant fixe souscrit quoi qu'il arrive", "Une somme limitée à la perte de revenus réelle prouvée", "Toujours 100% du salaire", "Le double de la perte en cas d'accident"], "a": 1, "e": "Indemnitaire = compense le préjudice réel. Ne peut pas dépasser la perte prouvée → peut sous-indemniser si charges fixes restent."}, {"q": "Un contrat FORFAITAIRE verse :", "opts": ["Seulement si la perte de revenu est prouvée", "Le montant souscrit, indépendamment de la perte réelle", "Un montant calculé chaque année selon le CA", "Uniquement en cas d'arrêt total de travail"], "a": 1, "e": "Forfaitaire = montant fixe souscrit. Si 50 000€/an souscrit → 50 000€ versés même si revenus avant = 30 000€."}, {"q": "Quel est le point de vigilance PRIORITAIRE dans un contrat prévoyance ?", "opts": ["Le délai de franchise", "Les exclusions pour sport", "La garantie invalidité", "Le délai de carence maladie"], "a": 2, "e": "L'invalidité couvre les arrêts définitifs. C'est là que les contrats sont les plus inégaux → point de vigilance prioritaire."}, {"q": "Le barème FONCTIONNEL évalue l'invalidité :", "opts": ["Selon la profession de l'assuré", "Selon les capacités physiques uniquement, sans tenir compte de la profession", "Par un tableau croisé IF × IP", "Par un médecin expert de la profession"], "a": 1, "e": "Barème fonctionnel = évalue le corps, pas la profession. Un chirurgien avec un doigt amputé = même taux qu'un ouvrier. Défavorable aux professions qualifiées."}, {"q": "Le barème PROFESSIONNEL est le plus favorable car :", "opts": ["Il donne toujours 100%", "Il évalue l'incapacité à exercer SA profession initiale", "Il est le plus bas", "Il ne peut pas être contesté"], "a": 1, "e": "Barème professionnel = invalidité évaluée selon les exigences de la profession. Un pianiste avec problème de main peut être à 100% pro même si fonctionnellement il peut marcher."}, {"q": "Calcul T/66 : taux d'invalidité 50%, rente souscrite 50 000€. Montant versé ?", "opts": ["25 000€", "37 900€", "50 000€", "33 000€"], "a": 1, "e": "T/66 : (50/66) × 50 000 = 75,76% × 50 000 = 37 878€ ≈ 37 900€. Bien supérieur au T/100 = 25 000€."}, {"q": "Calcul proportionnel (T/100) : taux 50%, rente 50 000€. Montant versé ?", "opts": ["37 900€", "50 000€", "25 000€", "33 300€"], "a": 2, "e": "T/100 : (50/100) × 50 000 = 25 000€. Soit 12 900€ de moins qu'avec T/66 dans exactement la même situation."}, {"q": "Quel est le seuil de déclenchement standard de la rente d'invalidité ?", "opts": ["16%", "25%", "33%", "50%"], "a": 2, "e": "33% dans la majorité des contrats. En dessous : aucune rente même si la perte de revenus réelle est importante."}, {"q": "À 33% d'invalidité professionnelle, la perte de revenu NET est environ :", "opts": ["33%", "20%", "50%", "10%"], "a": 2, "e": "33% de perte d'activité → ~1/3 du CA en moins. Mais charges fixes restent (loyer, crédits...) → impact sur revenu NET ≈ 50%."}, {"q": "À 24% d'invalidité professionnelle (sous le seuil de 33%), l'assuré :", "opts": ["Reçoit une rente proportionnelle", "Reçoit 24% de la rente souscrite", "Ne reçoit aucune rente mais perd ~35% de son revenu net", "Reçoit l'intégralité de la rente"], "a": 2, "e": "24% < 33% → aucune rente. Pourtant la perte réelle de revenu net est d'environ 35%. D'où l'importance d'un seuil bas (16%)."}, {"q": "Un contrat avec clause de 'reclassement professionnel' signifie :", "opts": ["L'assuré peut changer de contrat facilement", "Si l'assuré peut exercer une autre profession, les prestations s'arrêtent", "L'assuré est formé à un nouveau métier aux frais de l'assureur", "Le taux d'invalidité est réévalué chaque année"], "a": 1, "e": "Reclassement pro : chirurgien invalide → reclassé consultant → perd sa rente. Il faut choisir un contrat SANS cette clause."}, {"q": "Le délai de carence (attente) concerne :", "opts": ["La période après un sinistre sans indemnisation", "La période après la souscription pendant laquelle les garanties ne s'appliquent pas", "Le temps entre le diagnostic et le versement de la rente", "La durée maximale d'indemnisation"], "a": 1, "e": "Délai de carence = laps de temps entre signature et prise d'effet des garanties. Pas encore un sinistre survenu."}, {"q": "Pour quel type d'arrêt de travail n'y a-t-il PAS de délai d'attente ?", "opts": ["Maladie chronique", "Dépression", "Accident (survenu après souscription)", "Fibromyalgie"], "a": 2, "e": "Accident = aucun délai d'attente (si survenu après souscription). Maladie = 3 à 6 mois. Dépression/fibromyalgie peuvent aller jusqu'à 365 jours."}, {"q": "Le délai de franchise est :", "opts": ["Le temps avant que les garanties soient actives", "La période post-sinistre sans indemnisation", "Le délai de souscription du contrat", "Le temps de traitement d'un dossier sinistre"], "a": 1, "e": "Délai de franchise = période qui suit le sinistre pendant laquelle l'assuré n'est pas indemnisé. Ex : franchise 7j → indemnités à J+8."}, {"q": "Combien de délais de franchise différents peut-on trouver dans un contrat prévoyance ?", "opts": ["1 (identique pour tous les risques)", "2 (maladie et accident)", "3 (maladie, accident, hospitalisation)", "Aucun délai de franchise dans les bons contrats"], "a": 2, "e": "3 délais possibles : maladie, accident, hospitalisation. Généralement le délai accident est le plus court, hospitalisation aussi."}, {"q": "Les 2 lignes dans un contrat prévoyance servent à :", "opts": ["Doubler la couverture", "Dissocier pro et personnel pour optimiser la fiscalité", "Réduire la cotisation", "Augmenter le seuil de déclenchement"], "a": 1, "e": "Ligne 1 (pro) : cotisation déductible des revenus professionnels, rente imposable en revenu pro. Ligne 2 (perso) : traitement fiscal différent → optimisation IR."}, {"q": "Quel est le seuil de déclenchement OPTIMAL à viser dans un contrat prévoyance ?", "opts": ["33%", "25%", "16%", "50%"], "a": 2, "e": "16% (ou le plus bas possible). Permet d'être indemnisé dès une invalidité légère qui impact pourtant significativement les revenus nets."}, {"q": "Parmi ces combinaisons, quelle est la prévoyance optimale ?", "opts": ["Indemnitaire + barème fonctionnel + T/100", "Forfaitaire + barème professionnel + T/66", "Indemnitaire + barème professionnel + T/100", "Forfaitaire + barème fonctionnel + T/66"], "a": 1, "e": "La combinaison gagnante : Forfaitaire (montant garanti) + Professionnel (barème favorable) + T/66 (calcul rente favorable)."}, {"q": "Le barème croisé (contractuel) utilise :", "opts": ["Uniquement le taux physique", "IF (incapacité fonctionnelle) × IP (incapacité professionnelle)", "L'âge de l'assuré", "Le niveau de revenus de l'assuré"], "a": 1, "e": "Barème croisé = tableau IF (fonctionnel) × IP (professionnel). Donne un taux contractuel souvent supérieur à chaque composante seule, mais moins favorable que l'évaluation professionnelle pure."}, {"q": "Pour les affections psychiques, quelle est la question clé à poser à l'assureur ?", "opts": ["Quelle est la prime supplémentaire ?", "Sont-elles garanties en ITT et en invalidité permanente ?", "À partir de quel âge ?", "Quel est le délai de carence ?"], "a": 1, "e": "Certains contrats excluent les affections psychiques (dépression, burn-out) totalement ou partiellement. À vérifier impérativement pour ITT et invalidité permanente."}, {"q": "Un médecin (CARMF) invalide à 30% professionnellement reçoit de son régime obligatoire :", "opts": ["Sa rente CARMF complète", "Une rente partielle de ~20 160€/an", "Rien si le seuil de déclenchement CARMF est 33%", "La moitié de la rente"], "a": 2, "e": "Si le seuil de déclenchement CARMF est 33% et que le taux = 30% → aucune rente. D'où l'importance d'une prévoyance complémentaire avec seuil à 16%."}, {"q": "La protection sociale en France est la même pour tous ?", "opts": ["Oui, même cotisation et mêmes droits", "Non, elle varie selon le statut (salarié, indépendant, profession libérale...)", "Non, uniquement selon le revenu", "Oui pour les risques maladie et vieillesse"], "a": 1, "e": "'La protection sociale, oui mais... elle n'est pas la même pour tous.' Les indépendants ont des régimes obligatoires (SSI, CARMF, CARCDSF, CARPIMKO) souvent moins protecteurs que le régime général."}, {"q": "À quel taux d'invalidité la rente pleine est-elle versée ?", "opts": ["50%", "100%", "66%", "80%"], "a": 2, "e": "≥ 66% = rente pleine (100% du montant souscrit). C'est le seuil de référence pour le calcul T/66. En dessous : rente partielle."}, {"q": "Le SSI couvre combien de jours d'arrêt de travail ?", "opts": ["J1 à J90", "J3 à J360", "J1 à J180", "J8 à J1095"], "a": 1, "e": "SSI : couverture de J3 à J360. Après 360 jours → bascule en invalidité. La couverture reste très faible (~25% du revenu)."}, {"q": "Pourquoi le CARPIMKO est-il particulièrement exposé ?", "opts": ["Parce qu'il a les cotisations les plus élevées", "Parce que la rente invalidité n'est que 10 080€/an (≈12% de 80k€)", "Parce qu'il n'a aucune couverture maladie", "Parce que le seuil est à 50%"], "a": 1, "e": "CARPIMKO (kinés, infirmiers) : invalidité 27,62€/j = 10 080€/an ≈ 12% du revenu. Le moins protégé des 4 régimes présentés."}, {"q": "Quel type de contrat prévoyance est le plus courant sur le marché ?", "opts": ["Forfaitaire", "Indemnitaire", "Mixte", "Capitalistique"], "a": 1, "e": "La grande majorité des contrats du marché sont indemnitaires ('gouvernés par le principe indemnitaire'). D'où l'importance de chercher spécifiquement un contrat forfaitaire."}, {"q": "Le délai de carence pour la dépression peut aller jusqu'à :", "opts": ["30 jours", "6 mois", "1 an (365 jours)", "3 mois"], "a": 2, "e": "Pour certaines pathologies (dépression, fibromyalgie, VIH) : délai de carence jusqu'à 365 jours. Pendant ce temps, pas de couverture même si le contrat est actif."}];
@@ -493,57 +472,5 @@ function showTab(id,btn){
 }
 window.onload=function(){showCard();buildQuiz();buildFocus();};
 </script>
-
-<script>
-(function() {
-  var DAY_KEYWORDS = ["contrat indemnitaire", "contrat forfaitaire", "indemnitaire", "forfaitaire", "points de vigilance", "seuil de déclenchement", "taux d'invalidité", "T/66", "barème professionnel", "reclassement professionnel", "prévoyance optimale", "2 lignes"];
-  var seen = new WeakSet();
-
-  function markEl(el) {
-    if (!el || seen.has(el)) return;
-    var tag = el.tagName;
-    if (!tag) return;
-    seen.add(el);
-    el.classList.add('heart-line');
-    var badge = document.createElement('span');
-    badge.className = 'heart-badge';
-    badge.textContent = '❤️';
-    el.insertBefore(badge, el.firstChild);
-  }
-
-  function markKeywords(fb, keywords) {
-    var walker = document.createTreeWalker(fb, NodeFilter.SHOW_TEXT, null, false);
-    var node;
-    while ((node = walker.nextNode())) {
-      var txt = node.textContent.toLowerCase();
-      for (var i = 0; i < keywords.length; i++) {
-        if (txt.indexOf(keywords[i].toLowerCase()) !== -1) {
-          // Trouve l'ancêtre immédiat marquable
-          var el = node.parentElement;
-          var depth = 0;
-          while (el && el !== fb && depth < 6) {
-            var t = el.tagName;
-            if (t === 'LI' || t === 'P' || t === 'H2' || t === 'H3' ||
-                t === 'BLOCKQUOTE' || t === 'TABLE') {
-              markEl(el);
-              break;
-            }
-            el = el.parentElement;
-            depth++;
-          }
-          break;
-        }
-      }
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.fiche-body').forEach(function(fb) {
-      markKeywords(fb, DAY_KEYWORDS);
-    });
-  });
-})();
-</script>
-
 </body>
 </html>
