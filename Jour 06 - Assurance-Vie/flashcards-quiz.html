@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Jour 06 — Assurance-Vie | Formation CGP</title>
 <style>
 :root{
@@ -84,236 +85,223 @@ dl.fiche-dl dd{color:var(--text);line-height:1.5}
 .cas-solution{display:none;background:var(--ok-bg);border-radius:8px;padding:14px 16px;font-size:.84rem;line-height:1.6;border:1px solid var(--ok)}
 @media(max-width:600px){header{padding:20px 16px}.tab-pane{padding:18px 14px}dl.fiche-dl{grid-template-columns:1fr}}
 
+
 /* ── Marqueurs ❤️ À Retenir ── */
 .heart-line {
-  position: relative;
   border-left: 3px solid #e84393 !important;
   padding-left: 10px !important;
-  background: linear-gradient(to right, #fff0f7, transparent) !important;
-  border-radius: 0 6px 6px 0;
+  background: linear-gradient(to right, #fff0f7 0%, transparent 100%) !important;
+  border-radius: 0 6px 6px 0 !important;
   margin-left: 0 !important;
 }
 .heart-badge {
   display: inline-block;
-  font-size: 0.82em;
-  margin-right: 5px;
+  margin-right: 4px;
+  font-size: .88em;
   vertical-align: middle;
-  line-height: 1;
 }
-li.heart-line { list-style: none; margin-left: 0; padding-left: 14px !important; }
+li.heart-line { list-style: none; }
 table.heart-line { border-top: 3px solid #e84393; }
-h2.heart-line, h3.heart-line { padding-left: 6px !important; }
 
 </style>
 </head>
 <body>
 <header>
-  <h1>&#128218; Jour 06 &mdash; Assurance-Vie</h1>
-  <p>Articles 990I &amp; 757B &middot; Clause b&eacute;n&eacute;ficiaire &middot; D&eacute;lai de r&eacute;tractation</p>
+<h1>📚 Jour 06 — Assurance-Vie</h1>
+<p>Articles 990I &amp; 757B · Clause bénéficiaire · Délai de rétractation</p>
 </header>
 <div class="tab-bar">
-  <button class="tab-btn active" onclick="showTab('flashcards',this)">&#127183; Flashcards</button>
-  <button class="tab-btn" onclick="showTab('quiz',this)">&#128221; Quiz</button>
-  <button class="tab-btn" onclick="showTab('focus',this)">&#127919; Focus</button>
-  <button class="tab-btn" onclick="showTab('fiche',this)">&#128196; Fiche</button>
-  <button class="tab-btn" onclick="showTab('exercices',this)">&#127947; Exercices</button>
-  <button class="tab-btn" onclick="showTab('cas',this)">&#128203; Cas pratiques</button>
+<button class="tab-btn active" onclick="showTab('flashcards',this)">🃏 Flashcards</button>
+<button class="tab-btn" onclick="showTab('quiz',this)">📝 Quiz</button>
+<button class="tab-btn" onclick="showTab('focus',this)">🎯 Focus</button>
+<button class="tab-btn" onclick="showTab('fiche',this)">📄 Fiche</button>
+<button class="tab-btn" onclick="showTab('exercices',this)">🏋 Exercices</button>
+<button class="tab-btn" onclick="showTab('cas',this)">📋 Cas pratiques</button>
 </div>
-
 <!-- ══ FLASHCARDS ══ -->
-<div id="tab-flashcards" class="tab-pane active">
-  <div class="filter-bar" id="filter-bar">
-    <button class="filter-btn active" onclick="filterCards(0,this)">Tous (20)</button>
-    <button class="filter-btn" onclick="filterCards(1,this)">Ch.1 — Contrat AV</button>
-    <button class="filter-btn" onclick="filterCards(2,this)">Ch.2 — Art. 990I</button>
-    <button class="filter-btn" onclick="filterCards(3,this)">Ch.3 — Art. 757B</button>
-    <button class="filter-btn" onclick="filterCards(4,this)">Ch.4 — Clause &amp; R&eacute;tractation</button>
-  </div>
-  <div class="card-counter" id="card-counter">Carte 1 / 20</div>
-  <div class="card-wrap" onclick="flipCard()">
-    <div class="card-inner" id="card-inner">
-      <div class="card-face card-front">
-        <div class="ch-badge" id="card-ch">Ch. 1</div>
-        <div class="card-q" id="card-q">...</div>
-      </div>
-      <div class="card-face card-back">
-        <div class="card-a" id="card-a">...</div>
-      </div>
-    </div>
-  </div>
-  <div class="card-nav">
-    <button onclick="prevCard()">&#8592; Préc.</button>
-    <button onclick="shuffleCards()">&#128256; Mélanger</button>
-    <button onclick="nextCard()">Suiv. &#8594;</button>
-  </div>
+<div class="tab-pane active" id="tab-flashcards">
+<div class="filter-bar" id="filter-bar">
+<button class="filter-btn active" onclick="filterCards(0,this)">Tous (20)</button>
+<button class="filter-btn" onclick="filterCards(1,this)">Ch.1 — Contrat AV</button>
+<button class="filter-btn" onclick="filterCards(2,this)">Ch.2 — Art. 990I</button>
+<button class="filter-btn" onclick="filterCards(3,this)">Ch.3 — Art. 757B</button>
+<button class="filter-btn" onclick="filterCards(4,this)">Ch.4 — Clause &amp; Rétractation</button>
 </div>
-
+<div class="card-counter" id="card-counter">Carte 1 / 20</div>
+<div class="card-wrap" onclick="flipCard()">
+<div class="card-inner" id="card-inner">
+<div class="card-face card-front">
+<div class="ch-badge" id="card-ch">Ch. 1</div>
+<div class="card-q" id="card-q">...</div>
+</div>
+<div class="card-face card-back">
+<div class="card-a" id="card-a">...</div>
+</div>
+</div>
+</div>
+<div class="card-nav">
+<button onclick="prevCard()">← Préc.</button>
+<button onclick="shuffleCards()">🔀 Mélanger</button>
+<button onclick="nextCard()">Suiv. →</button>
+</div>
+</div>
 <!-- ══ QUIZ ══ -->
-<div id="tab-quiz" class="tab-pane">
-  <div id="quiz-container"></div>
-  <div id="quiz-summary" class="quiz-summary" style="display:none"></div>
-  <button id="quiz-submit" onclick="submitQuiz()" style="display:block;margin:0 auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Valider le quiz</button>
-  <button id="quiz-reset" onclick="resetQuiz()" style="display:none;margin:16px auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Recommencer</button>
+<div class="tab-pane" id="tab-quiz">
+<div id="quiz-container"></div>
+<div class="quiz-summary" id="quiz-summary" style="display:none"></div>
+<button id="quiz-submit" onclick="submitQuiz()" style="display:block;margin:0 auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Valider le quiz</button>
+<button id="quiz-reset" onclick="resetQuiz()" style="display:none;margin:16px auto;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:.9rem;font-weight:700;cursor:pointer">Recommencer</button>
 </div>
-
 <!-- ══ FOCUS ══ -->
-<div id="tab-focus" class="tab-pane">
-  <div class="focus-nav" id="focus-nav"></div>
-  <div id="focus-content"></div>
+<div class="tab-pane" id="tab-focus">
+<div class="focus-nav" id="focus-nav"></div>
+<div id="focus-content"></div>
 </div>
-
 <!-- ══ FICHE ══ -->
-<div id="tab-fiche" class="tab-pane">
-  <div class="fiche-nav">
-    <button class="fiche-btn active" onclick="j6go('r')">&#128196; Vue d&rsquo;ensemble</button>
-    <button class="fiche-btn" onclick="j6go('1')">990I &mdash; avant 70 ans</button>
-    <button class="fiche-btn" onclick="j6go('2')">757B &mdash; apr&egrave;s 70 ans</button>
-    <button class="fiche-btn" onclick="j6go('3')">Clause &amp; R&eacute;tractation</button>
-  </div>
-  <div id="fiche-r" class="fiche-section active">
-    <div class="fiche-block">
-      <h3>&#128218; L&rsquo;assurance-vie en bref</h3>
-      <dl class="fiche-dl">
-        <dt>D&eacute;finition</dt><dd>Contrat assureur ↔ souscripteur : versement d&rsquo;un capital au b&eacute;n&eacute;ficiaire au d&eacute;c&egrave;s de l&rsquo;assur&eacute;</dd>
-        <dt>Fonds euros</dt><dd>Capital garanti, effet cliquet (gains d&eacute;finitivement acquis)</dd>
-        <dt>UC</dt><dd>Unit&eacute;s de compte : capital non garanti, fluctue avec les march&eacute;s</dd>
-        <dt>Avantage cl&eacute;</dt><dd>Transmission <strong>hors succession</strong> (sauf clause b&eacute;n&eacute;ficiaire mal r&eacute;dig&eacute;e)</dd>
-      </dl>
-    </div>
-    <div class="fiche-block">
-      <h3>&#128200; Fiscalit&eacute; au d&eacute;c&egrave;s — vue synth&eacute;tique</h3>
-      <table class="fiche-table">
-        <tr><th></th><th>Art. 990I (avant 70 ans)</th><th>Art. 757B (apr&egrave;s 70 ans)</th></tr>
-        <tr><td>Abattement</td><td><strong>152 500 &euro;</strong> / b&eacute;n&eacute;ficiaire</td><td><strong>30 500 &euro;</strong> global</td></tr>
-        <tr><td>Gains</td><td>Inclus dans l&rsquo;assiette</td><td><strong>Exon&eacute;r&eacute;s</strong></td></tr>
-        <tr><td>Taux</td><td>20 % puis 31,25 %</td><td>Bar&egrave;me droits succession</td></tr>
-        <tr><td>Conjoint/PACS</td><td>Exon&eacute;r&eacute; (TEPA)</td><td>Exon&eacute;r&eacute; (TEPA)</td></tr>
-      </table>
-    </div>
-  </div>
-  <div id="fiche-1" class="fiche-section">
-    <div class="fiche-block">
-      <h3>&#128200; Article 990I — Primes vers&eacute;es AVANT 70 ans</h3>
-      <dl class="fiche-dl">
-        <dt>Champ</dt><dd>Primes vers&eacute;es avant les 70 ans de l&rsquo;assur&eacute; + gains g&eacute;n&eacute;r&eacute;s</dd>
-        <dt>R&eacute;gime</dt><dd>Hors succession &mdash; pr&eacute;l&egrave;vement sui generis autonome</dd>
-        <dt>Abattement</dt><dd><strong>152 500 &euro; PAR b&eacute;n&eacute;ficiaire</strong>, tous contrats AV confondus</dd>
-      </dl>
-      <table class="fiche-table" style="margin-top:12px">
-        <tr><th>Fraction taxable par b&eacute;n&eacute;ficiaire</th><th>Taux</th></tr>
-        <tr><td>Jusqu&rsquo;&agrave; 700 000 &euro;</td><td><strong>20 %</strong></td></tr>
-        <tr><td>Au-del&agrave; de 700 000 &euro;</td><td><strong>31,25 %</strong></td></tr>
-      </table>
-    </div>
-    <div class="fiche-hl">&#128161; <strong>Avantage strat&eacute;gique :</strong> en d&eacute;signant plusieurs b&eacute;n&eacute;ficiaires, on multiplie l&rsquo;abattement. 3 b&eacute;n&eacute;ficiaires = 3 × 152 500 = <strong>457 500 &euro;</strong> transmis en franchise.</div>
-    <div class="fiche-warn">&#9888; Conjoint/PACS = exon&eacute;ration totale (TEPA). Concubin = PAS d&rsquo;exon&eacute;ration &mdash; tax&eacute; au taux 990I.</div>
-  </div>
-  <div id="fiche-2" class="fiche-section">
-    <div class="fiche-block">
-      <h3>&#128200; Article 757B — Primes vers&eacute;es APR&Egrave;S 70 ans</h3>
-      <dl class="fiche-dl">
-        <dt>Champ</dt><dd>Primes vers&eacute;es apr&egrave;s les 70 ans de l&rsquo;assur&eacute; (les gains sont exon&eacute;r&eacute;s)</dd>
-        <dt>R&eacute;int&egrave;gre</dt><dd>La masse successorale &mdash; soumis aux droits de succession classiques</dd>
-        <dt>Abattement</dt><dd><strong>30 500 &euro; GLOBAL</strong> pour tous les b&eacute;n&eacute;ficiaires de tous les contrats</dd>
-        <dt>Gains</dt><dd><strong>Totalement exon&eacute;r&eacute;s</strong> &mdash; c&rsquo;est le principal avantage de 757B</dd>
-        <dt>Bar&egrave;me</dt><dd>Droits de succession selon lien de parent&eacute; (ligne directe, fr/s&oelig;ur, etc.)</dd>
-      </dl>
-    </div>
-    <div class="fiche-ok">&#128200; <strong>Comparaison 990I vs 757B :</strong> 990I est en g&eacute;n&eacute;ral plus favorable pour les gros capitaux avec peu de b&eacute;n&eacute;ficiaires. 757B est int&eacute;ressant si les gains repr&eacute;sentent une part importante du capital (les gains &eacute;tant exon&eacute;r&eacute;s).</div>
-    <div class="fiche-warn">&#9888; L&rsquo;abattement 757B de 30 500 &euro; est GLOBAL et non par b&eacute;n&eacute;ficiaire &mdash; contrairement &agrave; 990I.</div>
-  </div>
-  <div id="fiche-3" class="fiche-section">
-    <div class="fiche-block">
-      <h3>&#128213; Clause b&eacute;n&eacute;ficiaire</h3>
-      <dl class="fiche-dl">
-        <dt>D&eacute;finition</dt><dd>D&eacute;signation par le souscripteur des personnes qui recevront le capital au d&eacute;c&egrave;s</dd>
-        <dt>Acceptation</dt><dd>Clause accept&eacute;e = souscripteur bloqu&eacute; (rachats/arbitrages/modif interdits sans accord du b&eacute;n&eacute;ficiaire)</dd>
-      </dl>
-      <div class="fiche-warn" style="margin-top:10px">&#128680; &laquo; Mes h&eacute;ritiers &raquo; = les capitaux r&eacute;int&egrave;grent la succession &mdash; perte totale de l&rsquo;avantage hors succession. <strong>Toujours nommer les b&eacute;n&eacute;ficiaires pr&eacute;cis&eacute;ment.</strong></div>
-    </div>
-    <div class="fiche-block">
-      <h3>&#8987; D&eacute;lai de r&eacute;tractation</h3>
-      <dl class="fiche-dl">
-        <dt>D&eacute;lai</dt><dd><strong>30 jours calendaires</strong> &agrave; compter de la r&eacute;ception du contrat</dd>
-        <dt>Modalit&eacute;</dt><dd>Lettre recommand&eacute;e avec AR &agrave; l&rsquo;assureur</dd>
-        <dt>Effet</dt><dd>Restitution int&eacute;grale des primes + int&eacute;r&ecirc;ts l&eacute;gaux sous 30 jours</dd>
-        <dt>Prorogation</dt><dd>Si documents obligatoires non remis : <strong>d&eacute;lai ne court pas</strong> &mdash; renonciation possible &agrave; tout moment</dd>
-      </dl>
-    </div>
-  </div>
+<div class="tab-pane" id="tab-fiche">
+<div class="fiche-nav">
+<button class="fiche-btn active" onclick="j6go('r')">📄 Vue d’ensemble</button>
+<button class="fiche-btn" onclick="j6go('1')">990I — avant 70 ans</button>
+<button class="fiche-btn" onclick="j6go('2')">757B — après 70 ans</button>
+<button class="fiche-btn" onclick="j6go('3')">Clause &amp; Rétractation</button>
 </div>
-
+<div class="fiche-section active" id="fiche-r">
+<div class="fiche-block">
+<h3>📚 L’assurance-vie en bref</h3>
+<dl class="fiche-dl">
+<dt>Définition</dt><dd>Contrat assureur ↔ souscripteur : versement d’un capital au bénéficiaire au décès de l’assuré</dd>
+<dt>Fonds euros</dt><dd>Capital garanti, effet cliquet (gains définitivement acquis)</dd>
+<dt>UC</dt><dd>Unités de compte : capital non garanti, fluctue avec les marchés</dd>
+<dt>Avantage clé</dt><dd>Transmission <strong>hors succession</strong> (sauf clause bénéficiaire mal rédigée)</dd>
+</dl>
+</div>
+<div class="fiche-block">
+<h3>📈 Fiscalité au décès — vue synthétique</h3>
+<table class="fiche-table">
+<tr><th></th><th>Art. 990I (avant 70 ans)</th><th>Art. 757B (après 70 ans)</th></tr>
+<tr><td>Abattement</td><td><strong>152 500 €</strong> / bénéficiaire</td><td><strong>30 500 €</strong> global</td></tr>
+<tr><td>Gains</td><td>Inclus dans l’assiette</td><td><strong>Exonérés</strong></td></tr>
+<tr><td>Taux</td><td>20 % puis 31,25 %</td><td>Barème droits succession</td></tr>
+<tr><td>Conjoint/PACS</td><td>Exonéré (TEPA)</td><td>Exonéré (TEPA)</td></tr>
+</table>
+</div>
+</div>
+<div class="fiche-section" id="fiche-1">
+<div class="fiche-block">
+<h3>📈 Article 990I — Primes versées AVANT 70 ans</h3>
+<dl class="fiche-dl">
+<dt>Champ</dt><dd>Primes versées avant les 70 ans de l’assuré + gains générés</dd>
+<dt>Régime</dt><dd>Hors succession — prélèvement sui generis autonome</dd>
+<dt>Abattement</dt><dd><strong>152 500 € PAR bénéficiaire</strong>, tous contrats AV confondus</dd>
+</dl>
+<table class="fiche-table" style="margin-top:12px">
+<tr><th>Fraction taxable par bénéficiaire</th><th>Taux</th></tr>
+<tr><td>Jusqu’à 700 000 €</td><td><strong>20 %</strong></td></tr>
+<tr><td>Au-delà de 700 000 €</td><td><strong>31,25 %</strong></td></tr>
+</table>
+</div>
+<div class="fiche-hl">💡 <strong>Avantage stratégique :</strong> en désignant plusieurs bénéficiaires, on multiplie l’abattement. 3 bénéficiaires = 3 × 152 500 = <strong>457 500 €</strong> transmis en franchise.</div>
+<div class="fiche-warn">⚠ Conjoint/PACS = exonération totale (TEPA). Concubin = PAS d’exonération — taxé au taux 990I.</div>
+</div>
+<div class="fiche-section" id="fiche-2">
+<div class="fiche-block">
+<h3>📈 Article 757B — Primes versées APRÈS 70 ans</h3>
+<dl class="fiche-dl">
+<dt>Champ</dt><dd>Primes versées après les 70 ans de l’assuré (les gains sont exonérés)</dd>
+<dt>Réintègre</dt><dd>La masse successorale — soumis aux droits de succession classiques</dd>
+<dt>Abattement</dt><dd><strong>30 500 € GLOBAL</strong> pour tous les bénéficiaires de tous les contrats</dd>
+<dt>Gains</dt><dd><strong>Totalement exonérés</strong> — c’est le principal avantage de 757B</dd>
+<dt>Barème</dt><dd>Droits de succession selon lien de parenté (ligne directe, fr/sœur, etc.)</dd>
+</dl>
+</div>
+<div class="fiche-ok">📈 <strong>Comparaison 990I vs 757B :</strong> 990I est en général plus favorable pour les gros capitaux avec peu de bénéficiaires. 757B est intéressant si les gains représentent une part importante du capital (les gains étant exonérés).</div>
+<div class="fiche-warn">⚠ L’abattement 757B de 30 500 € est GLOBAL et non par bénéficiaire — contrairement à 990I.</div>
+</div>
+<div class="fiche-section" id="fiche-3">
+<div class="fiche-block">
+<h3>📕 Clause bénéficiaire</h3>
+<dl class="fiche-dl">
+<dt>Définition</dt><dd>Désignation par le souscripteur des personnes qui recevront le capital au décès</dd>
+<dt>Acceptation</dt><dd>Clause acceptée = souscripteur bloqué (rachats/arbitrages/modif interdits sans accord du bénéficiaire)</dd>
+</dl>
+<div class="fiche-warn" style="margin-top:10px">🚨 « Mes héritiers » = les capitaux réintègrent la succession — perte totale de l’avantage hors succession. <strong>Toujours nommer les bénéficiaires précisément.</strong></div>
+</div>
+<div class="fiche-block">
+<h3>⌛ Délai de rétractation</h3>
+<dl class="fiche-dl">
+<dt>Délai</dt><dd><strong>30 jours calendaires</strong> à compter de la réception du contrat</dd>
+<dt>Modalité</dt><dd>Lettre recommandée avec AR à l’assureur</dd>
+<dt>Effet</dt><dd>Restitution intégrale des primes + intérêts légaux sous 30 jours</dd>
+<dt>Prorogation</dt><dd>Si documents obligatoires non remis : <strong>délai ne court pas</strong> — renonciation possible à tout moment</dd>
+</dl>
+</div>
+</div>
+</div>
 <!-- ══ EXERCICES ══ -->
-<div id="tab-exercices" class="tab-pane">
-  <div style="background:#fff;border-radius:16px;padding:24px;border:1.5px solid var(--border)">
-    <h3 style="font-size:1rem;font-weight:800;color:var(--navy);margin-bottom:12px">&#127947; Exercices du cours</h3>
-    <p style="font-size:.86rem;color:var(--muted);line-height:1.6">Les exercices du cours J6 seront ajout&eacute;s ici. En attendant, entra&icirc;ne-toi sur les cas pratiques ci-dessous.</p>
-  </div>
+<div class="tab-pane" id="tab-exercices">
+<div style="background:#fff;border-radius:16px;padding:24px;border:1.5px solid var(--border)">
+<h3 style="font-size:1rem;font-weight:800;color:var(--navy);margin-bottom:12px">🏋 Exercices du cours</h3>
+<p style="font-size:.86rem;color:var(--muted);line-height:1.6">Les exercices du cours J6 seront ajoutés ici. En attendant, entraîne-toi sur les cas pratiques ci-dessous.</p>
 </div>
-
+</div>
 <!-- ══ CAS PRATIQUES ══ -->
-<div id="tab-cas" class="tab-pane">
-
-  <div class="cas">
-    <div class="cas-title">Cas n&deg;1 <span class="cas-ref">Art. 990I</span></div>
-    <div class="cas-enonce">
-      <strong>&#201;nonc&eacute; :</strong> Mme Martin d&eacute;c&egrave;de &agrave; 72 ans. Avant ses 70 ans, elle avait vers&eacute; <strong>200 000 &euro;</strong> sur une assurance-vie. &Agrave; son d&eacute;c&egrave;s, le contrat vaut <strong>260 000 &euro;</strong> (60 000 &euro; de gains). Elle a d&eacute;sign&eacute; son fils unique comme b&eacute;n&eacute;ficiaire.<br><br>
-      <strong>Question :</strong> Quel est le pr&eacute;l&egrave;vement &agrave; payer par le fils ?
+<div class="tab-pane" id="tab-cas">
+<div class="cas">
+<div class="cas-title">Cas n°1 <span class="cas-ref">Art. 990I</span></div>
+<div class="cas-enonce">
+<strong>Énoncé :</strong> Mme Martin décède à 72 ans. Avant ses 70 ans, elle avait versé <strong>200 000 €</strong> sur une assurance-vie. À son décès, le contrat vaut <strong>260 000 €</strong> (60 000 € de gains). Elle a désigné son fils unique comme bénéficiaire.<br/><br/>
+<strong>Question :</strong> Quel est le prélèvement à payer par le fils ?
     </div>
-    <div class="cas-piege">&#9888; <strong>Pi&egrave;ge :</strong> L&rsquo;assiette 990I inclut les gains &mdash; c&rsquo;est le capital TOTAL (260 000 &euro;) et non les seules primes.</div>
-    <button class="cas-btn" onclick="toggleCas('c1')">Voir la solution</button>
-    <div class="cas-solution" id="c1">
-      <strong>Application de l&rsquo;article 990I :</strong><br>
-      Capital transmis : 260 000 &euro; (primes + gains, tout est inclus)<br>
-      Abattement 990I : &minus; 152 500 &euro;<br>
-      Base taxable : 107 500 &euro;<br>
-      Pr&eacute;l&egrave;vement : 107 500 &times; 20 % = <strong>21 500 &euro;</strong><br><br>
-      Si le b&eacute;n&eacute;ficiaire avait &eacute;t&eacute; le conjoint : <strong>0 &euro;</strong> (exon&eacute;ration TEPA totale).<br>
-      Si 2 enfants b&eacute;n&eacute;ficiaires (chacun re&ccedil;oit 130 000 &euro;) : 130 000 &minus; 152 500 = 0 &euro; de pr&eacute;l&egrave;vement &rarr; <strong>transmission totalement libre de taxes</strong>.
+<div class="cas-piege">⚠ <strong>Piège :</strong> L’assiette 990I inclut les gains — c’est le capital TOTAL (260 000 €) et non les seules primes.</div>
+<button class="cas-btn" onclick="toggleCas('c1')">Voir la solution</button>
+<div class="cas-solution" id="c1">
+<strong>Application de l’article 990I :</strong><br/>
+      Capital transmis : 260 000 € (primes + gains, tout est inclus)<br/>
+      Abattement 990I : − 152 500 €<br/>
+      Base taxable : 107 500 €<br/>
+      Prélèvement : 107 500 × 20 % = <strong>21 500 €</strong><br/><br/>
+      Si le bénéficiaire avait été le conjoint : <strong>0 €</strong> (exonération TEPA totale).<br/>
+      Si 2 enfants bénéficiaires (chacun reçoit 130 000 €) : 130 000 − 152 500 = 0 € de prélèvement → <strong>transmission totalement libre de taxes</strong>.
     </div>
-  </div>
-
-  <div class="cas">
-    <div class="cas-title">Cas n&deg;2 <span class="cas-ref">Art. 757B</span></div>
-    <div class="cas-enonce">
-      <strong>&#201;nonc&eacute; :</strong> M. Leblanc d&eacute;c&egrave;de &agrave; 80 ans. Apr&egrave;s ses 70 ans, il avait vers&eacute; <strong>90 000 &euro;</strong> sur une AV. Ces primes ont g&eacute;n&eacute;r&eacute; <strong>25 000 &euro;</strong> de gains. Ses deux enfants sont d&eacute;sign&eacute;s &agrave; parts &eacute;gales.<br><br>
-      <strong>Question :</strong> Calculer les droits de succession dus par chaque enfant.
+</div>
+<div class="cas">
+<div class="cas-title">Cas n°2 <span class="cas-ref">Art. 757B</span></div>
+<div class="cas-enonce">
+<strong>Énoncé :</strong> M. Leblanc décède à 80 ans. Après ses 70 ans, il avait versé <strong>90 000 €</strong> sur une AV. Ces primes ont généré <strong>25 000 €</strong> de gains. Ses deux enfants sont désignés à parts égales.<br/><br/>
+<strong>Question :</strong> Calculer les droits de succession dus par chaque enfant.
     </div>
-    <div class="cas-piege">&#9888; <strong>Pi&egrave;ges :</strong> 1) Les gains (25 000 &euro;) sont totalement exon&eacute;r&eacute;s. 2) L&rsquo;abattement de 30 500 &euro; est global, pas par b&eacute;n&eacute;ficiaire.</div>
-    <button class="cas-btn" onclick="toggleCas('c2')">Voir la solution</button>
-    <div class="cas-solution" id="c2">
-      <strong>Application de l&rsquo;article 757B :</strong><br>
-      Gains (25 000 &euro;) : <strong>totalement exon&eacute;r&eacute;s</strong><br>
-      Primes versées : 90 000 &euro;<br>
-      Abattement 757B global : &minus; 30 500 &euro;<br>
-      Base taxable globale : 59 500 &euro;<br>
-      R&eacute;partition entre 2 enfants : 29 750 &euro; chacun<br><br>
-      Droits de succession en ligne directe (après abattement personnel de 100 000 &euro;/enfant par ailleurs) :<br>
-      Si abattement 100 000 &euro; d&eacute;j&agrave; utilis&eacute; pour d&rsquo;autres biens : 29 750 &euro; &times; 20 % = <strong>5 950 &euro;/enfant</strong><br><br>
-      <em>Note : l&rsquo;abattement 100 000 &euro; des droits de succession est commun &agrave; tous les biens du d&eacute;funt, pas sp&eacute;cifique &agrave; l&rsquo;AV.</em>
+<div class="cas-piege">⚠ <strong>Pièges :</strong> 1) Les gains (25 000 €) sont totalement exonérés. 2) L’abattement de 30 500 € est global, pas par bénéficiaire.</div>
+<button class="cas-btn" onclick="toggleCas('c2')">Voir la solution</button>
+<div class="cas-solution" id="c2">
+<strong>Application de l’article 757B :</strong><br/>
+      Gains (25 000 €) : <strong>totalement exonérés</strong><br/>
+      Primes versées : 90 000 €<br/>
+      Abattement 757B global : − 30 500 €<br/>
+      Base taxable globale : 59 500 €<br/>
+      Répartition entre 2 enfants : 29 750 € chacun<br/><br/>
+      Droits de succession en ligne directe (après abattement personnel de 100 000 €/enfant par ailleurs) :<br/>
+      Si abattement 100 000 € déjà utilisé pour d’autres biens : 29 750 € × 20 % = <strong>5 950 €/enfant</strong><br/><br/>
+<em>Note : l’abattement 100 000 € des droits de succession est commun à tous les biens du défunt, pas spécifique à l’AV.</em>
+</div>
+</div>
+<div class="cas">
+<div class="cas-title">Cas n°3 <span class="cas-ref">Délai de rétractation</span></div>
+<div class="cas-enonce">
+<strong>Énoncé :</strong> M. Petit a souscrit une AV en 2021. L’assureur ne lui a jamais remis la notice d’information ni les conditions générales. En 2026, M. Petit réalise que le contrat ne lui convient pas et souhaite y renoncer.<br/><br/>
+<strong>Question :</strong> Peut-il encore exercer son droit de renonciation 5 ans après la souscription ?
     </div>
-  </div>
-
-  <div class="cas">
-    <div class="cas-title">Cas n&deg;3 <span class="cas-ref">D&eacute;lai de r&eacute;tractation</span></div>
-    <div class="cas-enonce">
-      <strong>&#201;nonc&eacute; :</strong> M. Petit a souscrit une AV en 2021. L&rsquo;assureur ne lui a jamais remis la notice d&rsquo;information ni les conditions g&eacute;n&eacute;rales. En 2026, M. Petit r&eacute;alise que le contrat ne lui convient pas et souhaite y renoncer.<br><br>
-      <strong>Question :</strong> Peut-il encore exercer son droit de renonciation 5 ans apr&egrave;s la souscription ?
-    </div>
-    <div class="cas-piege">&#9888; <strong>Pi&egrave;ge fr&eacute;quent :</strong> Beaucoup pensent que pass&eacute; 30 jours, c&rsquo;est irr&eacute;m&eacute;diablement fini. C&rsquo;est FAUX si l&rsquo;assureur a failli &agrave; ses obligations d&rsquo;information.</div>
-    <button class="cas-btn" onclick="toggleCas('c3')">Voir la solution</button>
-    <div class="cas-solution" id="c3">
-      <strong>Oui &mdash; prorogation l&eacute;gale du d&eacute;lai :</strong><br><br>
-      L&rsquo;art. L132-5-2 du Code des assurances pr&eacute;voit que le d&eacute;lai de 30 jours ne court qu&rsquo;&agrave; compter de la remise des documents obligatoires (notice + conditions g&eacute;n&eacute;rales + bordereau de r&eacute;nonciation).<br><br>
-      Si ces documents n&rsquo;ont pas &eacute;t&eacute; remis : <strong>le d&eacute;lai ne commence jamais &agrave; courir</strong>.<br><br>
-      M. Petit peut exercer son droit de renonciation en 2026 par <strong>lettre recommand&eacute;e avec AR</strong>.<br>
-      L&rsquo;assureur doit restituer toutes les primes + <strong>int&eacute;r&ecirc;ts l&eacute;gaux</strong> dans les 30 jours.<br><br>
-      <em>&#128188; Conseil m&eacute;tier : v&eacute;rifier syst&eacute;matiquement que tous les documents ont bien &eacute;t&eacute; remis au client lors de la souscription &mdash; sinon le contrat reste contestable ind&eacute;finiment.</em>
-    </div>
-  </div>
-
+<div class="cas-piege">⚠ <strong>Piège fréquent :</strong> Beaucoup pensent que passé 30 jours, c’est irrémédiablement fini. C’est FAUX si l’assureur a failli à ses obligations d’information.</div>
+<button class="cas-btn" onclick="toggleCas('c3')">Voir la solution</button>
+<div class="cas-solution" id="c3">
+<strong>Oui — prorogation légale du délai :</strong><br/><br/>
+      L’art. L132-5-2 du Code des assurances prévoit que le délai de 30 jours ne court qu’à compter de la remise des documents obligatoires (notice + conditions générales + bordereau de rénonciation).<br/><br/>
+      Si ces documents n’ont pas été remis : <strong>le délai ne commence jamais à courir</strong>.<br/><br/>
+      M. Petit peut exercer son droit de renonciation en 2026 par <strong>lettre recommandée avec AR</strong>.<br/>
+      L’assureur doit restituer toutes les primes + <strong>intérêts légaux</strong> dans les 30 jours.<br/><br/>
+<em>💼 Conseil métier : vérifier systématiquement que tous les documents ont bien été remis au client lors de la souscription — sinon le contrat reste contestable indéfiniment.</em>
+</div>
+</div>
 </div><!-- /tab-cas -->
-
 <script>
 // ─── DATA ───────────────────────────────────────────────────────────────────
 var CARDS = [{"ch": 1, "q": "Définition d'un contrat d'assurance-vie", "a": "Contrat par lequel l'assureur verse un capital ou une rente au bénéficiaire désigné lors du décès de l'assuré (ou à terme). En échange, le souscripteur verse des primes."}, {"ch": 1, "q": "Les 4 acteurs d'un contrat AV", "a": "1. Souscripteur : signe et paye\n2. Assuré : vie ou décès sur lequel repose le risque\n3. Bénéficiaire : reçoit le capital\n4. Assureur : gère et garantit le contrat\n⚠ Souscripteur ≠ Assuré ≠ Bénéficiaire"}, {"ch": 1, "q": "Fonds en euros vs Unités de compte (UC)", "a": "Fonds en euros : capital garanti, effet cliquet (gains définitivement acquis), rendement modéré.\nUC : capital NON garanti, fluctue avec les marchés, potentiel de rendement plus élevé."}, {"ch": 1, "q": "Qu'est-ce que l'effet cliquet ?", "a": "Mécanisme propre aux fonds en euros : les intérêts crédités chaque année sont définitivement acquis. Même si les marchés chutent, les gains passés ne sont jamais repris."}, {"ch": 1, "q": "Contrat monosupport vs multisupport", "a": "Monosupport : uniquement fonds en euros (garanti).\nMultisupport : fonds euros + UC — permet d'arbitrer entre sécurité et performance selon le profil de risque du client."}, {"ch": 2, "q": "À quoi s'applique l'article 990I du CGI ?", "a": "Aux capitaux décès issus des primes versées AVANT les 70 ans de l'assuré. Régime fiscal autonome, hors succession — prélèvement sui generis."}, {"ch": 2, "q": "Abattement prévu par l'article 990I", "a": "152 500 € PAR BÉNÉFICIAIRE, tous contrats d'assurance-vie confondus. Chaque bénéficiaire profite de cet abattement indépendamment des autres."}, {"ch": 2, "q": "Taux de prélèvement après abattement 990I", "a": "• 20 % sur la fraction taxable jusqu'à 700 000 € (soit capital ≤ 852 500 €)\n• 31,25 % au-delà de 700 000 € de fraction taxable (soit capital > 852 500 €)"}, {"ch": 2, "q": "Quelle est l'assiette taxable sous 990I ?", "a": "Le capital TOTAL transmis au bénéficiaire : primes versées avant 70 ans + gains générés sur ces primes. Les gains sont INCLUS (contrairement à 757B)."}, {"ch": 2, "q": "Qui est exonéré au titre de l'article 990I ?", "a": "Le conjoint marié et le partenaire PACS sont totalement exonérés (loi TEPA 2007). Le concubin n'est PAS exonéré — taxé au taux de 20 % puis 31,25 %."}, {"ch": 3, "q": "À quoi s'applique l'article 757B du CGI ?", "a": "Aux primes versées APRÈS les 70 ans de l'assuré. Ces primes réintègrent la succession et sont soumises aux droits de succession selon le lien de parenté."}, {"ch": 3, "q": "Abattement prévu par l'article 757B", "a": "30 500 € GLOBAL pour l'ensemble des bénéficiaires de l'ensemble des contrats AV du défunt. Ce n'est PAS un abattement par bénéficiaire — il est partagé entre tous."}, {"ch": 3, "q": "Qu'est-ce qui est exonéré sous l'article 757B ?", "a": "Les gains (intérêts et plus-values) générés sur les primes versées après 70 ans sont TOTALEMENT exonérés. Seules les primes elles-mêmes (au-delà de 30 500 €) sont taxées."}, {"ch": 3, "q": "Quel barème s'applique sur la part taxable de l'article 757B ?", "a": "Le barème normal des droits de succession selon le lien de parenté entre assuré et bénéficiaire (ligne directe, frères/sœurs, etc.)."}, {"ch": 3, "q": "990I vs 757B : quelle est la règle fondamentale ?", "a": "Avant 70 ans → 990I : abattement de 152 500 € PAR bénéficiaire, gains TAXÉS.\nAprès 70 ans → 757B : abattement de 30 500 € GLOBAL, gains EXONÉRÉS.\n→ Verser avant 70 ans est généralement plus favorable pour les gros capitaux."}, {"ch": 4, "q": "Délai de rétractation d'un souscripteur AV", "a": "30 jours calendaires à compter de la date de première information (réception du contrat ou du premier avis de valeur de rachat). Délai légal impératif."}, {"ch": 4, "q": "Comment exercer la renonciation à une AV ?", "a": "Envoi d'une lettre recommandée avec accusé de réception à l'assureur dans les 30 jours. L'assureur doit restituer intégralement les primes + intérêts légaux dans les 30 jours suivants."}, {"ch": 4, "q": "Que se passe-t-il si l'assureur n'a pas remis les documents obligatoires ?", "a": "Le délai de 30 jours ne court pas. Prorogation légale : le souscripteur peut exercer son droit de renonciation à tout moment, même des années après la souscription."}, {"ch": 4, "q": "La clause bénéficiaire : définition et piège principal", "a": "Désignation par le souscripteur des personnes qui recevront le capital au décès. PIÈGE : écrire 'mes héritiers' fait rentrer le capital dans la succession (perd l'avantage hors succession). Toujours nommer les bénéficiaires explicitement."}, {"ch": 4, "q": "Clause bénéficiaire acceptée : conséquences", "a": "Dès que le bénéficiaire accepte formellement la clause, le souscripteur NE PEUT PLUS : racheter, arbitrer, modifier les bénéficiaires — sans l'accord écrit du bénéficiaire acceptant. À utiliser avec prudence."}];
@@ -451,57 +439,5 @@ function showTab(id, btn) {
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 window.onload = function() { showCard(); buildQuiz(); buildFocus(); };
 </script>
-
-<script>
-(function() {
-  var DAY_KEYWORDS = ["990 I", "990I", "article 990", "757 B", "757B", "article 757", "30 jours", "rétractation", "renonciation"];
-  var seen = new WeakSet();
-
-  function markEl(el) {
-    if (!el || seen.has(el)) return;
-    var tag = el.tagName;
-    if (!tag) return;
-    seen.add(el);
-    el.classList.add('heart-line');
-    var badge = document.createElement('span');
-    badge.className = 'heart-badge';
-    badge.textContent = '❤️';
-    el.insertBefore(badge, el.firstChild);
-  }
-
-  function markKeywords(fb, keywords) {
-    var walker = document.createTreeWalker(fb, NodeFilter.SHOW_TEXT, null, false);
-    var node;
-    while ((node = walker.nextNode())) {
-      var txt = node.textContent.toLowerCase();
-      for (var i = 0; i < keywords.length; i++) {
-        if (txt.indexOf(keywords[i].toLowerCase()) !== -1) {
-          // Trouve l'ancêtre immédiat marquable
-          var el = node.parentElement;
-          var depth = 0;
-          while (el && el !== fb && depth < 6) {
-            var t = el.tagName;
-            if (t === 'LI' || t === 'P' || t === 'H2' || t === 'H3' ||
-                t === 'BLOCKQUOTE' || t === 'TABLE') {
-              markEl(el);
-              break;
-            }
-            el = el.parentElement;
-            depth++;
-          }
-          break;
-        }
-      }
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.fiche-body').forEach(function(fb) {
-      markKeywords(fb, DAY_KEYWORDS);
-    });
-  });
-})();
-</script>
-
 </body>
 </html>
