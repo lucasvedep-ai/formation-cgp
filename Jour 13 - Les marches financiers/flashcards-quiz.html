@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Jour 13 &mdash; March&eacute;s financiers &amp; Profil investisseur | Formation CGP</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Jour 13 — Marchés financiers &amp; Profil investisseur | Formation CGP</title>
 <style>
 :root{
   --navy:#1a2744;--navy2:#253460;--gold:#c9a227;--gold2:#e8c84a;
@@ -124,462 +125,437 @@ img.schema{width:100%;border-radius:10px;margin:10px 0;border:1px solid var(--bo
 .cas-solution ul li::before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:700}
 @media(max-width:600px){header{padding:20px 16px}.tab-pane{padding:16px 12px}}
 
+
 /* ── Marqueurs ❤️ À Retenir ── */
 .heart-line {
-  position: relative;
   border-left: 3px solid #e84393 !important;
   padding-left: 10px !important;
-  background: linear-gradient(to right, #fff0f7, transparent) !important;
-  border-radius: 0 6px 6px 0;
+  background: linear-gradient(to right, #fff0f7 0%, transparent 100%) !important;
+  border-radius: 0 6px 6px 0 !important;
   margin-left: 0 !important;
 }
 .heart-badge {
   display: inline-block;
-  font-size: 0.82em;
-  margin-right: 5px;
+  margin-right: 4px;
+  font-size: .88em;
   vertical-align: middle;
-  line-height: 1;
 }
-li.heart-line { list-style: none; margin-left: 0; padding-left: 14px !important; }
+li.heart-line { list-style: none; }
 table.heart-line { border-top: 3px solid #e84393; }
-h2.heart-line, h3.heart-line { padding-left: 6px !important; }
 
 </style>
 </head>
 <body>
 <header>
-  <h1>&#128200; Jour 13 &mdash; Les march&eacute;s financiers &amp; Profil investisseur</h1>
-  <p>March&eacute; mon&eacute;taire &bull; March&eacute; primaire &amp; secondaire &bull; Actions &amp; Obligations &bull; Versements r&eacute;guliers &bull; Profil investisseur &bull; 40 cartes &bull; 30 questions</p>
+<h1>📈 Jour 13 — Les marchés financiers &amp; Profil investisseur</h1>
+<p>Marché monétaire • Marché primaire &amp; secondaire • Actions &amp; Obligations • Versements réguliers • Profil investisseur • 40 cartes • 30 questions</p>
 </header>
 <div class="tab-bar">
-  <button class="tab-btn active" onclick="showTab('flashcards',this)">&#127183; Flashcards</button>
-  <button class="tab-btn" onclick="showTab('quiz',this)">&#128221; Quiz</button>
-  <button class="tab-btn" onclick="showTab('focus',this)">&#127919; Focus</button>
-  <button class="tab-btn" onclick="showTab('fiche',this)">&#128196; Fiche</button>
-  <button class="tab-btn" onclick="showTab('exercices',this)">&#127947; Exercices</button>
-  <button class="tab-btn" onclick="showTab('cas',this)">&#128203; Cas pratiques</button>
+<button class="tab-btn active" onclick="showTab('flashcards',this)">🃏 Flashcards</button>
+<button class="tab-btn" onclick="showTab('quiz',this)">📝 Quiz</button>
+<button class="tab-btn" onclick="showTab('focus',this)">🎯 Focus</button>
+<button class="tab-btn" onclick="showTab('fiche',this)">📄 Fiche</button>
+<button class="tab-btn" onclick="showTab('exercices',this)">🏋 Exercices</button>
+<button class="tab-btn" onclick="showTab('cas',this)">📋 Cas pratiques</button>
 </div>
-
 <!-- FLASHCARDS -->
-<div id="tab-flashcards" class="tab-pane active">
-  <div class="score-line">Score session : <strong id="fc-score">0 / 40</strong></div>
-  <div class="filter-bar">
-    <button class="filter-btn active" data-ch="all" onclick="filterCh(this)">Tous (40)</button>
-    <button class="filter-btn" data-ch="Le marché des capitaux" onclick="filterCh(this)">March&eacute; des capitaux</button>
-    <button class="filter-btn" data-ch="Marché primaire et secondaire" onclick="filterCh(this)">Primaire &amp; Secondaire</button>
-    <button class="filter-btn" data-ch="Actions, Obligations et Marchés" onclick="filterCh(this)">Actions &amp; Obligations</button>
-    <button class="filter-btn" data-ch="Profil d'investisseur" onclick="filterCh(this)">Profil investisseur</button>
-  </div>
-  <div class="card-counter" id="card-counter">Carte 1 / 40</div>
-  <div class="card-wrap" onclick="flipCard()">
-    <div class="card-inner" id="card-inner">
-      <div class="card-face card-front">
-        <div class="ch-badge" id="card-ch">Ch. 1</div>
-        <div class="card-q" id="card-q">...</div>
-      </div>
-      <div class="card-face card-back">
-        <div class="card-a" id="card-a">...</div>
-      </div>
-    </div>
-  </div>
-  <div class="card-nav">
-    <button onclick="prevCard()">&#8592; Pr&eacute;c.</button>
-    <button onclick="shuffleCards()">&#128256; M&eacute;langer</button>
-    <button onclick="nextCard()">Suiv. &#8594;</button>
-  </div>
-  <div class="card-mark">
-    <button class="btn-ok" onclick="markOk()">&#10003; Su</button>
-    <button class="btn-ko" onclick="markKo()">&#10007; &Agrave; revoir</button>
-  </div>
+<div class="tab-pane active" id="tab-flashcards">
+<div class="score-line">Score session : <strong id="fc-score">0 / 40</strong></div>
+<div class="filter-bar">
+<button class="filter-btn active" data-ch="all" onclick="filterCh(this)">Tous (40)</button>
+<button class="filter-btn" data-ch="Le marché des capitaux" onclick="filterCh(this)">Marché des capitaux</button>
+<button class="filter-btn" data-ch="Marché primaire et secondaire" onclick="filterCh(this)">Primaire &amp; Secondaire</button>
+<button class="filter-btn" data-ch="Actions, Obligations et Marchés" onclick="filterCh(this)">Actions &amp; Obligations</button>
+<button class="filter-btn" data-ch="Profil d'investisseur" onclick="filterCh(this)">Profil investisseur</button>
 </div>
-
+<div class="card-counter" id="card-counter">Carte 1 / 40</div>
+<div class="card-wrap" onclick="flipCard()">
+<div class="card-inner" id="card-inner">
+<div class="card-face card-front">
+<div class="ch-badge" id="card-ch">Ch. 1</div>
+<div class="card-q" id="card-q">...</div>
+</div>
+<div class="card-face card-back">
+<div class="card-a" id="card-a">...</div>
+</div>
+</div>
+</div>
+<div class="card-nav">
+<button onclick="prevCard()">← Préc.</button>
+<button onclick="shuffleCards()">🔀 Mélanger</button>
+<button onclick="nextCard()">Suiv. →</button>
+</div>
+<div class="card-mark">
+<button class="btn-ok" onclick="markOk()">✓ Su</button>
+<button class="btn-ko" onclick="markKo()">✗ À revoir</button>
+</div>
+</div>
 <!-- QUIZ -->
-<div id="tab-quiz" class="tab-pane">
-  <div class="quiz-live">Score : <strong id="quiz-live">0 / 0</strong></div>
-  <div id="quiz-container"></div>
-  <div class="quiz-final" id="quiz-final">
-    <h3 id="qf-title"></h3>
-    <p id="qf-msg" style="color:var(--muted);font-size:.9rem;margin-top:6px"></p>
-    <button style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.86rem;font-weight:700;cursor:pointer;margin-top:14px" onclick="resetQuiz()">Recommencer</button>
-  </div>
+<div class="tab-pane" id="tab-quiz">
+<div class="quiz-live">Score : <strong id="quiz-live">0 / 0</strong></div>
+<div id="quiz-container"></div>
+<div class="quiz-final" id="quiz-final">
+<h3 id="qf-title"></h3>
+<p id="qf-msg" style="color:var(--muted);font-size:.9rem;margin-top:6px"></p>
+<button onclick="resetQuiz()" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.86rem;font-weight:700;cursor:pointer;margin-top:14px">Recommencer</button>
 </div>
-
+</div>
 <!-- FOCUS -->
-<div id="tab-focus" class="tab-pane">
-  <div class="focus-item">
-    <div class="focus-header" onclick="toggleFocus(this)">
-      <h3>&#128202; Focus 1 &mdash; March&eacute; primaire vs secondaire</h3><span class="focus-arrow">&#9660;</span>
-    </div>
-    <div class="focus-body">
-      <div class="focus-resume">
-        &#10003; March&eacute; primaire = &eacute;mission de titres NOUVEAUX (financement direct de l&rsquo;entreprise)<br>
-        &#10003; March&eacute; secondaire = revente de titres EXISTANTS = march&eacute; de l&rsquo;occasion<br>
-        &#10003; 3 occasions pour &eacute;mettre en primaire : bourse / augmentation capital / emprunt obligataire<br>
-        &#10003; 2 fonctions du secondaire : fixation des cours + liquidit&eacute; des titres<br>
-        &#10003; AMF = Autorit&eacute; des March&eacute;s Financiers (veille au bon fonctionnement)
-      </div>
-      <div id="focus-marches"></div>
-    </div>
-  </div>
-  <div class="focus-item">
-    <div class="focus-header" onclick="toggleFocus(this)">
-      <h3>&#128181; Focus 2 &mdash; Actions vs Obligations</h3><span class="focus-arrow">&#9660;</span>
-    </div>
-    <div class="focus-body">
-      <div class="focus-resume">
-        &#10003; Action = droit de propri&eacute;t&eacute;, dividendes variables, recherche de performance, moyen/long terme<br>
-        &#10003; Obligation = titre de cr&eacute;ance, int&eacute;r&ecirc;ts fixes, recherche revenus stables, court/moyen terme<br>
-        &#10003; Risque action : perte totale (course de bourse) / Risque obligation : risque de d&eacute;faut<br>
-        &#10003; 2 fa&ccedil;ons de gagner avec actions : plus-value + dividendes<br>
-        &#10003; Obligation : int&eacute;r&ecirc;ts d&eacute;finis &agrave; l&rsquo;avance, rentabilit&eacute; connue
-      </div>
-      <div id="focus-actoblig"></div>
-    </div>
-  </div>
-  <div class="focus-item">
-    <div class="focus-header" onclick="toggleFocus(this)">
-      <h3>&#128200; Focus 3 &mdash; Versements r&eacute;guliers : le meilleur moyen d&rsquo;investir</h3><span class="focus-arrow">&#9660;</span>
-    </div>
-    <div class="focus-body">
-      <div class="focus-resume">
-        &#10003; Le bon moment pour investir ? &rarr; Investir r&eacute;guli&egrave;rement tous les mois<br>
-        &#10003; On achète parfois haut, parfois bas &rarr; on crée une moyenne &agrave; la hausse<br>
-        &#10003; Capital unique baisse 50% en M2 et revient &rarr; r&eacute;cup&egrave;re 100€ pour 100€<br>
-        &#10003; Versements mensuels 100€ : M1=1UC, M2=2UC, M3=1UC &rarr; 4 UC &times; 100€ = 400€ pour 300€ vers&eacute;s<br>
-        &#10003; Plus-value cr&eacute;&eacute;e en achetant quand le march&eacute; est bas
-      </div>
-      <div id="focus-versements"></div>
-    </div>
-  </div>
-  <div class="focus-item">
-    <div class="focus-header" onclick="toggleFocus(this)">
-      <h3>&#128100; Focus 4 &mdash; Les 7 crit&egrave;res du profil investisseur</h3><span class="focus-arrow">&#9660;</span>
-    </div>
-    <div class="focus-body">
-      <div class="focus-resume">
-        &#10003; 1. &Acirc;ge &bull; 2. Situation familiale &bull; 3. Situation patrimoniale<br>
-        &#10003; 4. Horizon de placement &bull; 5. Objectifs de placement<br>
-        &#10003; 6. Tol&eacute;rance au risque &bull; 7. Connaissances &amp; exp&eacute;riences financi&egrave;res<br>
-        &#10003; D&eacute;termin&eacute; via questionnaire &eacute;crit pr&eacute;contractuel<br>
-        &#10003; Obligatoire avant toute souscription
-      </div>
-      <div id="focus-criteres"></div>
-    </div>
-  </div>
-  <div class="focus-item">
-    <div class="focus-header" onclick="toggleFocus(this)">
-      <h3>&#127919; Focus 5 &mdash; Les 3 profils d&rsquo;investisseur</h3><span class="focus-arrow">&#9660;</span>
-    </div>
-    <div class="focus-body">
-      <div class="focus-resume">
-        &#10003; Prudent : 80% FE / 20% UC &mdash; faible risque, vise l&eacute;g&egrave;rement au-dessus du fonds euros<br>
-        &#10003; &Eacute;quilibr&eacute; : 50% FE / 50% UC &mdash; diversification, accepte une dose de risque<br>
-        &#10003; Dynamique : jusqu&rsquo;&agrave; 100% UC &mdash; risquophile, fin connaisseur des march&eacute;s<br>
-        &#10003; UC = Unit&eacute;s de Compte (support risqu&eacute;) / FE = Fonds Euros (s&eacute;curis&eacute;)
-      </div>
-      <div id="focus-profils"></div>
-    </div>
-  </div>
+<div class="tab-pane" id="tab-focus">
+<div class="focus-item">
+<div class="focus-header" onclick="toggleFocus(this)">
+<h3>📊 Focus 1 — Marché primaire vs secondaire</h3><span class="focus-arrow">▼</span>
 </div>
-
+<div class="focus-body">
+<div class="focus-resume">
+        ✓ Marché primaire = émission de titres NOUVEAUX (financement direct de l’entreprise)<br/>
+        ✓ Marché secondaire = revente de titres EXISTANTS = marché de l’occasion<br/>
+        ✓ 3 occasions pour émettre en primaire : bourse / augmentation capital / emprunt obligataire<br/>
+        ✓ 2 fonctions du secondaire : fixation des cours + liquidité des titres<br/>
+        ✓ AMF = Autorité des Marchés Financiers (veille au bon fonctionnement)
+      </div>
+<div id="focus-marches"></div>
+</div>
+</div>
+<div class="focus-item">
+<div class="focus-header" onclick="toggleFocus(this)">
+<h3>💵 Focus 2 — Actions vs Obligations</h3><span class="focus-arrow">▼</span>
+</div>
+<div class="focus-body">
+<div class="focus-resume">
+        ✓ Action = droit de propriété, dividendes variables, recherche de performance, moyen/long terme<br/>
+        ✓ Obligation = titre de créance, intérêts fixes, recherche revenus stables, court/moyen terme<br/>
+        ✓ Risque action : perte totale (course de bourse) / Risque obligation : risque de défaut<br/>
+        ✓ 2 façons de gagner avec actions : plus-value + dividendes<br/>
+        ✓ Obligation : intérêts définis à l’avance, rentabilité connue
+      </div>
+<div id="focus-actoblig"></div>
+</div>
+</div>
+<div class="focus-item">
+<div class="focus-header" onclick="toggleFocus(this)">
+<h3>📈 Focus 3 — Versements réguliers : le meilleur moyen d’investir</h3><span class="focus-arrow">▼</span>
+</div>
+<div class="focus-body">
+<div class="focus-resume">
+        ✓ Le bon moment pour investir ? → Investir régulièrement tous les mois<br/>
+        ✓ On achète parfois haut, parfois bas → on crée une moyenne à la hausse<br/>
+        ✓ Capital unique baisse 50% en M2 et revient → récupère 100€ pour 100€<br/>
+        ✓ Versements mensuels 100€ : M1=1UC, M2=2UC, M3=1UC → 4 UC × 100€ = 400€ pour 300€ versés<br/>
+        ✓ Plus-value créée en achetant quand le marché est bas
+      </div>
+<div id="focus-versements"></div>
+</div>
+</div>
+<div class="focus-item">
+<div class="focus-header" onclick="toggleFocus(this)">
+<h3>👤 Focus 4 — Les 7 critères du profil investisseur</h3><span class="focus-arrow">▼</span>
+</div>
+<div class="focus-body">
+<div class="focus-resume">
+        ✓ 1. Âge • 2. Situation familiale • 3. Situation patrimoniale<br/>
+        ✓ 4. Horizon de placement • 5. Objectifs de placement<br/>
+        ✓ 6. Tolérance au risque • 7. Connaissances &amp; expériences financières<br/>
+        ✓ Déterminé via questionnaire écrit précontractuel<br/>
+        ✓ Obligatoire avant toute souscription
+      </div>
+<div id="focus-criteres"></div>
+</div>
+</div>
+<div class="focus-item">
+<div class="focus-header" onclick="toggleFocus(this)">
+<h3>🎯 Focus 5 — Les 3 profils d’investisseur</h3><span class="focus-arrow">▼</span>
+</div>
+<div class="focus-body">
+<div class="focus-resume">
+        ✓ Prudent : 80% FE / 20% UC — faible risque, vise légèrement au-dessus du fonds euros<br/>
+        ✓ Équilibré : 50% FE / 50% UC — diversification, accepte une dose de risque<br/>
+        ✓ Dynamique : jusqu’à 100% UC — risquophile, fin connaisseur des marchés<br/>
+        ✓ UC = Unités de Compte (support risqué) / FE = Fonds Euros (sécurisé)
+      </div>
+<div id="focus-profils"></div>
+</div>
+</div>
+</div>
 <!-- FICHE -->
-<div id="tab-fiche" class="tab-pane">
-  <div class="fiche-nav">
-    <button class="fiche-btn active" onclick="j13go('r',this)">Vue d&rsquo;ensemble</button>
-    <button class="fiche-btn" onclick="j13go('1',this)">Primaire &amp; Secondaire</button>
-    <button class="fiche-btn" onclick="j13go('2',this)">Actions &amp; Obligations</button>
-    <button class="fiche-btn" onclick="j13go('3',this)">Indices, OPCVM &amp; DIC</button>
-    <button class="fiche-btn" onclick="j13go('4',this)">7 crit&egrave;res</button>
-    <button class="fiche-btn" onclick="j13go('5',this)">3 Profils</button>
-  </div>
-
-  <!-- r: Vue d'ensemble -->
-  <div id="fiche-r" class="fiche-section active">
-    <div class="fiche-block">
-      <h3>&#128202; Le march&eacute; des capitaux &mdash; Vue d&rsquo;ensemble</h3>
-      <img class="schema" src="./img/IMG_0753.PNG" alt="Sch&eacute;ma march&eacute; des capitaux">
-      <table class="fiche-table">
-        <tr><th>March&eacute;</th><th>Horizon</th><th>Sous-march&eacute;s</th><th>Instruments</th></tr>
-        <tr><td><strong>Mon&eacute;taire</strong></td><td>Court terme</td><td>Interbancaire + TCN</td><td>Billets de tr&eacute;sorerie, bons du tr&eacute;sor</td></tr>
-        <tr><td><strong>Financier</strong></td><td>Moyen/long terme</td><td>Primaire + Secondaire</td><td>Actions, Obligations</td></tr>
-      </table>
-      <div class="fiche-hl">March&eacute; mon&eacute;taire = actifs tr&egrave;s <strong>liquides</strong> (CT) &mdash; March&eacute; financier = actions/obligations (&eacute;missions + reventes)</div>
-    </div>
-  </div>
-
-  <!-- 1: Marchés primaire et secondaire -->
-  <div id="fiche-1" class="fiche-section">
-    <div class="fiche-block">
-      <h3>&#128202; March&eacute; primaire</h3>
-      <p>March&eacute; d&rsquo;&eacute;mission de titres <strong>nouveaux</strong>. Confrontation entre :</p>
-      <ul>
-        <li>Agents &agrave; <strong>capacit&eacute;</strong> de financement (m&eacute;nages, assurances)</li>
-        <li>Agents &agrave; <strong>besoin</strong> de financement (entreprises)</li>
-      </ul>
-      <p><strong>3 occasions :</strong></p>
-      <ul>
-        <li>Introduction en bourse (IPO)</li>
-        <li>Augmentation du capital</li>
-        <li>&Eacute;mission d&rsquo;un emprunt obligataire</li>
-      </ul>
-      <div class="fiche-ok">Permet aux entreprises de trouver des ressources financi&egrave;res en &eacute;mettant des titres (actions, obligations).</div>
-    </div>
-    <div class="fiche-block">
-      <h3>&#128202; March&eacute; secondaire</h3>
-      <p>March&eacute; sur lequel s&rsquo;&eacute;changent des titres <strong>pr&eacute;alablement &eacute;mis</strong> sur le march&eacute; primaire = march&eacute; de l&rsquo;occasion.</p>
-      <table class="fiche-table">
-        <tr><th>Fonction</th><th>Description</th></tr>
-        <tr><td><strong>Fixation des cours</strong></td><td>Prix des titres selon la loi de l&rsquo;offre et de la demande</td></tr>
-        <tr><td><strong>Liquidit&eacute;</strong></td><td>Possibilit&eacute; de revendre ses titres pour r&eacute;cup&eacute;rer son argent &agrave; tout moment</td></tr>
-      </table>
-      <div class="fiche-hl">AMF = Autorit&eacute; des March&eacute;s Financiers &mdash; veille au bon fonctionnement de la bourse et &agrave; la protection des investisseurs.</div>
-    </div>
-  </div>
-
-  <!-- 2: Actions et Obligations -->
-  <div id="fiche-2" class="fiche-section">
-    <div class="fiche-block">
-      <h3>&#128200; Actions vs Obligations &mdash; Tableau comparatif</h3>
-      <img class="schema" src="./img/IMG_0764.PNG" alt="Tableau Action vs Obligation &mdash; passif entreprise">
-      <img class="schema" src="./img/IMG_0795.PNG" alt="R&eacute;sum&eacute; comparatif Action vs Obligation">
-      <table class="fiche-table">
-        <tr><th>Crit&egrave;re</th><th>ACTION</th><th>OBLIGATION</th></tr>
-        <tr><td><strong>D&eacute;finition</strong></td><td>Droit de propri&eacute;t&eacute; dans le capital de l&rsquo;entreprise</td><td>Titre de cr&eacute;ance (pr&ecirc;t &agrave; l&rsquo;entreprise ou &agrave; l&rsquo;&Eacute;tat)</td></tr>
-        <tr><td><strong>R&eacute;mun&eacute;ration</strong></td><td>Dividendes (variables, si b&eacute;n&eacute;fice)</td><td>Int&eacute;r&ecirc;ts fixes d&eacute;finis &agrave; l&rsquo;avance</td></tr>
-        <tr><td><strong>Risque</strong></td><td>Aucun dividende garanti, perte possible</td><td>Risque de d&eacute;faut (non remboursement)</td></tr>
-        <tr><td><strong>Avantage</strong></td><td>Droit de vote &agrave; l&rsquo;AG, part de propri&eacute;t&eacute;</td><td>Rentabilit&eacute; connue &agrave; l&rsquo;avance, risque ma&icirc;tris&eacute;</td></tr>
-        <tr><td><strong>Objectif</strong></td><td>Recherche de <strong>performance</strong></td><td>Recherche de <strong>revenus stables</strong></td></tr>
-        <tr><td><strong>Horizon</strong></td><td>Moyen/long terme</td><td>Court/moyen terme</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- 3: Indices, OPCVM, DIC, Versements -->
-  <div id="fiche-3" class="fiche-section">
-    <div class="fiche-block">
-      <h3>&#128200; Indices boursiers</h3>
-      <p>Un indice boursier mesure l&rsquo;&eacute;volution des cours d&rsquo;un &eacute;chantillon de soci&eacute;t&eacute;s cot&eacute;es. <strong>CAC 40</strong> = Cotation Assist&eacute;e en Continu = 40 valeurs les plus importantes de la Place de Paris.</p>
-      <ul>
-        <li>CAC 40 (France) &bull; DAX (Allemagne) &bull; FOOTSIE (Royaume-Uni)</li>
-        <li>DOW JONES (USA) &bull; NASDAQ (USA) &bull; NIKKEI 225 (Japon)</li>
-      </ul>
-    </div>
-    <div class="fiche-block">
-      <h3>&#128200; OPCVM</h3>
-      <p><strong>Organisme de Placement Collectif en Valeurs Mobili&egrave;res</strong> &mdash; 2 types :</p>
-      <ul>
-        <li><strong>SICAV</strong> : Soci&eacute;t&eacute; d&rsquo;investissement &agrave; capital variable</li>
-        <li><strong>FCP</strong> : Fonds commun de placement</li>
-      </ul>
-      <div class="fiche-ok">Diversification pour r&eacute;duire les risques &mdash; g&eacute;r&eacute; par un organisme sp&eacute;cialis&eacute;.</div>
-    </div>
-    <div class="fiche-block">
-      <h3>&#128200; DIC &mdash; Document d&rsquo;Information Cl&eacute;</h3>
-      <ul>
-        <li>Remis &agrave; la souscription de tout produit financier</li>
-        <li>Pr&eacute;sente l&rsquo;indicateur SRI (<strong>1 &agrave; 7</strong>, 7 = risque maximal)</li>
-        <li>V&eacute;rifier que la dur&eacute;e recommand&eacute;e correspond &agrave; l&rsquo;horizon de placement de l&rsquo;investisseur</li>
-      </ul>
-    </div>
-    <div class="fiche-block">
-      <h3>&#128200; Versements r&eacute;guliers vs capital unique</h3>
-      <img class="schema" src="./img/IMG_0792.PNG" alt="Sch&eacute;ma versements r&eacute;guliers vs capital unique">
-      <table class="fiche-table">
-        <tr><th></th><th>Capital unique (100€)</th><th>Versements r&eacute;guliers (100€/mois)</th></tr>
-        <tr><td>Mois 1 (UC=100€)</td><td>1 UC</td><td>1 UC</td></tr>
-        <tr><td>Mois 2 (UC=50€)</td><td>0 UC</td><td>2 UC</td></tr>
-        <tr><td>Mois 3 (UC=100€)</td><td>0 UC</td><td>1 UC</td></tr>
-        <tr><td><strong>R&eacute;sultat</strong></td><td>1 UC = <strong>100€</strong></td><td>4 UC = <strong>400€</strong> pour 300€ vers&eacute;s</td></tr>
-      </table>
-      <div class="fiche-hl">&#128200; Le meilleur moment pour investir = <strong>investir r&eacute;guli&egrave;rement</strong> tous les mois. On cr&eacute;e une moyenne &agrave; la hausse.</div>
-    </div>
-  </div>
-
-  <!-- 4: Les 7 critères -->
-  <div id="fiche-4" class="fiche-section">
-    <div class="fiche-block">
-      <h3>&#128100; Les 7 crit&egrave;res du profil d&rsquo;investisseur</h3>
-      <img class="schema" src="./img/IMG_0804.PNG" alt="Les 7 crit&egrave;res du profil d&rsquo;investisseur">
-      <table class="fiche-table">
-        <tr><th>#</th><th>Crit&egrave;re</th><th>Impact</th></tr>
-        <tr><td>1</td><td><strong>&Acirc;ge</strong></td><td>Jeune = peut prendre plus de risques. Ne suffit pas seul.</td></tr>
-        <tr><td>2</td><td><strong>Situation familiale</strong></td><td>Couple + enfants → prudent. C&eacute;libataire → tend &agrave; prendre des risques.</td></tr>
-        <tr><td>3</td><td><strong>Situation patrimoniale</strong></td><td>Petit patrimoine → prot&eacute;ger le capital. Grand patrimoine → pas forc&eacute;ment risquophile.</td></tr>
-        <tr><td>4</td><td><strong>Horizon de placement</strong></td><td>CT (&lt;3 ans) → risque ma&icirc;tris&eacute;. LT (&gt;8 ans) → peut prendre des risques.</td></tr>
-        <tr><td>5</td><td><strong>Objectifs de placement</strong></td><td>Retraite ? Protection famille ? Capitalisation ? &rarr; Clarifie les motivations.</td></tr>
-        <tr><td>6</td><td><strong>Tol&eacute;rance au risque</strong></td><td>Personnalit&eacute; subjective (valeurs, &eacute;ducation, croyances). Le plus personnel.</td></tr>
-        <tr><td>7</td><td><strong>Connaissances &amp; exp&eacute;riences</strong></td><td>Conna&icirc;t-il les produits ? A-t-il d&eacute;j&agrave; investi ? D&eacute;j&agrave; perdu ?</td></tr>
-      </table>
-      <div class="fiche-hl">D&eacute;termin&eacute; via <strong>questionnaire &eacute;crit</strong> (support durable) &mdash; document pr&eacute;contractuel rempli AVANT toute souscription.</div>
-    </div>
-  </div>
-
-  <!-- 5: Les 3 profils -->
-  <div id="fiche-5" class="fiche-section">
-    <div class="fiche-block">
-      <h3>&#127919; Les 3 profils d&rsquo;investisseur</h3>
-      <img class="schema" src="./img/IMG_0816.PNG" alt="Les 3 profils d&rsquo;investisseur">
-      <div class="profil-grid">
-        <div class="profil-card profil-prudent">
-          <h4>&#128994; Prudent</h4>
-          <p>Faible prise de risque. Vise une performance l&eacute;g&egrave;rement sup&eacute;rieure aux fonds euros.</p>
-          <div class="profil-bar"><div class="profil-bar-fe" style="width:80%"></div><div class="profil-bar-uc" style="width:20%"></div></div>
-          <p style="font-size:.75rem;font-weight:700">80% Fonds Euros / 20% UC</p>
-        </div>
-        <div class="profil-card profil-equilibre">
-          <h4>&#128992; &Eacute;quilibr&eacute;</h4>
-          <p>Diversification pour rendements plus &eacute;lev&eacute;s LT, accepte une dose de risque.</p>
-          <div class="profil-bar"><div class="profil-bar-fe" style="width:50%"></div><div class="profil-bar-uc" style="width:50%"></div></div>
-          <p style="font-size:.75rem;font-weight:700">50% Fonds Euros / 50% UC</p>
-        </div>
-        <div class="profil-card profil-dynamique">
-          <h4>&#128308; Dynamique</h4>
-          <p>Risquophile, fin connaisseur des march&eacute;s. Performance maximale recherch&eacute;e.</p>
-          <div class="profil-bar"><div class="profil-bar-uc" style="width:100%"></div></div>
-          <p style="font-size:.75rem;font-weight:700">Jusqu&rsquo;&agrave; 100% UC</p>
-        </div>
-      </div>
-      <div class="fiche-warn">&#9888; Le profil d&rsquo;investisseur est une &eacute;tape <strong>indispensable</strong> du travail du mandataire. Il se d&eacute;termine sur support &eacute;crit et <strong>en amont</strong> de la souscription.</div>
-    </div>
-  </div>
+<div class="tab-pane" id="tab-fiche">
+<div class="fiche-nav">
+<button class="fiche-btn active" onclick="j13go('r',this)">Vue d’ensemble</button>
+<button class="fiche-btn" onclick="j13go('1',this)">Primaire &amp; Secondaire</button>
+<button class="fiche-btn" onclick="j13go('2',this)">Actions &amp; Obligations</button>
+<button class="fiche-btn" onclick="j13go('3',this)">Indices, OPCVM &amp; DIC</button>
+<button class="fiche-btn" onclick="j13go('4',this)">7 critères</button>
+<button class="fiche-btn" onclick="j13go('5',this)">3 Profils</button>
 </div>
-
+<!-- r: Vue d'ensemble -->
+<div class="fiche-section active" id="fiche-r">
+<div class="fiche-block">
+<h3>📊 Le marché des capitaux — Vue d’ensemble</h3>
+<img alt="Schéma marché des capitaux" class="schema" src="./img/IMG_0753.PNG"/>
+<table class="fiche-table">
+<tr><th>Marché</th><th>Horizon</th><th>Sous-marchés</th><th>Instruments</th></tr>
+<tr><td><strong>Monétaire</strong></td><td>Court terme</td><td>Interbancaire + TCN</td><td>Billets de trésorerie, bons du trésor</td></tr>
+<tr><td><strong>Financier</strong></td><td>Moyen/long terme</td><td>Primaire + Secondaire</td><td>Actions, Obligations</td></tr>
+</table>
+<div class="fiche-hl">Marché monétaire = actifs très <strong>liquides</strong> (CT) — Marché financier = actions/obligations (émissions + reventes)</div>
+</div>
+</div>
+<!-- 1: Marchés primaire et secondaire -->
+<div class="fiche-section" id="fiche-1">
+<div class="fiche-block">
+<h3>📊 Marché primaire</h3>
+<p>Marché d’émission de titres <strong>nouveaux</strong>. Confrontation entre :</p>
+<ul>
+<li>Agents à <strong>capacité</strong> de financement (ménages, assurances)</li>
+<li>Agents à <strong>besoin</strong> de financement (entreprises)</li>
+</ul>
+<p><strong>3 occasions :</strong></p>
+<ul>
+<li>Introduction en bourse (IPO)</li>
+<li>Augmentation du capital</li>
+<li>Émission d’un emprunt obligataire</li>
+</ul>
+<div class="fiche-ok">Permet aux entreprises de trouver des ressources financières en émettant des titres (actions, obligations).</div>
+</div>
+<div class="fiche-block">
+<h3>📊 Marché secondaire</h3>
+<p>Marché sur lequel s’échangent des titres <strong>préalablement émis</strong> sur le marché primaire = marché de l’occasion.</p>
+<table class="fiche-table">
+<tr><th>Fonction</th><th>Description</th></tr>
+<tr><td><strong>Fixation des cours</strong></td><td>Prix des titres selon la loi de l’offre et de la demande</td></tr>
+<tr><td><strong>Liquidité</strong></td><td>Possibilité de revendre ses titres pour récupérer son argent à tout moment</td></tr>
+</table>
+<div class="fiche-hl">AMF = Autorité des Marchés Financiers — veille au bon fonctionnement de la bourse et à la protection des investisseurs.</div>
+</div>
+</div>
+<!-- 2: Actions et Obligations -->
+<div class="fiche-section" id="fiche-2">
+<div class="fiche-block">
+<h3>📈 Actions vs Obligations — Tableau comparatif</h3>
+<img alt="Tableau Action vs Obligation — passif entreprise" class="schema" src="./img/IMG_0764.PNG"/>
+<img alt="Résumé comparatif Action vs Obligation" class="schema" src="./img/IMG_0795.PNG"/>
+<table class="fiche-table">
+<tr><th>Critère</th><th>ACTION</th><th>OBLIGATION</th></tr>
+<tr><td><strong>Définition</strong></td><td>Droit de propriété dans le capital de l’entreprise</td><td>Titre de créance (prêt à l’entreprise ou à l’État)</td></tr>
+<tr><td><strong>Rémunération</strong></td><td>Dividendes (variables, si bénéfice)</td><td>Intérêts fixes définis à l’avance</td></tr>
+<tr><td><strong>Risque</strong></td><td>Aucun dividende garanti, perte possible</td><td>Risque de défaut (non remboursement)</td></tr>
+<tr><td><strong>Avantage</strong></td><td>Droit de vote à l’AG, part de propriété</td><td>Rentabilité connue à l’avance, risque maîtrisé</td></tr>
+<tr><td><strong>Objectif</strong></td><td>Recherche de <strong>performance</strong></td><td>Recherche de <strong>revenus stables</strong></td></tr>
+<tr><td><strong>Horizon</strong></td><td>Moyen/long terme</td><td>Court/moyen terme</td></tr>
+</table>
+</div>
+</div>
+<!-- 3: Indices, OPCVM, DIC, Versements -->
+<div class="fiche-section" id="fiche-3">
+<div class="fiche-block">
+<h3>📈 Indices boursiers</h3>
+<p>Un indice boursier mesure l’évolution des cours d’un échantillon de sociétés cotées. <strong>CAC 40</strong> = Cotation Assistée en Continu = 40 valeurs les plus importantes de la Place de Paris.</p>
+<ul>
+<li>CAC 40 (France) • DAX (Allemagne) • FOOTSIE (Royaume-Uni)</li>
+<li>DOW JONES (USA) • NASDAQ (USA) • NIKKEI 225 (Japon)</li>
+</ul>
+</div>
+<div class="fiche-block">
+<h3>📈 OPCVM</h3>
+<p><strong>Organisme de Placement Collectif en Valeurs Mobilières</strong> — 2 types :</p>
+<ul>
+<li><strong>SICAV</strong> : Société d’investissement à capital variable</li>
+<li><strong>FCP</strong> : Fonds commun de placement</li>
+</ul>
+<div class="fiche-ok">Diversification pour réduire les risques — géré par un organisme spécialisé.</div>
+</div>
+<div class="fiche-block">
+<h3>📈 DIC — Document d’Information Clé</h3>
+<ul>
+<li>Remis à la souscription de tout produit financier</li>
+<li>Présente l’indicateur SRI (<strong>1 à 7</strong>, 7 = risque maximal)</li>
+<li>Vérifier que la durée recommandée correspond à l’horizon de placement de l’investisseur</li>
+</ul>
+</div>
+<div class="fiche-block">
+<h3>📈 Versements réguliers vs capital unique</h3>
+<img alt="Schéma versements réguliers vs capital unique" class="schema" src="./img/IMG_0792.PNG"/>
+<table class="fiche-table">
+<tr><th></th><th>Capital unique (100€)</th><th>Versements réguliers (100€/mois)</th></tr>
+<tr><td>Mois 1 (UC=100€)</td><td>1 UC</td><td>1 UC</td></tr>
+<tr><td>Mois 2 (UC=50€)</td><td>0 UC</td><td>2 UC</td></tr>
+<tr><td>Mois 3 (UC=100€)</td><td>0 UC</td><td>1 UC</td></tr>
+<tr><td><strong>Résultat</strong></td><td>1 UC = <strong>100€</strong></td><td>4 UC = <strong>400€</strong> pour 300€ versés</td></tr>
+</table>
+<div class="fiche-hl">📈 Le meilleur moment pour investir = <strong>investir régulièrement</strong> tous les mois. On crée une moyenne à la hausse.</div>
+</div>
+</div>
+<!-- 4: Les 7 critères -->
+<div class="fiche-section" id="fiche-4">
+<div class="fiche-block">
+<h3>👤 Les 7 critères du profil d’investisseur</h3>
+<img alt="Les 7 critères du profil d’investisseur" class="schema" src="./img/IMG_0804.PNG"/>
+<table class="fiche-table">
+<tr><th>#</th><th>Critère</th><th>Impact</th></tr>
+<tr><td>1</td><td><strong>Âge</strong></td><td>Jeune = peut prendre plus de risques. Ne suffit pas seul.</td></tr>
+<tr><td>2</td><td><strong>Situation familiale</strong></td><td>Couple + enfants → prudent. Célibataire → tend à prendre des risques.</td></tr>
+<tr><td>3</td><td><strong>Situation patrimoniale</strong></td><td>Petit patrimoine → protéger le capital. Grand patrimoine → pas forcément risquophile.</td></tr>
+<tr><td>4</td><td><strong>Horizon de placement</strong></td><td>CT (&lt;3 ans) → risque maîtrisé. LT (&gt;8 ans) → peut prendre des risques.</td></tr>
+<tr><td>5</td><td><strong>Objectifs de placement</strong></td><td>Retraite ? Protection famille ? Capitalisation ? → Clarifie les motivations.</td></tr>
+<tr><td>6</td><td><strong>Tolérance au risque</strong></td><td>Personnalité subjective (valeurs, éducation, croyances). Le plus personnel.</td></tr>
+<tr><td>7</td><td><strong>Connaissances &amp; expériences</strong></td><td>Connaît-il les produits ? A-t-il déjà investi ? Déjà perdu ?</td></tr>
+</table>
+<div class="fiche-hl">Déterminé via <strong>questionnaire écrit</strong> (support durable) — document précontractuel rempli AVANT toute souscription.</div>
+</div>
+</div>
+<!-- 5: Les 3 profils -->
+<div class="fiche-section" id="fiche-5">
+<div class="fiche-block">
+<h3>🎯 Les 3 profils d’investisseur</h3>
+<img alt="Les 3 profils d’investisseur" class="schema" src="./img/IMG_0816.PNG"/>
+<div class="profil-grid">
+<div class="profil-card profil-prudent">
+<h4>🟢 Prudent</h4>
+<p>Faible prise de risque. Vise une performance légèrement supérieure aux fonds euros.</p>
+<div class="profil-bar"><div class="profil-bar-fe" style="width:80%"></div><div class="profil-bar-uc" style="width:20%"></div></div>
+<p style="font-size:.75rem;font-weight:700">80% Fonds Euros / 20% UC</p>
+</div>
+<div class="profil-card profil-equilibre">
+<h4>🟠 Équilibré</h4>
+<p>Diversification pour rendements plus élevés LT, accepte une dose de risque.</p>
+<div class="profil-bar"><div class="profil-bar-fe" style="width:50%"></div><div class="profil-bar-uc" style="width:50%"></div></div>
+<p style="font-size:.75rem;font-weight:700">50% Fonds Euros / 50% UC</p>
+</div>
+<div class="profil-card profil-dynamique">
+<h4>🔴 Dynamique</h4>
+<p>Risquophile, fin connaisseur des marchés. Performance maximale recherchée.</p>
+<div class="profil-bar"><div class="profil-bar-uc" style="width:100%"></div></div>
+<p style="font-size:.75rem;font-weight:700">Jusqu’à 100% UC</p>
+</div>
+</div>
+<div class="fiche-warn">⚠ Le profil d’investisseur est une étape <strong>indispensable</strong> du travail du mandataire. Il se détermine sur support écrit et <strong>en amont</strong> de la souscription.</div>
+</div>
+</div>
+</div>
 <!-- EXERCICES -->
-<div id="tab-exercices" class="tab-pane">
-
-  <div class="exo">
-    <div class="exo-title">Exercice 1 <span class="exo-tag">cours</span> &mdash; Action ou obligation ?</div>
-    <div class="exo-enonce">Classer les 3 titres suivants en action ou obligation et justifier :<br>
-    A) &laquo; La soci&eacute;t&eacute; X verse 4% d&rsquo;int&eacute;r&ecirc;ts par an, remboursable dans 5 ans. &raquo;<br>
-    B) &laquo; L&rsquo;acheteur re&ccedil;oit des dividendes lors de l&rsquo;AG si la soci&eacute;t&eacute; fait des b&eacute;n&eacute;fices. &raquo;<br>
-    C) &laquo; Ce titre repr&eacute;sente une part de propri&eacute;t&eacute; et conf&egrave;re un droit de vote &agrave; l&rsquo;AG. &raquo;</div>
-    <button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
-    <div class="exo-solution">
-      <div class="exo-step"><strong>A) OBLIGATION</strong> &mdash; Int&eacute;r&ecirc;ts fixes (4%) d&eacute;finis &agrave; l&rsquo;avance, capital remboursable &agrave; &eacute;ch&eacute;ance convenue. = titre de cr&eacute;ance.</div>
-      <div class="exo-step"><strong>B) ACTION</strong> &mdash; Les dividendes sont variables et li&eacute;s aux b&eacute;n&eacute;fices. Pas de garantie de versement. = rémunération variable.</div>
-      <div class="exo-step"><strong>C) ACTION</strong> &mdash; Part de propri&eacute;t&eacute; + droit de vote &agrave; l&rsquo;AG = d&eacute;finition exacte de l&rsquo;action.</div>
-    </div>
-  </div>
-
-  <div class="exo">
-    <div class="exo-title">Exercice 2 <span class="exo-tag">cours</span> &mdash; Calcul de dividende</div>
-    <div class="exo-enonce">La soci&eacute;t&eacute; ALPHA a un capital de <strong>50 000 actions</strong>. M. Dupont en poss&egrave;de <strong>5 000</strong>. L&rsquo;AG d&eacute;cide de distribuer un total de <strong>100 000€</strong> de dividendes.</div>
-    <div class="exo-questions">Quel montant de dividende re&ccedil;oit M. Dupont ?</div>
-    <button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
-    <div class="exo-solution">
-      <div class="exo-step"><strong>Part de M. Dupont :</strong> 5 000 / 50 000 = <strong>10%</strong> du capital</div>
-      <div class="exo-step"><strong>Dividende re&ccedil;u :</strong> 100 000 &times; 10% = <strong>10 000€</strong></div>
-      <div class="exo-step">&#9888; Cette somme n&rsquo;est garantie que si l&rsquo;entreprise fait des b&eacute;n&eacute;fices. L&rsquo;ann&eacute;e suivante, le dividende peut &ecirc;tre diff&eacute;rent ou nul.</div>
-    </div>
-  </div>
-
-  <div class="exo">
-    <div class="exo-title">Exercice 3 <span class="exo-tag">cours</span> &mdash; Capital unique vs versements r&eacute;guliers</div>
-    <div class="exo-enonce">Sc&eacute;nario : UC vaut <strong>100€</strong> en janvier, <strong>40€</strong> en f&eacute;vrier, <strong>80€</strong> en mars.<br>
-    Investisseur A : capital unique de <strong>300€</strong> en janvier.<br>
+<div class="tab-pane" id="tab-exercices">
+<div class="exo">
+<div class="exo-title">Exercice 1 <span class="exo-tag">cours</span> — Action ou obligation ?</div>
+<div class="exo-enonce">Classer les 3 titres suivants en action ou obligation et justifier :<br/>
+    A) « La société X verse 4% d’intérêts par an, remboursable dans 5 ans. »<br/>
+    B) « L’acheteur reçoit des dividendes lors de l’AG si la société fait des bénéfices. »<br/>
+    C) « Ce titre représente une part de propriété et confère un droit de vote à l’AG. »</div>
+<button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
+<div class="exo-solution">
+<div class="exo-step"><strong>A) OBLIGATION</strong> — Intérêts fixes (4%) définis à l’avance, capital remboursable à échéance convenue. = titre de créance.</div>
+<div class="exo-step"><strong>B) ACTION</strong> — Les dividendes sont variables et liés aux bénéfices. Pas de garantie de versement. = rémunération variable.</div>
+<div class="exo-step"><strong>C) ACTION</strong> — Part de propriété + droit de vote à l’AG = définition exacte de l’action.</div>
+</div>
+</div>
+<div class="exo">
+<div class="exo-title">Exercice 2 <span class="exo-tag">cours</span> — Calcul de dividende</div>
+<div class="exo-enonce">La société ALPHA a un capital de <strong>50 000 actions</strong>. M. Dupont en possède <strong>5 000</strong>. L’AG décide de distribuer un total de <strong>100 000€</strong> de dividendes.</div>
+<div class="exo-questions">Quel montant de dividende reçoit M. Dupont ?</div>
+<button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
+<div class="exo-solution">
+<div class="exo-step"><strong>Part de M. Dupont :</strong> 5 000 / 50 000 = <strong>10%</strong> du capital</div>
+<div class="exo-step"><strong>Dividende reçu :</strong> 100 000 × 10% = <strong>10 000€</strong></div>
+<div class="exo-step">⚠ Cette somme n’est garantie que si l’entreprise fait des bénéfices. L’année suivante, le dividende peut être différent ou nul.</div>
+</div>
+</div>
+<div class="exo">
+<div class="exo-title">Exercice 3 <span class="exo-tag">cours</span> — Capital unique vs versements réguliers</div>
+<div class="exo-enonce">Scénario : UC vaut <strong>100€</strong> en janvier, <strong>40€</strong> en février, <strong>80€</strong> en mars.<br/>
+    Investisseur A : capital unique de <strong>300€</strong> en janvier.<br/>
     Investisseur B : <strong>100€/mois</strong> pendant 3 mois.</div>
-    <div class="exo-questions">Calculer pour A et B : nombre d&rsquo;UC achet&eacute;es et valeur en mars.</div>
-    <button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
-    <div class="exo-solution">
-      <div class="exo-step"><strong>Investisseur A (capital unique) :</strong><br>Janvier : 300€ &divide; 100€ = 3 UC &mdash; Valeur en mars : 3 &times; 80€ = <strong>240€</strong> (perte de 60€)</div>
-      <div class="exo-step"><strong>Investisseur B (versements r&eacute;guliers) :</strong><br>Janvier : 100€ &divide; 100€ = 1 UC<br>F&eacute;vrier : 100€ &divide; 40€ = 2,5 UC<br>Mars : 100€ &divide; 80€ = 1,25 UC<br>Total : 4,75 UC &times; 80€ = <strong>380€</strong> pour 300€ vers&eacute;s !</div>
-      <div class="exo-step">&rarr; B gagne 80€ de plus que A gr&acirc;ce &agrave; l&rsquo;achat en f&eacute;vrier quand le march&eacute; &eacute;tait bas.</div>
-    </div>
-  </div>
-
-  <div class="exo">
-    <div class="exo-title">Exercice 4 <span class="exo-tag">&agrave; vous</span> &mdash; March&eacute; mon&eacute;taire ou financier ?</div>
-    <div class="exo-enonce">Classer ces 5 instruments dans le bon march&eacute; :<br>
-    1) Bon du tr&eacute;sor &bull; 2) Action Total &bull; 3) Obligation SNCF &bull; 4) Billet de tr&eacute;sorerie &bull; 5) Indice CAC 40</div>
-    <button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
-    <div class="exo-solution">
-      <div class="exo-step"><strong>March&eacute; mon&eacute;taire (court terme) :</strong> 1. Bon du tr&eacute;sor (cr&eacute;ance de l&rsquo;&Eacute;tat CT) &bull; 4. Billet de tr&eacute;sorerie (cr&eacute;ance CT d&rsquo;entreprise)</div>
-      <div class="exo-step"><strong>March&eacute; financier (moyen/long terme) :</strong> 2. Action Total (part propri&eacute;t&eacute;) &bull; 3. Obligation SNCF (emprunt LT) &bull; 5. CAC 40 (indice bourse = march&eacute; secondaire)</div>
-    </div>
-  </div>
-
-  <div class="exo">
-    <div class="exo-title">Exercice 5 <span class="exo-tag">&agrave; vous</span> &mdash; Identifier le profil d&rsquo;investisseur</div>
-    <div class="exo-enonce">M. Tremblay, 55 ans, en couple (2 enfants adultes), patrimoine de 500 000€, horizon de placement 5 ans, connaissance financi&egrave;re moyenne, objectif : compl&eacute;ter sa retraite de mani&egrave;re sereine. Il ne supporte pas de voir son capital baisser.</div>
-    <div class="exo-questions">Quel profil d&rsquo;investisseur attribuer &agrave; M. Tremblay ? Justifier avec les 7 crit&egrave;res.</div>
-    <button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
-    <div class="exo-solution">
-      <div class="exo-step"><strong>1. &Acirc;ge (55 ans)</strong> : proche de la retraite → tendance prudente<br><strong>2. Situation familiale</strong> : en couple, enfants adultes → relativement neutre<br><strong>3. Patrimoine (500k€)</strong> : confortable mais pas excessif → prudent<br><strong>4. Horizon (5 ans = MT)</strong> : ne peut pas se permettre de trop risquer<br><strong>5. Objectif</strong> : retraite sereine → s&eacute;curit&eacute; primordiale<br><strong>6. Tol&eacute;rance au risque</strong> : ne supporte pas la baisse → tr&egrave;s faible<br><strong>7. Connaissances</strong> : moyenne → pas de prise de risque &eacute;lev&eacute;e</div>
-      <div class="exo-step"><strong>&rarr; Profil : PRUDENT</strong><br>R&eacute;partition recommand&eacute;e : 80% fonds euros / 20% UC<br>Priorit&eacute; : prot&eacute;ger le capital, g&eacute;n&eacute;rer un compl&eacute;ment de revenus stable.</div>
-    </div>
-  </div>
-
+<div class="exo-questions">Calculer pour A et B : nombre d’UC achetées et valeur en mars.</div>
+<button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
+<div class="exo-solution">
+<div class="exo-step"><strong>Investisseur A (capital unique) :</strong><br/>Janvier : 300€ ÷ 100€ = 3 UC — Valeur en mars : 3 × 80€ = <strong>240€</strong> (perte de 60€)</div>
+<div class="exo-step"><strong>Investisseur B (versements réguliers) :</strong><br/>Janvier : 100€ ÷ 100€ = 1 UC<br/>Février : 100€ ÷ 40€ = 2,5 UC<br/>Mars : 100€ ÷ 80€ = 1,25 UC<br/>Total : 4,75 UC × 80€ = <strong>380€</strong> pour 300€ versés !</div>
+<div class="exo-step">→ B gagne 80€ de plus que A grâce à l’achat en février quand le marché était bas.</div>
 </div>
-
+</div>
+<div class="exo">
+<div class="exo-title">Exercice 4 <span class="exo-tag">à vous</span> — Marché monétaire ou financier ?</div>
+<div class="exo-enonce">Classer ces 5 instruments dans le bon marché :<br/>
+    1) Bon du trésor • 2) Action Total • 3) Obligation SNCF • 4) Billet de trésorerie • 5) Indice CAC 40</div>
+<button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
+<div class="exo-solution">
+<div class="exo-step"><strong>Marché monétaire (court terme) :</strong> 1. Bon du trésor (créance de l’État CT) • 4. Billet de trésorerie (créance CT d’entreprise)</div>
+<div class="exo-step"><strong>Marché financier (moyen/long terme) :</strong> 2. Action Total (part propriété) • 3. Obligation SNCF (emprunt LT) • 5. CAC 40 (indice bourse = marché secondaire)</div>
+</div>
+</div>
+<div class="exo">
+<div class="exo-title">Exercice 5 <span class="exo-tag">à vous</span> — Identifier le profil d’investisseur</div>
+<div class="exo-enonce">M. Tremblay, 55 ans, en couple (2 enfants adultes), patrimoine de 500 000€, horizon de placement 5 ans, connaissance financière moyenne, objectif : compléter sa retraite de manière sereine. Il ne supporte pas de voir son capital baisser.</div>
+<div class="exo-questions">Quel profil d’investisseur attribuer à M. Tremblay ? Justifier avec les 7 critères.</div>
+<button class="exo-btn" onclick="toggleSol(this)">Voir la correction</button>
+<div class="exo-solution">
+<div class="exo-step"><strong>1. Âge (55 ans)</strong> : proche de la retraite → tendance prudente<br/><strong>2. Situation familiale</strong> : en couple, enfants adultes → relativement neutre<br/><strong>3. Patrimoine (500k€)</strong> : confortable mais pas excessif → prudent<br/><strong>4. Horizon (5 ans = MT)</strong> : ne peut pas se permettre de trop risquer<br/><strong>5. Objectif</strong> : retraite sereine → sécurité primordiale<br/><strong>6. Tolérance au risque</strong> : ne supporte pas la baisse → très faible<br/><strong>7. Connaissances</strong> : moyenne → pas de prise de risque élevée</div>
+<div class="exo-step"><strong>→ Profil : PRUDENT</strong><br/>Répartition recommandée : 80% fonds euros / 20% UC<br/>Priorité : protéger le capital, générer un complément de revenus stable.</div>
+</div>
+</div>
+</div>
 <!-- CAS PRATIQUES -->
-<div id="tab-cas" class="tab-pane">
-
-  <div class="cas">
-    <div class="cas-title">Cas 1 &mdash; Emma, 28 ans, premi&egrave;re &eacute;pargne &agrave; long terme</div>
-    <div class="cas-enonce">Emma, c&eacute;libataire, CDI, 28 ans. Elle dispose de 15 000€ d&rsquo;&eacute;conomies et souhaite les faire fructifier sur <strong>10 ans minimum</strong>. Elle est ouverte aux risques et curieuse des march&eacute;s. Elle n&rsquo;a jamais investi.</div>
-    <div class="cas-piege">&#9888; Pi&egrave;ges : ne pas choisir un produit trop s&eacute;curitaire qui l&rsquo;emp&ecirc;cherait de profiter de son horizon long terme. Attention au profil qui dira &laquo; dynamique &raquo; sans avoir v&eacute;rifi&eacute; les connaissances.</div>
-    <button class="cas-btn" onclick="toggleSol(this)">Voir la proposition CGP</button>
-    <div class="cas-solution">
-      <strong>Profil :</strong>
-      <ul>
-        <li>&Acirc;ge (28 ans) + c&eacute;libataire + horizon 10 ans &rarr; peut se permettre du risque</li>
-        <li>Mais premi&egrave;re exp&eacute;rience : pas encore dynamique &rarr; <strong>profil &eacute;quilibr&eacute;</strong> pour commencer</li>
-      </ul>
-      <strong>Proposition :</strong>
-      <ul>
-        <li><strong>AV multisupport</strong> (50% FE / 50% UC) : accessible, fiscalit&eacute; optimis&eacute;e apr&egrave;s 8 ans</li>
-        <li>Ou <strong>PEA</strong> si int&eacute;r&ecirc;t pour actions europ&eacute;ennes (exon&eacute;ration IR apr&egrave;s 5 ans)</li>
-        <li><strong>Versements r&eacute;guliers recommand&eacute;s</strong> : 200-300€/mois plut&ocirc;t que tout d&rsquo;un coup</li>
-        <li>R&eacute;&eacute;valuer le profil dans 2 ans si connaissances augmentent &rarr; vers dynamique</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="cas">
-    <div class="cas-title">Cas 2 &mdash; M. et Mme Bernard : capital unique ou versements r&eacute;guliers ?</div>
-    <div class="cas-enonce">Couple, 45 ans, 2 enfants. Ils viennent de toucher une prime de <strong>50 000€</strong>. Ils h&eacute;sitent entre placer la totalit&eacute; en une fois ou investir <strong>1 000€/mois</strong> pendant 50 mois sur un PEA. Le march&eacute; est actuellement haut.</div>
-    <div class="cas-piege">&#9888; Pi&egrave;ge classique : &laquo; le march&eacute; est haut, donc c&rsquo;est le bon moment &raquo; vs versements r&eacute;guliers pour ne pas d&eacute;pendre du timing.</div>
-    <button class="cas-btn" onclick="toggleSol(this)">Voir la proposition CGP</button>
-    <div class="cas-solution">
-      <strong>Analyse :</strong>
-      <ul>
-        <li>Le bon moment pour investir n&rsquo;existe pas &rarr; <strong>les versements r&eacute;guliers sont recommand&eacute;s</strong></li>
-        <li>Capital unique : si le march&eacute; baisse juste apr&egrave;s &rarr; perte importante sans possibilit&eacute; de racheter bas</li>
-        <li>Versements r&eacute;guliers : achat &agrave; diff&eacute;rents prix &rarr; moyenne &agrave; la hausse, moins de risque de timing</li>
-      </ul>
-      <strong>Recommandation :</strong>
-      <ul>
-        <li>Mettre 20 000€ en s&eacute;curit&eacute; (AV fonds euros) comme filet</li>
-        <li>Investir 30 000€ en versements r&eacute;guliers (600€/mois sur 50 mois) sur PEA</li>
-        <li>Profil &eacute;quilibr&eacute; adapt&eacute; &agrave; leur situation (couple, enfants, 45 ans)</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="cas">
-    <div class="cas-title">Cas 3 &mdash; M. Arnaud : actions ou obligations ?</div>
-    <div class="cas-enonce">M. Arnaud, 60 ans, retrait&eacute;, patrimoine 300 000€, objectif : g&eacute;n&eacute;rer des revenus compl&eacute;mentaires stables pour les 10 prochaines ann&eacute;es. Il h&eacute;site entre investir en <strong>actions europ&eacute;ennes</strong> ou en <strong>obligations d&rsquo;&Eacute;tat fran&ccedil;aises (OAT)</strong>.</div>
-    <div class="cas-piege">&#9888; Pi&egrave;ge : 60 ans + retrait&eacute; + revenus stables = &eacute;viter la volatilit&eacute; des actions. Mais 10 ans d&rsquo;horizon peut justifier une petite part actions.</div>
-    <button class="cas-btn" onclick="toggleSol(this)">Voir la proposition CGP</button>
-    <div class="cas-solution">
-      <strong>Analyse des besoins :</strong>
-      <ul>
-        <li><strong>Objectif = revenus stables</strong> &rarr; les obligations correspondent mieux</li>
-        <li>Obligations OAT : int&eacute;r&ecirc;ts fixes, risque de d&eacute;faut tr&egrave;s faible (&Eacute;tat fran&ccedil;ais)</li>
-        <li>Actions : dividendes variables, risque plus &eacute;lev&eacute;, non adapt&eacute; si besoin imm&eacute;diat de revenus</li>
-      </ul>
-      <strong>Recommandation :</strong>
-      <ul>
-        <li><strong>Profil prudent &agrave; &eacute;quilibr&eacute;</strong> selon tol&eacute;rance au risque</li>
-        <li>Principalement obligations et fonds euros (70-80%)</li>
-        <li>Petite part actions (20-30%) via OPCVM pour maintenir le pouvoir d&rsquo;achat sur 10 ans</li>
-        <li>AV multisupport : souplesse + fiscalit&eacute; avantageuse (d&eacute;j&agrave; &gt;8 ans possible)</li>
-      </ul>
-    </div>
-  </div>
-
+<div class="tab-pane" id="tab-cas">
+<div class="cas">
+<div class="cas-title">Cas 1 — Emma, 28 ans, première épargne à long terme</div>
+<div class="cas-enonce">Emma, célibataire, CDI, 28 ans. Elle dispose de 15 000€ d’économies et souhaite les faire fructifier sur <strong>10 ans minimum</strong>. Elle est ouverte aux risques et curieuse des marchés. Elle n’a jamais investi.</div>
+<div class="cas-piege">⚠ Pièges : ne pas choisir un produit trop sécuritaire qui l’empêcherait de profiter de son horizon long terme. Attention au profil qui dira « dynamique » sans avoir vérifié les connaissances.</div>
+<button class="cas-btn" onclick="toggleSol(this)">Voir la proposition CGP</button>
+<div class="cas-solution">
+<strong>Profil :</strong>
+<ul>
+<li>Âge (28 ans) + célibataire + horizon 10 ans → peut se permettre du risque</li>
+<li>Mais première expérience : pas encore dynamique → <strong>profil équilibré</strong> pour commencer</li>
+</ul>
+<strong>Proposition :</strong>
+<ul>
+<li><strong>AV multisupport</strong> (50% FE / 50% UC) : accessible, fiscalité optimisée après 8 ans</li>
+<li>Ou <strong>PEA</strong> si intérêt pour actions européennes (exonération IR après 5 ans)</li>
+<li><strong>Versements réguliers recommandés</strong> : 200-300€/mois plutôt que tout d’un coup</li>
+<li>Réévaluer le profil dans 2 ans si connaissances augmentent → vers dynamique</li>
+</ul>
 </div>
-
+</div>
+<div class="cas">
+<div class="cas-title">Cas 2 — M. et Mme Bernard : capital unique ou versements réguliers ?</div>
+<div class="cas-enonce">Couple, 45 ans, 2 enfants. Ils viennent de toucher une prime de <strong>50 000€</strong>. Ils hésitent entre placer la totalité en une fois ou investir <strong>1 000€/mois</strong> pendant 50 mois sur un PEA. Le marché est actuellement haut.</div>
+<div class="cas-piege">⚠ Piège classique : « le marché est haut, donc c’est le bon moment » vs versements réguliers pour ne pas dépendre du timing.</div>
+<button class="cas-btn" onclick="toggleSol(this)">Voir la proposition CGP</button>
+<div class="cas-solution">
+<strong>Analyse :</strong>
+<ul>
+<li>Le bon moment pour investir n’existe pas → <strong>les versements réguliers sont recommandés</strong></li>
+<li>Capital unique : si le marché baisse juste après → perte importante sans possibilité de racheter bas</li>
+<li>Versements réguliers : achat à différents prix → moyenne à la hausse, moins de risque de timing</li>
+</ul>
+<strong>Recommandation :</strong>
+<ul>
+<li>Mettre 20 000€ en sécurité (AV fonds euros) comme filet</li>
+<li>Investir 30 000€ en versements réguliers (600€/mois sur 50 mois) sur PEA</li>
+<li>Profil équilibré adapté à leur situation (couple, enfants, 45 ans)</li>
+</ul>
+</div>
+</div>
+<div class="cas">
+<div class="cas-title">Cas 3 — M. Arnaud : actions ou obligations ?</div>
+<div class="cas-enonce">M. Arnaud, 60 ans, retraité, patrimoine 300 000€, objectif : générer des revenus complémentaires stables pour les 10 prochaines années. Il hésite entre investir en <strong>actions européennes</strong> ou en <strong>obligations d’État françaises (OAT)</strong>.</div>
+<div class="cas-piege">⚠ Piège : 60 ans + retraité + revenus stables = éviter la volatilité des actions. Mais 10 ans d’horizon peut justifier une petite part actions.</div>
+<button class="cas-btn" onclick="toggleSol(this)">Voir la proposition CGP</button>
+<div class="cas-solution">
+<strong>Analyse des besoins :</strong>
+<ul>
+<li><strong>Objectif = revenus stables</strong> → les obligations correspondent mieux</li>
+<li>Obligations OAT : intérêts fixes, risque de défaut très faible (État français)</li>
+<li>Actions : dividendes variables, risque plus élevé, non adapté si besoin immédiat de revenus</li>
+</ul>
+<strong>Recommandation :</strong>
+<ul>
+<li><strong>Profil prudent à équilibré</strong> selon tolérance au risque</li>
+<li>Principalement obligations et fonds euros (70-80%)</li>
+<li>Petite part actions (20-30%) via OPCVM pour maintenir le pouvoir d’achat sur 10 ans</li>
+<li>AV multisupport : souplesse + fiscalité avantageuse (déjà &gt;8 ans possible)</li>
+</ul>
+</div>
+</div>
+</div>
 <script>
 var CARDS = [{"id": 1, "ch": "Le marché des capitaux", "q": "Quelles sont les 2 grandes branches du marché des capitaux ?", "a": "Marché monétaire → court terme (très liquide)\nMarché financier → moyen/long terme\n(Actions, Obligations)"}, {"id": 2, "ch": "Le marché des capitaux", "q": "Qu'est-ce que le marché monétaire ?", "a": "Marché à court terme où s'échangent des titres très liquides.\nÉchéances courtes (CT à moyen terme).\nActifs considérés comme très liquides."}, {"id": 3, "ch": "Le marché des capitaux", "q": "Quels sont les 2 sous-marchés du marché monétaire ?", "a": "1. Marché interbancaire : gré à gré, banques entre elles\n2. Marché des TCN : titres de créances négociables, réservé aux professionnels"}, {"id": 4, "ch": "Le marché des capitaux", "q": "Qu'est-ce qu'un TCN ?", "a": "Titre de Créance Négociable.\nDépôt à terme ouvrant droit à remboursement à une échéance convenue.\nL'investisseur détenteur est créancier de l'émetteur (États, banques, entreprises)."}, {"id": 5, "ch": "Le marché des capitaux", "q": "Instruments financiers du marché monétaire ?", "a": "Billets de trésorerie : titre de créance CT émis par les entreprises\nBons du trésor : créancier de l'État"}, {"id": 6, "ch": "Le marché des capitaux", "q": "Le marché financier se divise en 2 types. Lesquels ?", "a": "Marché primaire : émission de titres NOUVEAUX\nMarché secondaire : revente de titres EXISTANTS\n(= marché de l'occasion)"}, {"id": 7, "ch": "Le marché des capitaux", "q": "Quel est le rôle économique du marché monétaire ?", "a": "Combler à court terme les besoins de financement :\n→ des banques\n→ de l'État\n→ des entreprises\n(via placements liquides ou à courte échéance)"}, {"id": 8, "ch": "Le marché des capitaux", "q": "Quel est le rôle économique du marché financier ?", "a": "Rendre possible le financement des investissements indispensables à la compétitivité des entreprises.\n→ Compétitivité → croissance économique du pays."}, {"id": 9, "ch": "Le marché des capitaux", "q": "Qu'échange-t-on sur le marché financier ?", "a": "Actions et obligations\n= valeurs mobilières = titres financiers négociables, interchangeables et fongibles"}, {"id": 10, "ch": "Le marché des capitaux", "q": "Différence court terme vs moyen/long terme dans le marché des capitaux ?", "a": "Court terme → Marché monétaire (liquide, billets de trésorerie, bons du trésor)\nMoyen/long terme → Marché financier (actions, obligations)"}, {"id": 11, "ch": "Marché primaire et secondaire", "q": "Définition du marché primaire ?", "a": "Marché d'émission de titres NOUVEAUX.\nConfrontation entre :\n→ Agents à capacité de financement (ménages, assurances)\n→ Agents à besoin de financement (entreprises)"}, {"id": 12, "ch": "Marché primaire et secondaire", "q": "3 occasions d'émettre sur le marché primaire ?", "a": "1. Introduction en bourse\n2. Augmentation du capital\n3. Émission d'un emprunt obligataire"}, {"id": 13, "ch": "Marché primaire et secondaire", "q": "Définition du marché secondaire ?", "a": "Marché sur lequel s'échangent des titres préalablement émis sur le marché primaire.\n= Marché de l'occasion\n(ex : Bourse de Paris)"}, {"id": 14, "ch": "Marché primaire et secondaire", "q": "Les 2 fonctions essentielles du marché secondaire ?", "a": "1. Fixation des cours : prix des titres selon offre & demande\n2. Liquidité des titres : possibilité de revendre pour récupérer son argent"}, {"id": 15, "ch": "Marché primaire et secondaire", "q": "Qu'est-ce qu'une bourse de valeur ?", "a": "Lieu où s'échangent les valeurs mobilières (titres financiers négociables, interchangeables et fongibles).\nFixe les cours selon l'offre et la demande."}, {"id": 16, "ch": "Marché primaire et secondaire", "q": "Marché primaire vs secondaire : différence fondamentale ?", "a": "Primaire = émission de NOUVEAUX titres (financement direct de l'entreprise)\nSecondaire = revente de titres EXISTANTS entre investisseurs (l'entreprise ne reçoit rien)"}, {"id": 17, "ch": "Marché primaire et secondaire", "q": "Quel est le rôle de l'AMF ?", "a": "Autorité des Marchés Financiers.\nVeille au bon fonctionnement de la bourse et à la protection des investisseurs."}, {"id": 18, "ch": "Marché primaire et secondaire", "q": "Comment est fixé le cours d'une action ?", "a": "Selon la loi de l'offre et de la demande.\nDépend de l'anticipation des agents économiques :\n→ Conjoncture, profits/dividendes, risques, stratégie de l'entreprise"}, {"id": 19, "ch": "Marché primaire et secondaire", "q": "Qu'est-ce que la liquidité des titres sur le marché secondaire ?", "a": "La possibilité pour les investisseurs de revendre leurs titres pour récupérer leur argent quand ils le souhaitent."}, {"id": 20, "ch": "Marché primaire et secondaire", "q": "Qu'est-ce que la volatilité ?", "a": "Indicateur de risque = le cours de variation d'un titre.\nFaible volatilité → risque peu élevé (rendement stable)\nForte volatilité → risque élevé (gains élevés ET fortes pertes alternent)"}, {"id": 21, "ch": "Actions, Obligations et Marchés", "q": "Définition d'une action ?", "a": "Part de propriété dans le capital d'une entreprise.\nDroit de vote à l'AG + rémunération = dividendes (variables, liés aux bénéfices).\nObjectif : performance. Type : moyen/long terme."}, {"id": 22, "ch": "Actions, Obligations et Marchés", "q": "Définition d'une obligation ?", "a": "Titre de créance = prêt accordé par l'investisseur à une entreprise ou un État.\nRémunération = intérêts FIXES définis à l'avance.\nObjectif : revenus stables. Type : court/moyen terme."}, {"id": 23, "ch": "Actions, Obligations et Marchés", "q": "2 façons de gagner de l'argent avec des actions ?", "a": "1. Plus-value (appréciation) : acheter bas, revendre haut\n2. Dividendes : part du bénéfice distribuée 1x/an à l'AG\n⚠ Si pas de bénéfice → pas de dividende."}, {"id": 24, "ch": "Actions, Obligations et Marchés", "q": "Risque principal d'une obligation ?", "a": "Risque de défaut :\nl'émetteur ne parvient pas à rembourser l'investissement de départ.\n(Ex : faillite de l'entreprise ou de l'État)"}, {"id": 25, "ch": "Actions, Obligations et Marchés", "q": "Action vs obligation : quel est l'objectif de chacune ?", "a": "Action → Recherche de PERFORMANCE\n(risque élevé, dividendes variables, droit de vote)\nObligation → Recherche de REVENUS STABLES\n(risque maîtrisé, intérêts fixes connus à l'avance)"}, {"id": 26, "ch": "Actions, Obligations et Marchés", "q": "Qu'est-ce qu'un dividende ?", "a": "Part du bénéfice distribuée aux actionnaires.\nEn général : 1 fois par an lors de l'AG.\n⚠ Si l'entreprise ne fait pas de bénéfice → pas de dividende."}, {"id": 27, "ch": "Actions, Obligations et Marchés", "q": "Qu'est-ce que le CAC 40 ?", "a": "Cotation Assistée en Continu.\nIndice boursier regroupant les 40 valeurs les plus importantes de la Place de Paris.\nMesure l'évolution générale d'un marché."}, {"id": 28, "ch": "Actions, Obligations et Marchés", "q": "Qu'est-ce qu'un OPCVM ?", "a": "Organisme de Placement Collectif en Valeurs Mobilières.\nRegroupe l'épargne de plusieurs investisseurs pour les investir sur les marchés financiers.\nDiversification du risque. 2 types : SICAV + FCP."}, {"id": 29, "ch": "Actions, Obligations et Marchés", "q": "Qu'est-ce que le DIC et son indicateur de risque ?", "a": "Document d'Information Clé remis à la souscription.\nPrésente l'indicateur synthétique de risque (SRI) sur une échelle de 1 à 7\n(7 = risque maximal)."}, {"id": 30, "ch": "Actions, Obligations et Marchés", "q": "Pourquoi les versements réguliers sont recommandés vs capital unique ?", "a": "Ils permettent de moyenner les prix d'achat.\nOn achète parfois haut, parfois bas → on crée une moyenne à la hausse.\nOn s'affranchit du timing de marché."}, {"id": 31, "ch": "Profil d'investisseur", "q": "Définition du profil d'investisseur ?", "a": "Déterminé en fonction des attentes, objectifs de performance, niveau d'aversion au risque et horizon de placement du client.\nÉlément essentiel à la souscription d'un contrat d'AV."}, {"id": 32, "ch": "Profil d'investisseur", "q": "Comment se détermine le profil d'investisseur ?", "a": "Via un questionnaire écrit (support durable), document précontractuel.\nRempli par le client PRÉALABLEMENT à toute souscription.\nLe client doit être le plus honnête possible."}, {"id": 33, "ch": "Profil d'investisseur", "q": "Quels sont les 7 critères déterminant le profil d'investisseur ?", "a": "1. Âge du client\n2. Situation familiale\n3. Situation patrimoniale\n4. Horizon de placement\n5. Objectifs de placement\n6. Tolérance au risque\n7. Connaissances et expériences financières"}, {"id": 34, "ch": "Profil d'investisseur", "q": "Quel est l'impact de l'âge sur le profil ?", "a": "Plus le client est jeune → plus il peut se permettre de prendre des risques.\n⚠ L'âge seul ne suffit pas : il faut combiner avec les 6 autres critères."}, {"id": 35, "ch": "Profil d'investisseur", "q": "Quel est l'impact de la situation familiale sur le profil ?", "a": "Couple avec enfants → tendance prudente/modérée\nCélibataire → tendance à prendre des risques pour la performance\n⚠ A croiser avec les autres critères."}, {"id": 36, "ch": "Profil d'investisseur", "q": "Profil prudent : caractéristiques et répartition type ?", "a": "Faible prise de risque.\nVise performance légèrement supérieure aux fonds euros.\nRépartition type : 80% fonds euros / 20% unités de compte."}, {"id": 37, "ch": "Profil d'investisseur", "q": "Profil équilibré : caractéristiques et répartition type ?", "a": "Diversification pour rendements plus élevés long terme.\nAccepte une certaine dose de risque.\nRépartition type : 50% fonds euros / 50% unités de compte."}, {"id": 38, "ch": "Profil d'investisseur", "q": "Profil dynamique : caractéristiques ?", "a": "Investisseur risquophile, fin connaisseur des marchés.\nPeut investir jusqu'à 100% en unités de compte.\nRecherche performance maximale."}, {"id": 39, "ch": "Profil d'investisseur", "q": "À quoi sert de déterminer le profil d'investisseur ?", "a": "→ Avoir une vue d'ensemble et complète de la situation client\n→ Aider le client à trouver le placement qui lui convient\nObligatoire avant toute souscription."}, {"id": 40, "ch": "Profil d'investisseur", "q": "Qu'est-ce que l'horizon de placement ?", "a": "Durée pendant laquelle l'investisseur prévoit de détenir son placement.\nCT : moins de 3 ans\nMT : 3 à 8 ans\nLT : plus de 8 ans\nPlus l'horizon est long → moins les pertes sont fréquentes."}];
 var QUIZ  = [{"id": 1, "q": "Le marché monétaire se caractérise par des actifs...", "opts": ["De moyen/long terme", "Très illiquides", "Court terme et très liquides", "Uniquement obligataires"], "ans": 2}, {"id": 2, "q": "TCN signifie :", "opts": ["Titre de Crédit Notarié", "Titre de Créance Négociable", "Taux de Capitalisation Net", "Titre de Couverture Nationale"], "ans": 1}, {"id": 3, "q": "Les instruments du marché monétaire sont :", "opts": ["Actions et obligations", "Billets de trésorerie et bons du trésor", "SICAV et FCP", "Fonds euros uniquement"], "ans": 1}, {"id": 4, "q": "Le marché primaire est...", "opts": ["Le marché de l'occasion", "Le marché d'émission des titres nouveaux", "Le marché interbancaire", "La bourse de Paris uniquement"], "ans": 1}, {"id": 5, "q": "Combien d'occasions permettent d'émettre sur le marché primaire ?", "opts": ["2", "4", "3", "1"], "ans": 2}, {"id": 6, "q": "Le marché secondaire est aussi appelé :", "opts": ["Marché de l'émission", "Marché interbancaire", "Marché de l'occasion", "Marché réglementé"], "ans": 2}, {"id": 7, "q": "Les 2 fonctions du marché secondaire sont :", "opts": ["Émission et cotation", "Fixation des cours et liquidité des titres", "Rendement et garantie", "DIC et SRI"], "ans": 1}, {"id": 8, "q": "Une action rémunère son détenteur via :", "opts": ["Des intérêts fixes garantis", "Des dividendes variables (si bénéfice)", "Un coupon annuel garanti", "Un loyer mensuel"], "ans": 1}, {"id": 9, "q": "Une obligation rémunère son détenteur via :", "opts": ["Des dividendes", "Des intérêts fixes définis à l'avance", "Des plus-values", "Un capital variable"], "ans": 1}, {"id": 10, "q": "L'objectif principal d'une action est :", "opts": ["Revenus stables", "Performance (avec prise de risque)", "Protection du capital garanti", "Rendement garanti"], "ans": 1}, {"id": 11, "q": "L'objectif principal d'une obligation est :", "opts": ["Performance maximale", "Prise de risque maximale", "Revenus stables, risque maîtrisé", "Droits de vote à l'AG"], "ans": 2}, {"id": 12, "q": "Le risque principal d'une obligation est :", "opts": ["La volatilité", "Le risque de défaut (l'émetteur ne rembourse pas)", "La baisse des dividendes", "La dilution du capital"], "ans": 1}, {"id": 13, "q": "CAC 40 = panier des 40 valeurs les plus importantes de... ?", "opts": ["New York", "Tokyo", "La Place de Paris", "Francfort"], "ans": 2}, {"id": 14, "q": "CAC signifie :", "opts": ["Cotation Assistée en Continu", "Capital Associé en Couverture", "Capitalisation Aidée Continue", "Cours d'Actifs Cotés"], "ans": 0}, {"id": 15, "q": "L'indicateur synthétique de risque (SRI) du DIC va de :", "opts": ["0 à 5", "1 à 10", "1 à 7 (7 = risque maximal)", "1 à 100"], "ans": 2}, {"id": 16, "q": "OPCVM signifie :", "opts": ["Organisme Public de Cotation en Valeurs Mobilières", "Organisme de Placement Collectif en Valeurs Mobilières", "Obligation Publique en Capital Variable et Modéré", "Organisme de Placement en Capital Variable Mondial"], "ans": 1}, {"id": 17, "q": "Les 2 types d'OPCVM sont :", "opts": ["DIC et SRI", "Actions et obligations", "SICAV et FCP", "CAC et DAX"], "ans": 2}, {"id": 18, "q": "Pourquoi investir en versements réguliers plutôt qu'en capital unique ?", "opts": ["Car le capital unique est interdit", "Pour éviter les impôts", "Pour moyenner les prix d'achat et s'affranchir du timing", "Car les versements réguliers sont garantis"], "ans": 2}, {"id": 19, "q": "Versements réguliers : 100€/mois. Mois 1=100€/UC, Mois 2=50€/UC, Mois 3=100€/UC. Résultat ?", "opts": ["3 UC = 300€ pour 300€ versés", "4 UC = 400€ pour 300€ versés", "2 UC = 200€ pour 300€ versés", "5 UC = 500€ pour 300€ versés"], "ans": 1}, {"id": 20, "q": "Le profil d'investisseur se détermine via :", "opts": ["Un entretien téléphonique non formalisé", "Un questionnaire écrit précontractuel", "Une visite médicale", "Le contrat d'assurance vie directement"], "ans": 1}, {"id": 21, "q": "Combien de critères permettent de déterminer le profil d'investisseur ?", "opts": ["3", "5", "7", "10"], "ans": 2}, {"id": 22, "q": "L'horizon de placement court terme correspond à :", "opts": ["Moins de 3 ans", "3 à 8 ans", "Plus de 8 ans", "Moins de 1 an"], "ans": 0}, {"id": 23, "q": "L'horizon de placement long terme correspond à :", "opts": ["Moins de 3 ans", "3 à 8 ans", "Plus de 8 ans", "Plus de 20 ans uniquement"], "ans": 2}, {"id": 24, "q": "Combien de profils d'investisseur existe-t-il ?", "opts": ["2", "3", "4", "5"], "ans": 1}, {"id": 25, "q": "Le profil 'prudent' correspond à une répartition type de :", "opts": ["100% unités de compte", "50% fonds euros / 50% UC", "80% fonds euros / 20% UC", "70% fonds euros / 30% UC"], "ans": 2}, {"id": 26, "q": "Le profil 'équilibré' correspond à :", "opts": ["80% fonds euros / 20% UC", "50% fonds euros / 50% UC", "100% unités de compte", "90% fonds euros / 10% UC"], "ans": 1}, {"id": 27, "q": "Le profil 'dynamique' peut investir jusqu'à :", "opts": ["50% en UC", "70% en UC", "80% en UC", "100% en UC"], "ans": 3}, {"id": 28, "q": "La volatilité est :", "opts": ["Un indicateur de performance garantie", "Un indicateur de risque (cours de variation d'un titre)", "Un taux d'intérêt fixe", "Le prix d'une obligation"], "ans": 1}, {"id": 29, "q": "L'AMF a pour rôle de :", "opts": ["Fixer les dividendes", "Veiller au bon fonctionnement de la bourse et protéger les investisseurs", "Émettre les obligations de l'État", "Gérer les OPCVM"], "ans": 1}, {"id": 30, "q": "Le DIC est remis à l'investisseur :", "opts": ["Lors de la clôture du contrat", "Annuellement", "Lors de la souscription du produit", "À la demande uniquement"], "ans": 2}];
@@ -717,57 +693,5 @@ function toggleSol(btn){
   btn.textContent=vis?'Voir la correction':'Masquer la correction';
 }
 </script>
-
-<script>
-(function() {
-  var DAY_KEYWORDS = ["marché primaire", "marché secondaire", "action", "actionnaire", "dividende", "obligation", "coupon", "meilleur moyen d'investir", "investir progressivement", "capital unique", "versements réguliers", "7 critères", "profil d'investisseur", "profil prudent", "profil équilibré", "profil dynamique"];
-  var seen = new WeakSet();
-
-  function markEl(el) {
-    if (!el || seen.has(el)) return;
-    var tag = el.tagName;
-    if (!tag) return;
-    seen.add(el);
-    el.classList.add('heart-line');
-    var badge = document.createElement('span');
-    badge.className = 'heart-badge';
-    badge.textContent = '❤️';
-    el.insertBefore(badge, el.firstChild);
-  }
-
-  function markKeywords(fb, keywords) {
-    var walker = document.createTreeWalker(fb, NodeFilter.SHOW_TEXT, null, false);
-    var node;
-    while ((node = walker.nextNode())) {
-      var txt = node.textContent.toLowerCase();
-      for (var i = 0; i < keywords.length; i++) {
-        if (txt.indexOf(keywords[i].toLowerCase()) !== -1) {
-          // Trouve l'ancêtre immédiat marquable
-          var el = node.parentElement;
-          var depth = 0;
-          while (el && el !== fb && depth < 6) {
-            var t = el.tagName;
-            if (t === 'LI' || t === 'P' || t === 'H2' || t === 'H3' ||
-                t === 'BLOCKQUOTE' || t === 'TABLE') {
-              markEl(el);
-              break;
-            }
-            el = el.parentElement;
-            depth++;
-          }
-          break;
-        }
-      }
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.fiche-body').forEach(function(fb) {
-      markKeywords(fb, DAY_KEYWORDS);
-    });
-  });
-})();
-</script>
-
 </body>
 </html>
