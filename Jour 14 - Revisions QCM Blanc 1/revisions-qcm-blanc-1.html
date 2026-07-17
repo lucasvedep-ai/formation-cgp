@@ -222,11 +222,10 @@ function renderQuestion(){
     });
   }else if(q.type==='multi'){
     document.querySelectorAll('.opt-label').forEach(lbl=>{
-      var inp=lbl.querySelector('input[type="checkbox"]');
-      if(inp){inp.addEventListener('change',function(){
-        if(this.checked){lbl.classList.add('selected');}
-        else{lbl.classList.remove('selected');}
-      });}
+      lbl.addEventListener('click',function(e){
+        e.preventDefault();
+        lbl.classList.toggle('selected');
+      });
     });
   }
 
@@ -253,7 +252,7 @@ function validate(){
     userLabels=[sel.value];
     isCorrect=q.correct.includes(sel.value);
   }else if(q.type==='multi'){
-    const sels=[...document.querySelectorAll('input[name="opt"]:checked')].map(i=>i.value);
+    const sels=[...document.querySelectorAll('.opt-label.selected')].map(l=>l.getAttribute('data-letter'));
     if(sels.length===0){document.getElementById('btn-validate').style.display='block'; alert('Sélectionnez au moins une réponse'); return;}
     userLabels=sels;
     isCorrect=[...sels].sort().join(',')===([...q.correct]).sort().join(',');
