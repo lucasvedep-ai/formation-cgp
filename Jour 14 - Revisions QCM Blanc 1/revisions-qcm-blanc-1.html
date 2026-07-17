@@ -220,6 +220,12 @@ function renderQuestion(){
         lbl.classList.add('selected');
       });
     });
+  }else if(q.type==='multi'){
+    document.querySelectorAll('.opt-label').forEach(lbl=>{
+      lbl.addEventListener('click',()=>{
+        lbl.classList.toggle('selected');
+      });
+    });
   }
 
   const btn=document.getElementById('btn-validate');
