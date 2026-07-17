@@ -222,9 +222,11 @@ function renderQuestion(){
     });
   }else if(q.type==='multi'){
     document.querySelectorAll('.opt-label').forEach(lbl=>{
-      lbl.addEventListener('click',()=>{
-        lbl.classList.toggle('selected');
-      });
+      var inp=lbl.querySelector('input[type="checkbox"]');
+      if(inp){inp.addEventListener('change',function(){
+        if(this.checked){lbl.classList.add('selected');}
+        else{lbl.classList.remove('selected');}
+      });}
     });
   }
 
